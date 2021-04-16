@@ -2,9 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/operation-log",
-    name: "operation-log",
-    component: () => import("../views/OperationLogList.vue")
+    path: "/",
+    component: () => import("../layouts/AdminLayout"),
+    children: [
+      {
+        path: "/operation-log",
+        component: () => import("../views/OperationLogList.vue")
+      }
+    ]
   }
 ];
 

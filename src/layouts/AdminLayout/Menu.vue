@@ -1,11 +1,11 @@
 <template>
 	<div class="layout-menu-container">
-		<AppSubmenu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick" />
+		<Submenu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick" />
 	</div>
 </template>
 
 <script>
-import AppSubmenu from './AppSubmenu';
+import Submenu from './Submenu';
 
 export default {
 	props: {
@@ -17,7 +17,7 @@ export default {
         }
     },
 	components: {
-		'AppSubmenu': AppSubmenu
+		Submenu
 	}
 }
 </script>
