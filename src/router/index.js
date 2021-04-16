@@ -10,6 +10,11 @@ const routes = [
         component: () => import("../views/OperationLogList.vue")
       }
     ]
+  },
+  {
+    name: "signin",
+    path: "/signin",
+    component: () => import("../layouts/Signin.vue")
   }
 ];
 
