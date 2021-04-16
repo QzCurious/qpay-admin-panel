@@ -40,6 +40,7 @@ import AppProfile from "./AppProfile.vue";
 import AppMenu from "./AppMenu.vue";
 import AppConfig from "./AppConfig.vue";
 import AppFooter from "./AppFooter.vue";
+import { PrimeIcons } from "primevue/api";
 
 export default {
   data() {
@@ -101,6 +102,11 @@ export default {
               ],
             },
           ],
+        },
+        {
+          label: "系統管理",
+          icon: PrimeIcons.COG,
+          items: [{ label: "操作日誌", to: "operation-log" }],
         },
       ],
     };
