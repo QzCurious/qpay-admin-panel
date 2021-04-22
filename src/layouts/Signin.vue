@@ -11,7 +11,7 @@
             <InputText
               id="username"
               :class="{ 'p-invalid': v$.username.$error }"
-              v-model="v$.username.$model"
+              v-model="username"
             />
             <label for="username" :class="{ 'p-error': v$.username.$error }"
               >帳號</label
@@ -26,7 +26,7 @@
             <Password
               id="password"
               :class="{ 'p-invalid': v$.password.$error }"
-              v-model="v$.password.$model"
+              v-model="password"
               :feedback="false"
             />
             <label for="password" :class="{ 'p-error': v$.password.$error }"

@@ -17,20 +17,20 @@
 				<span class="layout-topbar-item-text">Settings</span>
 				<span class="layout-topbar-icon pi pi-cog"></span>
 			</button>
-			<button class="p-link">
-				<span class="layout-topbar-item-text">User</span>
-				<span class="layout-topbar-icon pi pi-user"></span>
-			</button>
+			<UserBtn />
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
+import UserBtn from './UserBtn.vue'
+
+export default { 
+	components: {UserBtn},
     methods: {
         onMenuToggle(event) {
             this.$emit('menu-toggle', event);
         }
     }
-}
+ }
 </script>

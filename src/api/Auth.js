@@ -1,5 +1,6 @@
 import { $axios } from ".";
 import store from "../store";
+import router from "../router";
 
 class Auth {
   async signin({ username, password }) {
@@ -8,6 +9,11 @@ class Auth {
       .then(({ data: token }) => {
         store.dispatch("auth/signin", token);
       });
+  }
+
+  logout() {
+    store.dispatch("auth/logout");
+    router.push({ name: "signin" });
   }
 }
 

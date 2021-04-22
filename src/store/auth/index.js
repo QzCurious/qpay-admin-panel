@@ -16,11 +16,17 @@ export const store = {
   actions: {
     signin({ commit }, token) {
       commit("set", token);
+    },
+    logout({ commit }) {
+      commit("clear");
     }
   },
   mutations: {
     set(state, token) {
       state.token = token;
+    },
+    clear(state) {
+      state.token = null;
     }
   }
 };

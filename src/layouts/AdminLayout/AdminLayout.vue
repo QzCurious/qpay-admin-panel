@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import TopBar from "./Topbar.vue";
+import TopBar from "./Topbar";
 import Profile from "./Profile.vue";
 import Menu from "./Menu.vue";
 import Config from "./Config.vue";
