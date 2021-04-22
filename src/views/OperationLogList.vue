@@ -92,6 +92,13 @@
       <template #body="{ data }">
         {{ formatDate(data.time) }}
       </template>
+      <template #filter="{ filterModel }">
+        <Calendar
+          v-model="filterModel.value"
+          dateFormat="yy/mm/dd"
+          placeholder="yyyy/mm/dd"
+        />
+      </template>
     </Column>
   </DataTable>
 </template>
