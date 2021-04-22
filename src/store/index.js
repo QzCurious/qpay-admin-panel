@@ -7,5 +7,6 @@ export default createStore({
   actions: {},
   modules: {
     auth: auth.store
-  }
+  },
+  plugins: [...auth.plugins]
 });

@@ -81,7 +81,7 @@ export default {
           password: this.password,
         })
         .then(() => {
-          router.push("/");
+          router.push(this.$route.redirectedFrom?.fullPath || "/");
         })
         .catch((err) => {
           if (err.response.status >= 400 && !this.v$.$error) {

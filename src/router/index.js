@@ -1,8 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "../store";
 
 const routes = [
   {
     path: "/",
+    beforeEnter: () => {
+      if (!store.getters["auth/isAuthenticated"]) {
+        return { name: "signin" };
+      }
+    },
     component: () => import("../layouts/AdminLayout"),
     children: [
       {
