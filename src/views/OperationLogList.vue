@@ -32,23 +32,13 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="id" header="ID" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        <span class="p-column-title">ID</span>
-        {{ data.id }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
+    <Column header="index" :sortable="false">
+      <template #body="{ index }">
+        {{ index + 1 }}
       </template>
     </Column>
-    <Column field="username" header="帳號" :showFilterMatchModes="false">
+    <Column field="username" header="operator" :showFilterMatchModes="false">
       <template #body="{ data }">
-        <span class="p-column-title">帳號</span>
         {{ data.username }}
       </template>
       <template #filter="{ filterModel, filterCallback }">
@@ -60,10 +50,9 @@
         />
       </template>
     </Column>
-    <Column field="operation" header="操作" :showFilterMatchModes="false">
+    <Column field="company" header="company" :showFilterMatchModes="false">
       <template #body="{ data }">
-        <span class="p-column-title">操作</span>
-        {{ data.operation }}
+        {{ data.company }}
       </template>
       <template #filter="{ filterModel, filterCallback }">
         <InputText
@@ -74,10 +63,9 @@
         />
       </template>
     </Column>
-    <Column field="detail" header="詳情" :showFilterMatchModes="false">
+    <Column field="type" header="type" :showFilterMatchModes="false">
       <template #body="{ data }">
-        <span class="p-column-title">詳情</span>
-        {{ data.detail }}
+        {{ data.type }}
       </template>
       <template #filter="{ filterModel, filterCallback }">
         <InputText
@@ -88,7 +76,63 @@
         />
       </template>
     </Column>
-    <Column header="時間" field="time" dataType="date" :sortable="true">
+    <Column field="sub_type" header="sub_type" :showFilterMatchModes="false">
+      <template #body="{ data }">
+        {{ data.sub_type }}
+      </template>
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          type="text"
+          v-model="filterModel.value"
+          class="p-column-filter"
+          @keydown.enter="filterCallback"
+        />
+      </template>
+    </Column>
+    <Column field="remark" header="remark" :showFilterMatchModes="false">
+      <template #body="{ data }">
+        {{ data.remark }}
+      </template>
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          type="text"
+          v-model="filterModel.value"
+          class="p-column-filter"
+          @keydown.enter="filterCallback"
+        />
+      </template>
+    </Column>
+    <Column
+      field="action_type"
+      header="action_type"
+      :showFilterMatchModes="false"
+    >
+      <template #body="{ data }">
+        {{ data.action_type }}
+      </template>
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          type="text"
+          v-model="filterModel.value"
+          class="p-column-filter"
+          @keydown.enter="filterCallback"
+        />
+      </template>
+    </Column>
+    <Column field="ip" header="operator_ip" :showFilterMatchModes="false">
+      <template #body="{ data }">
+        {{ data.ip }}
+      </template>
+      <template #filter="{ filterModel, filterCallback }">
+        <InputText
+          type="text"
+          v-model="filterModel.value"
+          class="p-column-filter"
+          @keydown.enter="filterCallback"
+        />
+      </template>
+    </Column>
+    <Column field="time" header="operator_time" dataType="date">
       <template #body="{ data }">
         {{ formatDate(data.time) }}
       </template>
@@ -121,15 +165,17 @@ export default defineComponent({
     clearFilter() {
       this.filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        id: { value: null, matchMode: FilterMatchMode.CONTAINS },
         username: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        operation: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        detail: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        company: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        type: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        sub_type: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        remark: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        action_type: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        ip: { value: null, matchMode: FilterMatchMode.CONTAINS },
         time: {
           operator: FilterOperator.AND,
           constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
         },
-        ip: { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
     formatDate(date) {
