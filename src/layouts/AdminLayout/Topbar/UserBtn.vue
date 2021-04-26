@@ -19,6 +19,10 @@ export default {
     return {
       items: [
         {
+          label: "Reset Password",
+          to: "/reset-password"
+        },
+        {
           label: "Log Out",
           icon: PrimeIcons.SIGN_OUT,
           command: auth.logout,

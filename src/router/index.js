@@ -12,6 +12,10 @@ const routes = [
     component: () => import("../layouts/AdminLayout"),
     children: [
       {
+        path: "/reset-password",
+        component: () => import("../views/ResetPassword.vue")
+      },
+      {
         path: "/operation-log",
         component: () => import("../views/OperationLogList.vue")
       }
