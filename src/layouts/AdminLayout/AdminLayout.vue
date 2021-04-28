@@ -82,7 +82,10 @@ export default {
         {
           label: "系統管理",
           icon: PrimeIcons.COG,
-          items: [{ label: "操作日誌", to: "/operation-log" }],
+          items: [
+            { label: "操作日誌", to: "/operation-log" },
+            { label: "建立帳號", to: "/users/create" },
+          ],
         },
       ],
     };
@@ -214,7 +217,7 @@ export default {
 
 <style lang="scss">
 .p-toast.p-toast-topright {
-    z-index: 1000;
-    top: 70px;
+  z-index: 1000;
+  top: 70px;
 }
 </style>

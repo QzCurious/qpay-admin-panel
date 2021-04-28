@@ -18,6 +18,16 @@ const routes = [
       {
         path: "/operation-log",
         component: () => import("../views/OperationLogList.vue")
+      },
+      {
+        path: "/users",
+        component: () => import("./ForwordRouterView.vue"),
+        children: [
+          {
+            path: "create",
+            component: () => import("../views/user/CreateUser.vue")
+          }
+        ]
       }
     ]
   },
