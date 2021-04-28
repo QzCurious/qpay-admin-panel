@@ -83,6 +83,7 @@ export default {
           label: "系統管理",
           icon: PrimeIcons.COG,
           items: [
+            { label: "權限設定", to: "/users" },
             { label: "操作日誌", to: "/operation-log" },
             { label: "建立帳號", to: "/users/create" },
           ],

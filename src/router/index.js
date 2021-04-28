@@ -24,6 +24,10 @@ const routes = [
         component: () => import("./ForwordRouterView.vue"),
         children: [
           {
+            path: "",
+            component: () => import("../views/user/UserList.vue")
+          },
+          {
             path: "create",
             component: () => import("../views/user/CreateUser.vue")
           }
