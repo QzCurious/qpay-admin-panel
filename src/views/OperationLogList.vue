@@ -37,9 +37,9 @@
         {{ index + 1 }}
       </template>
     </Column>
-    <Column field="username" header="operator" :showFilterMatchModes="false">
+    <Column field="signin_id" header="operator" :showFilterMatchModes="false">
       <template #body="{ data }">
-        {{ data.username }}
+        {{ data.signin_id }}
       </template>
       <template #filter="{ filterModel, filterCallback }">
         <InputText
@@ -165,7 +165,7 @@ export default defineComponent({
     clearFilter() {
       this.filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        username: { value: null, matchMode: FilterMatchMode.CONTAINS },
+        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
         company: { value: null, matchMode: FilterMatchMode.CONTAINS },
         type: { value: null, matchMode: FilterMatchMode.CONTAINS },
         sub_type: { value: null, matchMode: FilterMatchMode.CONTAINS },
