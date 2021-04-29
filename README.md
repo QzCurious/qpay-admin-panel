@@ -12,7 +12,7 @@ npm start
 
 .env.development.local
 ```
-VUE_APP_API_HOST=http://localhost:300
+VUE_APP_API_HOST=http://localhost:3000
 ```
 
 Serve app
