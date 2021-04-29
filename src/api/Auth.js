@@ -3,9 +3,9 @@ import store from "../store";
 import router from "../router";
 
 class Auth {
-  async signin({ username, password }) {
+  async signin({ signin_id, password }) {
     return $axios
-      .post("auth/signin", { username, password })
+      .post("auth/signin", { signin_id, password })
       .then(({ data: token }) => {
         store.dispatch("auth/signin", token);
       });

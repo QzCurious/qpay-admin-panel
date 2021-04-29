@@ -6,38 +6,19 @@
         @submit.prevent="handleSubmit"
         class="p-fluid p-d-flex p-flex-column"
       >
-        <div class="p-field">
-          <div class="p-float-label">
-            <InputText
-              id="username"
-              :class="{ 'p-invalid': v$.username.$error }"
-              v-model="username"
-            />
-            <label for="username" :class="{ 'p-error': v$.username.$error }"
-              >帳號</label
-            >
-          </div>
-          <small v-if="v$.username.$error" class="p-error">
-            {{ v$.username.$errors?.[0]?.$message }}
-          </small>
-        </div>
-        <div class="p-field">
-          <span class="p-float-label">
-            <Password
-              id="password"
-              :class="{ 'p-invalid': v$.password.$error }"
-              v-model="password"
-              :feedback="false"
-            />
-            <label for="password" :class="{ 'p-error': v$.password.$error }"
-              >密碼</label
-            >
-          </span>
-          <small v-if="v$.password.$error" class="p-error">
-            {{ v$.password.$errors?.[0]?.$message }}
-          </small>
-        </div>
-        <Button label="Login" type="submit" />
+        <InputText
+          v-model="signin_id"
+          label="帳號"
+          name="signin_id"
+          :errors="v$.signin_id.$errors.map((e) => e.$message)"
+        />
+        <Password
+          v-model="password"
+          label="密碼"
+          name="password"
+          :errors="v$.password.$errors.map((e) => e.$message)"
+        />
+        <Button class="p-mt-3" label="Login" type="submit" />
       </form>
     </div>
   </div>
@@ -49,22 +30,25 @@ import auth from "../api/Auth";
 import router from "../router";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import InputText from "../components/InputText";
+import Password from "../components/Password";
 
 export default {
+  components: { InputText, Password },
   setup() {
     const v$ = useVuelidate();
     return { v$ };
   },
   validations() {
     return {
-      username: { required, minLength: minLength(2) },
+      signin_id: { required, minLength: minLength(2) },
       password: { required },
     };
   },
   data() {
     return {
-      username: "",
-      password: "",
+      signin_id: null,
+      password: null,
     };
   },
   methods: {
@@ -76,10 +60,7 @@ export default {
       }
 
       auth
-        .signin({
-          username: this.username,
-          password: this.password,
-        })
+        .signin({ signin_id: this.signin_id, password: this.password })
         .then(() => {
           router.push(this.$route.redirectedFrom?.fullPath || "/");
         })
@@ -100,11 +81,5 @@ export default {
 <style>
 .container {
   width: min(100%, 18rem);
-}
-form {
-  padding: 1rem 0;
-}
-.p-field {
-  margin-bottom: 1.5rem;
 }
 </style>
