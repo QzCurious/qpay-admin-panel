@@ -29,11 +29,27 @@ const routes = [
           },
           {
             path: "create",
-            component: () => import("../views/user/CreateUser.vue")
-          }
-        ]
-      }
-    ]
+            component: () => import("../views/user/CreateUser.vue"),
+          },
+        ],
+      },
+      {
+        path: "funds-management",
+        component: () => import("./ForwordRouterView.vue"),
+        children: [
+          {
+            path: "funds-operation-panel",
+            component: () =>
+              import("../views/funds-management/FundsOperationPanel.vue"),
+          },
+          {
+            path: "transation-records",
+            component: () =>
+              import("../views/funds-management/FundsOperationPanel.vue"),
+          },
+        ],
+      },
+    ],
   },
   {
     name: "signin",
