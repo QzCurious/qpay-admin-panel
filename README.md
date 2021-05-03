@@ -4,10 +4,7 @@
 
 Fake server
 ```
-git clone http://git.llamatech.top/qzcurious/qpay-fake-data.git
-cd qpay-fake-data
-npm install
-npm start
+npm run mock
 ```
 
 .env.development.local
