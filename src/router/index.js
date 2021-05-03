@@ -14,6 +14,10 @@ const routes = [
     component: () => import("../layouts/AdminLayout"),
     children: [
       {
+        path: "/payment-password/update",
+        component: () => import("../views/ChangePaymentPassword.vue")
+      },
+      {
         path: "/change-password",
         component: () => import("../views/ChangePassword.vue")
       },

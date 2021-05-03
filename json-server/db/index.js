@@ -8,5 +8,6 @@ module.exports = {
   ...require("./card"),
   ...require("./cardOperation"),
   ...require("./depositDailyReport"),
-  ...require("./merchantDailyReport")
+  ...require("./merchantDailyReport"),
+  ...require("./paymentPassword"),
 };
