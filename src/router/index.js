@@ -81,7 +81,37 @@ const routes = [
           },
         ],
       },
-    ],
+      {
+        path: "/payments",
+        component: () => import("./ForwordRouterView.vue"),
+        children: [
+          {
+            path: "",
+            components: () => import("../views/payments/banks.vue")
+          },
+          {
+            path: "banks",
+            component: () => import("../views/payments/banks.vue")
+          },
+          {
+            path: "channels",
+            component: () => import("../views/payments/channels.vue")
+          },
+          {
+            path: "card-holders",
+            component: () => import("../views/payments/card-holders.vue")
+          },
+          {
+            path: "cards",
+            component: () => import("../views/payments/cards.vue")
+          },
+          {
+            path: "card_operations",
+            component: () => import("../views/payments/card-operations.vue")
+          }
+        ]
+      }
+    ]
   },
   {
     name: "signin",
