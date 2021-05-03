@@ -43,3 +43,14 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+## Coding Style
+- `snake_case` for variable, function 
+- `PascalCase` for component name
+
+### Vuelidate
+盡量用 `validation()` + options api 的寫法比較沒問題
+
+已知問題:
+- composition api 宣告 `password`, `confirm_password` 的 ref，用 `sameAs` 會有 `$errors` 未正確觸發問題
