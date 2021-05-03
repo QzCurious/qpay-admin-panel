@@ -24,38 +24,18 @@
             {{ v$.role.$errors?.[0]?.$message }}
           </small>
         </div>
-        <div class="p-field">
-          <span class="p-float-label">
-            <InputText
-              id="signin_id"
-              :class="{ 'p-invalid': v$.signin_id.$error }"
-              v-model="signin_id"
-            />
-            <label for="signin_id" :class="{ 'p-error': v$.signin_id.$error }"
-              >帳號</label
-            >
-          </span>
-          <small v-if="v$.signin_id.$error" class="p-error">
-            {{ v$.signin_id.$errors?.[0]?.$message }}
-          </small>
-        </div>
-        <div class="p-field">
-          <span class="p-float-label">
-            <InputText
-              id="signin_password"
-              :class="{ 'p-invalid': v$.signin_password.$error }"
-              v-model="signin_password"
-            />
-            <label
-              for="signin_password"
-              :class="{ 'p-error': v$.signin_password.$error }"
-              >密碼</label
-            >
-          </span>
-          <small v-if="v$.signin_password.$error" class="p-error">
-            {{ v$.signin_password.$errors?.[0]?.$message }}
-          </small>
-        </div>
+        <InputText
+          v-model="signin_id"
+          label="帳號"
+          name="signin_id"
+          :errors="v$.signin_id.$errors.map((e) => e.$message)"
+        />
+        <Password
+          v-model="signin_password"
+          label="密碼"
+          name="password"
+          :errors="v$.signin_password.$errors.map((e) => e.$message)"
+        />
         <div class="p-field">
           <span class="p-float-label">
             <Chips
@@ -74,22 +54,13 @@
             {{ `${ip_allow_invlid} is not a valid IP` }}
           </small>
         </div>
-        <div class="p-field">
-          <span class="p-float-label">
-            <InputText
-              id="phone"
-              :class="{ 'p-invalid': v$.phone.$error }"
-              v-model="phone"
-            />
-            <label for="phone" :class="{ 'p-error': v$.phone.$error }"
-              >電話</label
-            >
-          </span>
-          <small v-if="v$.phone.$error" class="p-error">
-            {{ v$.phone.$errors?.[0]?.$message }}
-          </small>
-        </div>
-        <Button label="建立" type="submit" />
+        <InputText
+          v-model="phone"
+          label="電話"
+          name="phone"
+          :errors="v$.phone.$errors.map((e) => e.$message)"
+        />
+        <Button class="p-mt-3" label="建立" type="submit" />
       </form>
     </template>
   </Card>
@@ -102,8 +73,11 @@ import user from "../../api/User";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import { ipv4 } from "../../helper/validator";
+import InputText from "../../components/InputText";
+import Password from "../../components/Password";
 
 export default {
+  components: { InputText, Password },
   setup() {
     const v$ = useVuelidate();
     return { v$ };
@@ -186,7 +160,7 @@ export default {
 
           this.$toast.add({
             severity: "success",
-            summary: "職位新增成功",
+            summary: "帳號新增成功",
             life: 1800,
           });
         });
@@ -196,7 +170,4 @@ export default {
 </script>
 
 <style>
-.p-field {
-  margin-bottom: 1.5rem;
-}
 </style>
