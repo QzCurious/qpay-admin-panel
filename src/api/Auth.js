@@ -16,9 +16,9 @@ class Auth {
     router.push({ name: "signin" });
   }
 
-  async resetPassword({ oldPassword, newPassword }) {
+  async change_password({ old_password, new_password }) {
     return $axios
-      .post("auth/reset-password", { oldPassword, newPassword })
+      .post("auth/reset-password", { old_password, new_password })
       .then(({ data: token }) => {
         store.dispatch("auth/signin", token);
       });

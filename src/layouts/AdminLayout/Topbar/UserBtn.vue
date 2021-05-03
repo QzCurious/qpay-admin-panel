@@ -19,8 +19,8 @@ export default {
     return {
       items: [
         {
-          label: "Reset Password",
-          to: "/reset-password"
+          label: "Change Password",
+          to: "/change-password"
         },
         {
           label: "Log Out",
