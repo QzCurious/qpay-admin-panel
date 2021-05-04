@@ -4,6 +4,7 @@
       <InputText
         :name="name"
         :class="{ 'p-invalid': errors.length }"
+        v-bind="$attrs"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
@@ -22,6 +23,7 @@
 <script>
 import InputText from "primevue/inputtext";
 export default {
+  inheritAttrs: false,
   components: { InputText },
   emits: ["update:modelValue"],
   props: {

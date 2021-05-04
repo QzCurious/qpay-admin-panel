@@ -6,6 +6,7 @@
         :feedback="false"
         :name="name"
         :class="{ 'p-invalid': errors.length }"
+        v-bind="$attrs"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
@@ -21,6 +22,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   emits: ["update:modelValue"],
   props: {
     name: {
