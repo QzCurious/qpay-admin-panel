@@ -80,7 +80,7 @@
 
 <script>
 import { FilterMatchMode } from "primevue/api";
-import user from ".././../api/User";
+import user from "../../api/User";
 
 export default {
   data() {

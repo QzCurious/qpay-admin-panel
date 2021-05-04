@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import auth from "../api/Auth";
+import auth from "../../api/Auth";
 import useVuelidate from "@vuelidate/core";
 import { required, sameAs } from "@vuelidate/validators";
-import Password from "../components/Password";
+import Password from "../../components/Password";
 
 export default {
   components: { Password },

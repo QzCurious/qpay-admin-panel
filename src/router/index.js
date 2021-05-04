@@ -2,42 +2,43 @@ import { createRouter, createWebHistory } from "vue-router";
 import store from "../store";
 import payments from './features/Payments';
 import reports from './features/Reports';
+import ForwordRouterView from "./ForwordRouterView.vue";
 
 const routes = [
   {
     path: "/",
-    beforeEnter: () => {
-      if (!store.getters["auth/isAuthenticated"]) {
-        return { name: "signin" };
-      }
-    },
     component: () => import("../layouts/AdminLayout"),
     children: [
       {
-        path: "/payment-password/update",
-        component: () => import("../views/ChangePaymentPassword.vue")
-      },
-      {
-        path: "/change-password",
-        component: () => import("../views/ChangePassword.vue")
-      },
-      {
-        path: "/operation-log",
-        component: () => import("../views/OperationLogList.vue")
-      },
-      {
-        path: "/role-setting",
-        component: () => import("./ForwordRouterView.vue"),
+        path: "system-management",
+        component: ForwordRouterView,
         children: [
           {
-            path: "",
-            component: () => import("../views/user/UserList.vue")
+            path: "role-setting",
+            component: () =>
+              import("../views/system-management/RoleSetting.vue")
           },
           {
-            path: "create",
-            component: () => import("../views/user/CreateUser.vue"),
+            path: "operation-log",
+            component: () =>
+              import("../views/system-management/OperationLogList.vue")
           },
-        ],
+          {
+            path: "change-payment-password",
+            component: () =>
+              import("../views/system-management/ChangePaymentPassword.vue")
+          },
+          {
+            name: "change-password",
+            path: "change-password",
+            component: () =>
+              import("../views/system-management/ChangePassword.vue")
+          },
+          {
+            path: "user-management",
+            component: () => import("../views/system-management/CreateUser.vue")
+          }
+        ]
       },
       {
         path: "funds-management",
@@ -101,6 +102,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== "signin" && !store.getters["auth/isAuthenticated"]) {
+    next({ name: "signin" });
+  } else {
+    next();
+  }
 });
 
 export default router;
