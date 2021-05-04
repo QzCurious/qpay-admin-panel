@@ -26,7 +26,7 @@ const routes = [
         component: () => import("../views/OperationLogList.vue")
       },
       {
-        path: "/users",
+        path: "/role-setting",
         component: () => import("./ForwordRouterView.vue"),
         children: [
           {

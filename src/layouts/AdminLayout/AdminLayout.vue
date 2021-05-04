@@ -84,7 +84,7 @@ export default {
           label: "系統管理",
           icon: PrimeIcons.COG,
           items: [
-            { label: "權限設定", to: "/users" },
+            { label: "權限設定", to: "/role-setting" },
             { label: "操作日誌", to: "/operation-log" },
             { label: "變更付款密碼", to: "/payment-password/update" },
             { label: "建立帳號", to: "/users/create" },
