@@ -45,6 +45,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Coding Style
 - `snake_case` for variable, function 
 - `PascalCase` for component name
+- `kebab-case` for directory name
 
 ### Vuelidate
 盡量用 `validation()` + options api 的寫法比較沒問題
