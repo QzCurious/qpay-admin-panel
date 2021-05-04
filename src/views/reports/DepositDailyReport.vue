@@ -32,25 +32,49 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="index" :header="i18n.index">
+    <Column field="date" :header="i18n.date">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="bank_code" :header="i18n.bank_code">
+    <Column field="merchant" :header="i18n.merchant">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="bank_name" :header="i18n.bank_name">
+    <Column field="channel" :header="i18n.channel">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="transfer" :header="i18n.transfer">
+    <Column field="deposit_amount" :header="i18n.deposit_amount">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="status" :header="i18n.status">
+    <Column field="deposit_fee" :header="i18n.deposit_fee">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="country" :header="i18n.country">
+    <Column field="deposit_count" :header="i18n.deposit_count">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="edit" :header="i18n.edit">
+    <Column field="auto_deposit" :header="i18n.auto_deposit">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="manual_deposit" :header="i18n.manual_deposit">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="total_deposit" :header="i18n.total_deposit">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="deposit_count" :header="i18n.deposit_count">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="recharge_fee" :header="i18n.recharge_fee">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="deduction_amount" :header="i18n.deduction_amount">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="deduction_fee" :header="i18n.deduction_fee">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="opening_balance" :header="i18n.opening_balance">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="ending_balance" :header="i18n.ending_balance">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
   </DataTable>

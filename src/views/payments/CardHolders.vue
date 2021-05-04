@@ -35,22 +35,22 @@
     <Column field="index" :header="i18n.index">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="bank_code" :header="i18n.bank_code">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="transfer" :header="i18n.transfer">
+    <Column field="holder_name" :header="i18n.holder_name">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="country" :header="i18n.country">
+    <Column field="card_list" :header="i18n.card_list">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="phone" :header="i18n.phone">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="cards" :header="i18n.cards">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
   </DataTable>

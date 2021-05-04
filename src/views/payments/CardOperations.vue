@@ -35,19 +35,28 @@
     <Column field="index" :header="i18n.index">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="bank_code" :header="i18n.bank_code">
+    <Column field="merchant" :header="i18n.merchant">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="bank_name" :header="i18n.bank_name">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
-    <Column field="transfer" :header="i18n.transfer">
+    <Column field="account_name" :header="i18n.account_name">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="card_number" :header="i18n.card_number">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="limit_deposit" :header="i18n.limit_deposit">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="limit_daily" :header="i18n.limit_daily">
+        <template #body="{ data }">{{ data.signin_id }}</template> 
+    </Column>
+    <Column field="limit_once" :header="i18n.limit_once">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="country" :header="i18n.country">
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="edit" :header="i18n.edit">

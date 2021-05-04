@@ -120,6 +120,14 @@ export default {
             { label: i18n.card_management, to: "/payments/cards" },
             { label: i18n.card_operation_management, to: "/payments/card-operations" }
           ]
+        },
+        { 
+          label: i18n.financial_reports,
+          icon: PrimeIcons.CHART_BAR,
+          items: [
+            { label: i18n.deposit_daily_report, to: "/reports/deposit-daily-report"},
+            { label: i18n.merchant_daily_report, to: "/reports/merchant-daily-report"}
+          ]
         }
       ],
     };
