@@ -1,4 +1,24 @@
 <template>
+  <Dialog modal :header="i18n.add_bank" v-model:visible="dialog.display" >
+    <div class="p-field p-grid">
+    <label for="bank_name" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.bank_name}}</label>
+    <InputText id="bank_name" type="text" v-model="dialog.bank_name" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="country" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.country}}</label>
+    <InputText id="country" type="text" v-model="dialog.country" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
+    <InputSwitch id="status" v-model="dialog.status" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="transfer" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.transfer}}</label>
+    <InputSwitch id="transfer" v-model="dialog.transfer" />
+    </div>
+    <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" />
+  </Dialog>
+  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -68,7 +88,14 @@ export default {
       records: [],
       loading: true,
       filters: {},
-      i18n: i18n
+      i18n: i18n,
+      dialog: {
+          display: false,
+          bank_name: "",
+          country: "",
+          status: false,
+          transfer: false
+      }
     };
   },
   methods: {
@@ -81,7 +108,11 @@ export default {
       };
     },
     addBank() {
+        this.dialog.display = !this.dialog.display;
     },
+    showAddDialog() {
+        this.dialog.display = !this.dialog.display;
+    }
   },
   created() {
     this.clearFilter();

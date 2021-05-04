@@ -1,4 +1,39 @@
 <template>
+  <Dialog modal :header="i18n.add_card" v-model:visible="dialog.display" >
+    <div class="p-field p-grid">
+    <label for="channel" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.channel}}</label>
+    <Dropdown id="channel" :options="dialog.channels" type="text" v-model="dialog.selected_channel" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="card_holder" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.card_holder}}</label>
+    <Dropdown id="card_holder" :options="dialog.card_holders" type="text" v-model="dialog.selected_card_holder" />
+    </div>
+    <div class="p-field p-grid">
+        <label for="" class="p-col-12 p-mb-2 p-md-4 p-md-md-0">{{i18n.bank}}</label>
+    </div>
+    <div class="p-field p-grid">
+    <label for="branch" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.branch}}</label>
+    <InputText id="branch" type="text" v-model="dialog.branch" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="card_number" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.card_number}}</label>
+    <InputText id="card_number" v-model="dialog.card_number" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="internet_banking_id" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.internet_banking_id}}</label>
+    <InputText id="internet_banking_id" v-model="dialog.internet_banking_id" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="internet_banking_password" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.internet_banking_password}}</label>
+    <InputText id="internet_banking_password" v-model="dialog.internet_banking_password" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
+    <InputSwitch id="status" v-model="dialog.status" />
+    </div>
+    <Button :label="i18n.submit" icon="pi pi-check" @click="submit" />
+  </Dialog>
+  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog" />
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -18,7 +53,7 @@
           icon="pi pi-filter-slash"
           label="Add"
           class="p-button-outlined p-mb-2"
-          @click="addBank"
+          @click="filter"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -77,7 +112,14 @@ export default {
       records: [],
       loading: true,
       filters: {},
-      i18n: i18n
+      i18n: i18n,
+      dialog: {
+          display: false,
+          selected_channel: '',
+          selected_card_holder: '',
+          card_holders: ['a','b','c'],
+          channels: ['ch1', 'ch2']
+      }
     };
   },
   methods: {
@@ -89,8 +131,15 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    addBank() {
+    submit() {
+        this.dialog.display = !this.dialog.display
     },
+    showAddDialog() {
+        this.dialog.display = !this.dialog.display
+    },
+    filter() {
+
+    }
   },
   created() {
     this.clearFilter();

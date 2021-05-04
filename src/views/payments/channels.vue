@@ -1,4 +1,12 @@
 <template>
+  <Dialog modal :header="i18n.add_channel" v-model:visible="dialog.display" >
+    <div class="p-field p-grid">
+      <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
+      <InputSwitch id="status" v-model="dialog.status" />
+    </div>
+    <Button :label="i18n.submit" icon="pi pi-check" @click="addChannel()" />
+  </Dialog>
+  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -62,7 +70,11 @@ export default {
       records: [],
       loading: true,
       filters: {},
-      i18n: i18n
+      i18n: i18n,
+      dialog: {
+          display: false,
+          status: false
+      }
     };
   },
   methods: {
@@ -74,8 +86,13 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    addBank() {
+    addBank() {},
+    addChannel() {
+        this.dialog.display = !this.dialog.display;
     },
+    showAddDialog(){
+        this.dialog.display = !this.dialog.display;
+    }
   },
   created() {
     this.clearFilter();

@@ -15,6 +15,23 @@ export default {
         merchant_daily_report: 'code::merchant_daily_report',
 
     /**
+     * Button
+     */
+        add: 'code::add',
+    /**
+     * Dialog
+     */
+        add_bank: 'code::add',
+        submit: 'code::submit',
+        add_channel: 'code::channel',
+        add_card_holder: 'code::add_card_holder',
+        card_holder: 'code::card_holder',
+        branch: 'code::branch',
+        internet_banking_id: 'code::internet_banking_id',
+        internet_banking_password: 'code::internet_banking_password',
+        add_card: 'code::add_card',
+
+    /**
      * Column fields
      */
 
@@ -56,5 +73,7 @@ export default {
         deduction_fee: 'code::deduction_fee',
         opening_balance: 'code::opening_balance',
         ending_balance: 'code::ending_balance',
+
+        online: 'code::online',
     // }
 }

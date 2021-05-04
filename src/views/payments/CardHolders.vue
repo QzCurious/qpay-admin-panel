@@ -1,4 +1,16 @@
 <template>
+  <Dialog modal :header="i18n.add_card_holder" v-model:visible="dialog.display" >
+    <div class="p-field p-grid">
+      <label for="phone" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.phone}}</label>
+      <InputText id="phone" type="text" v-model="dialog.phone" />
+    </div>
+    <div class="p-field p-grid">
+      <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
+      <InputSwitch id="status" v-model="dialog.status" />
+    </div>
+    <Button :label="i18n.submit" icon="pi pi-check" @click="addCardHolder()" />
+  </Dialog>
+  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -68,7 +80,12 @@ export default {
       records: [],
       loading: true,
       filters: {},
-      i18n: i18n
+      i18n: i18n,
+      dialog: {
+        display: false,
+        phone: '',
+        status: false
+      }
     };
   },
   methods: {
@@ -82,6 +99,12 @@ export default {
     },
     addBank() {
     },
+    addCardHolder(){
+      this.dialog.display = !this.dialog.display;
+    },
+    showAddDialog() {
+      this.dialog.display = !this.dialog.display;
+    }
   },
   created() {
     this.clearFilter();

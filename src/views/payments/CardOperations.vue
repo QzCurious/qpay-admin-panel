@@ -51,16 +51,21 @@
         <template #body="{ data }">{{ data.signin_id }}</template> 
     </Column>
     <Column field="limit_daily" :header="i18n.limit_daily">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+      <template #body="{ data }">
+        {{ data.signin_id }}
+        <Button :label="i18n.edit" @click="editLimitDaily(data)" />
+      </template> 
     </Column>
-    <Column field="limit_once" :header="i18n.limit_once">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="current_balance" :header="i18n.current_balance">
+      <template #body="{ data }">
+        {{ data.signin_id }}
+        <Button :label="i18n.edit" @click="editCurrentBalance(data)" />
+      </template> 
     </Column>
-    <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="online" :header="i18n.online">
+      <template #body="{ data }">
+        {{ data.signin_id }}
+      </template> 
     </Column>
   </DataTable>
 
@@ -91,6 +96,12 @@ export default {
     },
     addBank() {
     },
+    editCurrentBalance(data) {
+      console.log(data);
+    },
+    editLimitDaily(data) {
+      console.log(data)
+    }
   },
   created() {
     this.clearFilter();
