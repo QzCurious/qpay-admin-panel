@@ -89,11 +89,14 @@ export default {
           ],
         },
         {
-          label: "收款管理",
+          label: "資金管理",
           icon: PrimeIcons.CREDIT_CARD,
           items: [
-            { label: "收款管理面板", to: "/funds-management" },
-            { label: "交易紀錄", to: "/create" },
+            {
+              label: "資金管理面板",
+              to: { name: "fundsManagement" },
+            },
+            { label: "交易紀錄", to: { name: "transactionRecord" } },
           ],
         },
         {

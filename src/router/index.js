@@ -39,13 +39,15 @@ const routes = [
         children: [
           {
             path: "funds-operation-panel",
+            name: "fundsManagement",
             component: () =>
               import("../views/funds-management/FundsOperationPanel.vue"),
           },
           {
-            path: "transation-records",
+            path: "transaction-record",
+            name: "transactionRecord",
             component: () =>
-              import("../views/funds-management/FundsOperationPanel.vue"),
+              import("../views/funds-management/TransactionRecord.vue"),
           },
         ],
       },
