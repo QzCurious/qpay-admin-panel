@@ -36,7 +36,7 @@ const routes = [
           },
           {
             path: "user-management",
-            component: () => import("../views/system-management/CreateUser.vue")
+            component: () => import("../views/system-management/UserManagement.vue")
           }
         ]
       },
