@@ -33,38 +33,42 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.id }}</template> 
     </Column>
     <Column field="merchant" :header="i18n.merchant">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.merchant }}</template> 
     </Column>
     <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.bank_name }}</template> 
     </Column>
     <Column field="account_name" :header="i18n.account_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.account_name }}</template> 
     </Column>
     <Column field="card_number" :header="i18n.card_number">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.card_number }}</template> 
     </Column>
     <Column field="limit_deposit" :header="i18n.limit_deposit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+          {{ data.limit_deposit.income_today }}
+          {{ data.limit_deposit.deposit_today }}
+          {{ data.limit_deposit.remaining }}
+        </template> 
     </Column>
     <Column field="limit_daily" :header="i18n.limit_daily">
       <template #body="{ data }">
-        {{ data.signin_id }}
+        <InputText type="text" v-model:disabled="data.editLimitDaily" :value="data.limit_daily" />
         <Button :label="i18n.edit" @click="editLimitDaily(data)" />
       </template> 
     </Column>
     <Column field="current_balance" :header="i18n.current_balance">
       <template #body="{ data }">
-        {{ data.signin_id }}
+        {{ data.current_balance }}
         <Button :label="i18n.edit" @click="editCurrentBalance(data)" />
       </template> 
     </Column>
     <Column field="online" :header="i18n.online">
       <template #body="{ data }">
-        {{ data.signin_id }}
+        <InputSwitch id="online" v-model="data.online" />
       </template> 
     </Column>
   </DataTable>
@@ -73,7 +77,7 @@
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
-import banks from '../../api/Bank';
+import cardOperations from '../../api/CardOperation';
 import i18n from "../../helper/i18n.zh-CN.js"
 
 export default {
@@ -107,7 +111,7 @@ export default {
     this.clearFilter();
   },
   mounted() {
-    user
+    cardOperations
       .all()
       .then(({ data }) => {
         this.records = data;

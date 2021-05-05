@@ -1,16 +1,16 @@
 import { $axios } from '.';
 
-class Bank {
+class CardHolder {
     async all() {
-        return $axios.get("banks");
+        return $axios.get("cardHolders");
     }
 
     async get({id}) {
-        return $axios.get(`banks/${id}`);
+        return $axios.get(`cardHolders/${id}`);
     }
 
     async create({ bank_name, country, status, transfer}) {
-        return $axios.post('banks', {bank_name, country, status, transfer});
+        return $axios.post('cardHolders', {bank_name, country, status, transfer});
     }
 
     async modify({ bank_name, country, status, transfer}) {
@@ -18,4 +18,4 @@ class Bank {
     }
 }
 
-export default new Bank();
+export default new CardHolder();

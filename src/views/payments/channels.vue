@@ -41,19 +41,29 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.id }}</template> 
     </Column>
     <Column field="channel_name" :header="i18n.channel_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.name }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            <InputSwitch id="status" v-model="data.status" />
+        </template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            <Button :label="i18n.edit" @click="edit(data.id)" />
+            <Button class="p-button-danger" :label="i18n.delete" />
+        </template> 
     </Column>
     <Column field="cards" :header="i18n.cards">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template :value="data.cards" #body="{ data }">
+        <div class="p-d-flex p-flex-column">
+
+        <Chip v-bind:key="card.id" v-for="card in data.cards">{{card}}</Chip>
+        </div>
+        </template> 
     </Column>
   </DataTable>
 
@@ -61,7 +71,7 @@
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
-import banks from '../../api/Bank';
+import channels from '../../api/Channel';
 import i18n from "../../helper/i18n.zh-CN.js"
 
 export default {
@@ -92,13 +102,16 @@ export default {
     },
     showAddDialog(){
         this.dialog.display = !this.dialog.display;
+    },
+    edit(id) {
+        console.log(id);
     }
   },
   created() {
     this.clearFilter();
   },
   mounted() {
-    user
+    channels
       .all()
       .then(({ data }) => {
         this.records = data;

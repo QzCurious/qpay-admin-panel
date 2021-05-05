@@ -45,25 +45,30 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.id }}</template> 
     </Column>
     <Column field="holder_name" :header="i18n.holder_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.name }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.status }}</template> 
     </Column>
     <Column field="card_list" :header="i18n.card_list">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+
+        <template #body="{ data }">
+        <div class="p-d-flex p-flex-column">
+          <Chip v-bind:key="card.id" v-for="card in data.cards"> {{card}}</Chip>
+        </div>
+        </template> 
     </Column>
     <Column field="phone" :header="i18n.phone">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.phone }}</template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="cards" :header="i18n.cards">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+          <Button :label="i18n.edit" @click="editData(data)" />
+          <Button class="p-button-danger" :label="i18n.delete" @click="deleteData(data)" />
+        </template> 
     </Column>
   </DataTable>
 
@@ -71,7 +76,7 @@
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
-import banks from '../../api/Bank';
+import cardHolders from "../../api/CardHolder";
 import i18n from "../../helper/i18n.zh-CN.js"
 
 export default {
@@ -104,13 +109,19 @@ export default {
     },
     showAddDialog() {
       this.dialog.display = !this.dialog.display;
+    },
+    editData() {
+
+    },
+    deleteData() {
+
     }
   },
   created() {
     this.clearFilter();
   },
   mounted() {
-    user
+    cardHolders
       .all()
       .then(({ data }) => {
         this.records = data;

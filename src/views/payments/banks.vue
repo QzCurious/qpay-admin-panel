@@ -53,25 +53,33 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.id }}</template> 
     </Column>
     <Column field="bank_code" :header="i18n.bank_code">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.code }}</template> 
     </Column>
     <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.name }}</template> 
     </Column>
     <Column field="transfer" :header="i18n.transfer">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            <InputSwitch v-model="data.transfer" />
+        </template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            <InputSwitch v-model="data.status" />
+        </template> 
     </Column>
     <Column field="country" :header="i18n.country">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.country }}</template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            {{ data.id }}
+            <Button :label="i18n.edit" />
+            <Button class="p-button-danger" :label="i18n.delete" />
+        </template> 
     </Column>
   </DataTable>
 
@@ -118,7 +126,7 @@ export default {
     this.clearFilter();
   },
   mounted() {
-    user
+    banks
       .all()
       .then(({ data }) => {
         this.records = data;

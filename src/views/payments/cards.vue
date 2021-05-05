@@ -68,34 +68,41 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="channel" :header="i18n.channel">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.channel }}</template> 
     </Column>
     <Column field="card_id" :header="i18n.card_id">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.card_id }}</template> 
     </Column>
     <Column field="merchant" :header="i18n.merchant">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.merchant }}</template> 
     </Column>
     <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.bank_name }}</template> 
     </Column>
     <Column field="account_name" :header="i18n.account_name">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.account_name }}</template> 
     </Column>
     <Column field="card_number" :header="i18n.card_number">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.card_number }}</template> 
     </Column>
     <Column field="limit_daily" :header="i18n.limit_daily">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.limit_daily }}</template> 
     </Column>
     <Column field="limit_once" :header="i18n.limit_once">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.limit_once }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            <InputSwitch id="status" v-model="data.status" />
+        </template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">
+            {{ data.signin_id }}
+        <Button :label="i18n.edit" @click="editData(data)" />
+        <Button :label="i18n.delete" @click="deleteData(data)" class="p-button-danger" />
+
+        </template> 
     </Column>
   </DataTable>
 
@@ -103,7 +110,7 @@
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
-import banks from '../../api/Bank';
+import cards from '../../api/Card';
 import i18n from "../../helper/i18n.zh-CN.js"
 
 export default {
@@ -145,7 +152,7 @@ export default {
     this.clearFilter();
   },
   mounted() {
-    user
+    cards
       .all()
       .then(({ data }) => {
         this.records = data;

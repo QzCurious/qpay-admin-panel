@@ -18,6 +18,7 @@ export default {
      * Button
      */
         add: 'code::add',
+        delete: 'code::delete',
     /**
      * Dialog
      */
