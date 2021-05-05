@@ -1,16 +1,19 @@
 <template>
-  <div class="p-field">
+  <div :style="$attrs.style" class="p-field" :class="$attrs.class">
     <span class="p-float-label">
       <Password
         toggleMask
         :feedback="false"
         :name="name"
-        :class="{ 'p-invalid': errors.length }"
-        v-bind="$attrs"
+        :style="inputStyle"
+        :class="{ ...computedInputClass, 'p-invalid': errors.length }"
+        v-bind="forward"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
-      <label :for="name" :class="{ 'p-error': errors.length }">{{ label }}</label>
+      <label :for="name" :class="{ 'p-error': errors.length }">{{
+        label
+      }}</label>
     </span>
     <template v-if="errors.length">
       <small v-for="error in errors" :key="error" class="p-error">
@@ -39,6 +42,27 @@ export default {
     errors: {
       type: Array,
       default: () => [],
+    },
+    inputClass: [Object, Array, String],
+    inputStyle: [Object, Array, String],
+  },
+  computed: {
+    forward() {
+      const forward = { ...this.$attrs };
+      delete forward.style;
+      delete forward.class;
+      return forward;
+    },
+    computedInputClass() {
+      if (
+        typeof this.inputClass === "string" ||
+        this.inputClass instanceof String
+      ) {
+        return { [this.inputClass]: true };
+      } else if (Array.isArray(this.inputClass)) {
+        return this.inputClass.map((cls) => ({ [cls]: true }));
+      }
+      return this.inputClass;
     },
   },
 };
