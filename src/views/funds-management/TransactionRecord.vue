@@ -24,8 +24,8 @@
         <div class="p-m-2">
           <label class="p-mr-3" for="channel">交易編號</label>
           <Dropdown
-            inputId="channel"
-            v-model="selectedState"
+            inputId="transaction"
+            v-model="selectedRecords"
             :options="states"
             optionLabel="name"
             placeholder="Select"
@@ -53,9 +53,9 @@
         <div class="p-m-2">
           <label class="p-mr-2 p-ml-2" for="status">日期</label>
           <Calendar
-            v-model="value"
+            v-model="date"
             :showTime="true"
-            :hourFormat="12"
+            :hourFormat="'12'"
             selectionMode="range"
           />
         </div>
@@ -128,10 +128,23 @@ export default defineComponent({
       records: [],
       loading: true,
       filters: {},
-      selectedMerchant: null,
       merchant: ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
-      value: "",
+      states: "",
+      date: "",
+      selectedRecords: "",
+      selectedMerchant: "",
+      selectedState: "",
     };
+  },
+  watch: {
+    date: {
+      handler: function(newVal, oldVal) {
+        console.log(newVal[0], "---new0---");
+        console.log(newVal[1], "---new1---");
+        console.log(Object.keys(newVal), "---new---");
+      },
+      deep: true,
+    },
   },
   methods: {
     clearFilter() {
@@ -170,7 +183,6 @@ export default defineComponent({
       if (i == 9) this.loading = false;
     }
     this.records = records;
-    console.log(this.records);
     //ajax api
     // operationLogApi
     //   .get()

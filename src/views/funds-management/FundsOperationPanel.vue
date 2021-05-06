@@ -116,8 +116,10 @@ export default defineComponent({
       filters: {},
       total_balance_d0: "123456",
       total_balance_t1: "111111",
+      //** mechant dropdown data example */
       selectedMerchant: null,
       merchant: ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+      //** mechant dropdown data example */
     };
   },
   methods: {

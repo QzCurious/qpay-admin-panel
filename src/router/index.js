@@ -38,7 +38,7 @@ const routes = [
         component: () => import("./ForwordRouterView.vue"),
         children: [
           {
-            path: "funds-operation-panel",
+            path: "operation-panel",
             name: "fundsManagement",
             component: () =>
               import("../views/funds-management/FundsOperationPanel.vue"),
@@ -48,6 +48,36 @@ const routes = [
             name: "transactionRecord",
             component: () =>
               import("../views/funds-management/TransactionRecord.vue"),
+          },
+        ],
+      },
+      {
+        path: "merchant-management",
+        component: () => import("./ForwordRouterView.vue"),
+        children: [
+          {
+            path: "parameter",
+            name: "merchantParameter",
+            component: () =>
+              import("../views/merchant-management/MerchantParameter.vue"),
+          },
+          {
+            path: "rate",
+            name: "merchantRate",
+            component: () =>
+              import("../views/merchant-management/MerchantRate.vue"),
+          },
+          {
+            path: "channel-setting",
+            name: "merchantChannelSetting",
+            component: () =>
+              import("../views/merchant-management/MerchantChannelSetting.vue"),
+          },
+          {
+            path: "operation-panel",
+            name: "merchantManagement",
+            component: () =>
+              import("../views/merchant-management/MerchantOperationPanel.vue"),
           },
         ],
       },
