@@ -1,4 +1,5 @@
 <template>
+  <div><Button label="新增職位" @click="create_role" /></div>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
@@ -51,7 +52,9 @@
       :showFilterMatchModes="false"
     >
       <template #body="{ data }">
-        {{ data.role.id }}
+        <span class="p-d-inline-flex p-ai-center">
+          {{ data.role.id }} <Button class="p-ml-2 p-button-sm" label="編輯" @click="edit_role(data)" />
+        </span>
       </template>
       <template #filter="{ filterModel, filterCallback }">
         <InputText
@@ -76,18 +79,28 @@
       </template>
     </Column>
   </DataTable>
+  <Dialog modal :header="modal_title" v-model:visible="modal.visible">
+    <RoleModal :mode="modal.mode" :data="modal.data" />
+  </Dialog>
 </template>
 
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
+import RoleModal from "./RoleModal";
 
 export default {
+  components: { RoleModal },
   data() {
     return {
       records: [],
       loading: true,
       filters: {},
+      modal: {
+        visible: false,
+        mode: null,
+        data: {},
+      },
     };
   },
   methods: {
@@ -98,6 +111,16 @@ export default {
         "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
+    },
+    edit_role(data) {
+      this.modal.mode = "edit";
+      this.modal.data = data;
+      this.modal.visible = true;
+    },
+    create_role() {
+      this.modal.mode = "create";
+      this.modal.data = {};
+      this.modal.visible = true;
     },
   },
   created() {

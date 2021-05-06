@@ -46,13 +46,13 @@ const routes = [
         children: [
           {
             path: "operation-panel",
-            name: "fundsManagement",
+            name: "funds_operation_panel",
             component: () =>
               import("../views/funds-management/FundsOperationPanel.vue"),
           },
           {
             path: "transaction-record",
-            name: "transactionRecord",
+            name: "transaction_record",
             component: () =>
               import("../views/funds-management/TransactionRecord.vue"),
           },
@@ -64,25 +64,25 @@ const routes = [
         children: [
           {
             path: "parameter",
-            name: "merchantParameter",
+            name: "merchant_parameter",
             component: () =>
               import("../views/merchant-management/MerchantParameter.vue"),
           },
           {
             path: "rate",
-            name: "merchantRate",
+            name: "merchant_rate",
             component: () =>
               import("../views/merchant-management/MerchantRate.vue"),
           },
           {
             path: "channel-setting",
-            name: "merchantChannelSetting",
+            name: "merchant_channel_setting",
             component: () =>
               import("../views/merchant-management/MerchantChannelSetting.vue"),
           },
           {
             path: "operation-panel",
-            name: "merchantManagement",
+            name: "merchant_operation_panel",
             component: () =>
               import("../views/merchant-management/MerchantOperationPanel.vue"),
           },

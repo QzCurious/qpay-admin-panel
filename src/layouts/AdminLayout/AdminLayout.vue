@@ -40,8 +40,7 @@ import Profile from "./Profile.vue";
 import Menu from "./Menu.vue";
 import Config from "./Config.vue";
 import Footer from "./Footer.vue";
-import { PrimeIcons } from "primevue/api";
-import i18n from "../../helper/i18n.zh-CN";
+import menu from "./menu";
 
 export default {
   data() {
@@ -51,87 +50,7 @@ export default {
       staticMenuInactive: false,
       overlayMenuActive: false,
       mobileMenuActive: false,
-      menu: [
-        {
-          label: "Menu Hierarchy",
-          icon: "pi pi-fw pi-search",
-          items: [
-            {
-              label: "Item",
-              icon: "pi pi-fw pi-bookmark",
-            },
-            {
-              label: "Submenu 1",
-              icon: "pi pi-fw pi-bookmark",
-              items: [
-                {
-                  label: "Submenu 1.1",
-                  icon: "pi pi-fw pi-bookmark",
-                },
-                {
-                  label: "Submenu 1.2",
-                  icon: "pi pi-fw pi-bookmark",
-                  items: [
-                    { label: "Submenu 1.2.1", icon: "pi pi-fw pi-bookmark" },
-                    { label: "Submenu 1.2.2", icon: "pi pi-fw pi-bookmark" },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          label: "系統管理",
-          icon: PrimeIcons.COG,
-          items: [
-            { label: "權限設定", to: "/system-management/role-setting" },
-            { label: "操作日誌", to: "/system-management/operation-log" },
-            { label: "變更密碼", to: "/system-management/change-password" },
-            { label: "變更付款密碼", to: "/system-management/change-payment-password" },
-            { label: "管理使用者", to: "/system-management/user-management" },
-          ],
-        },
-        {
-          label: "資金管理",
-          icon: PrimeIcons.CREDIT_CARD,
-          items: [
-            {
-              label: "資金管理面板",
-              to: { name: "fundsManagement" },
-            },
-            { label: "交易紀錄", to: { name: "transactionRecord" } },
-          ],
-        },
-        {
-          label: "商戶管理",
-          icon: PrimeIcons.USERS,
-          items: [
-            { label: "商戶管理面板", to: { name: "merchantManagement" } },
-            { label: "商戶參數", to: { name: "merchantParameter" } },
-            { label: "商戶費率", to: { name: "merchantRate" } },
-            { label: "商戶通道", to: { name: "merchantChannelSetting" } },
-          ],
-        },
-        {
-          label: i18n.payment_management,
-          icon: PrimeIcons.CREDIT_CARD,
-          items: [
-            { label: i18n.bank_management, to: "/payments/banks" },
-            { label: i18n.channel_management, to: "/payments/channels" },
-            { label: i18n.card_holder_management, to: "/payments/card-holders" },
-            { label: i18n.card_management, to: "/payments/cards" },
-            { label: i18n.card_operation_management, to: "/payments/card-operations" }
-          ]
-        },
-        { 
-          label: i18n.financial_reports,
-          icon: PrimeIcons.CHART_BAR,
-          items: [
-            { label: i18n.deposit_daily_report, to: "/reports/deposit-daily-report"},
-            { label: i18n.merchant_daily_report, to: "/reports/merchant-daily-report"}
-          ]
-        }
-      ],
+      menu: menu,
     };
   },
   watch: {
