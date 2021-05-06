@@ -1,59 +1,34 @@
 /**
  * AXIOS 封裝
- *
  */
 import axios from "axios";
-import { throwErr } from "./ErrorHandle";
+import store from "../store";
 
-const BASE_URL = "/test";
-
-let token = localStorage.getItem("api_token")
-  ? localStorage.getItem("api_token")
-  : "";
-
-console.log("api_token::::old", token, "        0");
 const config = {
-  baseURL: BASE_URL,
+  baseURL: process.env.VUE_APP_API_HOST,
   timeout: 6000,
   headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  },
+    "Content-Type": "application/json"
+  }
 };
 
-const instance = axios.create(config);
+const token = store.state["auth/token"];
+if (token) {
+  config.headers = {
+    ...config.headers,
+    Authorization: `bearer ${store.state["auth/token"]}`
+  };
+}
 
-export const http = {
-  async get(url) {
-    try {
-      let res = await instance.get(url);
-      return res;
-    } catch (err) {
-      return throwErr(err.response);
-    }
+const http = axios.create(config);
+http.interceptors.response.use(
+  function fulfilled(response) {
+    return response;
   },
-  async post(url, params) {
-    if (token) {
-      instance.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("api_token");
-    }
-    try {
-      let res = await instance.post(url, params);
-      return res;
-    } catch (err) {
-      return throwErr(err.response);
-    }
-  },
-  async put(url, params) {
-    if (token) {
-      instance.defaults.headers.common["Authorization"] =
-        "Bearer " + localStorage.getItem("api_token");
-    }
-    try {
-      let res = await instance.put(url, params);
-      return res;
-    } catch (err) {
-      return throwErr(err.response);
-    }
-  },
-};
+  function rejected(error) {
+    // 處理 500
+    return Promise.reject(error);
+  }
+);
+
+export default http;

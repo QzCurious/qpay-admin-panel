@@ -1,8 +1,7 @@
-import { $axios } from ".";
-
+import http from "./http";
 class Role {
   async all() {
-    return $axios.get("roles");
+    return http.get("roles");
   }
 }
 

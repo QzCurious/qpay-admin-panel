@@ -1,16 +1,16 @@
-import { $axios } from ".";
+import http from "./http";
 
 class User {
   async all() {
-    return $axios.get("users");
+    return http.get("users");
   }
 
   async get({ id }) {
-    return $axios.get(`users/${id}`);
+    return http.get(`users/${id}`);
   }
 
   async create({ sign_id, password, ip_allow = [], phone = null }) {
-    return $axios.post("users", { sign_id, password, ip_allow, phone });
+    return http.post("users", { sign_id, password, ip_allow, phone });
   }
 }
 

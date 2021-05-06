@@ -1,9 +1,8 @@
-import axios from "axios";
+import http from "./http";
 
 class OperationLogApi {
   async get() {
-    const api = new URL("operation-log", process.env.VUE_APP_API_HOST);
-    return axios.get(api);
+    return http.get("operation-log");
   }
 }
 
