@@ -32,50 +32,35 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="date" :header="i18n.date">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
     <Column field="merchant" :header="i18n.merchant">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.merchant }}</template> 
     </Column>
-    <Column field="channel" :header="i18n.channel">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="bank" :header="i18n.bank">
+        <template #body="{ data }">{{ data.bank }}</template> 
     </Column>
-    <Column field="deposit_amount" :header="i18n.deposit_amount">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="card_id" :header="i18n.card_id">
+        <template #body="{ data }">{{ data.card_id }}</template> 
     </Column>
-    <Column field="deposit_fee" :header="i18n.deposit_fee">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="card_number" :header="i18n.card_number">
+        <template #body="{ data }">{{ data.card_number }}</template> 
     </Column>
-    <Column field="deposit_count" :header="i18n.deposit_count">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+    <Column field="account_name" :header="i18n.account_name">
+        <template #body="{ data }">{{ data.account_name }}</template> 
+    </Column>
+    <Column field="current_balance" :header="i18n.current_balance">
+        <template #body="{ data }">{{ data.current_balance }}</template> 
     </Column>
     <Column field="auto_deposit" :header="i18n.auto_deposit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.auto_deposit }}</template> 
     </Column>
     <Column field="manual_deposit" :header="i18n.manual_deposit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.manual_deposit }}</template> 
     </Column>
     <Column field="total_deposit" :header="i18n.total_deposit">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.total_deposit }}</template> 
     </Column>
     <Column field="deposit_count" :header="i18n.deposit_count">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="recharge_fee" :header="i18n.recharge_fee">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="deduction_amount" :header="i18n.deduction_amount">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="deduction_fee" :header="i18n.deduction_fee">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="opening_balance" :header="i18n.opening_balance">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
-    </Column>
-    <Column field="ending_balance" :header="i18n.ending_balance">
-        <template #body="{ data }">{{ data.signin_id }}</template> 
+        <template #body="{ data }">{{ data.deposit_count }}</template> 
     </Column>
   </DataTable>
 
@@ -83,7 +68,7 @@
 <script>
 import { FilterMatchMode } from "primevue/api";
 import user from "../../api/User";
-import banks from '../../api/Bank';
+import depositDailyReport from '../../api/DepositDailyReport';
 import i18n from "../../helper/i18n.zh-CN.js"
 
 export default {
@@ -111,7 +96,7 @@ export default {
     this.clearFilter();
   },
   mounted() {
-    user
+    depositDailyReport
       .all()
       .then(({ data }) => {
         this.records = data;

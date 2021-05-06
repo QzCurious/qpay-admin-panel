@@ -76,5 +76,6 @@ export default {
         ending_balance: 'code::ending_balance',
 
         online: 'code::online',
+        deposit_amount: 'code::deposit_amount'
     // }
 }

@@ -7,4 +7,6 @@ module.exports = {
   ...require("./cardHolders"),
   ...require("./card"),
   ...require("./cardOperation"),
+  ...require("./depositDailyReport"),
+  ...require("./merchantDailyReport")
 };
