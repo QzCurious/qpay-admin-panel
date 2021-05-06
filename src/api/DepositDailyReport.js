@@ -1,20 +1,20 @@
-import { $axios } from '.';
+import http from './http';
 
 class DepositDailyReport {
     async all() {
-        return $axios.get("depositDailyReport");
+        return http.get("depositDailyReport");
     }
 
     async get({id}) {
-        return $axios.get(`depositDailyReport/${id}`);
+        return http.get(`depositDailyReport/${id}`);
     }
 
     async create({ bank_name, country, status, transfer}) {
-        return $axios.post('depositDailyReport', {bank_name, country, status, transfer});
+        return http.post('depositDailyReport', {bank_name, country, status, transfer});
     }
 
     async modify({ bank_name, country, status, transfer}) {
-        return $axios.update({ bank_name, country, status, transfer});
+        return http.update({ bank_name, country, status, transfer});
     }
 }
 

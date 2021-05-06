@@ -18,7 +18,7 @@
     </div>
     <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" />
   </Dialog>
-  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
+  
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -32,13 +32,14 @@
     v-model:filters="filters"
   >
     <template #header>
+      <h2><b>{{i18n.bank_management}}</b></h2>
       <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
         <Button
           type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+          icon="pi pi-plus"
+          :label="i18n.add"
+          _class="p-button-outlined p-mb-2"
+          @click="showAddDialog"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -86,7 +87,6 @@
 </template>
 <script>
 import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
 import banks from '../../api/Bank';
 import i18n from "../../helper/i18n.zh-CN.js"
 
