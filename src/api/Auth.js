@@ -8,7 +8,7 @@ class Auth {
     return http
       .post("auth/signin", { signin_id, password })
       .then(res => {
-        store.dispatch("auth/signin", res.data);
+        store.dispatch("auth/signin", res.data.access_token);
         return res;
       })
       .catch(err => {
@@ -30,7 +30,7 @@ class Auth {
     return http
       .post("auth/reset-password", { old_password, new_password })
       .then((res) => {
-        store.dispatch("auth/signin", res.data);
+        store.dispatch("auth/signin", res.data.access_token);
         return res
       });
   }
