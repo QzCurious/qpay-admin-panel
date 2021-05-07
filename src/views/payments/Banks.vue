@@ -1,7 +1,7 @@
 <template>
-  <Dialog modal :header="i18n.add_bank" v-model:visible="dialog.display" >
+  <Dialog modal :header="dialog.title" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
-    <label for="bank_name" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.bank_name}}</label>
+    <label for="bank_name" class="p-col-12 p-mb-10 p-md-4 p-mb-md-0">{{i18n.bank_name}}</label>
     <InputText id="bank_name" type="text" v-model="dialog.bank_name" />
     </div>
     <div class="p-field p-grid">
@@ -9,16 +9,19 @@
     <InputText id="country" type="text" v-model="dialog.country" />
     </div>
     <div class="p-field p-grid">
-    <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
-    <InputSwitch id="status" v-model="dialog.status" />
-    </div>
-    <div class="p-field p-grid">
     <label for="transfer" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.transfer}}</label>
     <InputSwitch id="transfer" v-model="dialog.transfer" />
     </div>
-    <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" />
+    <div class="p-field p-grid">
+    <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
+    <InputSwitch id="status" v-model="dialog.status" />
+    </div>
+    <!-- <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" /> -->
+    <Button :label="dialog.button" :icon="dialog.icon" @click="addEntry()" />
   </Dialog>
-  
+
+  <ConfirmPopup />
+
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -53,9 +56,9 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="index" :header="i18n.index">
+    <!-- <Column field="index" :header="i18n.index">
         <template #body="{ data }">{{ data.id }}</template> 
-    </Column>
+    </Column> -->
     <Column field="bank_code" :header="i18n.bank_code">
         <template #body="{ data }">{{ data.code }}</template> 
     </Column>
@@ -77,9 +80,8 @@
     </Column>
     <Column field="edit" :header="i18n.edit">
         <template #body="{ data }">
-            {{ data.id }}
-            <Button :label="i18n.edit" />
-            <Button class="p-button-danger" :label="i18n.delete" />
+            <Button :label="i18n.edit" @click="editEntry(data.id)"/>
+            <Button class="p-button-danger" :label="i18n.delete" @click="delEntry($event, data.id)" />
         </template> 
     </Column>
   </DataTable>
@@ -89,7 +91,6 @@
 import { FilterMatchMode } from "primevue/api";
 import banks from '../../api/Bank';
 import i18n from "../../helper/i18n.zh-CN.js"
-
 export default {
   data() {
     return {
@@ -98,11 +99,15 @@ export default {
       filters: {},
       i18n: i18n,
       dialog: {
-          display: false,
-          bank_name: "",
-          country: "",
-          status: false,
-          transfer: false
+        title: i18n.add,
+        id: undefined,
+        display: false,
+        bank_name: "",
+        country: "",
+        status: false,
+        transfer: false,
+        button: i18n.add,
+        icon: "pi pi-check"
       }
     };
   },
@@ -115,8 +120,53 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    addBank() {
-        this.dialog.display = !this.dialog.display;
+    addEntry() {
+      this.dialog.title = i18n.add;
+      this.dialog.button = i18n.add;
+      this.dialog.icon = 'pi pi-plus';
+      Object.assign(this.dialog, {
+        title: i18n.add,
+        button: i18n.add,
+        display: true,
+        id: undefined,
+        bank_name: "",
+        country: "",
+        status: true,
+        icon: "pi pi-check"
+      })
+      this.dialog.display = !this.dialog.display;
+    },
+    editEntry(id) {
+      let { records } = this.$data;
+      let data = records.filter(x => x.id == id)[0];
+      console.log(data.name);
+
+      Object.assign(this.dialog, {
+        title: i18n.add,
+        button: i18n.add,
+        display: true,
+        id: id,
+        bank_name: data.name,
+        country: data.country,
+        status: data.status,
+        transfer: data.transfer,
+        icon: "pi pi-edit",
+      })
+
+    },
+    delEntry(event, id) {
+      this.$confirm.require({
+          target: event.currentTarget,
+          message: i18n.dialog_confirm,
+          icon: 'pi pi-exclamation-circle',
+          accept: () => {
+              //callback to execute when user confirms the action
+              banks.delete({id: id});
+          },
+          reject: () => {
+              //callback to execute when user rejects the action
+          }
+      })
     },
     showAddDialog() {
         this.dialog.display = !this.dialog.display;

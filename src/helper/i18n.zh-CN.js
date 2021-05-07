@@ -31,7 +31,7 @@ export default {
         internet_banking_id: 'code::internet_banking_id',
         internet_banking_password: 'code::internet_banking_password',
         add_card: 'code::add_card',
-
+        dialog_confirm: 'code::dialog_confirm',
     /**
      * Column fields
      */

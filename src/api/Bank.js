@@ -5,7 +5,7 @@ class Bank {
         return http.get("banks");
     }
 
-    async get({id}) {
+    async retrieve( { id } ) {
         return http.get(`banks/${id}`);
     }
 
@@ -13,8 +13,12 @@ class Bank {
         return http.post('banks', {bank_name, country, status, transfer});
     }
 
-    async modify({ bank_name, country, status, transfer}) {
-        return http.update({ bank_name, country, status, transfer});
+    async update({ id, bank_name, country, status, transfer}) {
+        return http.put(`banks/${id}`, { bank_name, country, status, transfer});
+    }
+
+    async delete({ id }){
+        return http.delete(`banks${id}`);
     }
 }
 
