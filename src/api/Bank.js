@@ -9,14 +9,14 @@ class Bank {
         return http.get(`banks/${id}`);
     }
 
-    async create({ name, country, status, transfer}) {
-        console.log({ name, country, status, transfer})
-        return http.post('banks', {name, country, status, transfer});
+    async create({ name, code, country, status, transfer}) {
+        console.log({ name, code, country, status, transfer})
+        return http.post('banks', {name, code, country, status, transfer});
     }
 
-    async update({ id, name, country, status, transfer}) {
+    async update({ id, name, code, country, status, transfer}) {
         // toastService.add({severity:'success', summary: 'Success Message', detail:'Order submitted', life: 10000})
-        return http.put(`banks/${id}`, { name, country, status, transfer})
+        return http.put(`banks/${id}`, { name, code, country, status, transfer})
         // .catch( _ => { 
         // });
     }

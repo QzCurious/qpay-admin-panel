@@ -36,6 +36,7 @@
     :rows="10"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    sortField="code"
     v-model:filters="filters"
   >
     <template #header>
@@ -63,7 +64,7 @@
     <!-- <Column field="index" :header="i18n.index">
         <template #body="{ data }">{{ data.id }}</template> 
     </Column> -->
-    <Column field="bank_code" :header="i18n.bank_code">
+    <Column field="bank_code" :header="i18n.bank_code" sortable>
         <template #body="{ data }">{{ data.code }}</template> 
     </Column>
     <Column field="bank_name" :header="i18n.bank_name">
@@ -71,12 +72,12 @@
     </Column>
     <Column field="transfer" :header="i18n.transfer">
         <template #body="{ data }">
-            <InputSwitch v-model="data.transfer" />
+            <InputSwitch v-model="data.transfer" @change="update(data)"/>
         </template> 
     </Column>
     <Column field="status" :header="i18n.status">
         <template #body="{ data }">
-            <InputSwitch v-model="data.status" />
+            <InputSwitch v-model="data.status" @change="update(data)"/>
         </template> 
     </Column>
     <Column field="country" :header="i18n.country">
@@ -119,9 +120,6 @@ export default {
     clearFilter() {
       this.filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
     addEntry() {
@@ -130,23 +128,22 @@ export default {
         button: i18n.add,
         display: true,
         id: undefined,
+        code: undefined,
         name: "",
         country: "",
         status: true,
         icon: "pi pi-check"
       })
-      // this.dialog.display = !this.dialog.display;
     },
     editEntry(id) {
-      let { records } = this.$data;
-      let data = records.filter(x => x.id == id)[0];
-      console.log(data.name);
+      let data = this.records.filter(x => x.id == id)[0];
 
       Object.assign(this.dialog, {
         title: i18n.edit,
         button: i18n.commit,
         display: true,
         id: id,
+        code: data.code,
         name: data.name,
         country: data.country,
         status: data.status,
@@ -169,6 +166,9 @@ export default {
           }
       })
     },
+    update(data) {
+      banks.update(data);
+    },
     commit() {
       switch(this.dialog.title) {
         case i18n.add:
@@ -179,9 +179,8 @@ export default {
         break;
         default: console.warn('Unknown action.');
       }
-      console.log('commit');
       this.dialog.display = false;
-
+      banks.all().then(({data}) => {this.records = data;});
     },
     showDialog() {
         this.dialog.display = !this.dialog.display;

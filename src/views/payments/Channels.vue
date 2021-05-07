@@ -1,12 +1,19 @@
 <template>
   <Dialog modal :header="i18n.add_channel" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
+    <label for="channel_name" class="p-col-12 p-mb-10 p-md-4 p-mb-md-0">{{i18n.channel_name}}</label>
+    <InputText id="channel_name" type="text" v-model="dialog.name" />
+    </div>
+
+    <div class="p-field p-grid">
       <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
       <InputSwitch id="status" v-model="dialog.status" />
     </div>
-    <Button :label="i18n.submit" icon="pi pi-check" @click="addChannel()" />
+    <Button :label="i18n.submit" icon="pi pi-check" @click="commit()" />
   </Dialog>
-  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
+
+  <ConfirmPopup />
+
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -20,13 +27,14 @@
     v-model:filters="filters"
   >
     <template #header>
+      <h2><b>{{i18n.channel_management}}</b></h2>
       <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
         <Button
           type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+          icon="pi pi-plus"
+          :label="i18n.add"
+          _class="p-button-outlined p-mb-2"
+          @click="addEntry()"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -97,7 +105,7 @@ export default {
       };
     },
     addBank() {},
-    addChannel() {
+    commit() {
         this.dialog.display = !this.dialog.display;
     },
     showAddDialog(){
