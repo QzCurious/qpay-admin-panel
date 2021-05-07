@@ -19,6 +19,7 @@ export default {
      */
         add: 'code::add',
         delete: 'code::delete',
+        commit: 'code::commit',
     /**
      * Dialog
      */

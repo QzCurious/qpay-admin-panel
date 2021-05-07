@@ -2,11 +2,15 @@
   <Dialog modal :header="dialog.title" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
     <label for="bank_name" class="p-col-12 p-mb-10 p-md-4 p-mb-md-0">{{i18n.bank_name}}</label>
-    <InputText id="bank_name" type="text" v-model="dialog.bank_name" />
+    <InputText id="bank_name" type="text" v-model="dialog.name" />
     </div>
     <div class="p-field p-grid">
     <label for="country" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.country}}</label>
     <InputText id="country" type="text" v-model="dialog.country" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="code" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.bank_code}}</label>
+    <InputText id="code" type="text" v-model="dialog.code" />
     </div>
     <div class="p-field p-grid">
     <label for="transfer" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.transfer}}</label>
@@ -17,7 +21,7 @@
     <InputSwitch id="status" v-model="dialog.status" />
     </div>
     <!-- <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" /> -->
-    <Button :label="dialog.button" :icon="dialog.icon" @click="addEntry()" />
+    <Button :label="dialog.button" :icon="dialog.icon" @click="commit()" />
   </Dialog>
 
   <ConfirmPopup />
@@ -42,7 +46,7 @@
           icon="pi pi-plus"
           :label="i18n.add"
           _class="p-button-outlined p-mb-2"
-          @click="showAddDialog"
+          @click="addEntry()"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -102,7 +106,7 @@ export default {
         title: i18n.add,
         id: undefined,
         display: false,
-        bank_name: "",
+        name: "",
         country: "",
         status: false,
         transfer: false,
@@ -121,20 +125,17 @@ export default {
       };
     },
     addEntry() {
-      this.dialog.title = i18n.add;
-      this.dialog.button = i18n.add;
-      this.dialog.icon = 'pi pi-plus';
       Object.assign(this.dialog, {
         title: i18n.add,
         button: i18n.add,
         display: true,
         id: undefined,
-        bank_name: "",
+        name: "",
         country: "",
         status: true,
         icon: "pi pi-check"
       })
-      this.dialog.display = !this.dialog.display;
+      // this.dialog.display = !this.dialog.display;
     },
     editEntry(id) {
       let { records } = this.$data;
@@ -142,11 +143,11 @@ export default {
       console.log(data.name);
 
       Object.assign(this.dialog, {
-        title: i18n.add,
-        button: i18n.add,
+        title: i18n.edit,
+        button: i18n.commit,
         display: true,
         id: id,
-        bank_name: data.name,
+        name: data.name,
         country: data.country,
         status: data.status,
         transfer: data.transfer,
@@ -168,7 +169,21 @@ export default {
           }
       })
     },
-    showAddDialog() {
+    commit() {
+      switch(this.dialog.title) {
+        case i18n.add:
+          banks.create(this.dialog);
+        break;
+        case i18n.edit:
+          banks.update(this.dialog);
+        break;
+        default: console.warn('Unknown action.');
+      }
+      console.log('commit');
+      this.dialog.display = false;
+
+    },
+    showDialog() {
         this.dialog.display = !this.dialog.display;
     }
   },
