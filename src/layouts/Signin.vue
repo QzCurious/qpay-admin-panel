@@ -3,7 +3,7 @@
     <div class="container">
       <h1>登入</h1>
       <form
-        @submit.prevent="handleSubmit"
+        @submit.prevent="handle_submit"
         class="p-fluid p-d-flex p-flex-column"
       >
         <InputText
@@ -22,7 +22,7 @@
       </form>
     </div>
   </div>
-  <Toast position="top-center" />
+  <!-- <Toast position="top-center" /> -->
 </template>
 
 <script>
@@ -52,27 +52,21 @@ export default {
     };
   },
   methods: {
-    handleSubmit() {
+    async handle_submit() {
       this.v$.$touch();
 
       if (this.v$.$error) {
         return;
       }
 
-      auth
-        .signin({ signin_id: this.signin_id, password: this.password })
-        .then(() => {
-          router.push(this.$route.redirectedFrom?.fullPath || "/");
-        })
-        .catch((err) => {
-          if (err.response.status >= 400 && !this.v$.$error) {
-            this.$toast.add({
-              severity: "error",
-              summary: err.response.data.message,
-              life: 1800,
-            });
-          }
-        });
+      const res = await auth.signin({
+        signin_id: this.signin_id,
+        password: this.password,
+      });
+
+      if (res.status > 300) return;
+
+      router.push(this.$route.redirectedFrom?.fullPath || "/");
     },
   },
 };

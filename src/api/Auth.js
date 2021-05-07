@@ -1,13 +1,23 @@
 import http from "./http";
 import store from "../store";
 import router from "../router";
+import ToastService from "../service/ToastService";
 
 class Auth {
   async signin({ signin_id, password }) {
     return http
       .post("auth/signin", { signin_id, password })
-      .then(({ data: token }) => {
-        store.dispatch("auth/signin", token);
+      .then(res => {
+        store.dispatch("auth/signin", res.data);
+        return res;
+      })
+      .catch(err => {
+        ToastService.add({
+          severity: "error",
+          summary: err.response.data.message,
+          life: 1800
+        });
+        return err.response;
       });
   }
 
@@ -19,8 +29,9 @@ class Auth {
   async change_password({ old_password, new_password }) {
     return http
       .post("auth/reset-password", { old_password, new_password })
-      .then(({ data: token }) => {
-        store.dispatch("auth/signin", token);
+      .then((res) => {
+        store.dispatch("auth/signin", res.data);
+        return res
       });
   }
 }
