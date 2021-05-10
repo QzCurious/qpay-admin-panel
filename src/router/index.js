@@ -116,17 +116,18 @@ const routes = [
                 path: "merchant-order",
                 component: () =>
                   import("../views/order-management/MerchantOrder.vue")
+              },
+              {
+                name: "merchant_order_post",
+                path: "merchant-order-post",
+                component: () =>
+                  import("../views/order-management/MerchantOrderPost.vue")
               }
             ]
           },
           payments,
           reports
         ]
-      },
-      {
-        name: "signin",
-        path: "signin",
-        component: () => import("../layouts/Signin.vue")
       }
     ]
   }

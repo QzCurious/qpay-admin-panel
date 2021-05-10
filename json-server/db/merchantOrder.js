@@ -19,6 +19,7 @@ function userFactory(count) {
       order_status: ["success", "processing", "failed"][
         Math.floor(Math.random() * 3)
       ],
+      push_status: [0, 100][Math.floor(Math.random() * 2)],
       channel: `channel${Math.random() * 30}`,
       remark: faker.finance.transactionDescription(),
       audit_type: ["paid", "unpaid"][Math.floor(Math.random() * 2)],

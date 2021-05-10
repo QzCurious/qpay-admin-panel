@@ -136,6 +136,11 @@ export default [
         key: "merchant_order",
         label: "商家訂單",
         to: { name: "merchant_order" }
+      },
+      {
+        key: "merchant_order_post",
+        label: "商家訂單回調",
+        to: { name: "merchant_order_post" }
       }
     ]
   }
