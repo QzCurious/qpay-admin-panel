@@ -5,16 +5,20 @@ class Card {
         return http.get("cards");
     }
 
-    async get({id}) {
+    async retrieve({id}) {
         return http.get(`cards/${id}`);
     }
 
-    async create({ bank_name, country, status, transfer}) {
-        return http.post('cards', {bank_name, country, status, transfer});
+    async create({ channel, card_id, merchant, bank_name, account_name, card_number, limit_daily, limit_once, status}) {
+        return http.post('cards', {channel, card_id, merchant, bank_name, account_name, card_number, limit_daily, limit_once, status});
     }
 
-    async modify({ bank_name, country, status, transfer}) {
-        return http.update({ bank_name, country, status, transfer});
+    async update({ id, channel, card_id, merchant, bank_name, account_name, card_number, limit_daily, limit_once, status}) {
+        return http.put(`cards/${id}`, { channel, card_id, merchant, bank_name, account_name, card_number, limit_daily, limit_once, status});
+    }
+
+    async delete({ id }){
+        return http.delete(`cards/${id}`)
     }
 }
 

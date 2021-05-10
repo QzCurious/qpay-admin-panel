@@ -2,14 +2,15 @@
   <Dialog modal :header="i18n.add_card" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
     <label for="channel" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.channel}}</label>
-    <Dropdown id="channel" :options="dialog.channels" type="text" v-model="dialog.selected_channel" />
+    <Dropdown id="channel" :options="dialog.channels" type="text" v-model="dialog.channel" />
     </div>
     <div class="p-field p-grid">
     <label for="card_holder" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.card_holder}}</label>
-    <Dropdown id="card_holder" :options="dialog.card_holders" type="text" v-model="dialog.selected_card_holder" />
+    <Dropdown id="card_holder" :options="dialog.account_names" type="text" v-model="dialog.account_name" />
     </div>
     <div class="p-field p-grid">
-        <label for="" class="p-col-12 p-mb-2 p-md-4 p-md-md-0">{{i18n.bank}}</label>
+    <label for="bank" class="p-col-12 p-mb-2 p-md-4 p-md-md-0">{{i18n.bank_name}}</label>
+    <InputText id="bank" type="text" v-model="dialog.bank_name" />
     </div>
     <div class="p-field p-grid">
     <label for="branch" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.branch}}</label>
@@ -28,12 +29,22 @@
     <InputText id="internet_banking_password" v-model="dialog.internet_banking_password" />
     </div>
     <div class="p-field p-grid">
+    <label for="pb_api_key" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.pb_api_key}}</label>
+    <InputText id="pb_api_key" v-model="dialog.pb_api_key" />
+    </div>
+    <div class="p-field p-grid">
+    <label for="plugin_mode" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.plugin_mode}}</label>
+    <Dropdown id="plugin_mode" :options="dialog.plugins" type="text" v-model="dialog.plugin" />
+    </div>
+    <div class="p-field p-grid">
     <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
     <InputSwitch id="status" v-model="dialog.status" />
     </div>
-    <Button :label="i18n.submit" icon="pi pi-check" @click="submit" />
+    <Button :label="i18n.submit" :icon="dialog.icon" @click="commit()" />
   </Dialog>
-  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog" />
+
+  <ConfirmPopup />
+  
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -47,13 +58,14 @@
     v-model:filters="filters"
   >
     <template #header>
+      <h2><b>{{i18n.card_management}}</b></h2>
       <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
         <Button
           type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="filter"
+          icon="pi pi-plus"
+          :label=i18n.add
+          _class="p-button-outlined p-mb-2"
+          @click="addEntry()"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -93,14 +105,14 @@
     </Column>
     <Column field="status" :header="i18n.status">
         <template #body="{ data }">
-            <InputSwitch id="status" v-model="data.status" />
+            <InputSwitch id="status" v-model="data.status" @click="update($event, data)"/>
         </template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
         <template #body="{ data }">
             {{ data.signin_id }}
-        <Button :label="i18n.edit" @click="editData(data)" />
-        <Button :label="i18n.delete" @click="deleteData(data)" class="p-button-danger" />
+        <Button :label="i18n.edit" @click="editEntry(data.id)" />
+        <Button :label="i18n.delete" @click="delEntry($event, data)" class="p-button-danger" />
 
         </template> 
     </Column>
@@ -109,9 +121,34 @@
 </template>
 <script>
 import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
 import cards from '../../api/Card';
 import i18n from "../../helper/i18n.zh-CN.js"
+
+const dialogAddContent = {
+  title: i18n.add,
+  display: true,
+  button: i18n.add,
+  icon: "pi pi-plus"
+}
+
+const dialogEditContent = {
+  title: i18n.edit,
+  display: true,
+  button: i18n.edit,
+  icon: "pi pi-edit"
+}
+
+const dialogEmptyData = {
+  channel: '',
+  card_id: '',
+  merchant: '',
+  account_name: '',
+  card_number: '',
+  limit_daily: 0,
+  limit_once: 0,
+  status: false,
+  memo: ''
+}
 
 export default {
   data() {
@@ -122,10 +159,13 @@ export default {
       i18n: i18n,
       dialog: {
           display: false,
-          selected_channel: '',
-          selected_card_holder: '',
-          card_holders: ['a','b','c'],
-          channels: ['ch1', 'ch2']
+          account_name: '',
+          account_names: ['tony_chen','jimmy_wang'],
+          channel: '',
+          channels: ['c01', 'c02'],
+          plugin: '',
+          plugins: ['sms', 'spider']
+
       }
     };
   },
@@ -138,13 +178,33 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    submit() {
-        this.dialog.display = !this.dialog.display
+    addEntry() {
+      Object.assign(this.dialog, dialogAddContent, dialogEmptyData)
     },
-    showAddDialog() {
-        this.dialog.display = !this.dialog.display
+    editEntry(id) {
+      let data = this.records.filter(x => x.id == id)[0];
+      Object.assign(this.dialog, dialogEditContent, data);
     },
-    filter() {
+    delEntry(event, id) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          cards.delete({id: id})
+        },
+        reject: () => {
+
+        }
+      })
+    },
+    update(event, data) {
+
+    },
+    commit() {
+
+    },
+    showDialog() {
 
     }
   },

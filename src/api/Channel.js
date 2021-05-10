@@ -1,21 +1,25 @@
 import http from './http';
 
-class Bank {
+class Channel {
     async all() {
         return http.get("channels");
     }
 
-    async get({id}) {
+    async retrieve( { id } ) {
         return http.get(`channels/${id}`);
     }
 
-    async create({ bank_name, country, status, transfer}) {
-        return http.post('channels', {bank_name, country, status, transfer});
+    async create({ name, status}) {
+        return http.post('channels', {name, status});
     }
 
-    async modify({ bank_name, country, status, transfer}) {
-        return http.update({ bank_name, country, status, transfer});
+    async update({ id, name, status}) {
+        return http.put(`channels/${id}`, { name, status});
+    }
+
+    async delete({ id }){
+        return http.delete(`channels/${id}`);
     }
 }
 
-export default new Bank();
+export default new Channel();
