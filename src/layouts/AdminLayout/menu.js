@@ -146,6 +146,11 @@ export default [
         key: "merchant_order_statistics",
         label: "商家訂單統計數據",
         to: { name: "merchant_order_statistics" }
+      },
+      {
+        key: "merchant_order_operation",
+        label: "merchant_order_operation",
+        to: { name: "merchant_order_operation" }
       }
     ]
   }

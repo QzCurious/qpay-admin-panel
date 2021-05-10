@@ -130,6 +130,12 @@ const routes = [
                   import(
                     "../views/order-management/MerchantOrderStatistics.vue"
                   )
+              },
+              {
+                name: "merchant_order_operation",
+                path: "merchant-order-operation",
+                component: () =>
+                  import("../views/order-management/MerchantOrderOperation.vue")
               }
             ]
           },
