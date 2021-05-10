@@ -88,6 +88,27 @@ export default {
             { label: "建立帳號", to: "/users/create" },
           ],
         },
+        {
+          label: "資金管理",
+          icon: PrimeIcons.CREDIT_CARD,
+          items: [
+            {
+              label: "資金管理面板",
+              to: { name: "fundsManagement" },
+            },
+            { label: "交易紀錄", to: { name: "transactionRecord" } },
+          ],
+        },
+        {
+          label: "商戶管理",
+          icon: PrimeIcons.USERS,
+          items: [
+            { label: "商戶管理面板", to: { name: "merchantManagement" } },
+            { label: "商戶參數", to: { name: "merchantParameter" } },
+            { label: "商戶費率", to: { name: "merchantRate" } },
+            { label: "商戶通道", to: { name: "merchantChannelSetting" } },
+          ],
+        },
       ],
     };
   },
