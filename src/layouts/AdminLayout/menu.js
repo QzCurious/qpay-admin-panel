@@ -126,5 +126,17 @@ export default [
         to: { name: "merchant_daily_report" }
       }
     ]
+  },
+  {
+    key: "order_management",
+    label: "訂單管理",
+    icon: PrimeIcons.MONEY_BILL,
+    items: [
+      {
+        key: "merchant_order",
+        label: "商家訂單",
+        to: { name: "merchant_order" }
+      }
+    ]
   }
 ];

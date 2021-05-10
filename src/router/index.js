@@ -106,6 +106,19 @@ const routes = [
               }
             ]
           },
+          {
+            name: "order_management",
+            path: "order-management",
+            component: ForwordRouterView,
+            children: [
+              {
+                name: "merchant_order",
+                path: "merchant-order",
+                component: () =>
+                  import("../views/order-management/MerchantOrder.vue")
+              }
+            ]
+          },
           payments,
           reports
         ]
