@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "../store";
+import payments from './features/Payments';
+import reports from './features/Reports';
 
 const routes = [
   {
@@ -81,7 +83,9 @@ const routes = [
           },
         ],
       },
-    ],
+      payments,
+      reports,
+    ]
   },
   {
     name: "signin",

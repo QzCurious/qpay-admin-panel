@@ -41,6 +41,7 @@ import Menu from "./Menu.vue";
 import Config from "./Config.vue";
 import Footer from "./Footer.vue";
 import { PrimeIcons } from "primevue/api";
+import i18n from "../../helper/i18n.zh-CN";
 
 export default {
   data() {
@@ -109,6 +110,25 @@ export default {
             { label: "商戶通道", to: { name: "merchantChannelSetting" } },
           ],
         },
+        {
+          label: i18n.payment_management,
+          icon: PrimeIcons.CREDIT_CARD,
+          items: [
+            { label: i18n.bank_management, to: "/payments/banks" },
+            { label: i18n.channel_management, to: "/payments/channels" },
+            { label: i18n.card_holder_management, to: "/payments/card-holders" },
+            { label: i18n.card_management, to: "/payments/cards" },
+            { label: i18n.card_operation_management, to: "/payments/card-operations" }
+          ]
+        },
+        { 
+          label: i18n.financial_reports,
+          icon: PrimeIcons.CHART_BAR,
+          items: [
+            { label: i18n.deposit_daily_report, to: "/reports/deposit-daily-report"},
+            { label: i18n.merchant_daily_report, to: "/reports/merchant-daily-report"}
+          ]
+        }
       ],
     };
   },
