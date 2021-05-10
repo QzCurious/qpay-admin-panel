@@ -34,6 +34,10 @@ class Auth {
         return res
       });
   }
+
+  async change_payment_password({ old_password, new_password }) {
+    return http.patch("payment-password", { old_password, new_password });
+  }
 }
 
 export default new Auth();

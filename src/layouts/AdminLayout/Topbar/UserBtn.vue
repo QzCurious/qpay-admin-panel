@@ -20,7 +20,7 @@ export default {
       items: [
         {
           label: "Change Password",
-          to: "/change-password"
+          to: { name: "change-password" },
         },
         {
           label: "Log Out",

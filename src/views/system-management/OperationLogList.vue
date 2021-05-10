@@ -150,7 +150,7 @@
 <script>
 import { defineComponent } from "vue";
 import { FilterMatchMode, FilterOperator } from "primevue/api";
-import operationLogApi from "../api/OperationLog";
+import operationLogApi from "../../api/OperationLog";
 
 export default defineComponent({
   name: "OperationLog",

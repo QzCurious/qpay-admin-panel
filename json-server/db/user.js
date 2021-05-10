@@ -13,6 +13,8 @@ function userFactory(count) {
       id: faker.datatype.number(),
       signin_id: faker.internet.email(),
       role: roles[Math.floor(Math.random() * roles.length)],
+      company: faker.company.companyName(),
+      status: faker.datatype.boolean(),
       ip_allow: ["127.0.0.1"],
       phone: faker.phone.phoneNumber(),
     };

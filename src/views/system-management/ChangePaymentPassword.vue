@@ -1,6 +1,6 @@
 <template>
   <Card style="max-width: 20rem; margin: auto">
-    <template #title>重設密碼</template>
+    <template #title>重設付款密碼</template>
     <template #content>
       <form
         ref="form"
@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import auth from "../api/Auth";
+import auth from "../../api/Auth";
 import useVuelidate from "@vuelidate/core";
 import { required, sameAs } from "@vuelidate/validators";
-import Password from "../components/Password";
+import Password from "../../components/Password";
 
 export default {
   components: { Password },
@@ -70,19 +70,16 @@ export default {
       }
 
       auth
-        .change_password({
+        .change_payment_password({
           old_password: this.old_password,
           new_password: this.new_password,
         })
         .then(() => {
           this.v$.$reset();
-          this.old_password = null;
-          this.new_password = null;
-          this.confirm_new_password = null;
 
           this.$toast.add({
             severity: "success",
-            summary: "重設密碼成功",
+            summary: "重設付款密碼成功",
             life: 1800,
           });
         })
