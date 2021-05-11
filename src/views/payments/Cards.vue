@@ -112,7 +112,7 @@
         <template #body="{ data }">
             {{ data.signin_id }}
         <Button :label="i18n.edit" @click="editEntry(data.id)" />
-        <Button :label="i18n.delete" @click="delEntry($event, data)" class="p-button-danger" />
+        <Button :label="i18n.delete" @click="delEntry($event, data.id)" class="p-button-danger" />
 
         </template> 
     </Column>
@@ -139,13 +139,20 @@ const dialogEditContent = {
 }
 
 const dialogEmptyData = {
+  id: undefined,
   channel: '',
   card_id: '',
   merchant: '',
+  bank_name: '',
+  branch: '',
   account_name: '',
-  card_number: '',
+  card_number: undefined,
+  internet_banking_id: '',
+  internet_banking_password: '',
   limit_daily: 0,
   limit_once: 0,
+  pb_api_key: '',
+  plugin: '',
   status: false,
   memo: ''
 }
@@ -192,6 +199,7 @@ export default {
         icon: 'pi pi-exclamation-circle',
         accept: () => {
           cards.delete({id: id})
+          this.refresh();
         },
         reject: () => {
 
@@ -199,13 +207,38 @@ export default {
       })
     },
     update(event, data) {
-
+      let { status } = data;
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          cards.update(data);
+        },
+        reject: () => {
+          data.status = status;
+        }
+      })
     },
     commit() {
-
+      switch(this.dialog.title) {
+        case i18n.add:
+          cards.create(this.dialog);
+        break;
+        case i18n.edit:
+          cards.update(this.dialog);
+        break;
+        default: console.warn('Unknown action.');
+        break;
+      }
+      this.dialog.display = false;
+      cards.all().then(({ data }) => {this.records = data});
     },
     showDialog() {
-
+      this.dialog.display = true;
+    },
+    refresh() {
+      cards.all().then(({ data }) => {this.records = data});
     }
   },
   created() {
