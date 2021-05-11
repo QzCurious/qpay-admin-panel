@@ -142,6 +142,12 @@ const routes = [
                 path: "deposit-order-operation",
                 component: () =>
                   import("../views/order-management/DepositOrderOperation.vue")
+              },
+              {
+                name: "deposit_record",
+                path: "deposit-record",
+                component: () =>
+                  import("../views/order-management/DepositRecord.vue")
               }
             ]
           },

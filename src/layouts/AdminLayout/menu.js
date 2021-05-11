@@ -156,6 +156,11 @@ export default [
         key: "deposit_order_operation",
         label: "deposit_order_operation",
         to: { name: "deposit_order_operation" }
+      },
+      {
+        key: "deposit_record",
+        label: "deposit_record",
+        to: { name: "deposit_record" }
       }
     ]
   }
