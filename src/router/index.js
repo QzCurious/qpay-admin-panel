@@ -136,6 +136,12 @@ const routes = [
                 path: "merchant-order-operation",
                 component: () =>
                   import("../views/order-management/MerchantOrderOperation.vue")
+              },
+              {
+                name: "deposit_order_operation",
+                path: "deposit-order-operation",
+                component: () =>
+                  import("../views/order-management/DepositOrderOperation.vue")
               }
             ]
           },

@@ -151,6 +151,11 @@ export default [
         key: "merchant_order_operation",
         label: "merchant_order_operation",
         to: { name: "merchant_order_operation" }
+      },
+      {
+        key: "deposit_order_operation",
+        label: "deposit_order_operation",
+        to: { name: "deposit_order_operation" }
       }
     ]
   }
