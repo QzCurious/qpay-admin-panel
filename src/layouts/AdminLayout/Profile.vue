@@ -4,7 +4,7 @@
 			<img src="/assets/layout/images/profile.png" alt="" />
 		</div>
 		<button class="p-link layout-profile-link" @click="onClick">
-			<span class="username">Claire Williams</span>
+			<span class="username">{{ signin_id }}</span>
 			<i class="pi pi-fw pi-cog"></i>
 		</button>
         <transition name="layout-submenu-wrapper">
@@ -19,9 +19,11 @@
 </template>
 
 <script>
+	import store from '../../store'
 	export default {
 		data() {
 			return {
+				signin_id: store.getters["auth/signin_id"],
 				expanded: false
 			}
 		},
