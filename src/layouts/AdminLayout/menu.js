@@ -10,27 +10,27 @@ export default [
       {
         key: "role_setting",
         label: "權限設定",
-        to: "/system-management/role-setting"
+        to: { name: "role_setting" }
       },
       {
         key: "operation_log",
         label: "操作日誌",
-        to: "/system-management/operation-log"
+        to: { name: "operation_log" }
       },
       {
         key: "change_password",
         label: "變更密碼",
-        to: "/system-management/change-password"
+        to: { name: "change_password" }
       },
       {
         key: "change_payment_password",
         label: "變更付款密碼",
-        to: "/system-management/change-payment-password"
+        to: { name: "change_payment_password" }
       },
       {
-        key: "add_user",
+        key: "user_management",
         label: "管理使用者",
-        to: "/system-management/user-management"
+        to: { name: "user_management" }
       }
     ]
   },
@@ -86,27 +86,27 @@ export default [
       {
         key: "bank_management",
         label: i18n.bank_management,
-        to: "/payments/banks"
+        to: { name: "bank_management" }
       },
       {
         key: "channel_management",
         label: i18n.channel_management,
-        to: "/payments/channels"
+        to: { name: "channel_management" }
       },
       {
         key: "card_holder_management",
         label: i18n.card_holder_management,
-        to: "/payments/card-holders"
+        to: { name: "card_holder_management" }
       },
       {
         key: "card_management",
         label: i18n.card_management,
-        to: "/payments/cards"
+        to: { name: "card_management" }
       },
       {
         key: "card_operation_management",
         label: i18n.card_operation_management,
-        to: "/payments/card-operations"
+        to: { name: "card_operation_management" }
       }
     ]
   },
@@ -118,12 +118,12 @@ export default [
       {
         key: "deposit_daily_report",
         label: i18n.deposit_daily_report,
-        to: "/reports/deposit-daily-report"
+        to: { name: "deposit_daily_report" }
       },
       {
         key: "merchant_daily_report",
         label: i18n.merchant_daily_report,
-        to: "/reports/merchant-daily-report"
+        to: { name: "merchant_daily_report" }
       }
     ]
   }
