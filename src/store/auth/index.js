@@ -1,5 +1,3 @@
-import { VuexPersistence } from "vuex-persist";
-
 export const store = {
   namespaced: true,
   state: () => ({
@@ -30,6 +28,3 @@ export const store = {
     }
   }
 };
-
-const vuexLocal = new VuexPersistence({ storage: window.localStorage });
-export const plugins = [vuexLocal.plugin];

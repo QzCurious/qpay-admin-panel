@@ -1,5 +1,11 @@
+import { VuexPersistence } from "vuex-persist";
 import { createStore } from "vuex";
 import * as auth from "./auth";
+
+const vuexLocalStorage = new VuexPersistence({
+  modules: ["auth"],
+  storage: window.localStorage
+});
 
 export default createStore({
   state: {},
@@ -8,5 +14,5 @@ export default createStore({
   modules: {
     auth: auth.store
   },
-  plugins: [...auth.plugins]
+  plugins: [vuexLocalStorage.plugin]
 });
