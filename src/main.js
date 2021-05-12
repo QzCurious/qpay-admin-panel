@@ -9,6 +9,7 @@ import './assets/layout/flags/flags.css';
 import { createApp, reactive } from 'vue';
 import router from './router';
 import store from './store'
+import i18n from './i18n'
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
@@ -108,6 +109,7 @@ app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
 app.use(PrimeVue, { ripple: true });
 app.use(ConfirmationService);
 app.use(ToastService);
+app.use(i18n);
 app.use(router);
 app.use(store)
 
