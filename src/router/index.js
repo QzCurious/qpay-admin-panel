@@ -133,7 +133,6 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(to => {
-  console.log(i18n.global.locale, store.state.locale.locale, to)
   if (store.state.locale.locale !== to.params.locale) {
     store.dispatch("locale/set", to.params.locale);
   }
