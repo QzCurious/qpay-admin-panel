@@ -13,10 +13,7 @@
 				<span class="layout-topbar-icon pi pi-calendar"></span>
 				<span class="layout-topbar-badge">5</span>
 			</button>
-			<button class="p-link">
-				<span class="layout-topbar-item-text">Settings</span>
-				<span class="layout-topbar-icon pi pi-cog"></span>
-			</button>
+			<Settings />
 			<UserBtn />
 		</div>
 	</div>
@@ -24,9 +21,10 @@
 
 <script>
 import UserBtn from './UserBtn.vue'
+import Settings from './Settings.vue'
 
 export default { 
-	components: {UserBtn},
+	components: {UserBtn, Settings},
     methods: {
         onMenuToggle(event) {
             this.$emit('menu-toggle', event);
