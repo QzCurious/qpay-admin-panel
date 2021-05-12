@@ -106,14 +106,54 @@ const routes = [
               }
             ]
           },
+          {
+            name: "order_management",
+            path: "order-management",
+            component: ForwordRouterView,
+            children: [
+              {
+                name: "merchant_order",
+                path: "merchant-order",
+                component: () =>
+                  import("../views/order-management/MerchantOrder.vue")
+              },
+              {
+                name: "merchant_order_post",
+                path: "merchant-order-post",
+                component: () =>
+                  import("../views/order-management/MerchantOrderPost.vue")
+              },
+              {
+                name: "merchant_order_statistics",
+                path: "merchant-order-statistics",
+                component: () =>
+                  import(
+                    "../views/order-management/MerchantOrderStatistics.vue"
+                  )
+              },
+              {
+                name: "merchant_order_operation",
+                path: "merchant-order-operation",
+                component: () =>
+                  import("../views/order-management/MerchantOrderOperation.vue")
+              },
+              {
+                name: "deposit_order_operation",
+                path: "deposit-order-operation",
+                component: () =>
+                  import("../views/order-management/DepositOrderOperation.vue")
+              },
+              {
+                name: "deposit_record",
+                path: "deposit-record",
+                component: () =>
+                  import("../views/order-management/DepositRecord.vue")
+              }
+            ]
+          },
           payments,
           reports
         ]
-      },
-      {
-        name: "signin",
-        path: "signin",
-        component: () => import("../layouts/Signin.vue")
       }
     ]
   }

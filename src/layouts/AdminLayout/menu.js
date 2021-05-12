@@ -126,5 +126,42 @@ export default [
         to: { name: "merchant_daily_report" }
       }
     ]
+  },
+  {
+    key: "order_management",
+    label: "訂單管理",
+    icon: PrimeIcons.MONEY_BILL,
+    items: [
+      {
+        key: "merchant_order",
+        label: "商家訂單",
+        to: { name: "merchant_order" }
+      },
+      {
+        key: "merchant_order_post",
+        label: "商家訂單回調",
+        to: { name: "merchant_order_post" }
+      },
+      {
+        key: "merchant_order_statistics",
+        label: "商家訂單統計數據",
+        to: { name: "merchant_order_statistics" }
+      },
+      {
+        key: "merchant_order_operation",
+        label: "merchant_order_operation",
+        to: { name: "merchant_order_operation" }
+      },
+      {
+        key: "deposit_order_operation",
+        label: "deposit_order_operation",
+        to: { name: "deposit_order_operation" }
+      },
+      {
+        key: "deposit_record",
+        label: "deposit_record",
+        to: { name: "deposit_record" }
+      }
+    ]
   }
 ];

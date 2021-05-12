@@ -10,4 +10,5 @@ module.exports = {
   ...require("./depositDailyReport"),
   ...require("./merchantDailyReport"),
   ...require("./paymentPassword"),
+  ...require("./merchantOrder"),
 };
