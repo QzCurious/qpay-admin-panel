@@ -159,8 +159,8 @@ export default {
     },
     logo() {
       return this.layoutColorMode === "dark"
-        ? "assets/layout/images/logo-white.svg"
-        : "assets/layout/images/logo.svg";
+        ? "/assets/layout/images/logo-white.svg"
+        : "/assets/layout/images/logo.svg";
     },
   },
   beforeUpdate() {
