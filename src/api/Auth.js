@@ -4,9 +4,9 @@ import router from "../router";
 import ToastService from "../service/ToastService";
 
 class Auth {
-  async signin({ signin_id, password }) {
+  async signin({ username, password }) {
     return http
-      .post("auth/signin", { signin_id, password })
+      .post("auth/signin", { username, password })
       .then(res => {
         store.dispatch("auth/signin", res.data.access_token);
         return res;

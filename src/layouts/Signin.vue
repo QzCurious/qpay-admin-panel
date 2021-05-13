@@ -60,7 +60,7 @@ export default {
       }
 
       const res = await auth.signin({
-        signin_id: this.signin_id,
+        username: this.signin_id,
         password: this.password,
       });
 

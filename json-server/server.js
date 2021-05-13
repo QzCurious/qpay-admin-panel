@@ -22,8 +22,8 @@ const TOKEN = jwt.sign(
 );
 
 server.post("/auth/signin", (req, res) => {
-  const { signin_id, password } = req.body;
-  if (signin_id !== SIGNIN_ID || password !== PASSWORD) {
+  const { username, password } = req.body;
+  if (username !== SIGNIN_ID || password !== PASSWORD) {
     return res.status(401).json({ code: 1234, message: `signin_id: ${PASSWORD} password: ${PASSWORD}` });
   }
 
