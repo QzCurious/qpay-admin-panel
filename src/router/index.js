@@ -152,13 +152,13 @@ const routes = [
             ]
           },
           payments,
-          reports,
-          {
-            name: "signin",
-            path: "signin",
-            component: () => import("../layouts/Signin.vue")
-          }
+          reports
         ]
+      },
+      {
+        name: "signin",
+        path: "signin",
+        component: () => import("../layouts/Signin.vue")
       }
     ]
   }
