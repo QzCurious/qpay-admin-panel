@@ -1,7 +1,10 @@
 import { PrimeIcons } from "primevue/api";
-import i18n from "../../helper/i18n.zh-CN";
+import i18n from "../../i18n";
+import { computed } from "vue";
 
-export default [
+const { t } = i18n.global;
+
+export default computed(() => [
   {
     key: "system_management",
     label: "系統管理",
@@ -80,49 +83,49 @@ export default [
   },
   {
     key: "payment_management",
-    label: i18n.payment_management,
+    label: t("payment_management"),
     icon: PrimeIcons.CREDIT_CARD,
     items: [
       {
         key: "bank_management",
-        label: i18n.bank_management,
+        label: t("bank_management"),
         to: { name: "bank_management" }
       },
       {
         key: "channel_management",
-        label: i18n.channel_management,
+        label: t("channel_management"),
         to: { name: "channel_management" }
       },
       {
         key: "card_holder_management",
-        label: i18n.card_holder_management,
+        label: t("card_holder_management"),
         to: { name: "card_holder_management" }
       },
       {
         key: "card_management",
-        label: i18n.card_management,
+        label: t("card_management"),
         to: { name: "card_management" }
       },
       {
         key: "card_operation_management",
-        label: i18n.card_operation_management,
+        label: t("card_operation_management"),
         to: { name: "card_operation_management" }
       }
     ]
   },
   {
     key: "financial_reports",
-    label: i18n.financial_reports,
+    label: t("financial_reports"),
     icon: PrimeIcons.CHART_BAR,
     items: [
       {
         key: "deposit_daily_report",
-        label: i18n.deposit_daily_report,
+        label: t("deposit_daily_report"),
         to: { name: "deposit_daily_report" }
       },
       {
         key: "merchant_daily_report",
-        label: i18n.merchant_daily_report,
+        label: t("merchant_daily_report"),
         to: { name: "merchant_daily_report" }
       }
     ]
@@ -164,4 +167,4 @@ export default [
       }
     ]
   }
-];
+]);
