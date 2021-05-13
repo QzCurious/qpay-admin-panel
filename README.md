@@ -1,6 +1,6 @@
 # paypay
 
-## Demo
+## Development
 
 Fake server
 ```
@@ -18,24 +18,19 @@ npm install
 npm run serve
 ```
 
-## Project setup
+## Docker service
+
+Nginx 全導向 index.html
+
+Build
 ```
-npm install
+# --build-arg MODE=development
+docker build -t qpay .
 ```
 
-### Compiles and hot-reloads for development
+Server
 ```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
+docker run -p 80:80 paypay
 ```
 
 ### Customize configuration
