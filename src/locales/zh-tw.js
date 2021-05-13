@@ -1,6 +1,35 @@
 export default {
   name: "繁中-台灣",
 
+  // system_management
+  system_management: "系統管理",
+  role_setting: "權限設定",
+  operation_log: "操作日誌",
+  change_password: "變更密碼",
+  change_payment_password: "變更付款密碼",
+  user_management: "管理使用者",
+
+  // funds_management
+  funds_management: "code::funds_management",
+  funds_operation_panel: "code::funds_operation_panel",
+  transaction_record: "code::transaction_record",
+
+  // merchant_management
+  merchant_management: "code::merchant_management",
+  merchant_operation_panel: "code::merchant_operation_panel",
+  merchant_parameter: "code::merchant_parameter",
+  merchant_rate: "code::merchant_rate",
+  merchant_channel_setting: "code::merchant_channel_setting",
+
+  // order_management
+  order_management: "code::order_management",
+  merchant_order: "code::merchant_order",
+  merchant_order_post: "code::merchant_order_post",
+  merchant_order_statistics: "code::merchant_order_statistics",
+  merchant_order_operation: "code::merchant_order_operation",
+  deposit_order_operation: "code::deposit_order_operation",
+  deposit_record: "code::deposit_record",
+
   /**
    * Sidebar categories
    */
