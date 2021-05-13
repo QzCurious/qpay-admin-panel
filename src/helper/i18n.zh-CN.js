@@ -33,6 +33,8 @@ export default {
         internet_banking_password: 'code::internet_banking_password',
         add_card: 'code::add_card',
         dialog_confirm: 'code::dialog_confirm',
+        pb_api_key: 'code::pb_api_key',
+        plugin_mode: 'code::plugin_mode',
     /**
      * Column fields
      */

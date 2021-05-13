@@ -1,5 +1,5 @@
 <template>
-  <Dialog modal :header="i18n.add_card_holder" v-model:visible="dialog.display" >
+  <Dialog modal :header="dialog.title" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
       <label for="phone" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.phone}}</label>
       <InputText id="phone" type="text" v-model="dialog.phone" />
@@ -8,9 +8,11 @@
       <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
       <InputSwitch id="status" v-model="dialog.status" />
     </div>
-    <Button :label="i18n.submit" icon="pi pi-check" @click="addCardHolder()" />
+    <Button :label="i18n.submit" :icon="dialog.icon" @click="commit()" />
   </Dialog>
-  <Button :label="i18n.add" icon="pi pi-plus" @click.stop="showAddDialog()" />
+
+  <ConfirmPopup />
+
   <DataTable 
     responsiveLayout="scroll"
     dataKey="id"
@@ -24,13 +26,14 @@
     v-model:filters="filters"
   >
     <template #header>
+      <h2><b>{{i18n.card_holder_management}}</b></h2>
       <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
         <Button
           type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+          icon="pi pi-plus"
+          :label=i18n.add
+          _class="p-button-outlined p-mb-2"
+          @click="addEntry()"
         />
         <span class="p-input-icon-left p-mb-2">
           <i class="pi pi-search" />
@@ -51,7 +54,9 @@
         <template #body="{ data }">{{ data.name }}</template> 
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">{{ data.status }}</template> 
+        <template #body="{ data }">
+          <InputSwitch id="status" v-model="data.status" @click="update($event, data)"/>
+        </template> 
     </Column>
     <Column field="card_list" :header="i18n.card_list">
 
@@ -66,8 +71,8 @@
     </Column>
     <Column field="edit" :header="i18n.edit">
         <template #body="{ data }">
-          <Button :label="i18n.edit" @click="editData(data)" />
-          <Button class="p-button-danger" :label="i18n.delete" @click="deleteData(data)" />
+          <Button :label="i18n.edit" @click="editEntry(data.id)" />
+          <Button class="p-button-danger" :label="i18n.delete" @click="delEntry($event, data.id)" />
         </template> 
     </Column>
   </DataTable>
@@ -75,7 +80,6 @@
 </template>
 <script>
 import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
 import cardHolders from "../../api/CardHolder";
 import i18n from "../../helper/i18n.zh-CN.js"
 
@@ -87,7 +91,12 @@ export default {
       filters: {},
       i18n: i18n,
       dialog: {
+        title: i18n.add,
         display: false,
+        button: i18n.add,
+        icon: "pi pi-plus",
+
+        name: '',
         phone: '',
         status: false
       }
@@ -102,19 +111,76 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    addBank() {
-    },
-    addCardHolder(){
-      this.dialog.display = !this.dialog.display;
-    },
-    showAddDialog() {
-      this.dialog.display = !this.dialog.display;
-    },
-    editData() {
+    addEntry() {
+      Object.assign(this.dialog, {
+        title: i18n.add,
+        display: true,
+        button: i18n.add,
+        icon: "pi pi-check",
+
+        id: undefined,
+        name: "",
+        phone: "",
+        status: false
+      });
 
     },
-    deleteData() {
+    editEntry(id) {
+      let data = this.records.filter(x => x.id == id)[0];
 
+      Object.assign(this.dialog, {
+        title: i18n.edit,
+        display: true,
+        button: i18n.edit,
+        icon: "pi pi-edit",
+      }, data);
+    },
+    delEntry(event, id) {
+      console.log(id);
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          cardHolders.delete({id: id})
+        },
+        reject: () => {
+
+        }
+      })
+
+    },
+    update(event, data) {
+      let {status} = data;
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          cardHolders.update(data);
+        },
+        reject: () => {
+          let record = this.records.filter(x => x.id == data.id)[0];
+          record.status = status;
+        }
+      })
+    },
+    commit() {
+      switch(this.dialog.title) {
+        case i18n.add:
+          cardHolders.create(this.dialog);
+        break;
+        case i18n.edit:
+          cardHolders.update(this.dialog);
+        break;
+        default: console.warn('Unknown action.');
+        break;
+      }
+      this.dialog.display = false;
+      cardHolders.all().then(({data}) => {this.records = data});
+    },
+    showDialog() {
+      this.dialog.display = true;
     }
   },
   created() {

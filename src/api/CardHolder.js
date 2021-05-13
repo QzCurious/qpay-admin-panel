@@ -5,16 +5,20 @@ class CardHolder {
         return http.get("cardHolders");
     }
 
-    async get({id}) {
+    async retrieve({id}) {
         return http.get(`cardHolders/${id}`);
     }
 
-    async create({ bank_name, country, status, transfer}) {
-        return http.post('cardHolders', {bank_name, country, status, transfer});
+    async create({ name, phone, status}) {
+        return http.post('cardHolders', {name, phone, status});
     }
 
-    async modify({ bank_name, country, status, transfer}) {
-        return http.update({ bank_name, country, status, transfer});
+    async update({ id, name, phone, status}) {
+        return http.put(`cardHolders/${id}`, { name, phone, status});
+    }
+
+    async delete({id}) {
+        return http.delete(`cardHolders/${id}`)
     }
 }
 

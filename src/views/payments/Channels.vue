@@ -1,5 +1,5 @@
 <template>
-  <Dialog modal :header="i18n.add_channel" v-model:visible="dialog.display" >
+  <Dialog modal :header="dialog.title" v-model:visible="dialog.display" >
     <div class="p-field p-grid">
     <label for="channel_name" class="p-col-12 p-mb-10 p-md-4 p-mb-md-0">{{i18n.channel_name}}</label>
     <InputText id="channel_name" type="text" v-model="dialog.name" />
@@ -9,7 +9,7 @@
       <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
       <InputSwitch id="status" v-model="dialog.status" />
     </div>
-    <Button :label="i18n.submit" icon="pi pi-check" @click="commit()" />
+    <Button :label="i18n.submit" :icon="dialog.icon" @click="commit()" />
   </Dialog>
 
   <ConfirmPopup />
@@ -56,13 +56,13 @@
     </Column>
     <Column field="status" :header="i18n.status">
         <template #body="{ data }">
-            <InputSwitch id="status" v-model="data.status" />
+            <InputSwitch id="status" v-model="data.status" @click="update($event, data)"/>
         </template> 
     </Column>
     <Column field="edit" :header="i18n.edit">
         <template #body="{ data }">
-            <Button :label="i18n.edit" @click="edit(data.id)" />
-            <Button class="p-button-danger" :label="i18n.delete" />
+            <Button :label="i18n.edit" @click="editEntry(data.id)" />
+            <Button class="p-button-danger" :label="i18n.delete" @click="delEntry($event, data.id)" />
         </template> 
     </Column>
     <Column field="cards" :header="i18n.cards">
@@ -78,9 +78,9 @@
 </template>
 <script>
 import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
 import channels from '../../api/Channel';
-import i18n from "../../helper/i18n.zh-CN.js"
+import i18n from "../../helper/i18n.zh-CN.js";
+import ToastService from "../../service/ToastService";
 
 export default {
   data() {
@@ -90,8 +90,14 @@ export default {
       filters: {},
       i18n: i18n,
       dialog: {
-          display: false,
-          status: false
+        title: i18n.add,
+        display: false,
+        button: i18n.add,
+        icon: "pi pi-check",
+
+        id: undefined,
+        name: "",
+        status: false
       }
     };
   },
@@ -104,15 +110,77 @@ export default {
         "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
       };
     },
-    addBank() {},
+    addEntry() {
+      Object.assign(this.dialog, {
+        title: i18n.add,
+        display: true,
+        button: i18n.add,
+        icon: "pi pi-check",
+
+        id: undefined,
+        name: "",
+        status: false
+      })
+    },
+    editEntry(id) {
+      let data = this.records.filter(x => x.id == id)[0];
+
+      Object.assign(this.dialog, {
+        title: i18n.edit,
+        display: true,
+        button: i18n.edit,
+        icon: "pi pi-edit",
+
+        id: data.id,
+        name: data.name,
+        status: data.status
+      })
+      
+    },
+    delEntry(event, id) {
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          channels.delete({id: id})
+        },
+        reject: () => {
+
+        }
+      })
+    },
+    update(event, data) {
+      let { status } = data;
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          channels.update(data);
+        },
+        reject: () => {
+          let record = this.records.filter(x => x.id == data.id)[0];
+          record.status = status;
+        }
+      })
+    },
     commit() {
-        this.dialog.display = !this.dialog.display;
+      switch(this.dialog.title) {
+        case i18n.add:
+          channels.create(this.dialog);
+        break;
+        case i18n.edit:
+          channels.update(this.dialog);
+        break;
+        default: console.warn('Unknown action.');
+        break;
+      }
+      this.dialog.display = false;
+      channels.all().then(({data}) => {this.records = data;});
     },
-    showAddDialog(){
-        this.dialog.display = !this.dialog.display;
-    },
-    edit(id) {
-        console.log(id);
+    showDialog(){
+        this.dialog.display = true;
     }
   },
   created() {

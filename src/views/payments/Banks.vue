@@ -72,12 +72,12 @@
     </Column>
     <Column field="transfer" :header="i18n.transfer">
         <template #body="{ data }">
-            <InputSwitch v-model="data.transfer" @change="update(data)"/>
+            <InputSwitch v-model="data.transfer" @click="update($event, data)"/>
         </template> 
     </Column>
     <Column field="status" :header="i18n.status">
         <template #body="{ data }">
-            <InputSwitch v-model="data.status" @change="update(data)"/>
+            <InputSwitch v-model="data.status" @click="update($event, data)"/>
         </template> 
     </Column>
     <Column field="country" :header="i18n.country">
@@ -105,14 +105,15 @@ export default {
       i18n: i18n,
       dialog: {
         title: i18n.add,
-        id: undefined,
         display: false,
+        button: i18n.add,
+        icon: "pi pi-check",
+
+        id: undefined,
         name: "",
         country: "",
         status: false,
-        transfer: false,
-        button: i18n.add,
-        icon: "pi pi-check"
+        transfer: false
       }
     };
   },
@@ -125,14 +126,15 @@ export default {
     addEntry() {
       Object.assign(this.dialog, {
         title: i18n.add,
-        button: i18n.add,
         display: true,
+        button: i18n.add,
+        icon: "pi pi-check",
+
         id: undefined,
         code: undefined,
         name: "",
         country: "",
-        status: true,
-        icon: "pi pi-check"
+        status: true
       })
     },
     editEntry(id) {
@@ -140,19 +142,21 @@ export default {
 
       Object.assign(this.dialog, {
         title: i18n.edit,
-        button: i18n.commit,
         display: true,
+        button: i18n.commit,
+        icon: "pi pi-edit",
+
         id: id,
         code: data.code,
         name: data.name,
         country: data.country,
         status: data.status,
         transfer: data.transfer,
-        icon: "pi pi-edit",
       })
 
     },
     delEntry(event, id) {
+      console.log(this);
       this.$confirm.require({
           target: event.currentTarget,
           message: i18n.dialog_confirm,
@@ -166,8 +170,22 @@ export default {
           }
       })
     },
-    update(data) {
-      banks.update(data);
+    update(event, data) {
+      let {status, transfer} = data;
+      console.log(status + ', ' + transfer)
+      this.$confirm.require({
+        target: event.currentTarget,
+        message: i18n.dialog_confirm,
+        icon: 'pi pi-exclamation-circle',
+        accept: () => {
+          banks.update(data);
+        }, 
+        reject: () => {
+          let record = this.records.filter(x => x.id == data.id)[0];
+          record.status = status;
+          record.transfer = transfer;
+        }
+      })
     },
     commit() {
       switch(this.dialog.title) {
@@ -178,6 +196,7 @@ export default {
           banks.update(this.dialog);
         break;
         default: console.warn('Unknown action.');
+        break;
       }
       this.dialog.display = false;
       banks.all().then(({data}) => {this.records = data;});
