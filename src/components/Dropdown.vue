@@ -7,8 +7,6 @@
         :class="{ ...computedInputClass, 'p-invalid': errors.length }"
         v-bind="forward"
         :modelValue="modelValue"
-        optionLabel="label"
-        optionValue="value"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
       <label :for="name" :class="{ 'p-error': errors.length }">{{
