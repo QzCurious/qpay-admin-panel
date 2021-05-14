@@ -12,15 +12,23 @@ const config = {
   }
 };
 
-const token = store.state["auth/token"];
-if (token) {
-  config.headers = {
-    ...config.headers,
-    Authorization: `bearer ${store.state["auth/token"]}`
-  };
-}
-
 const http = axios.create(config);
+http.interceptors.request.use(
+  function(config) {
+    const token = store.state.auth.token;
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `bearer ${token}`
+      };
+    }
+    return config;
+  },
+  function(error) {
+    // Do something with request error
+    return Promise.reject(error);
+  }
+);
 http.interceptors.response.use(
   function fulfilled(response) {
     return response;
