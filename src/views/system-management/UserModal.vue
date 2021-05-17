@@ -1,21 +1,10 @@
 <template>
   <form @submit.prevent="handle_submit" class="p-fluid p-d-flex p-flex-column">
-    <div class="p-field">
-      <span class="p-float-label">
-        <Dropdown
-          id="role"
-          filter
-          v-model="role"
-          :options="roles"
-          optionLabel="name"
-          optionValue="id"
-        />
-        <label for="role" :class="{ 'p-error': v$.role.$error }">職位</label>
-      </span>
-      <small v-if="v$.role.$error" class="p-error">
-        {{ v$.role.$errors?.[0]?.$message }}
-      </small>
-    </div>
+    <RoleDropdown
+      float
+      v-model="role_id"
+      :errors="v$.role_id.$errors.map((e) => e.$message)"
+    />
     <InputText
       float
       v-model="signin_id"
@@ -30,6 +19,13 @@
       label="密碼"
       name="password"
       :errors="v$.signin_password.$errors.map((e) => e.$message)"
+    />
+    <Password
+      float
+      v-model="payment_password"
+      label="付款密碼"
+      name="password"
+      :errors="v$.payment_password.$errors.map((e) => e.$message)"
     />
     <div>
       <span class="p-float-label p-mt-4">
@@ -56,22 +52,24 @@
       name="phone"
       :errors="v$.phone.$errors.map((e) => e.$message)"
     />
-    <Button class="p-mt-3" label="建立" type="submit" />
+    <Button class="p-mt-3" label="送出" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
 
 <script>
-import role from "../../api/Role";
 import user from "../../api/User";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import { ipv4 } from "../../helper/validator";
 import InputText from "../../components/InputText";
 import Password from "../../components/Password";
+import RoleDropdown from "../../components/RoleDropdown";
+import ToastService from "../../service/ToastService";
 
 export default {
-  components: { InputText, Password },
+  components: { InputText, Password, RoleDropdown },
+  emits: ["success"],
   props: {
     mode: {
       type: String,
@@ -88,7 +86,8 @@ export default {
     return {
       signin_id: { required, minLength: minLength(2) },
       signin_password: this.mode === "create" ? { required } : {},
-      role: { required },
+      payment_password: this.mode === "create" ? { required } : {},
+      role_id: { required },
       phone: {},
     };
   },
@@ -96,27 +95,13 @@ export default {
     return {
       signin_id: this.data?.signin_id,
       signin_password: this.data?.signin_password,
-      role: this.data?.role?.id,
-      roles: [],
+      payment_password: this.data?.payment_password,
+      role_id: this.data?.role_id,
       ip_allow: this.data?.ip_allow ?? [],
       ip_allow_invlid: this.data?.ip_allow_invlid,
       phone: this.data?.phone,
+      status: this.data?.status ?? true,
     };
-  },
-  async mounted() {
-    role
-      .all()
-      .then(({ data }) => {
-        this.roles = data;
-        user.all().then();
-      })
-      .catch((err) => {
-        this.$toast.add({
-          severity: "error",
-          summary: err.response.data.message,
-          life: 1800,
-        });
-      });
   },
   methods: {
     ip_allow_added(e) {
@@ -144,23 +129,24 @@ export default {
 
       const data = {
         signin_id: this.signin_id,
+        role_id: this.role_id,
         signin_password: this.signin_password,
-        ip_allow: this.ip_allow,
+        payment_password: this.payment_password,
+        ip_allow: this.ip_allow.length ? this.ip_allow : null,
         phone: this.phone,
+        status: Boolean(this.status),
       };
       if (this.mode === "create") {
-        await user.create(data);
-        this.$toast.add({
-          severity: "success",
-          summary: "帳號新增成功",
-          life: 1800,
+        user.create(data).then(() => {
+          ToastService.success({ summary: "帳號新增成功" });
+
+          this.$emit("success", data);
         });
       } else if (this.mode === "edit") {
-        await user.update(this.signin_id, data);
-        this.$toast.add({
-          severity: "success",
-          summary: "帳號新增成功",
-          life: 1800,
+        user.update(this.signin_id, data).then(() => {
+          ToastService.success({ summary: "帳號修改成功" });
+
+          this.$emit("success", data);
         });
       }
 

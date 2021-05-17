@@ -1,28 +1,43 @@
 import http from "./http";
 
 class User {
+  async count(params = { signin_id: null, merchant_id: null }) {
+    return http.get("user/summary", { params });
+  }
+
   async all() {
-    return http.get("users");
+    return user.find({ limit: 99 });
   }
 
-  async get({ id }) {
-    return http.get(`users/${id}`);
+  async find(params) {
+    params = {
+      signin_id: null,
+      merchant_id: null,
+      page: 1,
+      limit: 10,
+      ...params
+    };
+    return http.get("user", { params });
   }
 
-  async create({ sign_id, password, ip_allow = [], phone = null }) {
-    return http.post("users", { sign_id, password, ip_allow, phone });
+  async get({ signin_id }) {
+    return http.get(`user/${signin_id}`);
   }
 
-  async update(id, data) {
-    return http.patch(`users/${id}`, data);
+  async create(params) {
+    return http.post("user", params);
   }
 
-  async command(id, data) {
-    return http.post(`users/${id}/command`, data);
+  async update(signin_id, data) {
+    return http.put(`user/${signin_id}`, data);
   }
 
-  async reset_2fa(id) {
-    return user.command(id, { type: "reset_2fa" });
+  async command(signin_id, data) {
+    return http.post(`user/${signin_id}/command`, data);
+  }
+
+  async reset_2fa(signin_id) {
+    return user.command(signin_id, { type: "reset_2fa" });
   }
 }
 
