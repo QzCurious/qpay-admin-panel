@@ -4,13 +4,17 @@
 import axios from "axios";
 import store from "../store";
 import ToastService from "../service/ToastService";
+import { setupCache } from "axios-cache-adapter";
+
+const cache = setupCache({ maxAge: 0 });
 
 const config = {
   baseURL: process.env.VUE_APP_API_HOST,
   timeout: 6000,
   headers: {
     "Content-Type": "application/json"
-  }
+  },
+  adapter: cache.adapter
 };
 
 const http = axios.create(config);
