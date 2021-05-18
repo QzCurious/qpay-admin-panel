@@ -1,167 +1,170 @@
 import { PrimeIcons } from "primevue/api";
-import i18n from "../../helper/i18n.zh-CN";
+import i18n from "../../i18n";
+import { computed } from "vue";
 
-export default [
+const { t } = i18n.global;
+
+export default computed(() => [
   {
     key: "system_management",
-    label: "系統管理",
+    label: t("system_management"),
     icon: PrimeIcons.COG,
     items: [
       {
         key: "role_setting",
-        label: "權限設定",
+        label: t("role_setting"),
         to: { name: "role_setting" }
       },
       {
         key: "operation_log",
-        label: "操作日誌",
+        label: t("operation_log"),
         to: { name: "operation_log" }
       },
       {
         key: "change_password",
-        label: "變更密碼",
+        label: t("change_password"),
         to: { name: "change_password" }
       },
       {
         key: "change_payment_password",
-        label: "變更付款密碼",
+        label: t("change_payment_password"),
         to: { name: "change_payment_password" }
       },
       {
         key: "user_management",
-        label: "管理使用者",
+        label: t("user_management"),
         to: { name: "user_management" }
       }
     ]
   },
   {
     key: "funds_management",
-    label: "資金管理",
+    label: t("funds_management"),
     icon: PrimeIcons.CREDIT_CARD,
     items: [
       {
         key: "funds_operation_panel",
-        label: "資金管理面板",
+        label: t("funds_operation_panel"),
         to: { name: "funds_operation_panel" }
       },
       {
         key: "transaction_record",
-        label: "交易紀錄",
+        label: t("transaction_record"),
         to: { name: "transaction_record" }
       }
     ]
   },
   {
     key: "merchant_management",
-    label: "商戶管理",
+    label: t("merchant_management"),
     icon: PrimeIcons.USERS,
     items: [
       {
         key: "merchant_operation_panel",
-        label: "商戶管理面板",
+        label: t("merchant_operation_panel"),
         to: { name: "merchant_operation_panel" }
       },
       {
         key: "merchant_parameter",
-        label: "商戶參數",
+        label: t("merchant_parameter"),
         to: { name: "merchant_parameter" }
       },
       {
         key: "merchant_rate",
-        label: "商戶費率",
+        label: t("merchant_rate"),
         to: { name: "merchant_rate" }
       },
       {
         key: "merchant_channel_setting",
-        label: "商戶通道",
+        label: t("merchant_channel_setting"),
         to: { name: "merchant_channel_setting" }
       }
     ]
   },
   {
     key: "payment_management",
-    label: i18n.payment_management,
+    label: t("payment_management"),
     icon: PrimeIcons.CREDIT_CARD,
     items: [
       {
         key: "bank_management",
-        label: i18n.bank_management,
+        label: t("bank_management"),
         to: { name: "bank_management" }
       },
       {
         key: "channel_management",
-        label: i18n.channel_management,
+        label: t("channel_management"),
         to: { name: "channel_management" }
       },
       {
         key: "card_holder_management",
-        label: i18n.card_holder_management,
+        label: t("card_holder_management"),
         to: { name: "card_holder_management" }
       },
       {
         key: "card_management",
-        label: i18n.card_management,
+        label: t("card_management"),
         to: { name: "card_management" }
       },
       {
         key: "card_operation_management",
-        label: i18n.card_operation_management,
+        label: t("card_operation_management"),
         to: { name: "card_operation_management" }
       }
     ]
   },
   {
     key: "financial_reports",
-    label: i18n.financial_reports,
+    label: t("financial_reports"),
     icon: PrimeIcons.CHART_BAR,
     items: [
       {
         key: "deposit_daily_report",
-        label: i18n.deposit_daily_report,
+        label: t("deposit_daily_report"),
         to: { name: "deposit_daily_report" }
       },
       {
         key: "merchant_daily_report",
-        label: i18n.merchant_daily_report,
+        label: t("merchant_daily_report"),
         to: { name: "merchant_daily_report" }
       }
     ]
   },
   {
     key: "order_management",
-    label: "訂單管理",
+    label: t("order_management"),
     icon: PrimeIcons.MONEY_BILL,
     items: [
       {
         key: "merchant_order",
-        label: "商家訂單",
+        label: t("merchant_order"),
         to: { name: "merchant_order" }
       },
       {
         key: "merchant_order_post",
-        label: "商家訂單回調",
+        label: t("merchant_order_post"),
         to: { name: "merchant_order_post" }
       },
       {
         key: "merchant_order_statistics",
-        label: "商家訂單統計數據",
+        label: t("merchant_order_statistics"),
         to: { name: "merchant_order_statistics" }
       },
       {
         key: "merchant_order_operation",
-        label: "merchant_order_operation",
+        label: t("merchant_order_operation"),
         to: { name: "merchant_order_operation" }
       },
       {
         key: "deposit_order_operation",
-        label: "deposit_order_operation",
+        label: t("deposit_order_operation"),
         to: { name: "deposit_order_operation" }
       },
       {
         key: "deposit_record",
-        label: "deposit_record",
+        label: t("deposit_record"),
         to: { name: "deposit_record" }
       }
     ]
   }
-];
+]);
