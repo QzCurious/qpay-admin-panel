@@ -60,7 +60,7 @@ export default {
   },
   computed: {
     permissions() {
-      return rename_key(menu);
+      return rename_key(menu.value);
     },
   },
   methods: {
