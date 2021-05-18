@@ -1,6 +1,13 @@
 <template>
-  <div :style="$attrs.style" class="p-field" :class="$attrs.class">
-    <span class="p-float-label">
+  <div :style="$attrs.style" :class="$attrs.class">
+    <span :class="{ 'p-mt-4 p-float-label': float }">
+      <template v-if="!float">
+        <label
+          :for="name"
+          :class="{ 'p-error': errors.length, 'p-mr-2': true }"
+          >{{ label }}</label
+        >
+      </template>
       <Password
         toggleMask
         :feedback="false"
@@ -11,9 +18,11 @@
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
-      <label :for="name" :class="{ 'p-error': errors.length }">{{
-        label
-      }}</label>
+      <template v-if="float">
+        <label :for="name" :class="{ 'p-error': errors.length }">{{
+          label
+        }}</label>
+      </template>
     </span>
     <template v-if="errors.length">
       <small v-for="error in errors" :key="error" class="p-error">
@@ -28,6 +37,10 @@ export default {
   inheritAttrs: false,
   emits: ["update:modelValue"],
   props: {
+    float: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: true,
@@ -67,9 +80,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.p-field {
-  margin: 1.5rem 0 0 0;
-}
-</style>
