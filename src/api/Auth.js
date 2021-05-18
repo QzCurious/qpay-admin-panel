@@ -27,12 +27,10 @@ class Auth {
   }
 
   async change_password({ old_password, new_password }) {
-    return http
-      .post("auth/reset-password", { old_password, new_password })
-      .then((res) => {
-        store.dispatch("auth/signin", res.data.access_token);
-        return res
-      });
+    return http.put("user/signin_password", {
+      signin_password: old_password,
+      signin_password_new: new_password
+    });
   }
 
   async change_payment_password({ old_password, new_password }) {

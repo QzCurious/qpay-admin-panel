@@ -40,6 +40,7 @@ import auth from "../../api/Auth";
 import useVuelidate from "@vuelidate/core";
 import { required, sameAs } from "@vuelidate/validators";
 import Password from "../../components/Password";
+import ToastService from "../../service/ToastService";
 
 export default {
   components: { Password },
@@ -83,19 +84,11 @@ export default {
           this.new_password = null;
           this.confirm_new_password = null;
 
-          this.$toast.add({
-            severity: "success",
-            summary: "重設密碼成功",
-            life: 1800,
-          });
+          ToastService.success({ summary: "修改密碼成功" });
         })
         .catch((err) => {
-          if (err.response.status >= 400 && !this.v$.$error) {
-            this.$toast.add({
-              severity: "error",
-              summary: err.response.data.message,
-              life: 1800,
-            });
+          if (err.response.status === 400 && !this.v$.$error) {
+            ToastService.error({ summary: err.response.data.message });
           }
         });
     },
