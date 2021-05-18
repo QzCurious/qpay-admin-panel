@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      role: this.data?.role?.name,
+      role: this.data?.role_name,
       selected: this.data?.selected || [],
     };
   },
