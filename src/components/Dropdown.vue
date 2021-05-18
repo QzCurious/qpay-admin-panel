@@ -1,17 +1,28 @@
 <template>
-  <div :style="$attrs.style" class="p-field" :class="$attrs.class">
-    <span class="p-float-label">
+  <div :style="$attrs.style" :class="$attrs.class">
+    <span :class="{ 'p-mt-4 p-float-label': float }">
+      <template v-if="!float">
+        <label
+          :for="name"
+          :class="{ 'p-error': errors.length, 'p-mr-2': true }"
+          >{{ label }}</label
+        >
+      </template>
       <Dropdown
         :name="name"
         :style="inputStyle"
         :class="{ ...computedInputClass, 'p-invalid': errors.length }"
+        :optionLabel="optionLabel"
+        :optionValue="optionValue"
         v-bind="forward"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
       />
-      <label :for="name" :class="{ 'p-error': errors.length }">{{
-        label
-      }}</label>
+      <template v-if="float">
+        <label :for="name" :class="{ 'p-error': errors.length }">{{
+          label
+        }}</label>
+      </template>
     </span>
     <template v-if="errors.length">
       <small v-for="error in errors" :key="error" class="p-error">
@@ -28,9 +39,21 @@ export default {
   components: { Dropdown },
   emits: ["update:modelValue"],
   props: {
+    float: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: false,
+    },
+    optionLabel: {
+      type: String,
+      default: "label",
+    },
+    optionValue: {
+      type: String,
+      default: "value",
     },
     modelValue: {
       default: null,
@@ -67,9 +90,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.p-field {
-  margin: 1.5rem 0 0 0;
-}
-</style>
