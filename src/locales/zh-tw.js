@@ -44,6 +44,14 @@ export default {
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
 
+  form: {
+    create: "新增",
+    edit: "編輯",
+    delete: "刪除",
+    submit: "送出",
+    search: "搜尋"
+  },
+
   /**
    * Button
    */

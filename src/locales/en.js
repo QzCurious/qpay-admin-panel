@@ -44,6 +44,14 @@ export default {
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
 
+  form: {
+    create: "Create",
+    edit: "Edit",
+    delete: "Delete",
+    submit: "Submit",
+    search: "Search"
+  },
+
   /**
    * Button
    */
