@@ -4,18 +4,7 @@
   chmod 600 ~/.ssh/id_rsa
   [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
-variables:
-  SSH_USER_TEST: deploy
-
-rspec:
-  image: node:10-slim
-  script:
-    # - echo "Running PHPUnit Tests"
-    # - php vendor/bin/phpunit --colors --debug  --coverage-text
-    - pwd
-    # - node index.js
-
-stage2:
+stage2-build-and-up:
   image: docker:dind
   script:
     - docker build -t qpay-client --build-arg MODE=development .
