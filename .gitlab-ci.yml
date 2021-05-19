@@ -1,0 +1,25 @@
+.init_ssh: &init_ssh |
+  mkdir -p ~/.ssh
+  echo -e "$SSH_PRIVATE_KEY_TEST" > ~/.ssh/id_rsa
+  chmod 600 ~/.ssh/id_rsa
+  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+rspec:
+  image: node:10-slim
+  script:
+    # - echo "Running PHPUnit Tests"
+    # - php vendor/bin/phpunit --colors --debug  --coverage-text
+    - pwd
+    - node index.js
+
+stage2:
+  image: docker:dind
+  script:
+    - docker build -t qpay-client --build-arg MODE=development .
+    # - docker push registry.llamatech.top/runner-lab
+    - *init_ssh
+    - cat ~/.ssh/id_rsa
+    - ssh -l $SSH_USER_TEST $SERVER_TEST << EOF
+    - cd $DOCKER_COMPOSE_DIRECTORY
+    - docker-compose up -d $SERVICE_NAME
+    - EOF
