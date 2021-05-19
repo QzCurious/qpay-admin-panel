@@ -44,6 +44,22 @@ export default {
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
 
+  // subject
+  signin_id: "Account",
+  company: "Company",
+  role: "Role",
+  status: "Status",
+  signin_password: "Password",
+  payment_password: "Payment Password",
+
+  // action
+  create_role: "Create role",
+  edit_role: "Edit role",
+
+  // feedback
+  role_successfully_created: "User created",
+  role_successfully_updated: "User updated",
+
   form: {
     create: "Create",
     edit: "Edit",
@@ -81,7 +97,6 @@ export default {
   bank_code: "code::bank_code",
   bank_name: "code::bank_name",
   transfer: "code::transfer",
-  status: "code::status",
   country: "code::country",
   edit: "code::edit",
 

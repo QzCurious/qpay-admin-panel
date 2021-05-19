@@ -44,6 +44,22 @@ export default {
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
 
+  // subject
+  signin_id: "帳號",
+  company: "機構",
+  role: "職位",
+  status: "狀態",
+  signin_password: "密碼",
+  payment_password: "付款密碼",
+
+  // action
+  create_role: "建立職位",
+  edit_role: "編輯職位",
+
+  // feedback
+  role_successfully_created: "職位新增成功",
+  role_successfully_updated: "職位更新成功",
+
   form: {
     create: "新增",
     edit: "編輯",
@@ -81,7 +97,6 @@ export default {
   bank_code: "code::bank_code",
   bank_name: "code::bank_name",
   transfer: "code::transfer",
-  status: "code::status",
   country: "code::country",
   edit: "code::edit",
 

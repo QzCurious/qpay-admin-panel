@@ -9,7 +9,7 @@
         autofocus
         class="p-mb-3"
         v-model="role"
-        label="職稱"
+        :label="$t('role')"
         name="role"
         :disabled="mode === 'edit'"
         :errors="v$.role.$errors.map((e) => e.$message)"
@@ -21,7 +21,7 @@
       selectionMode="checkbox"
       v-model:selectionKeys="selected"
     ></Tree>
-    <Button class="p-mt-3" label="建立" type="submit" />
+    <Button class="p-mt-3" :label="$t('create')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -33,6 +33,7 @@ import { required } from "@vuelidate/validators";
 import menu from "../../layouts/AdminLayout/menu";
 import { rename_key } from "../../helper/array";
 import InputText from "../../components/InputText";
+import ToastService from "../../service/ToastService";
 
 export default {
   components: { InputText },
@@ -76,18 +77,14 @@ export default {
       };
       if (this.mode === "create") {
         Role.create(data).then(() => {
-          this.$toast.add({
-            severity: "success",
-            summary: "職位新增成功",
-            life: 1800,
+          ToastService.success({
+            summary: this.$i18n.t("account_successfully_created"),
           });
         });
       } else if (this.mode === "edit") {
-        await Role.update(this.role.id, data).then(() => {
-          this.$toast.add({
-            severity: "success",
-            summary: "職位更新成功",
-            life: 1800,
+        Role.update(this.role.id, data).then(() => {
+          ToastService.success({
+            summary: this.$i18n.t("account_successfully_updated"),
           });
         });
       }
