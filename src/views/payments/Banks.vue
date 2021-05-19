@@ -1,223 +1,166 @@
 <template>
-  <Dialog modal :header="dialog.title" v-model:visible="dialog.display" >
-    <div class="p-field p-grid">
-    <label for="bank_name" class="p-col-12 p-mb-10 p-md-4 p-mb-md-0">{{i18n.bank_name}}</label>
-    <InputText id="bank_name" type="text" v-model="dialog.name" />
-    </div>
-    <div class="p-field p-grid">
-    <label for="country" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.country}}</label>
-    <InputText id="country" type="text" v-model="dialog.country" />
-    </div>
-    <div class="p-field p-grid">
-    <label for="code" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.bank_code}}</label>
-    <InputText id="code" type="text" v-model="dialog.code" />
-    </div>
-    <div class="p-field p-grid">
-    <label for="transfer" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.transfer}}</label>
-    <InputSwitch id="transfer" v-model="dialog.transfer" />
-    </div>
-    <div class="p-field p-grid">
-    <label for="status" class="p-col-12 p-mb-2 p-md-4 p-mb-md-0">{{i18n.status}}</label>
-    <InputSwitch id="status" v-model="dialog.status" />
-    </div>
-    <!-- <Button :label="i18n.submit" icon="pi pi-check" @click="addBank()" /> -->
-    <Button :label="dialog.button" :icon="dialog.icon" @click="commit()" />
-  </Dialog>
-
-  <ConfirmPopup />
-
-  <DataTable 
+  <DataTable
     responsiveLayout="scroll"
     dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    sortField="code"
-    v-model:filters="filters"
+    @page="on_page($event)"
   >
     <template #header>
-      <h2><b>{{i18n.bank_management}}</b></h2>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-plus"
-          :label="i18n.add"
-          _class="p-button-outlined p-mb-2"
-          @click="addEntry()"
-        />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
-      </div>
+      <form @submit.prevent="fetch" class="p-d-flex p-jc-end">
+        <Button class="p-mr-auto" label="新增銀行" @click="create" />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <!-- <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.id }}</template> 
-    </Column> -->
-    <Column field="bank_code" :header="i18n.bank_code" sortable>
-        <template #body="{ data }">{{ data.code }}</template> 
-    </Column>
-    <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.name }}</template> 
-    </Column>
+    <Column field="code" :header="i18n.bank_code" />
+    <Column field="name" :header="i18n.bank_name" />
     <Column field="transfer" :header="i18n.transfer">
-        <template #body="{ data }">
-            <InputSwitch v-model="data.transfer" @click="update($event, data)"/>
-        </template> 
+      <template #body="{ data }">
+        <InputSwitch
+          :modelValue="Boolean(data.transfer)"
+          @click="update_transfer(data, Number(!data.transfer))"
+        />
+      </template>
     </Column>
     <Column field="status" :header="i18n.status">
-        <template #body="{ data }">
-            <InputSwitch v-model="data.status" @click="update($event, data)"/>
-        </template> 
+      <template #body="{ data }">
+        <InputSwitch
+          :modelValue="Boolean(data.status)"
+          @click="update_status(data, Number(!data.status))"
+        />
+      </template>
     </Column>
-    <Column field="country" :header="i18n.country">
-        <template #body="{ data }">{{ data.country }}</template> 
-    </Column>
+    <Column field="country" :header="i18n.country" />
     <Column field="edit" :header="i18n.edit">
-        <template #body="{ data }">
-            <Button :label="i18n.edit" @click="editEntry(data.id)"/>
-            <Button class="p-button-danger" :label="i18n.delete" @click="delEntry($event, data.id)" />
-        </template> 
+      <template #body="{ data }">
+        <Button label="編輯" @click="edit(data)" />
+        <Button class="p-button-danger" label="刪除" @click="remove(data)" />
+      </template>
     </Column>
   </DataTable>
-
+  <ConfirmDialog />
+  <Dialog modal :header="modal_title" v-model:visible="modal.visible">
+    <BankModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+  </Dialog>
 </template>
 <script>
-import { FilterMatchMode } from "primevue/api";
-import banks from '../../api/Bank';
-import i18n from "../../helper/i18n.zh-CN.js"
+import { PrimeIcons } from "primevue/api";
+import Bank from "../../api/Bank";
+import i18n from "../../helper/i18n.zh-CN.js";
+import ToastService from "../../service/ToastService";
+import BankModal from "./BankModal";
+
 export default {
+  components: { BankModal },
   data() {
     return {
-      records: [],
       loading: true,
-      filters: {},
-      i18n: i18n,
-      dialog: {
-        title: i18n.add,
-        display: false,
-        button: i18n.add,
-        icon: "pi pi-check",
+      page: 1,
+      limit: 10,
+      filters: {
+        status: null,
+      },
+      records: [],
+      totalRecords: 0,
+      modal: {
+        visible: false,
+        mode: null,
+        data: {},
+      },
 
-        id: undefined,
-        name: "",
-        country: "",
-        status: false,
-        transfer: false
-      }
+      i18n: i18n,
     };
   },
-  methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
-    },
-    addEntry() {
-      Object.assign(this.dialog, {
-        title: i18n.add,
-        display: true,
-        button: i18n.add,
-        icon: "pi pi-check",
-
-        id: undefined,
-        code: undefined,
-        name: "",
-        country: "",
-        status: true
-      })
-    },
-    editEntry(id) {
-      let data = this.records.filter(x => x.id == id)[0];
-
-      Object.assign(this.dialog, {
-        title: i18n.edit,
-        display: true,
-        button: i18n.commit,
-        icon: "pi pi-edit",
-
-        id: id,
-        code: data.code,
-        name: data.name,
-        country: data.country,
-        status: data.status,
-        transfer: data.transfer,
-      })
-
-    },
-    delEntry(event, id) {
-      console.log(this);
-      this.$confirm.require({
-          target: event.currentTarget,
-          message: i18n.dialog_confirm,
-          icon: 'pi pi-exclamation-circle',
-          accept: () => {
-              //callback to execute when user confirms the action
-              banks.delete({id: id});
-          },
-          reject: () => {
-              //callback to execute when user rejects the action
-          }
-      })
-    },
-    update(event, data) {
-      let {status, transfer} = data;
-      console.log(status + ', ' + transfer)
-      this.$confirm.require({
-        target: event.currentTarget,
-        message: i18n.dialog_confirm,
-        icon: 'pi pi-exclamation-circle',
-        accept: () => {
-          banks.update(data);
-        }, 
-        reject: () => {
-          let record = this.records.filter(x => x.id == data.id)[0];
-          record.status = status;
-          record.transfer = transfer;
-        }
-      })
-    },
-    commit() {
-      switch(this.dialog.title) {
-        case i18n.add:
-          banks.create(this.dialog);
-        break;
-        case i18n.edit:
-          banks.update(this.dialog);
-        break;
-        default: console.warn('Unknown action.');
-        break;
-      }
-      this.dialog.display = false;
-      banks.all().then(({data}) => {this.records = data;});
-    },
-    showDialog() {
-        this.dialog.display = !this.dialog.display;
-    }
-  },
-  created() {
-    this.clearFilter();
-  },
   mounted() {
-    banks
-      .all()
-      .then(({ data }) => {
-        this.records = data;
-      })
-      .finally(() => (this.loading = false));
+    this.fetch();
   },
-}
+  methods: {
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        Bank.find({ ...this.filters, page: this.page, limit: this.limit }),
+        Bank.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
+    },
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
+    },
+    update_status(data, status) {
+      const verb = status ? "啟用" : "停用";
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: `${verb}銀行`,
+        message: `銀行將被${verb}: ${data.name}`,
+        accept: () => {
+          Bank.update(data.id, { status }).then(() => {
+            this.fetch();
+            ToastService.success({
+              summary: `已${verb}銀行 ${data.name}`,
+            });
+          });
+        },
+      });
+      this.show_update_status_modal = true;
+    },
+    update_transfer(data, value) {
+      const verb = status ? "啟用" : "停用";
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: `${verb}銀行`,
+        message: `銀行將被${verb}: ${data.name}`,
+        accept: () => {
+          Bank.update(data.id, { transfer: value }).then(() => {
+            this.fetch();
+            ToastService.success({
+              summary: `已${verb}銀行 ${data.name}`,
+            });
+          });
+        },
+      });
+      this.show_update_status_modal = true;
+    },
+    edit(data) {
+      this.modal.mode = "edit";
+      this.modal.data = data;
+      this.modal.visible = true;
+    },
+    create() {
+      this.modal.mode = "create";
+      this.modal.data = {};
+      this.modal.visible = true;
+    },
+    remove(data) {
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: "刪除銀行",
+        message: `銀行將被刪除: ${data.name}`,
+        accept: () => {
+          Bank.delete(data.id).then(() => {
+            ToastService.success({ summary: `已刪除銀行 ${data.name}` });
+            this.fetch();
+          });
+        },
+      });
+    },
+  },
+  computed: {
+    modal_title() {
+      return this.modal.mode === "edit" ? "編輯銀行" : "新增銀行";
+    },
+  },
+};
 </script>
 <style scoped>
-
 </style>

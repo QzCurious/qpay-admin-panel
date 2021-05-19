@@ -1,29 +1,40 @@
-import http from './http';
-import toastService from '../service/ToastService';
+import http from "./http";
+
 class Bank {
-    async all() {
-        return http.get("banks");
-    }
+  async count(params = {}) {
+    return http.get("bank/summary", { params });
+  }
 
-    async retrieve( { id } ) {
-        return http.get(`banks/${id}`);
-    }
+  async all() {
+    return bank.find({ limit: 99 });
+  }
 
-    async create({ name, code, country, status, transfer}) {
-        console.log({ name, code, country, status, transfer})
-        return http.post('banks', {name, code, country, status, transfer});
-    }
+  async find(params) {
+    params = {
+      page: 1,
+      limit: 10,
+      ...params
+    };
+    return http.get("bank", { params });
+  }
 
-    async update({ id, name, code, country, status, transfer}) {
-        // toastService.add({severity:'success', summary: 'Success Message', detail:'Order submitted', life: 10000})
-        return http.put(`banks/${id}`, { name, code, country, status, transfer})
-        // .catch( _ => { 
-        // });
-    }
+  async get(id) {
+    return http.get(`bank/${id}`);
+  }
 
-    async delete({ id }){
-        return http.delete(`banks/${id}`);
-    }
+  async create(params) {
+    return http.post("bank", params);
+  }
+
+  async update(id, data) {
+    return http.put(`bank/${id}`, data);
+  }
+
+  async delete(id) {
+    return http.delete(`bank/${id}`);
+  }
 }
 
-export default new Bank();
+const bank = new Bank();
+
+export default bank;
