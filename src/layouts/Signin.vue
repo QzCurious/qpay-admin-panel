@@ -7,12 +7,14 @@
         class="p-fluid p-d-flex p-flex-column"
       >
         <InputText
+          float
           v-model="signin_id"
           label="帳號"
           name="signin_id"
           :errors="v$.signin_id.$errors.map((e) => e.$message)"
         />
         <Password
+          float
           v-model="password"
           label="密碼"
           name="password"

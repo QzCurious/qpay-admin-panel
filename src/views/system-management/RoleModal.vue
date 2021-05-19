@@ -5,6 +5,7 @@
     </template>
     <template v-if="!data.role">
       <InputText
+        float
         autofocus
         class="p-mb-3"
         v-model="role"

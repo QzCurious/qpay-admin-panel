@@ -17,6 +17,7 @@
       </small>
     </div>
     <InputText
+      float
       v-model="signin_id"
       label="帳號"
       name="signin_id"
@@ -24,13 +25,14 @@
       :errors="v$.signin_id.$errors.map((e) => e.$message)"
     />
     <Password
+      float
       v-model="signin_password"
       label="密碼"
       name="password"
       :errors="v$.signin_password.$errors.map((e) => e.$message)"
     />
-    <div class="p-field">
-      <span class="p-float-label">
+    <div>
+      <span class="p-float-label p-mt-4">
         <Chips
           id="ip_allow"
           :class="{ 'p-invalid': ip_allow_invlid }"
@@ -48,6 +50,7 @@
       </small>
     </div>
     <InputText
+      float
       v-model="phone"
       label="電話"
       name="phone"

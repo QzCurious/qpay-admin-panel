@@ -8,18 +8,21 @@
         class="p-fluid p-d-flex p-flex-column"
       >
         <Password
+          float
           v-model="old_password"
           label="舊密碼"
           name="old_password"
           :errors="v$.old_password.$errors.map((e) => e.$message)"
         />
         <Password
+          float
           v-model="new_password"
           label="新密碼"
           name="new_password"
           :errors="v$.new_password.$errors.map((e) => e.$message)"
         />
         <Password
+          float
           v-model="confirm_new_password"
           label="確認新密碼"
           name="confirm_new_password"
