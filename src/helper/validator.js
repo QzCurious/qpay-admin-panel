@@ -10,3 +10,8 @@ export function ipv4(value) {
 export const date = (format = "YYYY/M/D") => ( value ) => {
   return !helpers.req(value) || moment(value, format, true).isValid();
 };
+
+
+export function numBool(value) {
+  return value => [0, 1].includes(value)
+}
