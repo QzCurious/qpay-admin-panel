@@ -34,7 +34,10 @@ class Auth {
   }
 
   async change_payment_password({ old_password, new_password }) {
-    return http.patch("payment-password", { old_password, new_password });
+    return http.put("user/payment_password", {
+      payment_password: old_password,
+      payment_password_new: new_password
+    });
   }
 }
 
