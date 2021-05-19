@@ -10,7 +10,7 @@ rspec:
     # - echo "Running PHPUnit Tests"
     # - php vendor/bin/phpunit --colors --debug  --coverage-text
     - pwd
-    - node index.js
+    # - node index.js
 
 stage2:
   image: docker:dind
