@@ -1,0 +1,19 @@
+.init_ssh: &init_ssh |
+  mkdir -p ~/.ssh
+  echo -e "$SSH_PRIVATE_KEY_TEST" > ~/.ssh/id_rsa
+  chmod 600 ~/.ssh/id_rsa
+  [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+stage2-build-and-up:
+  image: docker:dind
+  script:
+    - sed -i s/api\.llamatech.top/$API_LOCATION/g .env.development
+    - cat .env.development
+    - docker build -t qpay-client --build-arg MODE=development .
+    # - docker push registry.llamatech.top/runner-lab
+    - *init_ssh
+    - cat ~/.ssh/id_rsa
+    - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
+    - cd $DOCKER_COMPOSE_DIRECTORY
+    - docker-compose up -d $SERVICE_NAME
+    - EOF
