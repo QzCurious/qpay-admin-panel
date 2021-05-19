@@ -19,6 +19,7 @@ stage2:
     # - docker push registry.llamatech.top/runner-lab
     - *init_ssh
     - cat ~/.ssh/id_rsa
+    - echo $SSH_USER_TEST@$SERVER_TEST 
     - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
     - cd $DOCKER_COMPOSE_DIRECTORY
     - docker-compose up -d $SERVICE_NAME
