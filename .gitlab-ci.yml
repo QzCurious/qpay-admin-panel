@@ -7,6 +7,7 @@
 stage2-build-and-up:
   image: docker:dind
   script:
+    - sed -i s/api\.llamatech.com/$API_LOCATION/g .env.development
     - docker build -t qpay-client --build-arg MODE=development .
     # - docker push registry.llamatech.top/runner-lab
     - *init_ssh
