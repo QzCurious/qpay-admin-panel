@@ -9,6 +9,9 @@ export const store = {
     },
     isAuthenticated(state) {
       return Boolean(state.token);
+    },
+    signin_id(state, { jwt }) {
+      return jwt.signin_id;
     }
   },
   actions: {

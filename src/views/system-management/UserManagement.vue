@@ -1,38 +1,33 @@
 <template>
-  <div><Button label="新增使用者" @click="create_user" /></div>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          class="p-button-outlined p-mb-2"
-        />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText placeholder="Keyword Search" style="width: 100%" />
-        </span>
-      </div>
+      <form @submit.prevent="fetch" class="p-d-flex p-ai-start p-jc-end">
+        <Button class="p-mr-auto" label="新增使用者" @click="create_user" />
+        <MerchantDropdown label="機構" v-model="filters.merchant_id" />
+        <Button class="p-button-outlined" type="submit">搜尋</Button>
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="signin_id" header="帳號"></Column>
-    <Column field="company" header="機構"></Column>
-    <Column field="role.name" header="職位"> </Column>
+    <Column field="merchant_name" header="機構"></Column>
+    <Column field="role_name" header="職位"></Column>
     <Column field="status" header="status">
       <template #body="{ data }">
         <InputSwitch
-          :modelValue="data.status"
+          :modelValue="Boolean(data.status)"
           @click="update_user_status(data, !data.status)"
         />
       </template>
@@ -46,7 +41,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <UserModal :mode="modal.mode" :data="modal.data" />
+    <UserModal :mode="modal.mode" :data="modal.data" @success="fetch" />
   </Dialog>
 </template>
 
@@ -54,14 +49,21 @@
 import { PrimeIcons } from "primevue/api";
 import User from "../../api/User";
 import UserModal from "./UserModal";
+import MerchantDropdown from "../../components/MerchantDropdown";
+import ToastService from "../../service/ToastService";
 
 export default {
-  components: { UserModal },
+  components: { UserModal, MerchantDropdown },
   data() {
     return {
-      records: [],
       loading: true,
-      filters: {},
+      page: 1,
+      limit: 10,
+      filters: {
+        merchant_id: null,
+      },
+      records: [],
+      totalRecords: 0,
       modal: {
         visible: false,
         mode: null,
@@ -69,7 +71,25 @@ export default {
       },
     };
   },
+  mounted() {
+    this.fetch();
+  },
   methods: {
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        User.find({ ...this.filters, page: this.page, limit: this.limit }),
+        User.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
+    },
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
+    },
     update_user_status(data, status) {
       const verb = status ? "啟用" : "停用";
       this.$confirm.require({
@@ -77,8 +97,11 @@ export default {
         header: `${verb}帳號`,
         message: `帳號將被${verb}: ${data.signin_id}`,
         accept: () => {
-          User.update(data.id, { status }).then(() => {
+          User.update(data.signin_id, { status: Number(status) }).then(() => {
             data.status = status;
+            ToastService.success({
+              summary: `已${verb}帳號 ${data.signin_id}`,
+            });
           });
         },
       });
@@ -113,15 +136,11 @@ export default {
       return this.modal.mode === "edit" ? "編輯帳號" : "新增帳號";
     },
   },
-  mounted() {
-    User.all()
-      .then(({ data }) => {
-        this.records = data;
-      })
-      .finally(() => (this.loading = false));
-  },
 };
 </script>
 
-<style>
+<style scoped>
+form > :not(:last-child) {
+  margin-right: 0.5rem;
+}
 </style>

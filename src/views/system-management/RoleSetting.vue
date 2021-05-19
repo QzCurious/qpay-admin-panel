@@ -1,83 +1,42 @@
 <template>
-  <div><Button label="新增職位" @click="create_role" /></div>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    v-model:filters="filters"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
+      <form @submit.prevent="fetch" class="p-d-flex p-ai-start p-jc-end">
         <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          class="p-button-outlined p-mb-2"
-          @click="clearFilter"
+          class="p-mt-4 p-mr-auto"
+          label="新增職位"
+          @click="create_role"
         />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
-      </div>
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="signin_id" header="帳號" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        {{ data.signin_id }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column
-      filterField="role.id"
-      header="職位 id"
-      :showFilterMatchModes="false"
-    >
+    <Column field="signin_id" header="帳號" />
+    <Column field="role_id" header="職位 id">
       <template #body="{ data }">
         <span class="p-d-inline-flex p-ai-center">
-          {{ data.role.id }} <Button class="p-ml-2 p-button-sm" label="編輯" @click="edit_role(data)" />
+          {{ data.role_id }}
+          <Button
+            class="p-ml-2 p-button-sm"
+            label="編輯"
+            @click="edit_role(data)"
+          />
         </span>
       </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
     </Column>
-    <Column field="role.name" header="職位" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        {{ data.role.name }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
+    <Column field="role_name" header="職位" />
   </DataTable>
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
     <RoleModal :mode="modal.mode" :data="modal.data" />
@@ -85,17 +44,19 @@
 </template>
 
 <script>
-import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
+import User from "../../api/User";
 import RoleModal from "./RoleModal";
 
 export default {
   components: { RoleModal },
   data() {
     return {
-      records: [],
       loading: true,
+      page: 1,
+      limit: 10,
       filters: {},
+      records: [],
+      totalRecords: 0,
       modal: {
         visible: false,
         mode: null,
@@ -103,14 +64,26 @@ export default {
       },
     };
   },
+  computed: {
+    modal_title() {
+      return this.modal.mode === "edit" ? "編輯帳號" : "新增帳號";
+    },
+  },
   methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        User.find({ ...this.filters, page: this.page, limit: this.limit }),
+        User.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
+    },
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
     },
     edit_role(data) {
       this.modal.mode = "edit";
@@ -123,16 +96,8 @@ export default {
       this.modal.visible = true;
     },
   },
-  created() {
-    this.clearFilter();
-  },
   mounted() {
-    user
-      .all()
-      .then(({ data }) => {
-        this.records = data;
-      })
-      .finally(() => (this.loading = false));
+    this.fetch();
   },
 };
 </script>

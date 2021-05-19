@@ -2,90 +2,56 @@
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
-    :value="funds"
+    :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          class="p-button-outlined p-mb-2"
-          @click="clearFilter"
+      <form @submit.prevent="fetch" class="p-d-flex p-jc-end">
+        <Button class="p-mr-auto" label="新增商戶" @click="create" />
+        <Dropdown
+          label="狀態"
+          v-model="filters.status"
+          :options="[
+            { label: 'disabled', value: 0 },
+            { label: 'enabled', value: 1 },
+          ]"
         />
-        <div class="p-mb-2 p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="merchant">商戶</label>
-            <Dropdown
-              inputId="merchant"
-              v-model="selectedMerchant"
-              :options="merchant"
-              placeholder="Select"
-            />
-          </div>
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="channel">頻道</label>
-            <Dropdown
-              inputId="channel"
-              v-model="selectedState"
-              :options="states"
-              optionLabel="name"
-              placeholder="Select"
-            />
-          </div>
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="status">狀態</label>
-            <Dropdown
-              inputId="status"
-              v-model="selectedState"
-              :options="states"
-              optionLabel="name"
-              placeholder="Select"
-            />
-          </div>
-          <Button
-            type="button"
-            icon="pi pi-search"
-            label="搜尋"
-            class="p-button-outlined"
-          />
-        </div>
-      </div>
+        <Button
+          type="submit"
+          icon="pi pi-search"
+          label="搜尋"
+          class="p-button-outlined"
+        />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <!-- <Column field="index" header="索引" :sortable="false">
-      <template #body="{ index }">
-        {{ index + 1 }}
-      </template>
-    </Column> -->
-    <Column field="merchant" header="商戶名稱" :sortable="false">
+    <Column field="name" header="商戶名稱" />
+    <Column field="status" header="狀態">
       <template #body="{ data }">
-        {{ data.merchant }}
-      </template> </Column
-    ><Column field="channel" header="通道名稱" :sortable="false">
-      <template #body="{ data }">
-        {{ data.channel }}
+        <InputSwitch
+          :modelValue="Boolean(data.status)"
+          @click="update_status(data, !data.status)"
+        />
       </template>
     </Column>
-    <Column field="status" header="狀態" :sortable="false">
+    <Column field="created_at" header="創建時間">
       <template #body="{ data }">
-        <InputSwitch v-model="data.status" />
-      </template>
-    </Column>
-    <Column field="add_time" header="創建時間" :sortable="false">
-      <template #body="{ data }">
-        {{ data.add_time }}
+        {{
+          data.created_at &&
+          moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT)
+        }}
       </template>
     </Column>
     <Column header="操作" :sortable="false">
-      <template #body="{data}">
+      <template #body="{ data }">
         <Button
           class="p-button-primary p-m-1"
           label="編輯"
@@ -100,87 +66,104 @@
     </Column>
   </DataTable>
   <ConfirmDialog></ConfirmDialog>
-  <Dialog></Dialog>
+  <Dialog modal header="新增商戶" v-model:visible="create_modal.visible">
+    <CreateMerchant @success="fetch" />
+  </Dialog>
+  <Dialog modal header="編輯商戶" v-model:visible="edit_modal.visible">
+    <EditMerchant :id="edit_modal.data.id" @success="fetch" />
+  </Dialog>
 </template>
 <script>
 import { defineComponent } from "vue";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
+import { PrimeIcons } from "primevue/api";
+import Merchant from "../../api/Merchant";
+import ToastService from "../../service/ToastService";
+import Dropdown from "../../components/Dropdown";
+import CreateMerchant from "./CreateMerchant";
+import EditMerchant from "./EditMerchant";
 
 export default defineComponent({
   name: "FundsOperationPanel",
+  components: { Dropdown, CreateMerchant, EditMerchant },
   data() {
     return {
-      funds: [],
       loading: true,
-      filters: {},
-      total_balance_d0: "123456",
-      total_balance_t1: "111111",
-      selectedMerchant: null,
-      merchant: ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
-    };
-  },
-  watch: {
-    funds: {
-      handler: function(newVal, oldVal) {
-        console.log(newVal);
+      page: 1,
+      limit: 10,
+      filters: {
+        status: null,
       },
-      deep: true,
-    },
+      records: [],
+      totalRecords: 0,
+      create_modal: {
+        visible: false,
+      },
+      edit_modal: {
+        visible: false,
+        data: {},
+      },
+    };
   },
   mounted() {
-    let fund = function() {
-      this.channel = "1";
-      this.merchant = "g";
-      this.status = false;
-      this.add_time = "2021-1-1 12:00";
-      // this.lock_balance_t1 = "qfv w";
-    };
-    let funds = new Array(10);
-    for (var i = 0; i < 10; i++) {
-      funds[i] = new fund();
-      if (i == 9) this.loading = false;
-    }
-    this.funds = funds;
-    // api
-    // operationLogApi
-    //   .get()
-    //   .then(({ data }) => {
-    //     this.records = data.map((record) => ({
-    //       ...record,
-    //       time: new Date(record.timestamp),
-    //     }));
-    //   })
-    //   .finally(() => (this.loading = false));
-  },
-  created() {
-    this.clearFilter();
+    this.fetch();
   },
   methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        channel: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        Merchant.find({ ...this.filters, page: this.page, limit: this.limit }),
+        Merchant.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
     },
-    edit(item) {
-      console.log(item);
-      this.$confirm.require({});
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
     },
-    remove(item) {
-      console.log(item);
+    update_status(data, status) {
+      const verb = status ? "啟用" : "停用";
       this.$confirm.require({
-        message: "是否確認要刪除",
-        header: "Confirmation",
-        icon: "pi pi-exclamation-triangle",
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: `${verb}商戶`,
+        message: `商戶將被${verb}: ${data.name}`,
         accept: () => {
-          //callback to execute when user confirms the action
+          Merchant.update(data.id, { status: Number(status) }).then(() => {
+            data.status = status;
+            ToastService.success({ summary: `已${verb}商戶 ${data.name}` });
+          });
         },
-        reject: () => {
-          //callback to execute when user rejects the action
+      });
+      this.show_update_status_modal = true;
+    },
+    edit(data) {
+      this.edit_modal.data = data;
+      this.edit_modal.visible = true;
+    },
+    create() {
+      this.create_modal.visible = true;
+    },
+    remove(data) {
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: "刪除商戶",
+        message: `商戶將被刪除: ${data.name}`,
+        accept: () => {
+          Merchant.delete(data.id).then(() => {
+            ToastService.success({ summary: `已刪除商戶 ${data.name}` });
+            this.fetch();
+          });
         },
       });
     },
   },
 });
 </script>
-<style></style>
+
+<style scoped>
+form > :not(:last-child) {
+  margin-right: 0.5rem;
+}
+</style>

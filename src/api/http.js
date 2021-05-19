@@ -9,7 +9,7 @@ import { setupCache } from "axios-cache-adapter";
 const cache = setupCache({ maxAge: 0 });
 
 const config = {
-  baseURL: process.env.VUE_APP_API_HOST,
+  baseURL: `${process.env.VUE_APP_API_HOST}/api`,
   timeout: 6000,
   headers: {
     "Content-Type": "application/json"
