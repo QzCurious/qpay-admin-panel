@@ -15,7 +15,7 @@ export default {
   transaction_record: "code::transaction_record",
 
   // merchant_management
-  merchant_management: "code::merchant_management",
+  merchant_management: "商戶管理",
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
   merchant_rate: "code::merchant_rate",
@@ -53,6 +53,12 @@ export default {
   payment_password: "付款密碼",
   ip_allow: "允許 IP 名單",
   phone: "電話",
+  enabled: "啟用",
+  disabled: "停用",
+  merchant: "商戶",
+  create_at: "建立時間",
+  operation: "操作",
+  MD5_key: "MD5_key",
 
   // action
   create_role: "建立職位",
@@ -62,11 +68,20 @@ export default {
   reset_2fa: "重設 2fa",
   enable_account: "啟用帳號",
   disable_account: "停用帳號",
+  create_merchant: "建立商戶",
+  edit_merchant: "編輯商戶",
+  enable_merchant: "啟用商戶",
+  disable_merchant: "停用商戶",
+  delete_merchant: "刪除商戶",
+  generate_new_MD5_key: "產生新 key",
 
   // will be
   account_will_be_enable: "帳號將被啟用",
   account_will_be_disable: "帳號將被停用",
   account_2fa_will_be_reset: "帳號 2fa 將被重設",
+  merchant_will_be_enable: "商戶將被啟用",
+  merchant_will_be_disable: "商戶將被停用",
+  merchant_will_be_delete: "商戶將被刪除",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -76,6 +91,12 @@ export default {
   account_successfully_created: "職位新增成功",
   account_successfully_updated: "職位更新成功",
   ip_is_invalid: "錯誤的 IP 位址",
+  MD5_key_copied: "已複製 MD5 key",
+  merchant_successfully_created: "商戶新增成功",
+  merchant_successfully_updated: "商戶更新成功",
+  merchant_successfully_enabled: "商戶已啟用",
+  merchant_successfully_disabled: "商戶已停用",
+  merchant_successfully_delete: "商戶已刪除",
 
   form: {
     create: "新增",
@@ -87,7 +108,8 @@ export default {
     apply: "套用",
     accept: "是",
     reject: "否",
-    cancel: "取消"
+    cancel: "取消",
+    copy: "複製"
   },
 
   // day
@@ -163,7 +185,6 @@ export default {
 
   channel: "code::channel",
   card_id: "code::card_id",
-  merchant: "code::merchant",
   account_name: "code::account_name",
   card_number: "code::card_number",
   limit_daily: "code::limit_daily",

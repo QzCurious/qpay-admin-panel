@@ -14,27 +14,27 @@
   >
     <template #header>
       <form @submit.prevent="fetch" class="p-d-flex p-jc-end">
-        <Button class="p-mr-auto" label="新增商戶" @click="create" />
+        <Button class="p-mr-auto" :label="$t('form.create')" @click="create" />
         <Dropdown
-          label="狀態"
+          :label="$t('status')"
           v-model="filters.status"
           :options="[
-            { label: 'disabled', value: 0 },
-            { label: 'enabled', value: 1 },
+            { label: $t('disabled'), value: 0 },
+            { label: $t('enabled'), value: 1 },
           ]"
         />
         <Button
           type="submit"
           icon="pi pi-search"
-          label="搜尋"
+          :label="$t('form.search')"
           class="p-button-outlined"
         />
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="name" header="商戶名稱" />
-    <Column field="status" header="狀態">
+    <Column field="name" :header="$t('merchant')" />
+    <Column field="status" :header="狀態">
       <template #body="{ data }">
         <InputSwitch
           :modelValue="Boolean(data.status)"
@@ -42,7 +42,7 @@
         />
       </template>
     </Column>
-    <Column field="created_at" header="創建時間">
+    <Column field="created_at" :header="$t('create_at')">
       <template #body="{ data }">
         {{
           data.created_at &&
@@ -50,26 +50,34 @@
         }}
       </template>
     </Column>
-    <Column header="操作" :sortable="false">
+    <Column :header="$t('operation')" :sortable="false">
       <template #body="{ data }">
         <Button
           class="p-button-primary p-m-1"
-          label="編輯"
+          :label="$t('form.edit')"
           @click="edit(data)"
         />
         <Button
           class="p-button-danger p-m-1"
-          label="刪除"
+          :label="$t('form.delete')"
           @click="remove(data)"
         />
       </template>
     </Column>
   </DataTable>
   <ConfirmDialog></ConfirmDialog>
-  <Dialog modal header="新增商戶" v-model:visible="create_modal.visible">
+  <Dialog
+    modal
+    :header="$t('create_merchant')"
+    v-model:visible="create_modal.visible"
+  >
     <CreateMerchant @success="fetch" />
   </Dialog>
-  <Dialog modal header="編輯商戶" v-model:visible="edit_modal.visible">
+  <Dialog
+    modal
+    :header="$t('edit_merchant')"
+    v-model:visible="edit_modal.visible"
+  >
     <EditMerchant :id="edit_modal.data.id" @success="fetch" />
   </Dialog>
 </template>
@@ -124,15 +132,22 @@ export default defineComponent({
       this.fetch();
     },
     update_status(data, status) {
-      const verb = status ? "啟用" : "停用";
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: `${verb}商戶`,
-        message: `商戶將被${verb}: ${data.name}`,
+        header: status
+          ? this.$i18n.t("enable_merchant")
+          : this.$i18n.t("disable_merchant"),
+        message: status
+          ? `${this.$i18n.t("merchant_will_be_enable")}: ${data.name}`
+          : `${this.$i18n.t("merchant_will_be_disable")}: ${data.name}`,
         accept: () => {
           Merchant.update(data.id, { status: Number(status) }).then(() => {
             data.status = status;
-            ToastService.success({ summary: `已${verb}商戶 ${data.name}` });
+            ToastService.success({
+              summary: status
+                ? this.$i18n.t("merchant_successfully_enabled")
+                : this.$i18n.t("merchant_successfully_disabled"),
+            });
           });
         },
       });
@@ -148,11 +163,13 @@ export default defineComponent({
     remove(data) {
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: "刪除商戶",
-        message: `商戶將被刪除: ${data.name}`,
+        header: this.$i18n.t("delete_merchant"),
+        message: this.$i18n.t("merchant_will_be_delete"),
         accept: () => {
           Merchant.delete(data.id).then(() => {
-            ToastService.success({ summary: `已刪除商戶 ${data.name}` });
+            ToastService.success({
+              summary: this.$i18n.t("merchant_successfully_delete"),
+            });
             this.fetch();
           });
         },

@@ -3,7 +3,7 @@
     <InputText
       float
       v-model="name"
-      label="商戶名稱"
+      :label="$t('merchant')"
       name="merchant_name"
       :errors="v$.name.$errors.map((e) => e.$message)"
     />
@@ -13,7 +13,7 @@
         readonly
         style="flex: 1"
         v-model="md5_key"
-        label="MD5_key"
+        :label="$t('MD5_key')"
         name="MD5_key"
         :errors="v$.md5_key.$errors.map((e) => e.$message)"
       />
@@ -24,14 +24,14 @@
         type="button"
       />
       <Button
-        v-tooltip.top="'generate a new token'"
+        v-tooltip.top="$t('generate_new_MD5_key')"
         @click="refresh_md5_key"
         icon="pi pi-refresh"
         class="p-button-secondary p-ml-1"
         type="button"
       />
     </div>
-    <Button class="p-mt-3" label="送出" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -77,7 +77,7 @@ export default {
       copy_btn_props: {
         icon: "pi pi-copy",
         class: "p-button-info",
-        tooltip: "copy",
+        tooltip: this.$i18n.t("form.copy"),
       },
     };
   },
@@ -110,7 +110,9 @@ export default {
         md5_key: this.md5_key,
       };
       Merchant.update(this.id, data).then(() => {
-        ToastService.success({ summary: "商戶更新成功" });
+        ToastService.success({
+          summary: this.$i18n.t("merchant_successfully_updated"),
+        });
         this.$emit("success", data);
       });
 
@@ -126,7 +128,7 @@ export default {
         this.copy_btn_props = copy_btn_props;
       }, 1000);
       copy(this.md5_key);
-      ToastService.success({ summary: "MD5 key Copied" });
+      ToastService.success({ summary: this.$i18n.t("MD5_key_copied") });
     },
     refresh_md5_key() {
       this.md5_key = cryptoRandomString({ length: 64, type: "alphanumeric" });
