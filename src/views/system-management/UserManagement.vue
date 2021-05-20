@@ -1,4 +1,5 @@
 <template>
+  <h2>{{ $t("user_management") }}</h2>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
@@ -14,17 +15,26 @@
   >
     <template #header>
       <form @submit.prevent="fetch" class="p-d-flex p-ai-start p-jc-end">
-        <Button class="p-mr-auto" label="新增使用者" @click="create_user" />
-        <MerchantDropdown label="機構" v-model="filters.merchant_id" />
-        <Button class="p-button-outlined" type="submit">搜尋</Button>
+        <Button
+          class="p-mr-auto"
+          :label="$t('form.create')"
+          @click="create_user"
+        />
+        <MerchantDropdown
+          :label="$t('company')"
+          v-model="filters.merchant_id"
+        />
+        <Button class="p-button-outlined" type="submit">{{
+          $t("form.search")
+        }}</Button>
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="signin_id" header="帳號"></Column>
-    <Column field="merchant_name" header="機構"></Column>
-    <Column field="role_name" header="職位"></Column>
-    <Column field="status" header="status">
+    <Column field="signin_id" :header="$t('signin_id')"></Column>
+    <Column field="merchant_name" :header="$t('company')"></Column>
+    <Column field="role_name" :header="$t('role')"></Column>
+    <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <InputSwitch
           :modelValue="Boolean(data.status)"
@@ -34,8 +44,8 @@
     </Column>
     <Column>
       <template #body="{ data }">
-        <Button label="編輯" @click="edit_user(data)" />
-        <Button label="重設 2fa" @click="reset_2fa(data)" />
+        <Button :label="$t('form.edit')" @click="edit_user(data)" />
+        <Button :label="$t('reset_2fa')" @click="reset_2fa(data)" />
       </template>
     </Column>
   </DataTable>
@@ -91,16 +101,21 @@ export default {
       this.fetch();
     },
     update_user_status(data, status) {
-      const verb = status ? "啟用" : "停用";
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: `${verb}帳號`,
-        message: `帳號將被${verb}: ${data.signin_id}`,
+        header: status
+          ? this.$i18n.t("enable_account")
+          : this.$i18n.t("disable_account"),
+        message: status
+          ? `${this.$i18n.t("account_will_be_enable")}: ${data.signin_id}`
+          : `${this.$i18n.t("account_will_be_disable")}: ${data.signin_id}`,
         accept: () => {
           User.update(data.signin_id, { status: Number(status) }).then(() => {
             data.status = status;
             ToastService.success({
-              summary: `已${verb}帳號 ${data.signin_id}`,
+              summary: status
+                ? this.$i18n.t("account_successfully_enabled")
+                : this.$i18n.t("account_successfully_disabled"),
             });
           });
         },
@@ -110,8 +125,10 @@ export default {
     reset_2fa(data) {
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: `重設 2fa`,
-        message: `帳號 2fa 將被重設: ${data.signin_id}`,
+        header: this.$i18n.t("reset_2fa"),
+        message: `${this.$i18n.t("account_2fa_will_be_reset")}: ${
+          data.signin_id
+        }`,
         accept: () => {
           User.reset_2fa(data.id).then(() => {
             data.status = status;
@@ -133,7 +150,9 @@ export default {
   },
   computed: {
     modal_title() {
-      return this.modal.mode === "edit" ? "編輯帳號" : "新增帳號";
+      return this.modal.mode === "edit"
+        ? this.$i18n.t("edit_account")
+        : this.$i18n.t("create_account");
     },
   },
 };

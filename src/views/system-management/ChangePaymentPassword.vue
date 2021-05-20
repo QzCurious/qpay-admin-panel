@@ -1,6 +1,6 @@
 <template>
   <Card style="max-width: 20rem; margin: auto">
-    <template #title>重設付款密碼</template>
+    <template #title>{{ $t("change_payment_password") }}</template>
     <template #content>
       <form
         ref="form"
@@ -10,25 +10,25 @@
         <Password
           float
           v-model="old_password"
-          label="舊密碼"
+          :label="$t('old_password')"
           name="old_password"
           :errors="v$.old_password.$errors.map((e) => e.$message)"
         />
         <Password
           float
           v-model="new_password"
-          label="新密碼"
+          :label="$t('new_password')"
           name="new_password"
           :errors="v$.new_password.$errors.map((e) => e.$message)"
         />
         <Password
           float
           v-model="confirm_new_password"
-          label="確認新密碼"
+          :label="$t('confirm_new_password')"
           name="confirm_new_password"
           :errors="v$.confirm_new_password.$errors.map((e) => e.$message)"
         />
-        <Button class="p-mt-3" label="送出" type="submit" />
+        <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
       </form>
     </template>
   </Card>
@@ -40,6 +40,7 @@ import auth from "../../api/Auth";
 import useVuelidate from "@vuelidate/core";
 import { required, sameAs } from "@vuelidate/validators";
 import Password from "../../components/Password";
+import ToastService from "../../service/ToastService";
 
 export default {
   components: { Password },
@@ -80,19 +81,13 @@ export default {
         .then(() => {
           this.v$.$reset();
 
-          this.$toast.add({
-            severity: "success",
-            summary: "重設付款密碼成功",
-            life: 1800,
+          ToastService.success({
+            summary: this.$i18n.t("payment_password_successfully_changed"),
           });
         })
         .catch((err) => {
           if (err.response.status >= 400 && !this.v$.$error) {
-            this.$toast.add({
-              severity: "error",
-              summary: err.response.data.message,
-              life: 1800,
-            });
+            ToastService.error({ summary: err.response.data.message });
           }
         });
     },

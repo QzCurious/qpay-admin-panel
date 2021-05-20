@@ -8,7 +8,7 @@
     <InputText
       float
       v-model="signin_id"
-      label="帳號"
+      :label="$t('signin_id')"
       name="signin_id"
       :disabled="mode === 'edit'"
       :errors="v$.signin_id.$errors.map((e) => e.$message)"
@@ -16,14 +16,14 @@
     <Password
       float
       v-model="signin_password"
-      label="密碼"
+      :label="$t('signin_password')"
       name="password"
       :errors="v$.signin_password.$errors.map((e) => e.$message)"
     />
     <Password
       float
       v-model="payment_password"
-      label="付款密碼"
+      :label="$t('payment_password')"
       name="password"
       :errors="v$.payment_password.$errors.map((e) => e.$message)"
     />
@@ -37,22 +37,22 @@
           @add="ip_allow_added"
           @remove="ip_allow_remove"
         />
-        <label for="ip_allow" :class="{ 'p-error': ip_allow_invlid }"
-          >允許 IP</label
-        >
+        <label for="ip_allow" :class="{ 'p-error': ip_allow_invlid }">{{
+          $t("ip_allow")
+        }}</label>
       </span>
       <small v-if="ip_allow_invlid" class="p-error">
-        {{ `${ip_allow_invlid} is not a valid IP` }}
+        {{ $t("ip_is_invalid") }} {{ ip_allow_invlid }}
       </small>
     </div>
     <InputText
       float
       v-model="phone"
-      label="電話"
+      :label="$t('phone')"
       name="phone"
       :errors="v$.phone.$errors.map((e) => e.$message)"
     />
-    <Button class="p-mt-3" label="送出" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -138,13 +138,17 @@ export default {
       };
       if (this.mode === "create") {
         user.create(data).then(() => {
-          ToastService.success({ summary: "帳號新增成功" });
+          ToastService.success({
+            summary: this.$i18n.t("account_successfully_created"),
+          });
 
           this.$emit("success", data);
         });
       } else if (this.mode === "edit") {
         user.update(this.signin_id, data).then(() => {
-          ToastService.success({ summary: "帳號修改成功" });
+          ToastService.success({
+            summary: this.$i18n.t("account_successfully_updated"),
+          });
 
           this.$emit("success", data);
         });

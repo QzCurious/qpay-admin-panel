@@ -15,7 +15,7 @@ export default {
   transaction_record: "code::transaction_record",
 
   // merchant_management
-  merchant_management: "code::merchant_management",
+  merchant_management: "商戶管理",
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
   merchant_rate: "code::merchant_rate",
@@ -43,6 +43,112 @@ export default {
   financial_reports: "code::financial_reports",
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
+
+  // subject
+  signin_id: "帳號",
+  company: "機構",
+  role: "職位",
+  status: "狀態",
+  old_password: "舊密碼",
+  new_password: "新密碼",
+  signin_password: "密碼",
+  payment_password: "付款密碼",
+  ip_allow: "允許 IP 名單",
+  phone: "電話",
+  enabled: "啟用",
+  disabled: "停用",
+  merchant: "商戶",
+  create_at: "建立時間",
+  operation: "操作",
+  MD5_key: "MD5_key",
+
+  // action
+  create_role: "建立職位",
+  edit_role: "編輯職位",
+  create_account: "建立帳號",
+  edit_account: "編輯帳號",
+  reset_2fa: "重設 2fa",
+  enable_account: "啟用帳號",
+  disable_account: "停用帳號",
+  create_merchant: "建立商戶",
+  edit_merchant: "編輯商戶",
+  enable_merchant: "啟用商戶",
+  disable_merchant: "停用商戶",
+  delete_merchant: "刪除商戶",
+  generate_new_MD5_key: "產生新 key",
+
+  // will be
+  account_will_be_enable: "帳號將被啟用",
+  account_will_be_disable: "帳號將被停用",
+  account_2fa_will_be_reset: "帳號 2fa 將被重設",
+  merchant_will_be_enable: "商戶將被啟用",
+  merchant_will_be_disable: "商戶將被停用",
+  merchant_will_be_delete: "商戶將被刪除",
+
+  // feedback
+  role_successfully_created: "職位新增成功",
+  role_successfully_updated: "職位更新成功",
+  account_successfully_enabled: "帳號已啟用",
+  account_successfully_disabled: "帳號已停用",
+  account_successfully_created: "職位新增成功",
+  account_successfully_updated: "職位更新成功",
+  ip_is_invalid: "錯誤的 IP 位址",
+  MD5_key_copied: "已複製 MD5 key",
+  merchant_successfully_created: "商戶新增成功",
+  merchant_successfully_updated: "商戶更新成功",
+  merchant_successfully_enabled: "商戶已啟用",
+  merchant_successfully_disabled: "商戶已停用",
+  merchant_successfully_delete: "商戶已刪除",
+  password_successfully_changed: "修改密碼成功",
+  confirm_new_password: "確認新密碼",
+  payment_password_successfully_changed: "修改密碼成功",
+
+  form: {
+    create: "新增",
+    edit: "編輯",
+    delete: "刪除",
+    submit: "送出",
+    search: "搜尋",
+    clear: "清除",
+    apply: "套用",
+    accept: "是",
+    reject: "否",
+    cancel: "取消",
+    copy: "複製"
+  },
+
+  // day
+  today: "今天",
+
+  // weekday
+  Sunday: "星期日",
+  Monday: "星期一",
+  Tuesday: "星期二",
+  Wednesday: "星期三",
+  Thursday: "星期四",
+  Friday: "星期五",
+  Saturday: "星期六",
+  Sun: "日",
+  Mon: "一",
+  Tue: "二",
+  Wed: "三",
+  Thu: "四",
+  Fri: "五",
+  Sat: "六",
+
+  // month
+  January: "一月",
+  February: "二月",
+  March: "三月",
+  April: "四月",
+  May: "五月",
+  June: "六月",
+  July: "七月",
+  August: "八月",
+  September: "九月",
+  October: "十月",
+  November: "十一月",
+  December: "十二月",
 
   /**
    * Button
@@ -73,7 +179,6 @@ export default {
   bank_code: "code::bank_code",
   bank_name: "code::bank_name",
   transfer: "code::transfer",
-  status: "code::status",
   country: "code::country",
   edit: "code::edit",
 
@@ -82,11 +187,9 @@ export default {
 
   holder_name: "code::holder_name",
   card_list: "code::card_list",
-  phone: "code::phone",
 
   channel: "code::channel",
   card_id: "code::card_id",
-  merchant: "code::merchant",
   account_name: "code::account_name",
   card_number: "code::card_number",
   limit_daily: "code::limit_daily",

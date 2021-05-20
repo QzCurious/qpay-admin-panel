@@ -1,4 +1,5 @@
 <template>
+  <h1>{{ $t("role_setting") }}</h1>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
@@ -15,28 +16,28 @@
     <template #header>
       <form @submit.prevent="fetch" class="p-d-flex p-ai-start p-jc-end">
         <Button
-          class="p-mt-4 p-mr-auto"
-          label="新增職位"
+          class="p-mr-auto"
+          :label="$t('form.create')"
           @click="create_role"
         />
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="signin_id" header="帳號" />
-    <Column field="role_id" header="職位 id">
+    <Column field="signin_id" :header="$t('signin_id')" />
+    <Column field="role_id" :header="`${$t('role')} id`">
       <template #body="{ data }">
         <span class="p-d-inline-flex p-ai-center">
           {{ data.role_id }}
           <Button
             class="p-ml-2 p-button-sm"
-            label="編輯"
+            :label="$t('form.edit')"
             @click="edit_role(data)"
           />
         </span>
       </template>
     </Column>
-    <Column field="role_name" header="職位" />
+    <Column field="role_name" :header="$t('role')" />
   </DataTable>
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
     <RoleModal :mode="modal.mode" :data="modal.data" />
@@ -66,7 +67,9 @@ export default {
   },
   computed: {
     modal_title() {
-      return this.modal.mode === "edit" ? "編輯帳號" : "新增帳號";
+      return this.modal.mode === "edit"
+        ? this.$i18n.t("edit_role")
+        : this.$i18n.t("create_role");
     },
   },
   methods: {

@@ -3,33 +3,33 @@
     <InputText
       float
       v-model="name"
-      label="商戶名稱"
+      :label="$t('merchant')"
       name="merchant_name"
       :errors="v$.name.$errors.map((e) => e.$message)"
     />
     <InputText
       float
       v-model="signin_id"
-      label="帳號"
+      :label="$t('signin_id')"
       name="signin_id"
       :errors="v$.signin_id.$errors.map((e) => e.$message)"
     />
     <Password
       float
       v-model="signin_password"
-      label="密碼"
+      :label="$t('signin_password')"
       name="password"
       :errors="v$.signin_password.$errors.map((e) => e.$message)"
     />
     <Password
       float
       v-model="payment_password"
-      label="付款密碼"
+      :label="$t('payment_password')"
       name="password"
       :errors="v$.payment_password.$errors.map((e) => e.$message)"
     />
     <div class="p-field">
-      <span class="p-float-label">
+      <span class="p-float-label p-mt-4">
         <Chips
           id="ip_allow"
           :class="{ 'p-invalid': ip_allow_invlid }"
@@ -38,12 +38,12 @@
           @add="ip_allow_added"
           @remove="ip_allow_remove"
         />
-        <label for="ip_allow" :class="{ 'p-error': ip_allow_invlid }"
-          >允許 IP</label
-        >
+        <label for="ip_allow" :class="{ 'p-error': ip_allow_invlid }">
+          {{ $t("ip_allow") }}
+        </label>
       </span>
       <small v-if="ip_allow_invlid" class="p-error">
-        {{ `${ip_allow_invlid} is not a valid IP` }}
+        {{ $t("ip_is_invalid") }} {{ ip_allow_invlid }}
       </small>
     </div>
     <div class="p-d-flex p-ai-end">
@@ -52,7 +52,7 @@
         readonly
         style="flex: 1"
         v-model="md5_key"
-        label="MD5_key"
+        :label="$t('MD5_key')"
         name="MD5_key"
         :errors="v$.md5_key.$errors.map((e) => e.$message)"
       />
@@ -63,14 +63,14 @@
         type="button"
       />
       <Button
-        v-tooltip.top="'generate a new token'"
+        v-tooltip.top="$t('generate_new_MD5_key')"
         @click="refresh_md5_key"
         icon="pi pi-refresh"
         class="p-button-secondary p-ml-1"
         type="button"
       />
     </div>
-    <Button class="p-mt-3" label="送出" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -124,7 +124,7 @@ export default {
       copy_btn_props: {
         icon: "pi pi-copy",
         class: "p-button-info",
-        tooltip: "copy",
+        tooltip: this.$i18n.t("form.copy"),
       },
     };
   },
@@ -161,7 +161,9 @@ export default {
         md5_key: this.md5_key,
       };
       Merchant.create(data).then(() => {
-        ToastService.success({ summary: "商戶新增成功" });
+        ToastService.success({
+          summary: this.$i18n.t("merchant_successfully_created"),
+        });
         this.$emit("success", data);
       });
 
@@ -177,7 +179,7 @@ export default {
         this.copy_btn_props = copy_btn_props;
       }, 1000);
       copy(this.md5_key);
-      ToastService.success({ summary: "MD5 key Copied" });
+      ToastService.success({ summary: this.$i18n.t("MD5_key_copied") });
     },
     refresh_md5_key() {
       this.md5_key = cryptoRandomString({ length: 64, type: "alphanumeric" });

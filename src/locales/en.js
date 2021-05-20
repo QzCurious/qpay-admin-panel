@@ -15,7 +15,7 @@ export default {
   transaction_record: "code::transaction_record",
 
   // merchant_management
-  merchant_management: "code::merchant_management",
+  merchant_management: "Merchant Management",
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
   merchant_rate: "code::merchant_rate",
@@ -43,6 +43,112 @@ export default {
   financial_reports: "code::financial_reports",
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
+
+  // subject
+  signin_id: "Account",
+  company: "Company",
+  role: "Role",
+  status: "Status",
+  signin_password: "Password",
+  payment_password: "Payment Password",
+  ip_allow: "Allow IP List",
+  phone: "Phone",
+  enabled: "Enabled",
+  disabled: "Disabled",
+  merchant: "Merchant",
+  create_at: "Create At",
+  operation: "Operation",
+  MD5_key: "MD5_key",
+  old_password: "Old Password",
+  new_password: "New Password",
+
+  // action
+  create_role: "Create role",
+  edit_role: "Edit role",
+  create_account: "Create user",
+  edit_account: "Edit user",
+  reset_2fa: "Reset 2fa",
+  enable_account: "Enable user",
+  disable_account: "Disable user",
+  create_merchant: "Create merchant",
+  edit_merchant: "Edit merchant",
+  enable_merchant: "Enable merchant",
+  disable_merchant: "Disable merchant",
+  delete_merchant: "Delete merchant",
+  generate_new_MD5_key: "Generate new MD5 key",
+
+  // will be
+  account_will_be_enable: "User will be enable",
+  account_will_be_disable: "User will be disable",
+  account_2fa_will_be_reset: "2fa will be reset",
+  merchant_will_be_enable: "Merchant will be enabled",
+  merchant_will_be_disable: "Merchant will be disabled",
+  merchant_will_be_delete: "Merchant will be deleted",
+
+  // feedback
+  role_successfully_created: "User created",
+  role_successfully_updated: "User updated",
+  account_successfully_enabled: "User enabled",
+  account_successfully_disabled: "User disabled",
+  account_successfully_created: "Role created",
+  account_successfully_updated: "Role updated",
+  ip_is_invalid: "Invalid IP",
+  MD5_key_copied: "MD5 key copied",
+  merchant_successfully_created: "Merchant created",
+  merchant_successfully_updated: "Merchant updated",
+  merchant_successfully_enabled: "Merchant enabled",
+  merchant_successfully_disabled: "Merchant disabled",
+  merchant_successfully_delete: "Merchant deleted",
+  password_successfully_changed: "Password changed",
+  confirm_new_password: "Confirm new password",
+  payment_password_successfully_changed: "Payment password changed",
+
+  form: {
+    create: "Create",
+    edit: "Edit",
+    delete: "Delete",
+    submit: "Submit",
+    search: "Search",
+    clear: "Clear",
+    apply: "Apply",
+    accept: "Yes",
+    reject: "No",
+    cancel: "Cancel",
+    copy: "Copy"
+  },
+
+  // day
+  today: "Today",
+
+  // weekday
+  Sunday: "Sunday",
+  Monday: "Monday",
+  Tuesday: "Tuesday",
+  Wednesday: "Wednesday",
+  Thursday: "Thursday",
+  Friday: "Friday",
+  Saturday: "Saturday",
+  Sun: "Sun",
+  Mon: "Mon",
+  Tue: "Tue",
+  Wed: "Wed",
+  Thu: "Thu",
+  Fri: "Fri",
+  Sat: "Sat",
+
+  // month
+  January: "January",
+  February: "February",
+  March: "March",
+  April: "April",
+  May: "May",
+  June: "June",
+  July: "July",
+  August: "August",
+  September: "September",
+  October: "October",
+  November: "November",
+  December: "December",
 
   /**
    * Button
@@ -73,7 +179,6 @@ export default {
   bank_code: "code::bank_code",
   bank_name: "code::bank_name",
   transfer: "code::transfer",
-  status: "code::status",
   country: "code::country",
   edit: "code::edit",
 
@@ -82,11 +187,9 @@ export default {
 
   holder_name: "code::holder_name",
   card_list: "code::card_list",
-  phone: "code::phone",
 
   channel: "code::channel",
   card_id: "code::card_id",
-  merchant: "code::merchant",
   account_name: "code::account_name",
   card_number: "code::card_number",
   limit_daily: "code::limit_daily",
