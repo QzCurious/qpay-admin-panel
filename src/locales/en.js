@@ -51,14 +51,31 @@ export default {
   status: "Status",
   signin_password: "Password",
   payment_password: "Payment Password",
+  ip_allow: "Allow IP List",
+  phone: "Phone",
 
   // action
   create_role: "Create role",
   edit_role: "Edit role",
+  create_account: "Create user",
+  edit_account: "Edit user",
+  reset_2fa: "Reset 2fa",
+  enable_account: "Enable user",
+  disable_account: "Disable user",
+
+  // will be
+  account_will_be_enable: "User will be enable",
+  account_will_be_disable: "User will be disable",
+  account_2fa_will_be_reset: "2fa will be reset",
 
   // feedback
   role_successfully_created: "User created",
   role_successfully_updated: "User updated",
+  account_successfully_enabled: "User enabled",
+  account_successfully_disabled: "User disabled",
+  account_successfully_created: "Role created",
+  account_successfully_updated: "Role updated",
+  ip_is_invalid: "Invalid IP",
 
   form: {
     create: "Create",
@@ -105,7 +122,6 @@ export default {
 
   holder_name: "code::holder_name",
   card_list: "code::card_list",
-  phone: "code::phone",
 
   channel: "code::channel",
   card_id: "code::card_id",

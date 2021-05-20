@@ -51,14 +51,31 @@ export default {
   status: "狀態",
   signin_password: "密碼",
   payment_password: "付款密碼",
+  ip_allow: "允許 IP 名單",
+  phone: "電話",
 
   // action
   create_role: "建立職位",
   edit_role: "編輯職位",
+  create_account: "建立帳號",
+  edit_account: "編輯帳號",
+  reset_2fa: "重設 2fa",
+  enable_account: "啟用帳號",
+  disable_account: "停用帳號",
+
+  // will be
+  account_will_be_enable: "帳號將被啟用",
+  account_will_be_disable: "帳號將被停用",
+  account_2fa_will_be_reset: "帳號 2fa 將被重設",
 
   // feedback
   role_successfully_created: "職位新增成功",
   role_successfully_updated: "職位更新成功",
+  account_successfully_enabled: "帳號已啟用",
+  account_successfully_disabled: "帳號已停用",
+  account_successfully_created: "職位新增成功",
+  account_successfully_updated: "職位更新成功",
+  ip_is_invalid: "錯誤的 IP 位址",
 
   form: {
     create: "新增",
@@ -105,7 +122,6 @@ export default {
 
   holder_name: "code::holder_name",
   card_list: "code::card_list",
-  phone: "code::phone",
 
   channel: "code::channel",
   card_id: "code::card_id",
