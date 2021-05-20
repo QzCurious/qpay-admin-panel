@@ -101,6 +101,7 @@ export default {
   merchant_successfully_delete: "商戶已刪除",
   password_successfully_changed: "修改密碼成功",
   confirm_new_password: "確認新密碼",
+  payment_password_successfully_changed: "修改密碼成功",
 
   form: {
     create: "新增",

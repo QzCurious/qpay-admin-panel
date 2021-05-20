@@ -101,6 +101,7 @@ export default {
   merchant_successfully_delete: "Merchant deleted",
   password_successfully_changed: "Password changed",
   confirm_new_password: "Confirm new password",
+  payment_password_successfully_changed: "Payment password changed",
 
   form: {
     create: "Create",
