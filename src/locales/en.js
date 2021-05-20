@@ -59,6 +59,8 @@ export default {
   create_at: "Create At",
   operation: "Operation",
   MD5_key: "MD5_key",
+  old_password: "Old Password",
+  new_password: "New Password",
 
   // action
   create_role: "Create role",
@@ -97,6 +99,8 @@ export default {
   merchant_successfully_enabled: "Merchant enabled",
   merchant_successfully_disabled: "Merchant disabled",
   merchant_successfully_delete: "Merchant deleted",
+  password_successfully_changed: "Password changed",
+  confirm_new_password: "Confirm new password",
 
   form: {
     create: "Create",

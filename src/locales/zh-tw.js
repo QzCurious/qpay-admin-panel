@@ -49,6 +49,8 @@ export default {
   company: "機構",
   role: "職位",
   status: "狀態",
+  old_password: "舊密碼",
+  new_password: "新密碼",
   signin_password: "密碼",
   payment_password: "付款密碼",
   ip_allow: "允許 IP 名單",
@@ -97,6 +99,8 @@ export default {
   merchant_successfully_enabled: "商戶已啟用",
   merchant_successfully_disabled: "商戶已停用",
   merchant_successfully_delete: "商戶已刪除",
+  password_successfully_changed: "修改密碼成功",
+  confirm_new_password: "確認新密碼",
 
   form: {
     create: "新增",

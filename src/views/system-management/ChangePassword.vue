@@ -1,6 +1,6 @@
 <template>
   <Card style="max-width: 20rem; margin: auto">
-    <template #title>重設密碼</template>
+    <template #title>{{ $t("change_password") }}</template>
     <template #content>
       <form
         ref="form"
@@ -10,25 +10,25 @@
         <Password
           float
           v-model="old_password"
-          label="舊密碼"
+          :label="$t('old_password')"
           name="old_password"
           :errors="v$.old_password.$errors.map((e) => e.$message)"
         />
         <Password
           float
           v-model="new_password"
-          label="新密碼"
+          :label="$t('new_password')"
           name="new_password"
           :errors="v$.new_password.$errors.map((e) => e.$message)"
         />
         <Password
           float
           v-model="confirm_new_password"
-          label="確認新密碼"
+          :label="$t('confirm_new_password')"
           name="confirm_new_password"
           :errors="v$.confirm_new_password.$errors.map((e) => e.$message)"
         />
-        <Button class="p-mt-3" label="送出" type="submit" />
+        <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
       </form>
     </template>
   </Card>
@@ -84,7 +84,7 @@ export default {
           this.new_password = null;
           this.confirm_new_password = null;
 
-          ToastService.success({ summary: "修改密碼成功" });
+          ToastService.success({ summary: this.$i18n.t('password_successfully_changed') });
         })
         .catch((err) => {
           if (err.response.status === 400 && !this.v$.$error) {
