@@ -1,7 +1,10 @@
 <template>
   <div class="p-pt-6 p-d-flex p-jc-center">
     <div class="container">
-      <h1>登入</h1>
+      <div class="p-d-flex p-ai-center">
+        <h1 class="p-mr-auto">{{ $t("signin") }}</h1>
+        <LocaleDropdown />
+      </div>
       <form
         @submit.prevent="handle_submit"
         class="p-fluid p-d-flex p-flex-column"
@@ -9,34 +12,40 @@
         <InputText
           float
           v-model="signin_id"
-          label="帳號"
+          :label="$t('signin_id')"
           name="signin_id"
           :errors="v$.signin_id.$errors.map((e) => e.$message)"
         />
         <Password
           float
           v-model="password"
-          label="密碼"
+          :label="$t('signin_password')"
           name="password"
           :errors="v$.password.$errors.map((e) => e.$message)"
         />
-        <Button class="p-mt-3" label="Login" type="submit" />
+        <Button class="p-mt-3" :label="$t('signin')" type="submit" />
       </form>
     </div>
   </div>
-  <!-- <Toast position="top-center" /> -->
+  <Dialog modal :header="$t('verify_2fa')" v-model:visible="show_verify_2fa">
+    <Verify2fa @success="next_page" />
+  </Dialog>
 </template>
 
 <script>
 import auth from "../api/Auth";
+import User from "../api/User";
 import router from "../router";
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
 import InputText from "../components/InputText";
 import Password from "../components/Password";
+import store from "../store";
+import Verify2fa from "../components/Verify2fa";
+import LocaleDropdown from "../components/LocaleDropdown";
 
 export default {
-  components: { InputText, Password },
+  components: { InputText, Password, Verify2fa, LocaleDropdown },
   setup() {
     const v$ = useVuelidate();
     return { v$ };
@@ -51,6 +60,7 @@ export default {
     return {
       signin_id: null,
       password: null,
+      show_verify_2fa: false,
     };
   },
   methods: {
@@ -61,20 +71,26 @@ export default {
         return;
       }
 
-      const res = await auth.signin({
-        username: this.signin_id,
-        password: this.password,
+      await auth.signin({
+        signin_id: this.signin_id,
+        signin_password: this.password,
       });
-
-      if (res.status > 300) return;
-
+      // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
+      // 取 error 訊息判斷是否有註冊過 2fa
+      User.get(store.getters["auth/signin_id"]).catch((err) => {
+        if (err.response.data.code === 9002) {
+          this.show_verify_2fa = true;
+        }
+      });
+    },
+    next_page() {
       router.push(this.$route.redirectedFrom?.fullPath || "/");
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   width: min(100%, 18rem);
 }

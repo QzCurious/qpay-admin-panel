@@ -20,7 +20,7 @@ class User {
     return http.get("user", { params });
   }
 
-  async get({ signin_id }) {
+  async get(signin_id) {
     return http.get(`user/${signin_id}`);
   }
 

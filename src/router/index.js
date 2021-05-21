@@ -8,7 +8,7 @@ import ForwordRouterView from "./ForwordRouterView.vue";
 const routes = [
   {
     path: "/",
-    redirect: `/${i18n.global.fallbackLocale}`
+    redirect: () => `/${i18n.global.locale}`
   },
   {
     path: "/:locale",

@@ -100,6 +100,8 @@ export default {
   enable_card_holder: "Enable card holder",
   disable_card_holder: "Disable card holder",
   delete_card_holder: "Delete card holder",
+  verify_2fa: "Verify 2fa",
+  signin: "Sign In",
 
   // will be
   account_will_be_enable: "User will be enable",
@@ -201,6 +203,13 @@ export default {
   October: "October",
   November: "November",
   December: "December",
+
+  api: {
+    error: {
+      10001: "Incorrect username or password",
+      9527: "2fa verification failed"
+    }
+  },
 
   /**
    * Button

@@ -1,6 +1,6 @@
 <template>
   <router-view></router-view>
-  <Toast />
+  <Toast :autoZIndex="false" style="z-index: 9999" />
 </template>
 
 <script>

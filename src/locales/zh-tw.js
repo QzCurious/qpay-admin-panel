@@ -100,6 +100,8 @@ export default {
   enable_card_holder: "啟用持卡人",
   disable_card_holder: "停用持卡人",
   delete_card_holder: "刪除持卡人",
+  verify_2fa: "驗證 2fa",
+  signin: "登入",
 
   // will be
   account_will_be_enable: "帳號將被啟用",
@@ -201,6 +203,13 @@ export default {
   October: "十月",
   November: "十一月",
   December: "十二月",
+
+  api: {
+    error: {
+      10001: "帳號不存在或密碼不正確",
+      9527: "2fa 驗證碼錯誤"
+    }
+  },
 
   /**
    * Button
