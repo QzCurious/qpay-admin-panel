@@ -49,6 +49,8 @@ export default {
   company: "Company",
   role: "Role",
   status: "Status",
+  old_password: "Old Password",
+  new_password: "New Password",
   signin_password: "Password",
   payment_password: "Payment Password",
   ip_allow: "Allow IP List",
@@ -59,8 +61,6 @@ export default {
   create_at: "Create At",
   operation: "Operation",
   MD5_key: "MD5_key",
-  old_password: "Old Password",
-  new_password: "New Password",
 
   // action
   create_role: "Create role",
