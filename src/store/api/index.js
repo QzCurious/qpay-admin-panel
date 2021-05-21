@@ -2,7 +2,8 @@ export const store = {
   namespaced: true,
   state: () => ({
     role_list: [],
-    merchant_list: []
+    merchant_list: [],
+    bank_list: []
   }),
   getters: {
     role_name: state => role_id => {
@@ -10,6 +11,9 @@ export const store = {
     },
     merchant_name: state => merchant_id => {
       return state.merchant_list.find(item => item.id === merchant_id).name;
+    },
+    bank_name: state => bank_id => {
+      return state.bank_list.find(item => item.id === bank_id).name;
     }
   },
   actions: {
@@ -18,6 +22,9 @@ export const store = {
     },
     set_merchant_list({ commit }, data) {
       commit("set_merchant_list", data);
+    },
+    set_bank_list({ commit }, data) {
+      commit("set_bank_list", data);
     }
   },
   mutations: {
@@ -26,6 +33,9 @@ export const store = {
     },
     set_merchant_list(state, data) {
       state.merchant_list = data;
+    },
+    set_bank_list(state, data) {
+      state.bank_list = data;
     }
   }
 };
