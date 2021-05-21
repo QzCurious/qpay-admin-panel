@@ -36,7 +36,7 @@ export default {
   payment_management: "Payment Management",
   bank_management: "code::bank_management",
   channel_management: "Channel Management",
-  card_holder_management: "code::card_holder_management",
+  card_holder_management: "Card Holder Management",
   card_management: "code::card_management",
   card_operation_management: "code::card_operation_management",
 
@@ -67,6 +67,7 @@ export default {
   country: "Country",
   channel: "Channel",
   card: "Card",
+  card_holder: "Card Holder",
 
   // action
   create_role: "Create role",
@@ -94,6 +95,11 @@ export default {
   enable_channel: "Enable channel",
   disable_channel: "Disable channel",
   delete_channel: "Delete channel",
+  create_card_holder: "Create card holder",
+  edit_card_holder: "Edit card holder",
+  enable_card_holder: "Enable card holder",
+  disable_card_holder: "Disable card holder",
+  delete_card_holder: "Delete card holder",
 
   // will be
   account_will_be_enable: "User will be enable",
@@ -110,6 +116,9 @@ export default {
   channel_will_be_enabled: "Channel will be enabled",
   channel_will_be_disabled: "Channel will be disabled",
   channel_will_be_deleted: "Channel will be deleted",
+  card_holder_will_be_enabled: "Card holder will be enable",
+  card_holder_will_be_disabled: "Card holder will be disable",
+  card_holder_will_be_deleted: "Card holder will be delete",
 
   // feedback
   role_successfully_created: "User created",
@@ -140,6 +149,11 @@ export default {
   password_successfully_changed: "Password changed",
   confirm_new_password: "Confirm new password",
   payment_password_successfully_changed: "Payment password changed",
+  card_holder_successfully_created: "Card holder created",
+  card_holder_successfully_updated: "Card holder updated",
+  card_holder_successfully_enabled: "Card holder enabled",
+  card_holder_successfully_disabled: "Card holder disabled",
+  card_holder_successfully_deleted: "Card holder deleted",
 
   form: {
     create: "Create",
@@ -201,7 +215,6 @@ export default {
   submit: "code::submit",
   add_channel: "code::channel",
   add_card_holder: "code::add_card_holder",
-  card_holder: "code::card_holder",
   branch: "code::branch",
   internet_banking_id: "code::internet_banking_id",
   internet_banking_password: "code::internet_banking_password",

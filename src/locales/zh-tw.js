@@ -36,7 +36,7 @@ export default {
   payment_management: "支付管理",
   bank_management: "code::bank_management",
   channel_management: "通道管理",
-  card_holder_management: "code::card_holder_management",
+  card_holder_management: "持卡人管理",
   card_management: "code::card_management",
   card_operation_management: "code::card_operation_management",
 
@@ -67,6 +67,7 @@ export default {
   country: "國家",
   channel: "通道",
   card: "銀行卡",
+  card_holder: "持卡人",
 
   // action
   create_role: "建立職位",
@@ -94,6 +95,11 @@ export default {
   enable_channel: "啟用通道",
   disable_channel: "停用通道",
   delete_channel: "刪除通道",
+  create_card_holder: "建立持卡人",
+  edit_card_holder: "編輯持卡人",
+  enable_card_holder: "啟用持卡人",
+  disable_card_holder: "停用持卡人",
+  delete_card_holder: "刪除持卡人",
 
   // will be
   account_will_be_enable: "帳號將被啟用",
@@ -110,6 +116,9 @@ export default {
   channel_will_be_enabled: "通道將被啟用",
   channel_will_be_disabled: "通道將被停用",
   channel_will_be_deleted: "通道將被刪除",
+  card_holder_will_be_enabled: "持卡人將被啟用",
+  card_holder_will_be_disabled: "持卡人將被停用",
+  card_holder_will_be_deleted: "持卡人將被刪除",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -140,6 +149,11 @@ export default {
   password_successfully_changed: "修改密碼成功",
   confirm_new_password: "確認新密碼",
   payment_password_successfully_changed: "修改密碼成功",
+  card_holder_successfully_created: "持卡人新增成功",
+  card_holder_successfully_updated: "持卡人更新成功",
+  card_holder_successfully_enabled: "持卡人已啟用",
+  card_holder_successfully_disabled: "持卡人已停用",
+  card_holder_successfully_deleted: "持卡人已刪除",
 
   form: {
     create: "新增",
@@ -201,7 +215,6 @@ export default {
   submit: "code::submit",
   add_channel: "code::channel",
   add_card_holder: "code::add_card_holder",
-  card_holder: "code::card_holder",
   branch: "code::branch",
   internet_banking_id: "code::internet_banking_id",
   internet_banking_password: "code::internet_banking_password",

@@ -4,7 +4,8 @@ export const store = {
     role_list: [],
     merchant_list: [],
     bank_list: [],
-    channel_list: []
+    channel_list: [],
+    holder_list: []
   }),
   getters: {
     role_name: state => role_id => {
@@ -18,6 +19,9 @@ export const store = {
     },
     channel_name: state => channel_id => {
       return state.channel_list.find(item => item.id === channel_id).name;
+    },
+    holder_name: state => holder_id => {
+      return state.holder_list.find(item => item.id === holder_id).name;
     }
   },
   actions: {
@@ -32,6 +36,9 @@ export const store = {
     },
     set_channel_list({ commit }, data) {
       commit("set_channel_list", data);
+    },
+    set_holder_list({ commit }, data) {
+      commit("set_holder_list", data);
     }
   },
   mutations: {
@@ -46,6 +53,9 @@ export const store = {
     },
     set_channel_list(state, data) {
       state.channel_list = data;
+    },
+    set_holder_list(state, data) {
+      state.holder_list = data;
     }
   }
 };
