@@ -36,6 +36,14 @@ class Auth {
       });
   }
 
+  async get_2fa_qrcode() {
+    return http.get("api/auth/2fa", { withCredentials: true , responseType: 'blob'});
+  }
+
+  async trigger_bind_2fa() {
+    return http.post("api/auth/2fa", null, { withCredentials: true });
+  }
+
   async singin_2fa(code) {
     return http.post("api/auth/2fa/verify", { code }).then(res => {
       store.dispatch("auth/signin", res.data.access_token);

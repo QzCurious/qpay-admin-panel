@@ -168,7 +168,8 @@ export default {
     accept: "是",
     reject: "否",
     cancel: "取消",
-    copy: "複製"
+    copy: "複製",
+    next: "下一步"
   },
 
   // day

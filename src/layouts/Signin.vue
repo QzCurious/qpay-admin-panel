@@ -30,6 +30,12 @@
   <Dialog modal :header="$t('verify_2fa')" v-model:visible="show_verify_2fa">
     <Verify2fa @success="next_page" />
   </Dialog>
+  <Dialog modal :header="'2fa QR code'" v-model:visible="show_qrcode">
+    <div class="p-fluid p-d-flex p-flex-column">
+      <img :src="qrcode" />
+      <Button :label="$t('form.next')" @click="continue_to_signin" />
+    </div>
+  </Dialog>
 </template>
 
 <script>
@@ -61,6 +67,8 @@ export default {
       signin_id: null,
       password: null,
       show_verify_2fa: false,
+      qrcode: null,
+      show_qrcode: false,
     };
   },
   methods: {
@@ -80,8 +88,20 @@ export default {
       User.get(store.getters["auth/signin_id"]).catch((err) => {
         if (err.response.data.code === 9002) {
           this.show_verify_2fa = true;
+        } else if (err.response.data.code === 9001) {
+          auth.get_2fa_qrcode().then((res) => {
+            this.show_qrcode = true;
+            this.qrcode = URL.createObjectURL(res.data);
+
+            // 後端說要打 cookie 回去
+            auth.trigger_bind_2fa();
+          });
         }
       });
+    },
+    continue_to_signin() {
+      this.show_qrcode = false;
+      this.show_verify_2fa = true;
     },
     next_page() {
       router.push(this.$route.redirectedFrom?.fullPath || "/");

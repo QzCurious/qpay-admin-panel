@@ -168,7 +168,8 @@ export default {
     accept: "Yes",
     reject: "No",
     cancel: "Cancel",
-    copy: "Copy"
+    copy: "Copy",
+    next: "Next"
   },
 
   // day
