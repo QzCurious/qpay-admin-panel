@@ -21,7 +21,7 @@
       selectionMode="checkbox"
       v-model:selectionKeys="selected"
     ></Tree>
-    <Button class="p-mt-3" :label="$t('create')" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.create')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
