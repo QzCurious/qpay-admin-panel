@@ -37,7 +37,7 @@ export default {
   bank_management: "code::bank_management",
   channel_management: "通道管理",
   card_holder_management: "持卡人管理",
-  card_management: "code::card_management",
+  card_management: "銀行卡管理",
   card_operation_management: "code::card_operation_management",
 
   financial_reports: "code::financial_reports",
@@ -68,6 +68,14 @@ export default {
   channel: "通道",
   card: "銀行卡",
   card_holder: "持卡人",
+  card_number: "卡號",
+  deposit_limit_daily: "日收款上限",
+  deposit_limit_once: "單次收款上限",
+  pb_api_key: "PushBullet Key",
+  plugin_mode: "掛載模式",
+  bank_branch: "分行",
+  internet_banking_id: "網銀帳號",
+  internet_banking_password: "網銀密碼",
 
   // action
   create_role: "建立職位",
@@ -100,6 +108,11 @@ export default {
   enable_card_holder: "啟用持卡人",
   disable_card_holder: "停用持卡人",
   delete_card_holder: "刪除持卡人",
+  create_card: "建立卡片",
+  edit_card: "編輯卡片",
+  enable_card: "啟用卡片",
+  disable_card: "停用卡片",
+  delete_card: "刪除卡片",
   verify_2fa: "驗證 2fa",
   signin: "登入",
 
@@ -121,6 +134,9 @@ export default {
   card_holder_will_be_enabled: "持卡人將被啟用",
   card_holder_will_be_disabled: "持卡人將被停用",
   card_holder_will_be_deleted: "持卡人將被刪除",
+  card_will_be_enabled: "卡片將被啟用",
+  card_will_be_disabled: "卡片將被停用",
+  card_will_be_deleted: "卡片將被刪除",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -134,6 +150,11 @@ export default {
   channel_successfully_enabled: "通道已啟用",
   channel_successfully_disabled: "通道已停用",
   channel_successfully_deleted: "通道已刪除",
+  card_successfully_created: "卡片新增成功",
+  card_successfully_updated: "卡片更新成功",
+  card_successfully_enabled: "卡片已啟用",
+  card_successfully_disabled: "卡片已停用",
+  card_successfully_deleted: "卡片已刪除",
   ip_is_invalid: "錯誤的 IP 位址",
   MD5_key_copied: "已複製 MD5 key",
   merchant_successfully_created: "商戶新增成功",
@@ -226,12 +247,8 @@ export default {
   add_channel: "code::channel",
   add_card_holder: "code::add_card_holder",
   branch: "code::branch",
-  internet_banking_id: "code::internet_banking_id",
-  internet_banking_password: "code::internet_banking_password",
   add_card: "code::add_card",
   dialog_confirm: "code::dialog_confirm",
-  pb_api_key: "code::pb_api_key",
-  plugin_mode: "code::plugin_mode",
   /**
    * Column fields
    */
@@ -247,7 +264,6 @@ export default {
 
   card_id: "code::card_id",
   account_name: "code::account_name",
-  card_number: "code::card_number",
   limit_daily: "code::limit_daily",
   limit_once: "code::limit_once",
   limit_deposit: "code::limit_deposit",

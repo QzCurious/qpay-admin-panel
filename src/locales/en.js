@@ -37,7 +37,7 @@ export default {
   bank_management: "code::bank_management",
   channel_management: "Channel Management",
   card_holder_management: "Card Holder Management",
-  card_management: "code::card_management",
+  card_management: "Card Management",
   card_operation_management: "code::card_operation_management",
 
   financial_reports: "code::financial_reports",
@@ -68,6 +68,14 @@ export default {
   channel: "Channel",
   card: "Card",
   card_holder: "Card Holder",
+  card_number: "Card Number",
+  deposit_limit_daily: "Daily Deposit Limit",
+  deposit_limit_once: "Once Deposit Limit",
+  pb_api_key: "PushBullet Key",
+  plugin_mode: "Plugin Mode",
+  bank_branch: "Bank Branch",
+  internet_banking_id: "Internet Banking",
+  internet_banking_password: "Internet Banking Password",
 
   // action
   create_role: "Create role",
@@ -100,6 +108,11 @@ export default {
   enable_card_holder: "Enable card holder",
   disable_card_holder: "Disable card holder",
   delete_card_holder: "Delete card holder",
+  create_card: "Create card",
+  edit_card: "Edit card",
+  enable_card: "Enable card",
+  disable_card: "Disable card",
+  delete_card: "Delete card",
   verify_2fa: "Verify 2fa",
   signin: "Sign In",
 
@@ -121,6 +134,9 @@ export default {
   card_holder_will_be_enabled: "Card holder will be enable",
   card_holder_will_be_disabled: "Card holder will be disable",
   card_holder_will_be_deleted: "Card holder will be delete",
+  card_will_be_enabled: "Card will be enabled",
+  card_will_be_disabled: "Card will be disabled",
+  card_will_be_deleted: "Card will be deleted",
 
   // feedback
   role_successfully_created: "User created",
@@ -134,6 +150,11 @@ export default {
   channel_successfully_enabled: "Channel enabled",
   channel_successfully_disabled: "Channel disabled",
   channel_successfully_deleted: "Channel deleted",
+  card_successfully_created: "Card created",
+  card_successfully_updated: "Card updated",
+  card_successfully_enabled: "Card enabled",
+  card_successfully_disabled: "Card disabled",
+  card_successfully_deleted: "Card deleted",
   ip_is_invalid: "Invalid IP",
   MD5_key_copied: "MD5 key copied",
   merchant_successfully_created: "Merchant created",
@@ -226,12 +247,8 @@ export default {
   add_channel: "code::channel",
   add_card_holder: "code::add_card_holder",
   branch: "code::branch",
-  internet_banking_id: "code::internet_banking_id",
-  internet_banking_password: "code::internet_banking_password",
   add_card: "code::add_card",
   dialog_confirm: "code::dialog_confirm",
-  pb_api_key: "code::pb_api_key",
-  plugin_mode: "code::plugin_mode",
   /**
    * Column fields
    */
@@ -248,7 +265,6 @@ export default {
 
   card_id: "code::card_id",
   account_name: "code::account_name",
-  card_number: "code::card_number",
   limit_daily: "code::limit_daily",
   limit_once: "code::limit_once",
   limit_deposit: "code::limit_deposit",

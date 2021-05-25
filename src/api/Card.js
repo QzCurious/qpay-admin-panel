@@ -1,25 +1,40 @@
-import http from './http';
+import http from "./http";
 
 class Card {
-    async all() {
-        return http.get("cards");
-    }
+  async count(params = {}) {
+    return http.get("card/summary", { params });
+  }
 
-    async retrieve({id}) {
-        return http.get(`cards/${id}`);
-    }
+  async all() {
+    return card.find({ limit: 99 });
+  }
 
-    async create({ channel, card_id, merchant, bank_name, branch, account_name, card_number, internet_banking_id, internet_banking_password, limit_daily, limit_once, pb_api_key, plugin, status}) {
-        return http.post('cards', {channel, card_id, merchant, bank_name, branch, account_name, card_number, internet_banking_id, internet_banking_password, limit_daily, pb_api_key, plugin, limit_once, status});
-    }
+  async find(params) {
+    params = {
+      page: 1,
+      limit: 10,
+      ...params
+    };
+    return http.get("card", { params });
+  }
 
-    async update({ id, channel, card_id, merchant, bank_name, branch, account_name, card_number, internet_banking_id, internet_banking_password, limit_daily, limit_once, pb_api_key, plugin, status}) {
-        return http.put(`cards/${id}`, { channel, card_id, merchant, bank_name, branch, account_name, card_number, internet_banking_id, internet_banking_password, limit_daily, pb_api_key, plugin, limit_once, status});
-    }
+  async get(id) {
+    return http.get(`card/${id}`);
+  }
 
-    async delete({ id }){
-        return http.delete(`cards/${id}`)
-    }
+  async create(params) {
+    return http.post("card", params);
+  }
+
+  async update(id, data) {
+    return http.put(`card/${id}`, data);
+  }
+
+  async delete(id) {
+    return http.delete(`card/${id}`);
+  }
 }
 
-export default new Card();
+const card = new Card();
+
+export default card;
