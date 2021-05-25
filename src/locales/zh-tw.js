@@ -76,6 +76,13 @@ export default {
   bank_branch: "分行",
   internet_banking_id: "網銀帳號",
   internet_banking_password: "網銀密碼",
+  online: "掛載",
+  auto_refresh: "自動刷新",
+  limit_deposit: "收款限制",
+  deposit_today: "今日已收款額度",
+  credit_today: "今日已入帳額度",
+  remaining_today: "今日剩餘收款額度",
+  balance: "帳戶餘額",
 
   // action
   create_role: "建立職位",
@@ -113,6 +120,8 @@ export default {
   enable_card: "啟用卡片",
   disable_card: "停用卡片",
   delete_card: "刪除卡片",
+  online_card: "掛載銀行卡",
+  offline_card: "卸載銀行卡",
   create_merchant_channel: "建立商戶通道",
   enable_merchant_channel: "啟用商戶通道",
   disable_merchant_channel: "停用商戶通道",
@@ -140,6 +149,8 @@ export default {
   card_holder_will_be_deleted: "持卡人將被刪除",
   card_will_be_enabled: "卡片將被啟用",
   card_will_be_disabled: "卡片將被停用",
+  card_will_be_online: "卡片將掛載",
+  card_will_be_offline: "卡片將卸載",
   card_will_be_deleted: "卡片將被刪除",
   merchant_channel_will_be_enabled: "商戶通道將被啟用",
   merchant_channel_will_be_disabled: "商戶通道將被停用",
@@ -162,6 +173,8 @@ export default {
   card_successfully_enabled: "卡片已啟用",
   card_successfully_disabled: "卡片已停用",
   card_successfully_deleted: "卡片已刪除",
+  card_successfully_online: "卡片已掛載",
+  card_successfully_offline: "卡片已卸載",
   merchant_channel_successfully_created: "商戶通道新增成功",
   merchant_channel_successfully_enabled: "商戶通道已啟用",
   merchant_channel_successfully_disabled: "商戶通道已停用",
@@ -277,7 +290,6 @@ export default {
   account_name: "code::account_name",
   limit_daily: "code::limit_daily",
   limit_once: "code::limit_once",
-  limit_deposit: "code::limit_deposit",
 
   current_balance: "code::current_balance",
   auto_deposit: "code::auto_deposit",
@@ -293,6 +305,5 @@ export default {
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
 
-  online: "code::online",
   deposit_amount: "code::deposit_amount"
 };

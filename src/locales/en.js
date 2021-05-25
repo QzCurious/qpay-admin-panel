@@ -76,6 +76,13 @@ export default {
   bank_branch: "Bank Branch",
   internet_banking_id: "Internet Banking",
   internet_banking_password: "Internet Banking Password",
+  online: "Online",
+  auto_refresh: "Auth Refresh",
+  limit_deposit: "Limit Deposit",
+  deposit_today: "Deposit Today",
+  credit_today: "Credit Today",
+  remaining_today: "Remaining Today",
+  balance: "Balance",
 
   // action
   create_role: "Create role",
@@ -113,6 +120,8 @@ export default {
   enable_card: "Enable card",
   disable_card: "Disable card",
   delete_card: "Delete card",
+  online_card: "Set card online",
+  offline_card: "Set card offline",
   create_merchant_channel: "Create merchant channel",
   enable_merchant_channel: "Enable merchant channel",
   disable_merchant_channel: "Disable merchant channel",
@@ -140,6 +149,8 @@ export default {
   card_holder_will_be_deleted: "Card holder will be delete",
   card_will_be_enabled: "Card will be enabled",
   card_will_be_disabled: "Card will be disabled",
+  card_will_be_online: "Card will be online",
+  card_will_be_offline: "Card will be offline",
   card_will_be_deleted: "Card will be deleted",
   merchant_channel_will_be_enabled: "Merchant channel will be enabled",
   merchant_channel_will_be_disabled: "Merchant channel will be disabled",
@@ -162,6 +173,8 @@ export default {
   card_successfully_enabled: "Card enabled",
   card_successfully_disabled: "Card disabled",
   card_successfully_deleted: "Card deleted",
+  card_successfully_online: "Card is online",
+  card_successfully_offline: "Card is offline",
   merchant_channel_successfully_created: "Merchant channel created",
   merchant_channel_successfully_enabled: "Merchant channel enabled",
   merchant_channel_successfully_disabled: "Merchant channel disabled",
@@ -278,7 +291,6 @@ export default {
   account_name: "code::account_name",
   limit_daily: "code::limit_daily",
   limit_once: "code::limit_once",
-  limit_deposit: "code::limit_deposit",
 
   current_balance: "code::current_balance",
   auto_deposit: "code::auto_deposit",
@@ -294,6 +306,5 @@ export default {
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
 
-  online: "code::online",
   deposit_amount: "code::deposit_amount"
 };
