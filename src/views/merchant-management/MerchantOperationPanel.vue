@@ -34,7 +34,7 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="name" :header="$t('merchant')" />
-    <Column field="status" :header="狀態">
+    <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <InputSwitch
           :modelValue="Boolean(data.status)"
