@@ -19,7 +19,7 @@ export default {
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
   merchant_rate: "code::merchant_rate",
-  merchant_channel_setting: "code::merchant_channel_setting",
+  merchant_channel_setting: "商戶通道管理",
 
   // order_management
   order_management: "code::order_management",
@@ -113,6 +113,10 @@ export default {
   enable_card: "啟用卡片",
   disable_card: "停用卡片",
   delete_card: "刪除卡片",
+  create_merchant_channel: "建立商戶通道",
+  enable_merchant_channel: "啟用商戶通道",
+  disable_merchant_channel: "停用商戶通道",
+  delete_merchant_channel: "刪除商戶通道",
   verify_2fa: "驗證 2fa",
   signin: "登入",
 
@@ -137,6 +141,9 @@ export default {
   card_will_be_enabled: "卡片將被啟用",
   card_will_be_disabled: "卡片將被停用",
   card_will_be_deleted: "卡片將被刪除",
+  merchant_channel_will_be_enabled: "商戶通道將被啟用",
+  merchant_channel_will_be_disabled: "商戶通道將被停用",
+  merchant_channel_will_be_deleted: "商戶通道將被刪除",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -155,6 +162,10 @@ export default {
   card_successfully_enabled: "卡片已啟用",
   card_successfully_disabled: "卡片已停用",
   card_successfully_deleted: "卡片已刪除",
+  merchant_channel_successfully_created: "商戶通道新增成功",
+  merchant_channel_successfully_enabled: "商戶通道已啟用",
+  merchant_channel_successfully_disabled: "商戶通道已停用",
+  merchant_channel_successfully_deleted: "商戶通道已刪除",
   ip_is_invalid: "錯誤的 IP 位址",
   MD5_key_copied: "已複製 MD5 key",
   merchant_successfully_created: "商戶新增成功",

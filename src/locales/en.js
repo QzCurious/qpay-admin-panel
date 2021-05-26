@@ -19,7 +19,7 @@ export default {
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
   merchant_rate: "code::merchant_rate",
-  merchant_channel_setting: "code::merchant_channel_setting",
+  merchant_channel_setting: "Merchant Channel Setting",
 
   // order_management
   order_management: "code::order_management",
@@ -113,6 +113,10 @@ export default {
   enable_card: "Enable card",
   disable_card: "Disable card",
   delete_card: "Delete card",
+  create_merchant_channel: "Create merchant channel",
+  enable_merchant_channel: "Enable merchant channel",
+  disable_merchant_channel: "Disable merchant channel",
+  delete_merchant_channel: "Delete merchant channel",
   verify_2fa: "Verify 2fa",
   signin: "Sign In",
 
@@ -137,6 +141,9 @@ export default {
   card_will_be_enabled: "Card will be enabled",
   card_will_be_disabled: "Card will be disabled",
   card_will_be_deleted: "Card will be deleted",
+  merchant_channel_will_be_enabled: "Merchant channel will be enabled",
+  merchant_channel_will_be_disabled: "Merchant channel will be disabled",
+  merchant_channel_will_be_deleted: "Merchant channel will be deleted",
 
   // feedback
   role_successfully_created: "User created",
@@ -155,6 +162,10 @@ export default {
   card_successfully_enabled: "Card enabled",
   card_successfully_disabled: "Card disabled",
   card_successfully_deleted: "Card deleted",
+  merchant_channel_successfully_created: "Merchant channel created",
+  merchant_channel_successfully_enabled: "Merchant channel enabled",
+  merchant_channel_successfully_disabled: "Merchant channel disabled",
+  merchant_channel_successfully_deleted: "Merchant channel deleted",
   ip_is_invalid: "Invalid IP",
   MD5_key_copied: "MD5 key copied",
   merchant_successfully_created: "Merchant created",
