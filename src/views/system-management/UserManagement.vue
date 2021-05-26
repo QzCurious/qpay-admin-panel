@@ -107,8 +107,8 @@ export default {
           ? this.$i18n.t("enable_account")
           : this.$i18n.t("disable_account"),
         message: status
-          ? `${this.$i18n.t("account_will_be_enable")}: ${data.signin_id}`
-          : `${this.$i18n.t("account_will_be_disable")}: ${data.signin_id}`,
+          ? `${this.$i18n.t("account_will_be_enabled")}: ${data.signin_id}`
+          : `${this.$i18n.t("account_will_be_disabled")}: ${data.signin_id}`,
         accept: () => {
           User.update(data.signin_id, { status: Number(status) }).then(() => {
             data.status = status;

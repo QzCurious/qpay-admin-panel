@@ -138,8 +138,8 @@ export default defineComponent({
           ? this.$i18n.t("enable_merchant")
           : this.$i18n.t("disable_merchant"),
         message: status
-          ? `${this.$i18n.t("merchant_will_be_enable")}: ${data.name}`
-          : `${this.$i18n.t("merchant_will_be_disable")}: ${data.name}`,
+          ? `${this.$i18n.t("merchant_will_be_enabled")}: ${data.name}`
+          : `${this.$i18n.t("merchant_will_be_disabled")}: ${data.name}`,
         accept: () => {
           Merchant.update(data.id, { status: Number(status) }).then(() => {
             data.status = status;
@@ -164,11 +164,11 @@ export default defineComponent({
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_merchant"),
-        message: this.$i18n.t("merchant_will_be_delete"),
+        message: this.$i18n.t("merchant_will_be_deleted"),
         accept: () => {
           Merchant.delete(data.id).then(() => {
             ToastService.success({
-              summary: this.$i18n.t("merchant_successfully_delete"),
+              summary: this.$i18n.t("merchant_successfully_deleted"),
             });
             this.fetch();
           });
