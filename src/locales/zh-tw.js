@@ -61,6 +61,10 @@ export default {
   create_at: "建立時間",
   operation: "操作",
   MD5_key: "MD5_key",
+  bank: "銀行",
+  bank_code: "銀行代號",
+  transfer: "跨行轉帳",
+  country: "國家",
 
   // action
   create_role: "建立職位",
@@ -75,6 +79,13 @@ export default {
   enable_merchant: "啟用商戶",
   disable_merchant: "停用商戶",
   delete_merchant: "刪除商戶",
+  create_bank: "建立銀行",
+  edit_bank: "編輯銀行",
+  enable_bank: "啟用銀行",
+  disable_bank: "停用銀行",
+  delete_bank: "刪除銀行",
+  enable_bank_transfer: "啟用跨行轉帳",
+  disable_bank_transfer: "停用跨行轉帳",
   generate_new_MD5_key: "產生新 key",
 
   // will be
@@ -84,6 +95,11 @@ export default {
   merchant_will_be_enable: "商戶將被啟用",
   merchant_will_be_disable: "商戶將被停用",
   merchant_will_be_delete: "商戶將被刪除",
+  bank_will_be_enabled: "銀行將被啟用",
+  bank_will_be_disabled: "銀行將被停用",
+  bank_will_be_deleted: "銀行將被刪除",
+  bank_transfer_will_be_enabled: "跨行轉帳將被啟用",
+  bank_transfer_will_be_disabled: "跨行轉帳將被停用",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -99,6 +115,13 @@ export default {
   merchant_successfully_enabled: "商戶已啟用",
   merchant_successfully_disabled: "商戶已停用",
   merchant_successfully_delete: "商戶已刪除",
+  bank_successfully_created: "銀行新增成功",
+  bank_successfully_updated: "銀行更新成功",
+  bank_successfully_enabled: "銀行已啟用",
+  bank_successfully_disabled: "銀行已停用",
+  bank_successfully_deleted: "銀行已刪除",
+  bank_transfer_successfully_enabled: "跨行轉帳已啟用",
+  bank_transfer_successfully_disabled: "跨行轉帳已停用",
   password_successfully_changed: "修改密碼成功",
   confirm_new_password: "確認新密碼",
   payment_password_successfully_changed: "修改密碼成功",
@@ -176,10 +199,6 @@ export default {
    */
 
   index: "code::index",
-  bank_code: "code::bank_code",
-  bank_name: "code::bank_name",
-  transfer: "code::transfer",
-  country: "code::country",
   edit: "code::edit",
 
   channel_name: "code::channel_name",
@@ -196,7 +215,6 @@ export default {
   limit_once: "code::limit_once",
   limit_deposit: "code::limit_deposit",
 
-  bank: "code::bank",
   current_balance: "code::current_balance",
   auto_deposit: "code::auto_deposit",
   manual_deposit: "code::manual_deposit",

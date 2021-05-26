@@ -14,14 +14,14 @@
   >
     <template #header>
       <form @submit.prevent="fetch" class="p-d-flex p-jc-end">
-        <Button class="p-mr-auto" label="新增銀行" @click="create" />
+        <Button class="p-mr-auto" :label="$t('form.create')" @click="create" />
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="code" :header="i18n.bank_code" />
-    <Column field="name" :header="i18n.bank_name" />
-    <Column field="transfer" :header="i18n.transfer">
+    <Column field="code" :header="$t('create_bank')" />
+    <Column field="name" :header="$t('bank')" />
+    <Column field="transfer" :header="$t('transfer')">
       <template #body="{ data }">
         <InputSwitch
           :modelValue="Boolean(data.transfer)"
@@ -29,7 +29,7 @@
         />
       </template>
     </Column>
-    <Column field="status" :header="i18n.status">
+    <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <InputSwitch
           :modelValue="Boolean(data.status)"
@@ -37,11 +37,15 @@
         />
       </template>
     </Column>
-    <Column field="country" :header="i18n.country" />
-    <Column field="edit" :header="i18n.edit">
+    <Column field="country" :header="$t('country')" />
+    <Column :header="$t('operation')">
       <template #body="{ data }">
-        <Button label="編輯" @click="edit(data)" />
-        <Button class="p-button-danger" label="刪除" @click="remove(data)" />
+        <Button :label="$t('form.edit')" @click="edit(data)" />
+        <Button
+          class="p-button-danger"
+          :label="$t('form.delete')"
+          @click="remove(data)"
+        />
       </template>
     </Column>
   </DataTable>
@@ -53,7 +57,6 @@
 <script>
 import { PrimeIcons } from "primevue/api";
 import Bank from "../../api/Bank";
-import i18n from "../../helper/i18n.zh-CN.js";
 import ToastService from "../../service/ToastService";
 import BankModal from "./BankModal";
 
@@ -74,8 +77,6 @@ export default {
         mode: null,
         data: {},
       },
-
-      i18n: i18n,
     };
   },
   mounted() {
@@ -98,33 +99,43 @@ export default {
       this.fetch();
     },
     update_status(data, status) {
-      const verb = status ? "啟用" : "停用";
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: `${verb}銀行`,
-        message: `銀行將被${verb}: ${data.name}`,
+        header: status
+          ? this.$i18n.t("enable_bank")
+          : this.$i18n.t("disable_bank"),
+        message: status
+          ? `${this.$i18n.t("bank_will_be_enabled")}: ${data.name}`
+          : `${this.$i18n.t("bank_will_be_disabled")}: ${data.name}`,
         accept: () => {
-          Bank.update(data.id, { status }).then(() => {
+          Bank.update(data.id, { status: Number(status) }).then(() => {
             this.fetch();
             ToastService.success({
-              summary: `已${verb}銀行 ${data.name}`,
+              summary: status
+                ? this.$i18n.t("bank_successfully_enabled")
+                : this.$i18n.t("bank_successfully_disabled"),
             });
           });
         },
       });
       this.show_update_status_modal = true;
     },
-    update_transfer(data, value) {
-      const verb = status ? "啟用" : "停用";
+    update_transfer(data, status) {
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: `${verb}銀行`,
-        message: `銀行將被${verb}: ${data.name}`,
+        header: status
+          ? this.$i18n.t("enable_bank_transfer")
+          : this.$i18n.t("disable_bank_transfer"),
+        message: status
+          ? `${this.$i18n.t("bank_transfer_will_be_enabled")}: ${data.name}`
+          : `${this.$i18n.t("bank_transfer_will_be_disabled")}: ${data.name}`,
         accept: () => {
-          Bank.update(data.id, { transfer: value }).then(() => {
+          Bank.update(data.id, { transfer: Number(status) }).then(() => {
             this.fetch();
             ToastService.success({
-              summary: `已${verb}銀行 ${data.name}`,
+              summary: status
+                ? this.$i18n.t("bank_transfer_successfully_enabled")
+                : this.$i18n.t("bank_transfer_successfully_disabled"),
             });
           });
         },
@@ -144,11 +155,15 @@ export default {
     remove(data) {
       this.$confirm.require({
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
-        header: "刪除銀行",
-        message: `銀行將被刪除: ${data.name}`,
+        header: this.$i18n.t("delete_bank"),
+        message: `${this.$i18n.t("bank_will_be_deleted")}: ${data.name}`,
         accept: () => {
           Bank.delete(data.id).then(() => {
-            ToastService.success({ summary: `已刪除銀行 ${data.name}` });
+            ToastService.success({
+              summary: `${this.$i18n.t("bank_successfully_deleted")}: ${
+                data.name
+              }`,
+            });
             this.fetch();
           });
         },
@@ -157,7 +172,9 @@ export default {
   },
   computed: {
     modal_title() {
-      return this.modal.mode === "edit" ? "編輯銀行" : "新增銀行";
+      return this.modal.mode === "edit"
+        ? this.$i18n.t("edit_bank")
+        : this.$i18n.t("create_bank");
     },
   },
 };

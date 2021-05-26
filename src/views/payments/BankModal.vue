@@ -3,33 +3,33 @@
     <InputText
       float
       v-model="name"
-      label="銀行"
+      :label="$t('bank')"
       name="name"
       :errors="v$.name.$errors.map((e) => e.$message)"
     />
     <InputText
       float
       v-model="country"
-      label="國家"
+      :label="$t('country')"
       name="country"
       :errors="v$.country.$errors.map((e) => e.$message)"
     />
     <InputText
       float
       v-model="code"
-      label="code"
+      :label="$t('bank_code')"
       name="code"
       :errors="v$.code.$errors.map((e) => e.$message)"
     />
     <div class="p-d-flex p-ai-center p-mt-3">
       <InputSwitch v-model="status" />
-      <span class="p-ml-2">狀態</span>
+      <span class="p-ml-2">{{ $t("status") }}</span>
     </div>
     <div class="p-d-flex p-ai-center p-mt-3">
       <InputSwitch v-model="transfer" />
-      <span class="p-ml-2">Transfer</span>
+      <span class="p-ml-2">{{ $t("transfer") }}</span>
     </div>
-    <Button class="p-mt-3" label="送出" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -85,18 +85,22 @@ export default {
         name: this.name,
         country: this.country,
         code: this.code,
-        status: this.status,
-        transfer: this.transfer,
+        status: Number(this.status),
+        transfer: Number(this.transfer),
       };
       if (this.mode === "create") {
         Bank.create(data).then(() => {
-          ToastService.success({ summary: "銀行新增成功" });
+          ToastService.success({
+            summary: this.$i18n.t("bank_successfully_created"),
+          });
 
           this.$emit("success", data);
         });
       } else if (this.mode === "edit") {
         Bank.update(this.data.id, data).then(() => {
-          ToastService.success({ summary: "銀行修改成功" });
+          ToastService.success({
+            summary: this.$i18n.t("bank_successfully_updated"),
+          });
 
           this.$emit("success", data);
         });

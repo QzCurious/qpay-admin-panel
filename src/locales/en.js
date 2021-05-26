@@ -61,6 +61,10 @@ export default {
   create_at: "Create At",
   operation: "Operation",
   MD5_key: "MD5_key",
+  bank: "Bank",
+  bank_code: "Bank Code",
+  transfer: "Transfer",
+  country: "Country",
 
   // action
   create_role: "Create role",
@@ -75,6 +79,13 @@ export default {
   enable_merchant: "Enable merchant",
   disable_merchant: "Disable merchant",
   delete_merchant: "Delete merchant",
+  create_bank: "Create bank",
+  edit_bank: "Edit bank",
+  enable_bank: "Enable bank",
+  disable_bank: "Disable bank",
+  delete_bank: "Delete bank",
+  enable_bank_transfer: "Enable transfer",
+  disable_bank_transfer: "Disable transfer",
   generate_new_MD5_key: "Generate new MD5 key",
 
   // will be
@@ -84,6 +95,11 @@ export default {
   merchant_will_be_enable: "Merchant will be enabled",
   merchant_will_be_disable: "Merchant will be disabled",
   merchant_will_be_delete: "Merchant will be deleted",
+  bank_will_be_enabled: "Bank will be enabled",
+  bank_will_be_disabled: "Bank will be disabled",
+  bank_will_be_deleted: "Bank will be deleted",
+  bank_transfer_will_be_enabled: "Transfer will be enabled",
+  bank_transfer_will_be_disabled: "Transfer will be disabled",
 
   // feedback
   role_successfully_created: "User created",
@@ -99,6 +115,13 @@ export default {
   merchant_successfully_enabled: "Merchant enabled",
   merchant_successfully_disabled: "Merchant disabled",
   merchant_successfully_delete: "Merchant deleted",
+  bank_successfully_created: "Bank created",
+  bank_successfully_updated: "Bank updated",
+  bank_successfully_enabled: "Bank enabled",
+  bank_successfully_disabled: "Bank disabled",
+  bank_successfully_deleted: "Bank deleted",
+  bank_transfer_successfully_enabled: "Transfer enabled",
+  bank_transfer_successfully_disabled: "Transfer disabled",
   password_successfully_changed: "Password changed",
   confirm_new_password: "Confirm new password",
   payment_password_successfully_changed: "Payment password changed",
@@ -176,10 +199,7 @@ export default {
    */
 
   index: "code::index",
-  bank_code: "code::bank_code",
   bank_name: "code::bank_name",
-  transfer: "code::transfer",
-  country: "code::country",
   edit: "code::edit",
 
   channel_name: "code::channel_name",
@@ -196,7 +216,6 @@ export default {
   limit_once: "code::limit_once",
   limit_deposit: "code::limit_deposit",
 
-  bank: "code::bank",
   current_balance: "code::current_balance",
   auto_deposit: "code::auto_deposit",
   manual_deposit: "code::manual_deposit",
