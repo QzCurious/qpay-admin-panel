@@ -1,25 +1,42 @@
-import http from './http';
+import http from "./http";
+import store from "../store";
 
 class Channel {
-    async all() {
-        return http.get("channels");
-    }
+  async count(params = { status: null }) {
+    return http.get("channel/summary", { params });
+  }
 
-    async retrieve( { id } ) {
-        return http.get(`channels/${id}`);
-    }
+  async all() {
+    return channel.find(
+      { limit: 99 },
+      { cache: { maxAge: 5 * 60 * 1000, exclude: { query: false } } }
+    );
+  }
 
-    async create({ name, status}) {
-        return http.post('channels', {name, status});
-    }
+  async find(params = {}, config) {
+    params = {
+      page: 1,
+      limit: 10,
+      ...params
+    };
+    return http.get("channel", { params, ...config }).then(res => {
+      store.dispatch("api/set_channel_list", res.data.data);
+      return res;
+    });
+  }
 
-    async update({ id, name, status}) {
-        return http.put(`channels/${id}`, { name, status});
-    }
+  async create(data) {
+    return http.post("channel", data);
+  }
 
-    async delete({ id }){
-        return http.delete(`channels/${id}`);
-    }
+  async update(id, data) {
+    return http.put(`channel/${id}`, data);
+  }
+
+  async delete(id, data) {
+    return http.delete(`channel/${id}`, data);
+  }
 }
 
-export default new Channel();
+const channel = new Channel();
+export default channel;

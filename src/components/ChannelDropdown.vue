@@ -11,7 +11,7 @@
 
 <script>
 import Dropdown from "./Dropdown.vue";
-import Merchant from "../api/Merchant";
+import Channel from "../api/Channel";
 import store from "../store";
 import i18n from "../i18n";
 
@@ -19,16 +19,16 @@ export default {
   components: { Dropdown },
   props: {
     modelValue: Number,
-    label: { type: String, default: () => i18n.global.t("merchant") },
+    label: { type: String, default: () => i18n.global.t("channel") },
   },
   emits: ["update:modelValue"],
   computed: {
     options() {
-      return store.state.api.merchant_list;
+      return store.state.api.channel_list;
     },
   },
   async mounted() {
-    await Merchant.all();
+    await Channel.all();
   },
 };
 </script>

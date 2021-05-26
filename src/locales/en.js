@@ -33,9 +33,9 @@ export default {
   /**
    * Sidebar categories
    */
-  payment_management: "code::payment_management",
+  payment_management: "Payment Management",
   bank_management: "code::bank_management",
-  channel_management: "code::channel_management",
+  channel_management: "Channel Management",
   card_holder_management: "code::card_holder_management",
   card_management: "code::card_management",
   card_operation_management: "code::card_operation_management",
@@ -65,6 +65,8 @@ export default {
   bank_code: "Bank Code",
   transfer: "Transfer",
   country: "Country",
+  channel: "Channel",
+  card: "Card",
 
   // action
   create_role: "Create role",
@@ -87,6 +89,11 @@ export default {
   enable_bank_transfer: "Enable transfer",
   disable_bank_transfer: "Disable transfer",
   generate_new_MD5_key: "Generate new MD5 key",
+  create_channel: "Create channel",
+  edit_channel: "Edit channel",
+  enable_channel: "Enable channel",
+  disable_channel: "Disable channel",
+  delete_channel: "Delete channel",
 
   // will be
   account_will_be_enable: "User will be enable",
@@ -100,6 +107,9 @@ export default {
   bank_will_be_deleted: "Bank will be deleted",
   bank_transfer_will_be_enabled: "Transfer will be enabled",
   bank_transfer_will_be_disabled: "Transfer will be disabled",
+  channel_will_be_enabled: "Channel will be enabled",
+  channel_will_be_disabled: "Channel will be disabled",
+  channel_will_be_deleted: "Channel will be deleted",
 
   // feedback
   role_successfully_created: "User created",
@@ -108,6 +118,11 @@ export default {
   account_successfully_disabled: "User disabled",
   account_successfully_created: "Role created",
   account_successfully_updated: "Role updated",
+  channel_successfully_created: "Channel created",
+  channel_successfully_updated: "Channel updated",
+  channel_successfully_enabled: "Channel enabled",
+  channel_successfully_disabled: "Channel disabled",
+  channel_successfully_deleted: "Channel deleted",
   ip_is_invalid: "Invalid IP",
   MD5_key_copied: "MD5 key copied",
   merchant_successfully_created: "Merchant created",
@@ -208,7 +223,6 @@ export default {
   holder_name: "code::holder_name",
   card_list: "code::card_list",
 
-  channel: "code::channel",
   card_id: "code::card_id",
   account_name: "code::account_name",
   card_number: "code::card_number",

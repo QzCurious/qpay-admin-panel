@@ -33,9 +33,9 @@ export default {
   /**
    * Sidebar categories
    */
-  payment_management: "code::payment_management",
+  payment_management: "支付管理",
   bank_management: "code::bank_management",
-  channel_management: "code::channel_management",
+  channel_management: "通道管理",
   card_holder_management: "code::card_holder_management",
   card_management: "code::card_management",
   card_operation_management: "code::card_operation_management",
@@ -65,6 +65,8 @@ export default {
   bank_code: "銀行代號",
   transfer: "跨行轉帳",
   country: "國家",
+  channel: "通道",
+  card: "銀行卡",
 
   // action
   create_role: "建立職位",
@@ -87,6 +89,11 @@ export default {
   enable_bank_transfer: "啟用跨行轉帳",
   disable_bank_transfer: "停用跨行轉帳",
   generate_new_MD5_key: "產生新 key",
+  create_channel: "建立通道",
+  edit_channel: "編輯通道",
+  enable_channel: "啟用通道",
+  disable_channel: "停用通道",
+  delete_channel: "刪除通道",
 
   // will be
   account_will_be_enable: "帳號將被啟用",
@@ -100,6 +107,9 @@ export default {
   bank_will_be_deleted: "銀行將被刪除",
   bank_transfer_will_be_enabled: "跨行轉帳將被啟用",
   bank_transfer_will_be_disabled: "跨行轉帳將被停用",
+  channel_will_be_enabled: "通道將被啟用",
+  channel_will_be_disabled: "通道將被停用",
+  channel_will_be_deleted: "通道將被刪除",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -108,6 +118,11 @@ export default {
   account_successfully_disabled: "帳號已停用",
   account_successfully_created: "職位新增成功",
   account_successfully_updated: "職位更新成功",
+  channel_successfully_created: "通道新增成功",
+  channel_successfully_updated: "通道更新成功",
+  channel_successfully_enabled: "通道已啟用",
+  channel_successfully_disabled: "通道已停用",
+  channel_successfully_deleted: "通道已刪除",
   ip_is_invalid: "錯誤的 IP 位址",
   MD5_key_copied: "已複製 MD5 key",
   merchant_successfully_created: "商戶新增成功",
@@ -207,7 +222,6 @@ export default {
   holder_name: "code::holder_name",
   card_list: "code::card_list",
 
-  channel: "code::channel",
   card_id: "code::card_id",
   account_name: "code::account_name",
   card_number: "code::card_number",
