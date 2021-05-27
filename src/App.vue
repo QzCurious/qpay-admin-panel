@@ -43,6 +43,7 @@ export default {
           i18n.global.t("Wed"),
           i18n.global.t("Thu"),
           i18n.global.t("Fri"),
+          i18n.global.t("Sat"),
         ],
         monthNames: [
           i18n.global.t("January"),
