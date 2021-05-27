@@ -18,7 +18,7 @@ export default {
   merchant_management: "商戶管理",
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
-  merchant_rate: "code::merchant_rate",
+  merchant_channel_rate: "商戶通道費率",
   merchant_channel_setting: "商戶通道管理",
 
   // order_management
@@ -83,6 +83,11 @@ export default {
   credit_today: "今日已入帳額度",
   remaining_today: "今日剩餘收款額度",
   balance: "帳戶餘額",
+  deposit_fee: "收款手續費",
+  withdraw_fee_rate: "提款手續費率",
+  withdraw_fee: "提款手續費",
+  withdraw_limit_daily: "日提款上限",
+  deposit_fee_rate: "收款手續費率",
 
   // action
   create_role: "建立職位",
@@ -123,6 +128,7 @@ export default {
   online_card: "掛載銀行卡",
   offline_card: "卸載銀行卡",
   create_merchant_channel: "建立商戶通道",
+  edit_merchant_channel: "編輯商戶通道",
   enable_merchant_channel: "啟用商戶通道",
   disable_merchant_channel: "停用商戶通道",
   delete_merchant_channel: "刪除商戶通道",
@@ -176,6 +182,7 @@ export default {
   card_successfully_online: "卡片已掛載",
   card_successfully_offline: "卡片已卸載",
   merchant_channel_successfully_created: "商戶通道新增成功",
+  merchant_channel_successfully_updated: "商戶通道更新成功",
   merchant_channel_successfully_enabled: "商戶通道已啟用",
   merchant_channel_successfully_disabled: "商戶通道已停用",
   merchant_channel_successfully_deleted: "商戶通道已刪除",
@@ -275,7 +282,6 @@ export default {
   deposit_count: "code::deposit_count",
 
   date: "code::date",
-  deposit_fee: "code::deposit_fee",
   recharge_fee: "code::recharge_fee",
   deduction_amount: "code::deduction_amount",
   deduction_fee: "code::deduction_fee",

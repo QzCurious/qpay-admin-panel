@@ -18,7 +18,7 @@ export default {
   merchant_management: "Merchant Management",
   merchant_operation_panel: "code::merchant_operation_panel",
   merchant_parameter: "code::merchant_parameter",
-  merchant_rate: "code::merchant_rate",
+  merchant_channel_rate: "Merchant Channel Rate",
   merchant_channel_setting: "Merchant Channel Setting",
 
   // order_management
@@ -83,6 +83,11 @@ export default {
   credit_today: "Credit Today",
   remaining_today: "Remaining Today",
   balance: "Balance",
+  deposit_fee: "Deposit Fee",
+  withdraw_fee_rate: "Withdraw Fee Rate",
+  withdraw_fee: "Withdraw Fee",
+  withdraw_limit_daily: "Withdraw Limit Daily",
+  deposit_fee_rate: "Deposit Fee Rate",
 
   // action
   create_role: "Create role",
@@ -123,6 +128,7 @@ export default {
   online_card: "Set card online",
   offline_card: "Set card offline",
   create_merchant_channel: "Create merchant channel",
+  edit_merchant_channel: "Edit merchant channel",
   enable_merchant_channel: "Enable merchant channel",
   disable_merchant_channel: "Disable merchant channel",
   delete_merchant_channel: "Delete merchant channel",
@@ -176,6 +182,7 @@ export default {
   card_successfully_online: "Card is online",
   card_successfully_offline: "Card is offline",
   merchant_channel_successfully_created: "Merchant channel created",
+  merchant_channel_successfully_updated: "Merchant channel updated",
   merchant_channel_successfully_enabled: "Merchant channel enabled",
   merchant_channel_successfully_disabled: "Merchant channel disabled",
   merchant_channel_successfully_deleted: "Merchant channel deleted",
@@ -275,7 +282,6 @@ export default {
   deposit_count: "code::deposit_count",
 
   date: "code::date",
-  deposit_fee: "code::deposit_fee",
   recharge_fee: "code::recharge_fee",
   deduction_amount: "code::deduction_amount",
   deduction_fee: "code::deduction_fee",

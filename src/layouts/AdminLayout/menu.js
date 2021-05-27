@@ -156,9 +156,9 @@ export default computed(() => [
         to: { name: "merchant_channel_setting" }
       },
       {
-        key: "merchant_rate",
-        label: t("merchant_rate"),
-        to: { name: "merchant_rate" }
+        key: "merchant_channel_rate",
+        label: t("merchant_channel_rate"),
+        to: { name: "merchant_channel_rate" }
       },
       {
         key: "merchant_parameter",
