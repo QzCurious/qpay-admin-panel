@@ -2,7 +2,7 @@
   <Dropdown
     optionLabel="name"
     optionValue="id"
-    :label="label"
+    :label="data_label"
     :options="options"
     :modelValue="modelValue"
     @update:modelValue="(value) => $emit('update:modelValue', value)"
@@ -13,16 +13,18 @@
 import Dropdown from "./Dropdown.vue";
 import Merchant from "../api/Merchant";
 import store from "../store";
-import i18n from "../i18n";
 
 export default {
   components: { Dropdown },
   props: {
     modelValue: Number,
-    label: { type: String, default: () => i18n.global.t("merchant") },
+    label: { type: String },
   },
   emits: ["update:modelValue"],
   computed: {
+    data_label() {
+      return this.label ?? this.$i18n.t("merchant");
+    },
     options() {
       return store.state.api.merchant_list;
     },

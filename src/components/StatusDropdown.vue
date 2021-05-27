@@ -1,6 +1,6 @@
 <template>
   <Dropdown
-    :label="label"
+    :label="data_label"
     :options="[
       { label: $t('disabled'), value: 0 },
       { label: $t('enabled'), value: 1 },
@@ -12,18 +12,22 @@
 
 <script>
 import Dropdown from "./Dropdown.vue";
-import i18n from "../i18n";
 
 export default {
   components: { Dropdown },
   props: {
     modelValue: Number,
-    label: { type: String, default: () => i18n.global.t("status") },
+    label: { type: String },
   },
   data() {
     return {
       value: null,
     };
+  },
+  computed: {
+    data_label() {
+      return this.label ?? this.$i18n.t("status");
+    },
   },
   emits: ["update:modelValue"],
 };
