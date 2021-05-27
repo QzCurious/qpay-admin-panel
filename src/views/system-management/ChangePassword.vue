@@ -84,11 +84,15 @@ export default {
           this.new_password = null;
           this.confirm_new_password = null;
 
-          ToastService.success({ summary: this.$i18n.t('password_successfully_changed') });
+          ToastService.success({
+            summary: this.$i18n.t("password_successfully_changed"),
+          });
         })
         .catch((err) => {
           if (err.response.status === 400 && !this.v$.$error) {
-            ToastService.error({ summary: err.response.data.message });
+            ToastService.error({
+              summary: this.$i18n.t(`api.error.${err.response.data.code}`),
+            });
           }
         });
     },
