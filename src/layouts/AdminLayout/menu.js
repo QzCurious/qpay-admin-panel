@@ -38,50 +38,6 @@ export default computed(() => [
     ]
   },
   {
-    key: "funds_management",
-    label: t("funds_management"),
-    icon: PrimeIcons.CREDIT_CARD,
-    items: [
-      {
-        key: "funds_operation_panel",
-        label: t("funds_operation_panel"),
-        to: { name: "funds_operation_panel" }
-      },
-      {
-        key: "transaction_record",
-        label: t("transaction_record"),
-        to: { name: "transaction_record" }
-      }
-    ]
-  },
-  {
-    key: "merchant_management",
-    label: t("merchant_management"),
-    icon: PrimeIcons.USERS,
-    items: [
-      {
-        key: "merchant_operation_panel",
-        label: t("merchant_operation_panel"),
-        to: { name: "merchant_operation_panel" }
-      },
-      {
-        key: "merchant_parameter",
-        label: t("merchant_parameter"),
-        to: { name: "merchant_parameter" }
-      },
-      {
-        key: "merchant_rate",
-        label: t("merchant_rate"),
-        to: { name: "merchant_rate" }
-      },
-      {
-        key: "merchant_channel_setting",
-        label: t("merchant_channel_setting"),
-        to: { name: "merchant_channel_setting" }
-      }
-    ]
-  },
-  {
     key: "payment_management",
     label: t("payment_management"),
     icon: PrimeIcons.CREDIT_CARD,
@@ -114,19 +70,19 @@ export default computed(() => [
     ]
   },
   {
-    key: "financial_reports",
-    label: t("financial_reports"),
-    icon: PrimeIcons.CHART_BAR,
+    key: "funds_management",
+    label: t("funds_management"),
+    icon: PrimeIcons.CREDIT_CARD,
     items: [
       {
-        key: "deposit_daily_report",
-        label: t("deposit_daily_report"),
-        to: { name: "deposit_daily_report" }
+        key: "funds_operation_panel",
+        label: t("funds_operation_panel"),
+        to: { name: "funds_operation_panel" }
       },
       {
-        key: "merchant_daily_report",
-        label: t("merchant_daily_report"),
-        to: { name: "merchant_daily_report" }
+        key: "transaction_record",
+        label: t("transaction_record"),
+        to: { name: "transaction_record" }
       }
     ]
   },
@@ -141,14 +97,14 @@ export default computed(() => [
         to: { name: "merchant_order" }
       },
       {
-        key: "merchant_order_post",
-        label: t("merchant_order_post"),
-        to: { name: "merchant_order_post" }
-      },
-      {
         key: "merchant_order_statistics",
         label: t("merchant_order_statistics"),
         to: { name: "merchant_order_statistics" }
+      },
+      {
+        key: "merchant_order_post",
+        label: t("merchant_order_post"),
+        to: { name: "merchant_order_post" }
       },
       {
         key: "merchant_order_operation",
@@ -166,5 +122,49 @@ export default computed(() => [
         to: { name: "deposit_record" }
       }
     ]
-  }
+  },
+  {
+    key: "financial_reports",
+    label: t("financial_reports"),
+    icon: PrimeIcons.CHART_BAR,
+    items: [
+      {
+        key: "deposit_daily_report",
+        label: t("deposit_daily_report"),
+        to: { name: "deposit_daily_report" }
+      },
+      {
+        key: "merchant_daily_report",
+        label: t("merchant_daily_report"),
+        to: { name: "merchant_daily_report" }
+      }
+    ]
+  },
+  {
+    key: "merchant_management",
+    label: t("merchant_management"),
+    icon: PrimeIcons.USERS,
+    items: [
+      {
+        key: "merchant_operation_panel",
+        label: t("merchant_operation_panel"),
+        to: { name: "merchant_operation_panel" }
+      },
+      {
+        key: "merchant_channel_setting",
+        label: t("merchant_channel_setting"),
+        to: { name: "merchant_channel_setting" }
+      },
+      {
+        key: "merchant_rate",
+        label: t("merchant_rate"),
+        to: { name: "merchant_rate" }
+      },
+      {
+        key: "merchant_parameter",
+        label: t("merchant_parameter"),
+        to: { name: "merchant_parameter" }
+      },
+    ]
+  },
 ]);
