@@ -57,14 +57,14 @@ class Auth {
   }
 
   async change_password({ old_password, new_password }) {
-    return http.put("user/signin_password", {
+    return http.put("api/user/signin_password", {
       signin_password: old_password,
       signin_password_new: new_password
     });
   }
 
   async change_payment_password({ old_password, new_password }) {
-    return http.put("user/payment_password", {
+    return http.put("api/user/payment_password", {
       payment_password: old_password,
       payment_password_new: new_password
     });
