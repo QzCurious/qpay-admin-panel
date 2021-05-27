@@ -30,7 +30,6 @@
       @layout-color-change="onLayoutColorChange"
     /> -->
 
-    <Footer />
   </div>
 </template>
 
@@ -38,7 +37,6 @@
 import TopBar from "./Topbar";
 import Profile from "./Profile.vue";
 import Menu from "./Menu.vue";
-import Footer from "./Footer.vue";
 import menu from "./menu";
 
 export default {
@@ -171,7 +169,6 @@ export default {
     TopBar,
     Profile,
     Menu,
-    Footer,
   },
 };
 </script>
