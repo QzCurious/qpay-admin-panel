@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       auto_refresh: false,
-      auto_refresh_intervel_id: false,
+      auto_refresh_interval_id: null,
       loading: true,
       page: 1,
       limit: 10,
@@ -117,12 +117,13 @@ export default {
         this.records = records.data.data;
         this.totalRecords = count.data.count;
         window.scrollTo(0, 0);
-        this.loading = false;
       } catch (e) {
         if (e.response.status >= 500) {
           this.auto_refresh = false;
           return;
         }
+      } finally {
+        this.loading = false;
       }
     },
     on_page(e) {
@@ -176,6 +177,7 @@ export default {
         this.auto_refresh_interval_id = setInterval(this.fetch, 5000);
       } else {
         clearInterval(this.auto_refresh_interval_id);
+        this.auto_refresh_interval_id = null;
       }
     },
   },
