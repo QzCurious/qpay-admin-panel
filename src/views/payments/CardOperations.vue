@@ -91,7 +91,7 @@ export default {
   data() {
     return {
       auto_refresh: false,
-      auto_refresh_intervel_id: false,
+      auto_refresh_interval_id: null,
       loading: true,
       page: 1,
       limit: 10,
@@ -176,6 +176,7 @@ export default {
         this.auto_refresh_interval_id = setInterval(this.fetch, 5000);
       } else {
         clearInterval(this.auto_refresh_interval_id);
+        this.auto_refresh_interval_id = null;
       }
     },
   },
