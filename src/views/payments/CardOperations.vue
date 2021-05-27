@@ -117,12 +117,13 @@ export default {
         this.records = records.data.data;
         this.totalRecords = count.data.count;
         window.scrollTo(0, 0);
-        this.loading = false;
       } catch (e) {
         if (e.response.status >= 500) {
           this.auto_refresh = false;
           return;
         }
+      } finally {
+        this.loading = false;
       }
     },
     on_page(e) {
