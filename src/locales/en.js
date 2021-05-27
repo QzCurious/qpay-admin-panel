@@ -157,8 +157,8 @@ export default {
   merchant_channel_will_be_deleted: "Merchant channel will be deleted",
 
   // feedback
-  role_successfully_created: "User created",
-  role_successfully_updated: "User updated",
+  role_successfully_created: "Role created",
+  role_successfully_updated: "Role updated",
   account_successfully_enabled: "User enabled",
   account_successfully_disabled: "User disabled",
   account_successfully_created: "Role created",

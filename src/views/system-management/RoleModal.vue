@@ -78,13 +78,13 @@ export default {
       if (this.mode === "create") {
         Role.create(data).then(() => {
           ToastService.success({
-            summary: this.$i18n.t("account_successfully_created"),
+            summary: this.$i18n.t("role_successfully_created"),
           });
         });
       } else if (this.mode === "edit") {
         Role.update(this.role.id, data).then(() => {
           ToastService.success({
-            summary: this.$i18n.t("account_successfully_updated"),
+            summary: this.$i18n.t("role_successfully_updated"),
           });
         });
       }
