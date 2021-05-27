@@ -1,194 +1,158 @@
 <template>
+  <h1>{{ $t("merchant_channel_setting") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
-    :value="funds"
+    :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          class="p-button-outlined p-mb-2"
-          @click="clearFilter"
-        />
-        <div class="p-mb-2 p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="merchant">商戶</label>
-            <Dropdown
-              inputId="merchant"
-              v-model="selectedMerchant"
-              :options="merchant"
-              placeholder="Select"
-            />
-          </div>
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="channel">頻道</label>
-            <Dropdown
-              inputId="channel"
-              v-model="selectedState"
-              :options="states"
-              optionLabel="name"
-              placeholder="Select"
-            />
-          </div>
-          <div class="p-mr-2">
-            <label class="p-mr-2" for="status">狀態</label>
-            <Dropdown
-              inputId="status"
-              v-model="selectedState"
-              :options="states"
-              optionLabel="name"
-              placeholder="Select"
-            />
-          </div>
-          <Button
-            type="button"
-            icon="pi pi-search"
-            label="搜尋"
-            class="p-button-outlined  p-mr-2"
-          />
-          <Button
-            type="button"
-            icon="pi pi-search"
-            label="新增"
-            class="p-button-outlined"
-          />
-        </div>
-      </div>
+      <form @submit.prevent="fetch" class="p-d-flex p-ai-center p-flex-wrap">
+        <Button class="p-mr-auto" :label="$t('form.create')" @click="create" />
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <StatusDropdown v-model="filters.status" />
+        <Search />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <!-- <Column field="index" header="索引" :sortable="false">
-      <template #body="{ index }">
-        {{ index + 1 }}
-      </template>
-    </Column> -->
-    <Column field="merchant" header="商戶名稱" :sortable="false">
+    <Column field="merchant_name" :header="$t('merchant')" />
+    <Column field="channel_name" :header="$t('channel')" />
+    <Column field="status" :header="$t('status')">
       <template #body="{ data }">
-        {{ data.merchant }}
-      </template>
-    </Column>
-    <Column field="channel" header="通道名稱" :sortable="false">
-      <template #body="{ data }">
-        {{ data.channel }}
-      </template>
-    </Column>
-    <Column field="status" header="狀態" :sortable="false">
-      <template #body="{ data }">
-        {{ data.status ? "enabled" : "locked" }}
-      </template>
-    </Column>
-    <Column field="add_time" header="創建時間" :sortable="false">
-      <template #body="{ data }">
-        {{ data.add_time }}
-      </template>
-    </Column>
-    <Column header="操作" :sortable="false">
-      <template #body="{data}">
-        <Button
-          class="p-button-primary p-m-1"
-          label="編輯"
-          @click="edit(data)"
+        <InputSwitch
+          :modelValue="Boolean(data.status)"
+          @click="update_status(data, !data.status)"
         />
+      </template>
+    </Column>
+    <Column :header="$t('operation')">
+      <template #body="{ data }">
         <Button
-          class="p-button-danger p-m-1"
-          label="刪除"
+          class="p-button-danger"
+          :label="$t('form.delete')"
           @click="remove(data)"
         />
       </template>
     </Column>
   </DataTable>
-  <ConfirmDialog></ConfirmDialog>
-  <Dialog></Dialog>
+  <ConfirmDialog />
+  <Dialog
+    modal
+    :header="$t('create_merchant_channel')"
+    v-model:visible="modal_visible"
+  >
+    <CreateMerchantChannel @success="fetch" />
+  </Dialog>
 </template>
-<script>
-import { defineComponent } from "vue";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
 
-export default defineComponent({
-  name: "FundsOperationPanel",
+<script>
+import { PrimeIcons } from "primevue/api";
+import MerchantChannel from "../../api/MerchantChannel";
+import ToastService from "../../service/ToastService";
+import MerchantDropdown from "../../components/MerchantDropdown";
+import StatusDropdown from "../../components/StatusDropdown";
+import Search from "../../components/Search.vue";
+import CreateMerchantChannel from "./CreateMerchantChannel";
+
+export default {
+  components: {
+    CreateMerchantChannel,
+    MerchantDropdown,
+    StatusDropdown,
+    Search,
+  },
   data() {
     return {
-      funds: [],
       loading: true,
-      filters: {},
-      total_balance_d0: "123456",
-      total_balance_t1: "111111",
-      selectedMerchant: null,
-      merchant: ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
+      page: 1,
+      limit: 10,
+      filters: {
+        merchant_id: null,
+        bank_id: null,
+        status: null,
+      },
+      records: [],
+      totalRecords: 0,
+      modal_visible: false,
     };
   },
   methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        channel: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        MerchantChannel.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        MerchantChannel.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
     },
-    edit(item) {
-      console.log(item);
-      this.$confirm.require({});
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
     },
-    remove(item) {
-      console.log(item);
+    create() {
+      this.modal_visible = true;
+    },
+    remove(data) {
       this.$confirm.require({
-        message: "是否確認要刪除",
-        header: "Confirmation",
-        icon: "pi pi-exclamation-triangle",
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: this.$i18n.t("delete_merchant_channel"),
+        message: this.$i18n.t("merchant_channel_will_be_deleted"),
         accept: () => {
-          //callback to execute when user confirms the action
+          MerchantChannel.delete(data.id).then(() => {
+            ToastService.success({
+              summary: this.$i18n.t("merchant_channel_successfully_deleted"),
+            });
+            this.fetch();
+          });
         },
-        reject: () => {
-          //callback to execute when user rejects the action
+      });
+    },
+    update_status(data, status) {
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: status
+          ? this.$i18n.t("enable_merchant_channel")
+          : this.$i18n.t("disable_merchant_channel"),
+        message: status
+          ? this.$i18n.t("merchant_channel_will_be_enabled")
+          : this.$i18n.t("merchant_channel_will_be_disabled"),
+        accept: () => {
+          MerchantChannel.update(data.id, { status: Number(status) }).then(
+            () => {
+              this.fetch();
+              ToastService.success({
+                summary: status
+                  ? this.$i18n.t("merchant_channel_successfully_enabled")
+                  : this.$i18n.t("merchant_channel_successfully_disabled"),
+              });
+            }
+          );
         },
       });
     },
   },
-  created() {
-    this.clearFilter();
-  },
-  watch: {
-    funds: {
-      handler: function(newVal, oldVal) {
-        console.log(newVal);
-      },
-      deep: true,
-    },
-  },
   mounted() {
-    let fund = function() {
-      this.channel = "1";
-      this.merchant = "g";
-      this.status = false;
-      this.add_time = "2021-1-1 12:00";
-      // this.lock_balance_t1 = "qfv w";
-    };
-    let funds = new Array(10);
-    for (var i = 0; i < 10; i++) {
-      funds[i] = new fund();
-      if (i == 9) this.loading = false;
-    }
-    this.funds = funds;
-    console.log(this.funds);
-    // api
-    // operationLogApi
-    //   .get()
-    //   .then(({ data }) => {
-    //     this.records = data.map((record) => ({
-    //       ...record,
-    //       time: new Date(record.timestamp),
-    //     }));
-    //   })
-    //   .finally(() => (this.loading = false));
+    this.fetch();
   },
-});
+};
 </script>
-<style></style>
+
+<style scoped>
+form > :not(:last-child) {
+  margin-right: 0.5rem;
+}
+</style>

@@ -1,125 +1,189 @@
 <template>
-  <DataTable 
+  <h1>{{ $t("card_operation_management") }}</h1>
+  <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    v-model:filters="filters"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+      <form @submit.prevent="fetch" class="p-d-flex p-jc-end p-flex-wrap">
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <BankDropdown v-model="filters.bank_id" />
+        <StatusDropdown v-model="filters.status" />
+        <InputText
+          :label="$t('card_number')"
+          v-model="filters.account_number"
         />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
-      </div>
+        <div class="p-d-flex p-ai-center">
+          <label :for="auto_refresh" class="p-mr-2">{{
+            $t("auto_refresh")
+          }}</label>
+          <InputSwitch id="auto_refresh" v-model="auto_refresh" />
+        </div>
+        <Search />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="index" :header="i18n.index">
-        <template #body="{ data }">{{ data.id }}</template> 
-    </Column>
-    <Column field="merchant" :header="i18n.merchant">
-        <template #body="{ data }">{{ data.merchant }}</template> 
-    </Column>
-    <Column field="bank_name" :header="i18n.bank_name">
-        <template #body="{ data }">{{ data.bank_name }}</template> 
-    </Column>
-    <Column field="account_name" :header="i18n.account_name">
-        <template #body="{ data }">{{ data.account_name }}</template> 
-    </Column>
-    <Column field="card_number" :header="i18n.card_number">
-        <template #body="{ data }">{{ data.card_number }}</template> 
-    </Column>
-    <Column field="limit_deposit" :header="i18n.limit_deposit">
-        <template #body="{ data }">
-          {{ data.limit_deposit.income_today }}
-          {{ data.limit_deposit.deposit_today }}
-          {{ data.limit_deposit.remaining }}
-        </template> 
-    </Column>
-    <Column field="limit_daily" :header="i18n.limit_daily">
+    <Column field="merchant_name" :header="$t('merchant')" />
+    <Column field="bank_name" :header="$t('bank')" />
+    <Column field="card_holder_name" :header="$t('card_holder')" />
+    <Column field="account_number" :header="$t('card_number')" />
+    <Column :header="$t('limit_deposit')">
       <template #body="{ data }">
-        <InputText type="text" v-model:disabled="data.editLimitDaily" :value="data.limit_daily" />
-        <Button :label="i18n.edit" @click="editLimitDaily(data)" />
-      </template> 
+        <div>
+          <div>{{ $t("deposit_today") }}: {{ data.deposit_today }}</div>
+          <div>{{ $t("credit_today") }}: {{ data.credit_today }}</div>
+          <div>{{ $t("remaining_today") }}: {{ data.remain_today }}</div>
+        </div>
+      </template>
     </Column>
-    <Column field="current_balance" :header="i18n.current_balance">
+    <Column field="deposit_limit_daily" :header="$t('deposit_limit_daily')" />
+    <Column field="deposit_limit_once" :header="$t('deposit_limit_once')" />
+    <Column field="balance" :header="$t('balance')" />
+    <Column field="online" :header="$t('online')">
       <template #body="{ data }">
-        {{ data.current_balance }}
-        <Button :label="i18n.edit" @click="editCurrentBalance(data)" />
-      </template> 
+        <InputSwitch
+          :modelValue="Boolean(data.online)"
+          @click="update_online(data, !data.online)"
+        />
+      </template>
     </Column>
-    <Column field="online" :header="i18n.online">
+    <Column field="status" :header="$t('status')">
       <template #body="{ data }">
-        <InputSwitch id="online" v-model="data.online" />
-      </template> 
+        <template v-if="data.status === 0">
+          <Tag severity="danger" :value="$t('disabled')" />
+        </template>
+        <template v-else-if="data.status === 1">
+          <Tag severity="success" :value="$t('enabled')" />
+        </template>
+      </template>
     </Column>
   </DataTable>
-
+  <ConfirmDialog />
 </template>
+
 <script>
-import { FilterMatchMode } from "primevue/api";
-import user from "../../api/User";
-import cardOperations from '../../api/CardOperation';
-import i18n from "../../helper/i18n.zh-CN.js"
+import { PrimeIcons } from "primevue/api";
+import Card from "../../api/Card";
+import ToastService from "../../service/ToastService";
+import MerchantDropdown from "../../components/MerchantDropdown";
+import BankDropdown from "../../components/BankDropdown";
+import StatusDropdown from "../../components/StatusDropdown";
+import InputText from "../../components/InputText";
+import Search from "../../components/Search.vue";
 
 export default {
+  components: {
+    MerchantDropdown,
+    BankDropdown,
+    StatusDropdown,
+    InputText,
+    Search,
+  },
   data() {
     return {
-      records: [],
+      auto_refresh: false,
+      auto_refresh_intervel_id: false,
       loading: true,
-      filters: {},
-      i18n: i18n
+      page: 1,
+      limit: 10,
+      filters: {
+        merchant_id: null,
+        bank_id: null,
+        status: null,
+        account_number: null,
+      },
+      records: [],
+      totalRecords: 0,
     };
   },
   methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    async fetch() {
+      this.loading = true;
+      try {
+        const [records, count] = await Promise.all([
+          Card.find({ ...this.filters, page: this.page, limit: this.limit }),
+          Card.count(this.filters),
+        ]);
+
+        this.records = records.data.data;
+        this.totalRecords = count.data.count;
+        window.scrollTo(0, 0);
+        this.loading = false;
+      } catch (e) {
+        if (e.response.status >= 500) {
+          this.auto_refresh = false;
+          return;
+        }
+      }
     },
-    addBank() {
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
     },
-    editCurrentBalance(data) {
-      console.log(data);
+    remove(data) {
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: this.$i18n.t("delete_card"),
+        message: this.$i18n.t("card_will_be_delete"),
+        accept: () => {
+          Card.delete(data.id).then(() => {
+            ToastService.success({
+              summary: this.$i18n.t("card_successfully_delete"),
+            });
+            this.fetch();
+          });
+        },
+      });
     },
-    editLimitDaily(data) {
-      console.log(data)
-    }
-  },
-  created() {
-    this.clearFilter();
+    update_online(data, status) {
+      this.$confirm.require({
+        icon: PrimeIcons.EXCLAMATION_TRIANGLE,
+        header: status
+          ? this.$i18n.t("online_card")
+          : this.$i18n.t("offline_card"),
+        message: status
+          ? `${this.$i18n.t("card_will_be_online")}: ${data.account_number}`
+          : `${this.$i18n.t("card_will_be_offline")}: ${data.account_number}`,
+        accept: () => {
+          Card.update(data.id, { online: Number(status) }).then(() => {
+            this.fetch();
+            ToastService.success({
+              summary: status
+                ? this.$i18n.t("card_successfully_online")
+                : this.$i18n.t("card_successfully_offline"),
+            });
+          });
+        },
+      });
+    },
   },
   mounted() {
-    cardOperations
-      .all()
-      .then(({ data }) => {
-        this.records = data;
-      })
-      .finally(() => (this.loading = false));
+    this.auto_refresh = true;
+    this.fetch();
   },
-}
+  watch: {
+    auto_refresh(new_auto_refresh) {
+      if (new_auto_refresh) {
+        this.auto_refresh_interval_id = setInterval(this.fetch, 5000);
+      } else {
+        clearInterval(this.auto_refresh_interval_id);
+      }
+    },
+  },
+};
 </script>
-<style scoped>
 
+<style scoped>
+form > :not(:last-child) {
+  margin-right: 0.5rem;
+}
 </style>

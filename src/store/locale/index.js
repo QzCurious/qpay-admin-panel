@@ -4,7 +4,7 @@ import router from "../../router";
 export const store = {
   namespaced: true,
   state: () => ({
-    locale: i18n.global.fallbackLocale
+    locale: i18n.global.locale
   }),
   actions: {
     set({ commit }, locale) {

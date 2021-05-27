@@ -9,24 +9,24 @@
     />
     <InputText
       float
-      v-model="signin_id"
+      v-model="user_signin_id"
       :label="$t('signin_id')"
-      name="signin_id"
-      :errors="v$.signin_id.$errors.map((e) => e.$message)"
+      name="user_signin_id"
+      :errors="v$.user_signin_id.$errors.map((e) => e.$message)"
     />
     <Password
       float
-      v-model="signin_password"
+      v-model="user_signin_password"
       :label="$t('signin_password')"
       name="password"
-      :errors="v$.signin_password.$errors.map((e) => e.$message)"
+      :errors="v$.user_signin_password.$errors.map((e) => e.$message)"
     />
     <Password
       float
-      v-model="payment_password"
+      v-model="user_payment_password"
       :label="$t('payment_password')"
       name="password"
-      :errors="v$.payment_password.$errors.map((e) => e.$message)"
+      :errors="v$.user_payment_password.$errors.map((e) => e.$message)"
     />
     <div class="p-field">
       <span class="p-float-label p-mt-4">
@@ -100,13 +100,13 @@ export default {
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      signin_id: {
+      user_signin_id: {
         required,
         minLength: minLength(2),
         maxLength: maxLength(20),
       },
-      signin_password: { required },
-      payment_password: { required },
+      user_signin_password: { required },
+      user_payment_password: { required },
       md5_key: { required },
     };
   },
@@ -114,9 +114,9 @@ export default {
     return {
       id: null,
       name: null,
-      signin_id: null,
-      signin_password: null,
-      payment_password: null,
+      user_signin_id: null,
+      user_signin_password: null,
+      user_payment_password: null,
       ip_allow: [],
       ip_allow_invlid: null,
       md5_key: null,
@@ -154,9 +154,9 @@ export default {
 
       const data = {
         name: this.name,
-        signin_id: this.signin_id,
-        signin_password: this.signin_password,
-        payment_password: this.payment_password,
+        user_signin_id: this.user_signin_id,
+        user_signin_password: this.user_signin_password,
+        user_payment_password: this.user_payment_password,
         ip_allow: this.ip_allow.length ? this.ip_allow : null,
         md5_key: this.md5_key,
       };
