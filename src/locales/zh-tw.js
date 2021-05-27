@@ -258,40 +258,15 @@ export default {
   },
 
   /**
-   * Button
-   */
-  add: "code::add",
-  delete: "code::delete",
-  commit: "code::commit",
-  /**
-   * Dialog
-   */
-  add_bank: "code::add",
-  submit: "code::submit",
-  add_channel: "code::channel",
-  add_card_holder: "code::add_card_holder",
-  branch: "code::branch",
-  add_card: "code::add_card",
-  dialog_confirm: "code::dialog_confirm",
-  /**
    * Column fields
    */
 
   index: "code::index",
-  edit: "code::edit",
 
-  channel_name: "code::channel_name",
-  cards: "code::cards",
-
-  holder_name: "code::holder_name",
   card_list: "code::card_list",
 
   card_id: "code::card_id",
-  account_name: "code::account_name",
-  limit_daily: "code::limit_daily",
-  limit_once: "code::limit_once",
 
-  current_balance: "code::current_balance",
   auto_deposit: "code::auto_deposit",
   manual_deposit: "code::manual_deposit",
   total_deposit: "code::total_deposit",
