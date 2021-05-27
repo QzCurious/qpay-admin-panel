@@ -111,7 +111,7 @@ export default {
           : `${this.$i18n.t("account_will_be_disabled")}: ${data.signin_id}`,
         accept: () => {
           User.update(data.signin_id, { status: Number(status) }).then(() => {
-            data.status = status;
+            this.fetch();
             ToastService.success({
               summary: status
                 ? this.$i18n.t("account_successfully_enabled")

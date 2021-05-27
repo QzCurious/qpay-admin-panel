@@ -142,7 +142,7 @@ export default defineComponent({
           : `${this.$i18n.t("merchant_will_be_disabled")}: ${data.name}`,
         accept: () => {
           Merchant.update(data.id, { status: Number(status) }).then(() => {
-            data.status = status;
+            this.fetch();
             ToastService.success({
               summary: status
                 ? this.$i18n.t("merchant_successfully_enabled")
