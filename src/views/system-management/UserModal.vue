@@ -134,7 +134,6 @@ export default {
         payment_password: this.payment_password,
         ip_allow: this.ip_allow.length ? this.ip_allow : null,
         phone: this.phone,
-        status: Boolean(this.status),
       };
       if (this.mode === "create") {
         user.create(data).then(() => {

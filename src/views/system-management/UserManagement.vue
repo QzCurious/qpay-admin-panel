@@ -2,7 +2,7 @@
   <h2>{{ $t("user_management") }}</h2>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
+    dataKey="signin_id"
     :lazy="true"
     :loading="loading"
     :value="records"
