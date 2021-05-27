@@ -23,12 +23,12 @@
       <router-view />
     </div>
 
-    <Config
+    <!-- <Config
       :layoutMode="layoutMode"
       :layoutColorMode="layoutColorMode"
       @layout-change="onLayoutChange"
       @layout-color-change="onLayoutColorChange"
-    />
+    /> -->
 
     <Footer />
   </div>
@@ -38,7 +38,6 @@
 import TopBar from "./Topbar";
 import Profile from "./Profile.vue";
 import Menu from "./Menu.vue";
-import Config from "./Config.vue";
 import Footer from "./Footer.vue";
 import menu from "./menu";
 
@@ -172,7 +171,6 @@ export default {
     TopBar,
     Profile,
     Menu,
-    Config,
     Footer,
   },
 };
