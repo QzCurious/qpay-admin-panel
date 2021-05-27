@@ -1,6 +1,6 @@
 <template>
   <div :style="$attrs.style" :class="$attrs.class">
-    <span :class="{ 'p-mt-4 p-float-label': float }">
+    <span :class="[float ? 'p-mt-4 p-float-label' : 'p-d-flex p-ai-center']">
       <template v-if="!float">
         <label
           :for="name"
