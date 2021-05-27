@@ -8,7 +8,7 @@ const http = axios.create({
   baseURL: process.env.VUE_APP_API_HOST,
   timeout: 6000
 });
-http.interceptors.request.use(function(config) {
+http.interceptors.request.use(function (config) {
   const token = store.state.auth.token;
   config.headers = {
     ...config.headers,
@@ -27,9 +27,9 @@ class Auth {
         return res;
       })
       .catch(err => {
-        if (err.response.status === 401) {
+        if (err.response.status === 401 && err.response.data.code === 9009) {
           ToastService.error({
-            detail: i18n.global.t(`api.error.${err.response.data.code}`)
+            detail: i18n.global.t("api.error.9009")
           });
         }
         throw err;
@@ -37,7 +37,7 @@ class Auth {
   }
 
   async get_2fa_qrcode() {
-    return http.get("api/auth/2fa", { withCredentials: true , responseType: 'blob'});
+    return http.get("api/auth/2fa", { withCredentials: true, responseType: 'blob' });
   }
 
   async trigger_bind_2fa() {

@@ -252,7 +252,7 @@ export default {
 
   api: {
     error: {
-      10001: "Incorrect username or password",
+      9009: "Incorrect username or password",
       9527: "2fa verification failed"
     }
   },
