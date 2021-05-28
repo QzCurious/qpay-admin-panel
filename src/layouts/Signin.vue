@@ -23,7 +23,12 @@
           name="password"
           :errors="v$.password.$errors.map((e) => e.$message)"
         />
-        <Button class="p-mt-3" :label="$t('signin')" type="submit" />
+        <Button
+          :loading="submitting"
+          class="p-mt-3"
+          :label="$t('signin')"
+          type="submit"
+        />
       </form>
     </div>
   </div>
@@ -31,10 +36,10 @@
     <Verify2fa @success="next_page" />
   </Dialog>
   <Dialog modal :header="'2fa QR code'" v-model:visible="show_qrcode">
-    <div class="p-fluid p-d-flex p-flex-column">
+    <form class="p-fluid p-d-flex p-flex-column">
       <img :src="qrcode" />
-      <Button :label="$t('form.next')" @click="continue_to_signin" />
-    </div>
+      <Button autofocus :label="$t('form.next')" @click="continue_to_signin" />
+    </form>
   </Dialog>
 </template>
 
@@ -66,6 +71,7 @@ export default {
     return {
       signin_id: null,
       password: null,
+      submitting: false,
       show_verify_2fa: false,
       qrcode: null,
       show_qrcode: false,
@@ -79,6 +85,7 @@ export default {
         return;
       }
 
+      this.submitting = true;
       await auth.signin({
         signin_id: this.signin_id,
         signin_password: this.password,
@@ -105,6 +112,14 @@ export default {
     },
     next_page() {
       router.push(this.$route.redirectedFrom?.fullPath || "/");
+    },
+  },
+  watch: {
+    show_verify_2fa(new_value) {
+      this.submitting = new_value;
+    },
+    show_qrcode(new_value) {
+      this.submitting = new_value;
     },
   },
 };
