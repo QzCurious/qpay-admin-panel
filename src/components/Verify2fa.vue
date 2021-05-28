@@ -34,12 +34,11 @@ export default {
           this.$emit("success");
         })
         .catch((err) => {
-          if (err.response.data.code === 9527) {
+          if (err.response.status === 401 && err.response.data.code === 9003) {
             ToastService.error({
-              summary: this.$i18n.t(`api.error.${err.response.data.code}`),
+              summary: this.$i18n.t("api.error.9003"),
             });
           }
-          throw err;
         });
     },
   },
