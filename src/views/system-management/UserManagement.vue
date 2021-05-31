@@ -130,9 +130,7 @@ export default {
           data.signin_id
         }`,
         accept: () => {
-          User.reset_2fa(data.id).then(() => {
-            data.status = status;
-          });
+          User.reset_2fa(data.signin_id).then(() => this.fetch());
         },
       });
       this.show_update_status_modal = true;
