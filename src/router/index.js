@@ -78,15 +78,15 @@ const routes = [
             children: [
               {
                 path: "parameter",
-                name: "merchant_parameter",
+                name: "merchant_channel_parameter",
                 component: () =>
-                  import("../views/merchant-management/MerchantParameter.vue")
+                  import("../views/merchant-management/MerchantChannelParameter.vue")
               },
               {
-                path: "rate",
-                name: "merchant_rate",
+                path: "merchant-channel-rate",
+                name: "merchant_channel_rate",
                 component: () =>
-                  import("../views/merchant-management/MerchantRate.vue")
+                  import("../views/merchant-management/MerchantChannelRate.vue")
               },
               {
                 path: "channel-setting",

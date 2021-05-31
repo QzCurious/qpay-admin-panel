@@ -37,7 +37,7 @@ class User {
   }
 
   async reset_2fa(signin_id) {
-    return user.command(signin_id, { type: "reset_2fa" });
+    return user.update(signin_id, { google_auth: 0 });
   }
 }
 
