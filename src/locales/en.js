@@ -17,7 +17,7 @@ export default {
   // merchant_management
   merchant_management: "Merchant Management",
   merchant_operation_panel: "code::merchant_operation_panel",
-  merchant_parameter: "code::merchant_parameter",
+  merchant_channel_parameter: "Merchant Channel Parameter",
   merchant_channel_rate: "Merchant Channel Rate",
   merchant_channel_setting: "Merchant Channel Setting",
 
@@ -88,6 +88,11 @@ export default {
   withdraw_fee: "Withdraw Fee",
   withdraw_limit_daily: "Withdraw Limit Daily",
   deposit_fee_rate: "Deposit Fee Rate",
+  recharge_limit_daily: "Recharge Limit Daily",
+  manual_deposit_limit: "Manual Deposit Limit",
+  order_limit_once: "Order Limit Once",
+  order_per_minute: "Order Per Minute",
+  order_limit_daily: "Order Limit Daily",
 
   // action
   create_role: "Create role",
@@ -132,6 +137,7 @@ export default {
   enable_merchant_channel: "Enable merchant channel",
   disable_merchant_channel: "Disable merchant channel",
   delete_merchant_channel: "Delete merchant channel",
+  edit_merchant_channel_parameter: "Edit merchant channel parameter",
   verify_2fa: "Verify 2fa",
   signin: "Sign In",
 

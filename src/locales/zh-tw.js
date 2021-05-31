@@ -17,7 +17,7 @@ export default {
   // merchant_management
   merchant_management: "商戶管理",
   merchant_operation_panel: "code::merchant_operation_panel",
-  merchant_parameter: "code::merchant_parameter",
+  merchant_channel_parameter: "商戶通道參數",
   merchant_channel_rate: "商戶通道費率",
   merchant_channel_setting: "商戶通道管理",
 
@@ -88,6 +88,11 @@ export default {
   withdraw_fee: "提款手續費",
   withdraw_limit_daily: "日提款上限",
   deposit_fee_rate: "收款手續費率",
+  recharge_limit_daily: "單日充值上限",
+  manual_deposit_limit: "手動收款增加值上限",
+  order_limit_once: "單次收款上限",
+  order_per_minute: "每分鐘產生訂單上限",
+  order_limit_daily: "單日收款上限",
 
   // action
   create_role: "建立職位",
@@ -132,6 +137,7 @@ export default {
   enable_merchant_channel: "啟用商戶通道",
   disable_merchant_channel: "停用商戶通道",
   delete_merchant_channel: "刪除商戶通道",
+  edit_merchant_channel_parameter: "編輯商戶參數",
   verify_2fa: "驗證 2fa",
   signin: "登入",
 
