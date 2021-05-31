@@ -171,6 +171,9 @@ export default {
     this.auto_refresh = true;
     this.fetch();
   },
+  unmounted() {
+    clearInterval(this.auto_refresh_interval_id);
+  },
   watch: {
     auto_refresh(new_auto_refresh) {
       if (new_auto_refresh) {
