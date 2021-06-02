@@ -86,10 +86,14 @@ export default {
       }
 
       this.submitting = true;
-      await auth.signin({
-        signin_id: this.signin_id,
-        signin_password: this.password,
-      });
+      await auth
+        .signin({
+          signin_id: this.signin_id,
+          signin_password: this.password,
+        })
+        .catch(() => {
+          this.submitting = false;
+        });
       // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
       // 取 error 訊息判斷是否有註冊過 2fa
       User.get(store.getters["auth/signin_id"]).catch((err) => {
