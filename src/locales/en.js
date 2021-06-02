@@ -2,7 +2,7 @@ export default {
   name: "English",
 
   // system_management
-  system_management: "System Mangement",
+  system_management: "System Management",
   role_setting: "Role Setting",
   operation_log: "Operation Log",
   change_password: "Change Password",
