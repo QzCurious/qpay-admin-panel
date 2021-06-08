@@ -69,6 +69,12 @@ const routes = [
                 name: "transaction_record",
                 component: () =>
                   import("../views/funds-management/TransactionRecord.vue")
+              },
+              {
+                path: "funds-withdraw",
+                name: "funds_withdraw",
+                component: () =>
+                  import("../views/funds-management/FundsWithdraw.vue")
               }
             ]
           },
