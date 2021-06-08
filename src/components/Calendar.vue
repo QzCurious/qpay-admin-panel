@@ -1,7 +1,7 @@
 <template>
   <div :style="$attrs.style" :class="$attrs.class">
     <span :class="{ 'p-mt-4 p-float-label': float }">
-      <template v-if="!float">
+      <template v-if="!float && label">
         <label
           :for="name"
           :class="{ 'p-error': errors.length, 'p-mr-2': true }"
