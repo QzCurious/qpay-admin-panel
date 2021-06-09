@@ -45,6 +45,27 @@ export default {
   deposit_daily_report: "存款日报表",
   merchant_daily_report: "商户通道日报表",
 
+  // value
+  funds_withdraw_status: {
+    pending: "pending",
+    processing: "processing",
+    paid: "paid",
+    reject: "reject",
+  },
+  order_status_values: {
+    UNPAID: "UNPAID",
+    SUCCESS: "SUCCESS",
+    SUCCESS_NOT_NOTIFY: "SUCCESS_NOT_NOTIFY",
+    FAIL_EXPIRE: "FAIL_EXPIRE",
+    FAIL_AMOUNT_NOT_MATCH: "FAIL_AMOUNT_NOT_MATCH",
+    FAIL_ORDER: "FAIL_ORDER",
+  },
+  audit_type_values: {
+    PAID: "PAID",
+    UNPAID: "UNPAID",
+    REJECT: "REJECT",
+  },
+
   // subject
   signin_id: "账号",
   company: "机构",
@@ -94,6 +115,24 @@ export default {
   order_limit_once: "商户订单上限",
   order_per_minute: "每分钟建单上限",
   order_limit_daily: "商户每日订单上限",
+  transaction_id: "transaction_id",
+  withdraw_amount: "withdraw_amount",
+  debit_amount: "debit_amount",
+  to_bank: "to_bank",
+  to_branch: "to_branch",
+  to_account_name: "to_account_name",
+  to_account_number: "to_account_number",
+  remark: "remark",
+  order_number: "order_number",
+  order_amount: "order_amount",
+  order_over: "order_over",
+  order_status: "order_status",
+  audit_type: "audit_type",
+  real_amount: "real_amount",
+  fee: "fee",
+  credit_amount: "credit_amount",
+  order_time: "order_time",
+  success_time: "success_time",
 
   // action
   create_role: "建立角色",
@@ -168,6 +207,10 @@ export default {
   merchant_channel_will_be_enabled: "商戶通道将被启用",
   merchant_channel_will_be_disabled: "商戶通道将被停用",
   merchant_channel_will_be_deleted: "商戶通道将被刪除",
+  status_will_be_updated: "status_will_be_updated",
+  status_will_be_updated_to_processing: "status_will_be_updated_to_processing",
+  status_will_be_updated_to_paid: "status_will_be_updated_to_paid",
+  status_will_be_updated_to_reject: "status_will_be_updated_to_reject",
 
   // feedback
   role_successfully_created: "角色新增成功",
@@ -215,6 +258,12 @@ export default {
   card_holder_successfully_enabled: "持卡人已启用",
   card_holder_successfully_disabled: "持卡人已停用",
   card_holder_successfully_deleted: "持卡人已删除",
+  status_successfully_set_to_processing: "status_successfully_set_to_processing",
+  status_successfully_set_to_paid: "status_successfully_set_to_paid",
+  status_successfully_set_to_reject: "status_successfully_set_to_reject",
+
+  // informative
+  enter_2fa_to_permit_action: "enter_2fa_to_permit_action",
 
   form: {
     create: "新增",
@@ -229,7 +278,13 @@ export default {
     cancel: "取消",
     copy: "复制",
     next: "下一步",
+    start_time: "start_time",
+    end_time: "end_time",
   },
+
+  // error
+  invalid_date_format: "invalid_date_format",
+  end_time_should_not_be_older_then_start_time: "end_time_should_not_be_older_then_start_time",
 
   // day
   today: "今日",
