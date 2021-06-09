@@ -10,9 +10,10 @@ export default {
   user_management: "User Management",
 
   // funds_management
-  funds_management: "code::funds_management",
+  funds_management: "Funds Management",
   funds_operation_panel: "code::funds_operation_panel",
   transaction_record: "code::transaction_record",
+  funds_withdraw: "Funds Withdraw",
 
   // merchant_management
   merchant_management: "Merchant Management",
@@ -22,8 +23,8 @@ export default {
   merchant_channel_setting: "Merchant Channel Setting",
 
   // order_management
-  order_management: "code::order_management",
-  merchant_order: "code::merchant_order",
+  order_management: "Order Management",
+  merchant_order: "Merchant Order",
   merchant_order_post: "code::merchant_order_post",
   merchant_order_statistics: "code::merchant_order_statistics",
   merchant_order_operation: "code::merchant_order_operation",
@@ -43,6 +44,27 @@ export default {
   financial_reports: "code::financial_reports",
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
+
+  // value
+  funds_withdraw_status: {
+    pending: "Pending",
+    processing: "Processing",
+    paid: "Paid",
+    reject: "Reject",
+  },
+  order_status_values: {
+    UNPAID: "code::unpaid",
+    SUCCESS: "code::success",
+    SUCCESS_NOT_NOTIFY: "code::success_not_notify",
+    FAIL_EXPIRE: "code::fail_expire",
+    FAIL_AMOUNT_NOT_MATCH: "code::fail_amount_not_match",
+    FAIL_ORDER: "code::fail_order",
+  },
+  audit_type_values: {
+    PAID: "code::paid",
+    UNPAID: "code::unpaid",
+    REJECT: "code::reject",
+  },
 
   // subject
   signin_id: "Account",
@@ -93,6 +115,24 @@ export default {
   order_limit_once: "Order Limit Once",
   order_per_minute: "Order Per Minute",
   order_limit_daily: "Order Limit Daily",
+  transaction_id: "Transaction ID",
+  withdraw_amount: "Withdraw Amount",
+  debit_amount: "Debit Amount",
+  to_bank: "To Bank",
+  to_branch: "To Branch",
+  to_account_name: "To",
+  to_account_number: "To Account Number",
+  remark: "Remark",
+  order_number: "Order Number",
+  order_amount: "Amount",
+  order_over: "Order Over",
+  order_status: "Status",
+  audit_type: "Audit Type",
+  real_amount: "Real Amount",
+  fee: "Fee",
+  credit_amount: "Credit Amount",
+  order_time: "Order Time",
+  success_time: "code::success_time",
 
   // action
   create_role: "Create role",
@@ -167,6 +207,10 @@ export default {
   merchant_channel_will_be_enabled: "Merchant channel will be enabled",
   merchant_channel_will_be_disabled: "Merchant channel will be disabled",
   merchant_channel_will_be_deleted: "Merchant channel will be deleted",
+  status_will_be_updated: "Status will be updated",
+  status_will_be_updated_to_processing: "Status will be set to processing",
+  status_will_be_updated_to_paid: "Status will be set to paid",
+  status_will_be_updated_to_reject: "Status will be set to reject",
 
   // feedback
   role_successfully_created: "Role created",
@@ -214,6 +258,17 @@ export default {
   card_holder_successfully_enabled: "Card holder enabled",
   card_holder_successfully_disabled: "Card holder disabled",
   card_holder_successfully_deleted: "Card holder deleted",
+  status_successfully_set_to_processing: "Status is now processing",
+  status_successfully_set_to_paid: "Status is now paid",
+  status_successfully_set_to_reject: "Status is now rejected",
+
+  // informative
+  enter_2fa_to_permit_action: "Enter 2fa code to permit",
+
+  // error
+  invalid_date_format: "It's not a valid date",
+  end_time_should_not_be_older_then_start_time:
+    "End time should not be older then start time",
 
   form: {
     create: "Create",
@@ -227,7 +282,9 @@ export default {
     reject: "No",
     cancel: "Cancel",
     copy: "Copy",
-    next: "Next"
+    next: "Next",
+    start_time: "Start",
+    end_time: "End",
   },
 
   // day

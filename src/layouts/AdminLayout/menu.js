@@ -83,6 +83,11 @@ export default computed(() => [
         key: "transaction_record",
         label: t("transaction_record"),
         to: { name: "transaction_record" }
+      },
+      {
+        key: "funds_withdraw",
+        label: t("funds_withdraw"),
+        to: { name: "funds_withdraw" }
       }
     ]
   },

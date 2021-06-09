@@ -10,9 +10,10 @@ export default {
   user_management: "管理使用者",
 
   // funds_management
-  funds_management: "code::funds_management",
+  funds_management: "資金管理",
   funds_operation_panel: "code::funds_operation_panel",
   transaction_record: "code::transaction_record",
+  funds_withdraw: "資金提領",
 
   // merchant_management
   merchant_management: "商戶管理",
@@ -22,8 +23,8 @@ export default {
   merchant_channel_setting: "商戶通道管理",
 
   // order_management
-  order_management: "code::order_management",
-  merchant_order: "code::merchant_order",
+  order_management: "訂單管理",
+  merchant_order: "商戶訂單",
   merchant_order_post: "code::merchant_order_post",
   merchant_order_statistics: "code::merchant_order_statistics",
   merchant_order_operation: "code::merchant_order_operation",
@@ -43,6 +44,27 @@ export default {
   financial_reports: "code::financial_reports",
   deposit_daily_report: "code::deposit_daily_report",
   merchant_daily_report: "code::merchant_daily_report",
+
+  // value
+  funds_withdraw_status: {
+    pending: "待處理",
+    processing: "處理中",
+    paid: "已支付",
+    reject: "駁回",
+  },
+  order_status_values: {
+    UNPAID: "code::unpaid",
+    SUCCESS: "code::success",
+    SUCCESS_NOT_NOTIFY: "code::success_not_notify",
+    FAIL_EXPIRE: "code::fail_expire",
+    FAIL_AMOUNT_NOT_MATCH: "code::fail_amount_not_match",
+    FAIL_ORDER: "code::fail_order",
+  },
+  audit_type_values: {
+    PAID: "code::paid",
+    UNPAID: "code::unpaid",
+    REJECT: "code::reject",
+  },
 
   // subject
   signin_id: "帳號",
@@ -93,6 +115,24 @@ export default {
   order_limit_once: "單次收款上限",
   order_per_minute: "每分鐘產生訂單上限",
   order_limit_daily: "單日收款上限",
+  transaction_id: "交易代號",
+  withdraw_amount: "提款金額",
+  debit_amount: "code::debit_amount",
+  to_bank: "收款銀行",
+  to_branch: "收款分行",
+  to_account_name: "收款人",
+  to_account_number: "收款帳號",
+  remark: "附註",
+  order_number: "訂單號",
+  order_amount: "金額",
+  order_over: "金額大於",
+  order_status: "訂單狀態",
+  audit_type: "審核狀態",
+  real_amount: "實際支付金額",
+  fee: "手續費",
+  credit_amount: "入帳金額",
+  order_time: "下單時間",
+  success_time: "入帳時間",
 
   // action
   create_role: "建立職位",
@@ -167,6 +207,10 @@ export default {
   merchant_channel_will_be_enabled: "商戶通道將被啟用",
   merchant_channel_will_be_disabled: "商戶通道將被停用",
   merchant_channel_will_be_deleted: "商戶通道將被刪除",
+  status_will_be_updated: "狀態將被更新",
+  status_will_be_updated_to_processing: "狀態將被更新為處理中",
+  status_will_be_updated_to_paid: "狀態將被更新為已支付",
+  status_will_be_updated_to_reject: "狀態將被更新為駁回",
 
   // feedback
   role_successfully_created: "職位新增成功",
@@ -214,6 +258,12 @@ export default {
   card_holder_successfully_enabled: "持卡人已啟用",
   card_holder_successfully_disabled: "持卡人已停用",
   card_holder_successfully_deleted: "持卡人已刪除",
+  status_successfully_set_to_processing: "更新狀態為處理中",
+  status_successfully_set_to_paid: "更新狀態為已支付",
+  status_successfully_set_to_reject: "更新狀態為駁回",
+
+  // informative
+  enter_2fa_to_permit_action: "請輸入 2fa 以授權操作",
 
   form: {
     create: "新增",
@@ -227,8 +277,14 @@ export default {
     reject: "否",
     cancel: "取消",
     copy: "複製",
-    next: "下一步"
+    next: "下一步",
+    start_time: "開始",
+    end_time: "結束",
   },
+
+  // error
+  invalid_date_format: "時間格式錯誤",
+  end_time_should_not_be_older_then_start_time: "結束時間不可小於開始時間",
 
   // day
   today: "今天",
