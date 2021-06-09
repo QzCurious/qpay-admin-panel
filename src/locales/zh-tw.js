@@ -132,7 +132,7 @@ export default {
   fee: "手續費",
   credit_amount: "入帳金額",
   order_time: "下單時間",
-  success_time: "入帳時間",
+  success_time: "成功時間",
 
   // action
   create_role: "建立職位",
