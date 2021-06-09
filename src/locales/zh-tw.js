@@ -23,8 +23,8 @@ export default {
   merchant_channel_setting: "商戶通道管理",
 
   // order_management
-  order_management: "code::order_management",
-  merchant_order: "code::merchant_order",
+  order_management: "訂單管理",
+  merchant_order: "商戶訂單",
   merchant_order_post: "code::merchant_order_post",
   merchant_order_statistics: "code::merchant_order_statistics",
   merchant_order_operation: "code::merchant_order_operation",
@@ -51,6 +51,19 @@ export default {
     processing: "處理中",
     paid: "已支付",
     reject: "駁回",
+  },
+  order_status_values: {
+    UNPAID: "code::unpaid",
+    SUCCESS: "code::success",
+    SUCCESS_NOT_NOTIFY: "code::success_not_notify",
+    FAIL_EXPIRE: "code::fail_expire",
+    FAIL_AMOUNT_NOT_MATCH: "code::fail_amount_not_match",
+    FAIL_ORDER: "code::fail_order",
+  },
+  audit_type_values: {
+    PAID: "code::paid",
+    UNPAID: "code::unpaid",
+    REJECT: "code::reject",
   },
 
   // subject
@@ -110,6 +123,16 @@ export default {
   to_account_name: "收款人",
   to_account_number: "收款帳號",
   remark: "附註",
+  order_number: "訂單號",
+  order_amount: "金額",
+  order_over: "金額大於",
+  order_status: "訂單狀態",
+  audit_type: "審核狀態",
+  real_amount: "實際支付金額",
+  fee: "手續費",
+  credit_amount: "入帳金額",
+  order_time: "下單時間",
+  success_time: "入帳時間",
 
   // action
   create_role: "建立職位",
