@@ -1,13 +1,16 @@
 <template>
+  <h1>{{ $t("merchant_order") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
       <form

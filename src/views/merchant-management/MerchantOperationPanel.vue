@@ -1,7 +1,7 @@
 <template>
+  <h1>{{ $t("merchant_operation_panel") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
     :lazy="true"
     :loading="loading"
     :value="records"
