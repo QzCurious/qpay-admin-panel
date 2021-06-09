@@ -40,6 +40,13 @@ http.interceptors.request.use(
       }
     }
 
+    // 如果 query string 中帶有空字串就拿掉
+    for (const key in config.params) {
+      if (config.params[key] === "") {
+        config.params[key] = undefined;
+      }
+    }
+
     return config;
   },
   function(error) {

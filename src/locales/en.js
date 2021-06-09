@@ -29,7 +29,7 @@ export default {
   merchant_order_statistics: "code::merchant_order_statistics",
   merchant_order_operation: "code::merchant_order_operation",
   deposit_order_operation: "code::deposit_order_operation",
-  deposit_record: "code::deposit_record",
+  deposit_record: "Deposit Record",
 
   /**
    * Sidebar categories
@@ -64,6 +64,11 @@ export default {
     PAID: "code::paid",
     UNPAID: "code::unpaid",
     REJECT: "code::reject",
+  },
+  deposit_transaction_status_values: {
+    AUTO_DEPOSIT: "Auto Deposit",
+    MANUAL_DEPOSIT: "Manual Deposit",
+    UNKNOWN_DEPOSIT: "Unknown Deposit",
   },
 
   // subject
@@ -116,6 +121,7 @@ export default {
   order_per_minute: "Order Per Minute",
   order_limit_daily: "Order Limit Daily",
   transaction_id: "Transaction ID",
+  transaction_number: "Transaction Number",
   withdraw_amount: "Withdraw Amount",
   debit_amount: "Debit Amount",
   to_bank: "To Bank",
@@ -133,6 +139,18 @@ export default {
   credit_amount: "Credit Amount",
   order_time: "Order Time",
   success_time: "code::success_time",
+  deposit_count: "Deposit Count",
+  total_deposit: "Total Deposit",
+  unknown_count: "Unknown Count",
+  unknown_deposit: "Unknown Deposit",
+  deposit_amount: "Deposit Amount",
+  payee_bank: "Payee Bank",
+  payee_account: "Payee Account",
+  payee_number: "Payee Number",
+  sms_message: "SMS Message",
+  remitter_name: "Remitter Name",
+  operator: "Operator",
+  transaction_time: "Transaction Time",
 
   // action
   create_role: "Create role",
@@ -341,8 +359,6 @@ export default {
 
   auto_deposit: "code::auto_deposit",
   manual_deposit: "code::manual_deposit",
-  total_deposit: "code::total_deposit",
-  deposit_count: "code::deposit_count",
 
   date: "code::date",
   recharge_fee: "code::recharge_fee",
@@ -351,5 +367,4 @@ export default {
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
 
-  deposit_amount: "code::deposit_amount"
 };
