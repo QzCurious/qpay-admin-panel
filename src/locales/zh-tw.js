@@ -35,7 +35,7 @@ export default {
    * Sidebar categories
    */
   payment_management: "支付管理",
-  bank_management: "code::bank_management",
+  bank_management: "銀行管理",
   channel_management: "通道管理",
   card_holder_management: "持卡人管理",
   card_management: "銀行卡管理",
