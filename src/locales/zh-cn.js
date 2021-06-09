@@ -65,6 +65,11 @@ export default {
     UNPAID: "UNPAID",
     REJECT: "REJECT",
   },
+  deposit_transaction_status_values: {
+    AUTO_DEPOSIT: "AUTO_DEPOSIT",
+    MANUAL_DEPOSIT: "MANUAL_DEPOSIT",
+    UNKNOWN_DEPOSIT: "UNKNOWN_DEPOSIT",
+  },
 
   // subject
   signin_id: "账号",
@@ -116,6 +121,7 @@ export default {
   order_per_minute: "每分钟建单上限",
   order_limit_daily: "商户每日订单上限",
   transaction_id: "transaction_id",
+  transaction_number: "transaction_number",
   withdraw_amount: "withdraw_amount",
   debit_amount: "debit_amount",
   to_bank: "to_bank",
@@ -133,6 +139,18 @@ export default {
   credit_amount: "credit_amount",
   order_time: "order_time",
   success_time: "success_time",
+  deposit_count: "deposit_count",
+  total_deposit: "total_deposit",
+  unknown_count: "unknown_count",
+  unknown_deposit: "unknown_deposit",
+  deposit_amount: "deposit_amount",
+  payee_bank: "payee_bank",
+  payee_account: "payee_account",
+  payee_number: "payee_number",
+  sms_message: "sms_message",
+  remitter_name: "remitter_name",
+  operator: "operator",
+  transaction_time: "transaction_time",
 
   // action
   create_role: "建立角色",
@@ -340,8 +358,6 @@ export default {
 
   auto_deposit: "code::auto_deposit",
   manual_deposit: "code::manual_deposit",
-  total_deposit: "code::total_deposit",
-  deposit_count: "code::deposit_count",
 
   date: "code::date",
   recharge_fee: "code::recharge_fee",
@@ -350,5 +366,4 @@ export default {
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
 
-  deposit_amount: "code::deposit_amount",
 };

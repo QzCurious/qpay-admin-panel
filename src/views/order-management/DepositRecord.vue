@@ -1,13 +1,15 @@
 <template>
+  <h1>{{ $t("deposit_record") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    :loading="loading"
+    :lazy="true"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
       <form
@@ -15,130 +17,202 @@
         class="p-d-flex p-flex-wrap p-ai-start"
       >
         <InputText
-          label="交易代號"
-          name="transation_number"
-          v-model="transation_number"
-        />
-        <InputText name="order_number" label="訂單號" v-model="order_number" />
-        <InputText
-          name="payee_number"
-          label="付款編號"
-          v-model="payee_number"
+          name="transaction_number"
+          :label="$t('transaction_number')"
+          v-model="filters.id"
         />
         <InputText
-          name="payee_account"
-          label="付款帳號"
-          v-model="payee_account"
-        />
-        <InputText name="order_amount" label="金額" v-model="order_amount" />
-        <Dropdown
-          label="訂單狀態"
-          v-model="order_status"
-          :options="order_status_list"
+          name="merchant_order_id"
+          :label="$t('order_number')"
+          v-model="filters.merchant_order_id"
         />
         <Dropdown
-          label="付款銀行"
-          v-model="payee_bank"
-          :options="payee_bank_list"
+          name="status"
+          :label="$t('status')"
+          v-model="filters.status"
+          :options="deposit_transaction_status_values"
         />
-        <Dropdown label="商家" v-model="merchant" :options="merchant_list" />
-        <Dropdown label="通道" v-model="channel" :options="channel_list" />
-        <Calendar
-          name="start"
-          label="開始"
-          v-model="start"
-          :showSeconds="true"
-          :showTime="true"
-          :errors="v$.start.$errors.map((e) => e.$message)"
+        <BankDropdown v-model="filters.bank_id" />
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <ChannelDropdown v-model="filters.channel_id" />
+        <InputText
+          name="deposit_amount"
+          :label="$t('deposit_amount')"
+          v-model="filters.deposit_amount"
         />
-        <Calendar
-          name="end"
-          label="結束"
-          v-model="end"
-          :showSeconds="true"
-          :showTime="true"
-          :errors="v$.end.$errors.map((e) => e.$message)"
+        <InputText
+          name="bank_card_id"
+          :label="$t('payee_number')"
+          v-model="filters.bank_card_id"
         />
-        <Button class="p-mt-4" type="submit">搜尋</Button>
+        <InputText
+          name="card_holder_id"
+          :label="$t('payee_account')"
+          v-model="filters.card_holder_id"
+        />
+        <InputText
+          name="order_amount"
+          :label="$t('order_amount')"
+          v-model="filters.order_amount"
+        />
+        <CalendarStartTime
+          v-model="filters.start_time"
+          :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
+        />
+        <CalendarEndTime
+          v-model="filters.end_time"
+          :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
+        />
+        <Search />
       </form>
+      <div class="summery p-mt-2">
+        <!-- no api -->
+        <span>{{ $t("deposit_count") }}: {{}}</span>
+        <span>{{ $t("total_deposit") }}: {{}}</span>
+        <span>{{ $t("unknown_count") }}: {{}}</span>
+        <span>{{ $t("unknown_deposit") }}: {{}}</span>
+      </div>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="order_number" header="訂單號"></Column>
-    <Column field="transation_number" header="交易代號"></Column>
-    <Column field="order_amount" header="金額"></Column>
-    <Column field="real_amount" header="實際金額"></Column>
-    <Column field="credit_amount" header="獲利淨額"></Column>
-    <Column field="payee_bank" header="付款銀行"></Column>
-    <Column field="payee_account" header="付款帳號"></Column>
-    <Column field="payee_number" header="付款編號"></Column>
-    <Column field="sms_message" header="簡訊內容"></Column>
-    <Column field="remitter_name" header="訂單狀態"></Column>
-    <Column field="channel" header="通道"></Column>
-    <Column field="merchant" header="商家"></Column>
-    <Column field="remark" header="備註"></Column>
-    <Column field="order_time" header="下單時間">
+    <Column field="merchant_order_id" :header="$t('order_number')"></Column>
+    <Column field="id" :header="$t('transaction_number')"></Column>
+    <Column :header="$t('order_amount')">
       <template #body="{ data }">
-        {{ moment(data.order_time).format("YYYY-MM-DD HH:mm:ss") }}
+        {{ data.order_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column field="status" header="status"></Column>
+    <Column :header="$t('real_amount')">
+      <template #body="{ data }">
+        {{ data.real_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('deposit_amount')">
+      <template #body="{ data }">
+        {{ data.deposit_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column field="payee_bank_name" :header="$t('payee_bank')"></Column>
+    <Column field="card_holder_name" :header="$t('payee_account')"></Column>
+    <Column
+      field="bank_card_account_number"
+      :header="$t('payee_number')"
+    ></Column>
+    <Column field="remark" :header="$t('sms_message')"></Column>
+    <Column field="remitter_name" :header="$t('remitter_name')"></Column>
+    <Column field="channel_name" :header="$t('channel')"></Column>
+    <Column field="merchant_name" :header="$t('merchant')"></Column>
+    <Column field="operator" :header="$t('operator')"></Column>
+    <Column :header="$t('success_time')">
+      <template #body="{ data }">
+        {{ moment(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
+      </template>
+    </Column>
+    <Column :header="$t('transaction_time')">
+      <template #body="{ data }">
+        {{ moment(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
+      </template>
+    </Column>
+    <Column :header="$t('status')">
+      <template #body="{ data }">
+        {{
+          deposit_transaction_status_values.find(
+            ({ value }) => value === data.status
+          ).label
+        }}
+      </template>
+    </Column>
   </DataTable>
 </template>
 
 <script>
 import InputText from "../../components/InputText.vue";
 import Dropdown from "../../components/Dropdown.vue";
-import Calendar from "../../components/Calendar.vue";
-import MerchantOrder from "../../api/MerchantOrder";
+import BankDropdown from "../../components/BankDropdown";
+import MerchantDropdown from "../../components/MerchantDropdown";
+import ChannelDropdown from "../../components/ChannelDropdown";
+import DepositTransaction, {
+  DEPOSIT_TRANSACTION_STATUS_VALUES,
+} from "../../api/DepositTransaction";
 import useVuelidate from "@vuelidate/core";
 import { date } from "../../helper/validator";
-import { helpers } from "@vuelidate/validators";
-import moment from "moment";
+import { helpers, minValue } from "@vuelidate/validators";
+import CalendarStartTime from "../../components/CalendarStartTime.vue";
+import CalendarEndTime from "../../components/CalendarEndTime.vue";
+import Search from "../../components/Search";
 
 export default {
-  components: { InputText, Dropdown, Calendar },
+  components: {
+    InputText,
+    Dropdown,
+    CalendarStartTime,
+    CalendarEndTime,
+    BankDropdown,
+    MerchantDropdown,
+    ChannelDropdown,
+    Search,
+  },
   setup() {
     const v$ = useVuelidate();
     return { v$ };
   },
   validations() {
     return {
-      start: {
-        valid_date: helpers.withMessage("It's not a valid date", date()),
+      filters: {
+        start_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_time)
+          ),
+        },
       },
-      end: { valid_date: helpers.withMessage("It's not a valid date", date()) },
     };
   },
   data() {
     return {
       loading: true,
-
-      transation_number: null,
-      order_number: null,
-      payee_number: null,
-      payee_account: null,
-      order_amount: null,
-      order_status: null,
-      order_status_list: [{ label: "d", value: "adsf" }],
-      payee_bank: null,
-      payee_bank_list: [{ label: "bank1", value: "bank1" }],
-      merchant: null,
-      merchant_list: [],
-      channel: null,
-      channel_list: [],
-      start: null,
-      end: null,
-
+      page: 1,
+      limit: 10,
+      filters: {
+        id: null,
+        merchant_order_id: null,
+        status: null,
+        bank_id: null,
+        merchant_id: null,
+        channel_id: null,
+        deposit_amount: null,
+        bank_card_id: null,
+        card_holder_id: null,
+        order_amount: null,
+        start_time: this.moment().startOf("day").toDate(),
+        end_time: this.moment().endOf("day").toDate(),
+      },
       records: [],
+      totalRecords: 0,
     };
   },
-  created() {
-    this.moment = moment;
+  computed: {
+    deposit_transaction_status_values() {
+      return Object.entries(DEPOSIT_TRANSACTION_STATUS_VALUES).map(
+        ([key, value]) => ({
+          label: this.$i18n.t(`deposit_transaction_status_values.${key}`),
+          value,
+        })
+      );
+    },
   },
-  async mounted() {
-    this.records = (await MerchantOrder.all()).data;
-    this.loading = false;
+  mounted() {
+    this.fetch();
   },
   methods: {
     handle_search() {
@@ -146,6 +220,29 @@ export default {
       if (this.v$.$error) {
         return;
       }
+
+
+
+      this.fetch();
+    },
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        DepositTransaction.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        DepositTransaction.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
+    },
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
     },
   },
 };
@@ -154,5 +251,16 @@ export default {
 <style scoped>
 form > :not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.summery {
+  display: flex;
+  justify-content: end;
+  color: var(--blue-500);
+}
+
+.summery > * + *::before {
+  margin: 0 0.5rem;
+  content: "|";
 }
 </style>
