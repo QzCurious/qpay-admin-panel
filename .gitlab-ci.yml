@@ -8,7 +8,7 @@ stage-build-and-up:
   image: docker:dind
   script:
     # - sed -i s/api\.llamatech.top/$API_LOCATION/g .env.development
-    # - cat .env.development
+    - cat .env.development
     - docker build -t qpay-client .
     # - docker push registry.llamatech.top/runner-lab
     - *init_ssh
@@ -23,6 +23,7 @@ stage-build-demo-and-up:
   image: docker:dind
   script: 
     - cp .env.development.demo .env.development
+    - cat .env.development
     - docker build -t qpay-client:demo .
     - *init_ssh
     - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
