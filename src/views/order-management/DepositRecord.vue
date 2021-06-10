@@ -105,12 +105,12 @@
     <Column field="operator" :header="$t('operator')"></Column>
     <Column :header="$t('success_time')">
       <template #body="{ data }">
-        {{ moment(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{ moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
     <Column :header="$t('transaction_time')">
       <template #body="{ data }">
-        {{ moment(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
     <Column :header="$t('status')">
@@ -221,8 +221,6 @@ export default {
         return;
       }
 
-
-
       this.fetch();
     },
     async fetch() {
@@ -255,7 +253,7 @@ form > :not(:last-child) {
 
 .summery {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   color: var(--blue-500);
 }
 
