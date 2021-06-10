@@ -9,7 +9,7 @@ stage2-build-and-up:
   script:
     # - sed -i s/api\.llamatech.top/$API_LOCATION/g .env.development
     # - cat .env.development
-    - docker build -t qpay-client --build-arg MODE=development .
+    - docker build -t qpay-client .
     # - docker push registry.llamatech.top/runner-lab
     - *init_ssh
     - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
