@@ -155,6 +155,10 @@ export default {
   before_balance: "Before Balance",
   after_balance: "After Balance",
   transaction_record_type: "type",
+  balance_d0: "D0",
+  lock_balance_d0: "D0 locked",
+  balance_t1: "T1",
+  lock_balance_t1: "T1 locked",
 
   // action
   create_role: "Create role",

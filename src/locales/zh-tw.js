@@ -155,6 +155,10 @@ export default {
   before_balance: "操作前金額",
   after_balance: "操作後金額",
   transaction_record_type: "交易類型",
+  balance_d0: "D0總餘額",
+  lock_balance_d0: "D0鎖定總餘額",
+  balance_t1: "T1總餘額",
+  lock_balance_t1: "T1鎖定總餘額",
 
   // action
   create_role: "建立職位",
