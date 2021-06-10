@@ -5,7 +5,7 @@ export const PROCESSING = 1;
 export const PAID = 2;
 export const REJECT = 3;
 
-class Funds {
+class FundsWithdraw {
   async count(params = {}) {
     return http.get("funds/withdraw/summary", { params });
   }
@@ -24,6 +24,6 @@ class Funds {
   }
 }
 
-const funds = new Funds();
+const funds_withdraw = new FundsWithdraw();
 
-export default funds;
+export default funds_withdraw;

@@ -95,7 +95,12 @@
 </template>
 
 <script>
-import Funds, { PENDING, PROCESSING, PAID, REJECT } from "../../api/Funds";
+import FundsWithdraw, {
+  PENDING,
+  PROCESSING,
+  PAID,
+  REJECT,
+} from "../../api/FundsWithdraw";
 import MerchantDropdown from "../../components/MerchantDropdown";
 import ChannelDropdown from "../../components/ChannelDropdown";
 import Dropdown from "../../components/Dropdown";
@@ -202,12 +207,12 @@ export default {
     async fetch() {
       this.loading = true;
       const [records, count] = await Promise.all([
-        Funds.find({
+        FundsWithdraw.find({
           ...this.filters,
           page: this.page,
           limit: this.limit,
         }),
-        Funds.count(this.filters),
+        FundsWithdraw.count(this.filters),
       ]);
       this.records = records.data.data;
       this.totalRecords = count.data.count;
@@ -253,7 +258,7 @@ export default {
       }
 
       this.modal.submitting = true;
-      Funds.update(this.modal.data.id, {
+      FundsWithdraw.update(this.modal.data.id, {
         status: this.modal.data.status,
         code: this.code,
       })
