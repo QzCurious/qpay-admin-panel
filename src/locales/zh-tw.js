@@ -12,7 +12,7 @@ export default {
   // funds_management
   funds_management: "資金管理",
   funds_operation_panel: "code::funds_operation_panel",
-  transaction_record: "code::transaction_record",
+  transaction_record: "資金異動紀錄",
   funds_withdraw: "資金提領",
 
   // merchant_management
@@ -151,6 +151,10 @@ export default {
   remitter_name: "匯款人姓名",
   operator: "操作者",
   transaction_time: "交易時間",
+  operation_balance: "操作金額",
+  before_balance: "操作前金額",
+  after_balance: "操作後金額",
+  transaction_record_type: "交易類型",
 
   // action
   create_role: "建立職位",
@@ -343,7 +347,7 @@ export default {
       1002: "帳號已存在",
       9003: "2fa 驗證碼錯誤",
       9009: "帳號不存在或密碼不正確",
-    }
+    },
   },
 
   /**

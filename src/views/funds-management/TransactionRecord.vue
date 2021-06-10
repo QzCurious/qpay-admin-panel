@@ -1,199 +1,171 @@
 <template>
+  <h1>{{ $t("transaction_record") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-flex-column p-flex-sm-row">
-        <div class="p-m-2">
-          <Button
-            type="button"
-            icon="pi pi-filter-slash"
-            label="Clear"
-            class="p-button-outlined "
-            @click="clearFilter"
-          />
-        </div>
-        <div class="p-m-2">
-          <label class="p-mr-3" for="channel">交易編號</label>
-          <Dropdown
-            inputId="transaction"
-            v-model="selectedRecords"
-            :options="states"
-            optionLabel="name"
-            placeholder="Select"
-          />
-        </div>
-        <div class="p-m-2">
-          <label class="p-mr-2 p-ml-2" for="merchant">商戶</label>
-          <Dropdown
-            inputId="merchant"
-            v-model="selectedMerchant"
-            :options="merchant"
-            placeholder="Select"
-          />
-        </div>
-        <div class="p-m-2">
-          <label class="p-mr-2 p-ml-2" for="channel">頻道</label>
-          <Dropdown
-            inputId="channel"
-            v-model="selectedState"
-            :options="states"
-            optionLabel="name"
-            placeholder="Select"
-          />
-        </div>
-        <div class="p-m-2">
-          <label class="p-mr-2 p-ml-2" for="status">日期</label>
-          <Calendar
-            v-model="date"
-            :showTime="true"
-            :hourFormat="'12'"
-            selectionMode="range"
-          />
-        </div>
-
-        <Button
-          type="button"
-          icon="pi pi-search"
-          label="搜尋"
-          class="p-button-outlined p-mb-2 p-m-2"
+      <form
+        @submit.prevent="handle_search"
+        class="header p-d-flex p-ai-center p-flex-wrap"
+      >
+        <InputText
+          :label="$t('transaction_id')"
+          v-model="filters.transaction_id"
         />
-      </div>
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <ChannelDropdown v-model="filters.channel_id" />
+        <CalendarStartTime
+          v-model="filters.start_time"
+          :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
+        />
+        <CalendarEndTime
+          v-model="filters.end_time"
+          :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
+        />
+        <Search />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="index" header="索引" :sortable="false">
-      <template #body="{ index }">
-        {{ index + 1 }}
+    <Column field="channel_name" :header="$t('channel')" />
+    <Column field="merchant_name" :header="$t('merchant')" />
+    <Column field="transaction_id" :header="$t('transaction_id')" />
+    <Column :header="$t('operation_balance')">
+      <template #body="{ data }">
+        {{ data.amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column field="channel" header="通道名稱" :sortable="false">
+    <Column :header="$t('before_balance')">
       <template #body="{ data }">
-        {{ data.channel }}
+        {{ data.before_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column field="merchant" header="商戶名稱" :sortable="false">
+    <Column :header="$t('after_balance')">
       <template #body="{ data }">
-        {{ data.merchant }}
-      </template> </Column
-    ><Column field="transaction" header="交易單號" :sortable="false">
-      <template #body="{ data }">
-        {{ data.transaction }}
-      </template> </Column
-    ><Column field="operation_balance" header="發生金額" :sortable="false">
-      <template #body="{ data }">
-        {{ data.operation_balance }}
-      </template> </Column
-    ><Column field="before_balance" header="期初餘額" :sortable="false">
-      <template #body="{ data }">
-        {{ data.before_balance }}
-      </template> </Column
-    ><Column field="after_balance" header="期末餘額" :sortable="false">
-      <template #body="{ data }">
-        {{ data.after_balance }}
+        {{ data.after_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column field="create_time" header="創建時間" :sortable="false">
+    <Column :header="$t('created_at')">
       <template #body="{ data }">
-        {{ data.create_time }}
+        {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
-    <Column field="remark" header="備註" :sortable="false">
-      <template #body="{ data }">
-        {{ data.remark }}
-      </template>
-    </Column>
-    <Column>
-      <Button label="Primary" />
-      <Button label="Primary" />
-    </Column>
+    <Column
+      field="transaction_record_type_name"
+      :header="$t('transaction_record_type')"
+    />
   </DataTable>
 </template>
 <script>
-import { defineComponent } from "vue";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
+import TransactionRecord from "../../api/TransactionRecord";
+import MerchantDropdown from "../../components/MerchantDropdown";
+import ChannelDropdown from "../../components/ChannelDropdown";
+import CalendarStartTime from "../../components/CalendarStartTime.vue";
+import CalendarEndTime from "../../components/CalendarEndTime.vue";
+import InputText from "../../components/InputText.vue";
+import Search from "../../components/Search.vue";
+import { date } from "../../helper/validator";
+import { helpers, minValue } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
-export default defineComponent({
-  name: "FundsOperationPanel",
+export default {
+  components: {
+    ChannelDropdown,
+    MerchantDropdown,
+    Search,
+    InputText,
+    CalendarStartTime,
+    CalendarEndTime,
+  },
+  setup() {
+    const v$ = useVuelidate();
+    return { v$ };
+  },
+  validations() {
+    return {
+      filters: {
+        start_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_time)
+          ),
+        },
+      },
+    };
+  },
   data() {
     return {
-      records: [],
       loading: true,
-      filters: {},
-      merchant: ["ivan", "ivan", "ivan", "ivan", "ivan", "ivan", "ivan"],
-      states: "",
-      date: "",
-      selectedRecords: "",
-      selectedMerchant: "",
-      selectedState: "",
-    };
-  },
-  watch: {
-    date: {
-      handler: function(newVal, oldVal) {
-        console.log(newVal[0], "---new0---");
-        console.log(newVal[1], "---new1---");
-        console.log(Object.keys(newVal), "---new---");
+      page: 1,
+      limit: 10,
+      filters: {
+        transaction_id: null,
+        merchant_id: null,
+        channel_id: null,
+        start_time: this.moment().startOf("day").toDate(),
+        end_time: this.moment().endOf("day").toDate(),
       },
-      deep: true,
-    },
+      records: [],
+      totalRecords: 0,
+    };
   },
   methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        channel: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    handle_search() {
+      this.v$.$touch();
+
+      if (this.v$.$error) {
+        return;
+      }
+
+      this.fetch();
     },
-    formatDate(date) {
-      return date.toLocaleDateString("zh-TW", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
+    async fetch() {
+      this.loading = true;
+      const [records, count] = await Promise.all([
+        TransactionRecord.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        TransactionRecord.count(this.filters),
+      ]);
+      this.records = records.data.data;
+      this.totalRecords = count.data.count;
+      window.scrollTo(0, 0);
+      this.loading = false;
     },
-    editStatus() {},
-  },
-  created() {
-    this.clearFilter();
+    on_page(e) {
+      this.page = e.page + 1;
+      this.fetch();
+    },
   },
   mounted() {
-    let record = function() {
-      this.index = "1";
-      this.channel = "1";
-      this.merchant = "g";
-      this.transaction = "adfa";
-      this.operation_balance = "asdf";
-      this.before_balance = "fd";
-      this.after_balance = "qfv w";
-      this.create_time = "someday";
-      this.remark = "nonono";
-    };
-    let records = new Array(10);
-    for (var i = 0; i < 10; i++) {
-      records[i] = new record();
-      if (i == 9) this.loading = false;
-    }
-    this.records = records;
-    //ajax api
-    // operationLogApi
-    //   .get()
-    //   .then(({ data }) => {
-    //     this.records = data.map((record) => ({
-    //       ...record,
-    //       time: new Date(record.timestamp),
-    //     }));
-    //   })
-    //   .finally(() => (this.loading = false));
+    this.fetch();
   },
-});
+};
 </script>
-<style lang=""></style>
+
+<style scoped>
+.header > :not(:last-child) {
+  margin-right: 0.5rem;
+}
+</style>

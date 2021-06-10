@@ -12,7 +12,7 @@ export default {
   // funds_management
   funds_management: "Funds Management",
   funds_operation_panel: "code::funds_operation_panel",
-  transaction_record: "code::transaction_record",
+  transaction_record: "Transaction Record",
   funds_withdraw: "Funds Withdraw",
 
   // merchant_management
@@ -151,6 +151,10 @@ export default {
   remitter_name: "Remitter Name",
   operator: "Operator",
   transaction_time: "Transaction Time",
+  operation_balance: "Operation Balance",
+  before_balance: "Before Balance",
+  after_balance: "After Balance",
+  transaction_record_type: "type",
 
   // action
   create_role: "Create role",
@@ -344,7 +348,7 @@ export default {
       1002: "Account already exists",
       9003: "2fa verification failed",
       9009: "Incorrect username or password",
-    }
+    },
   },
 
   /**
@@ -366,5 +370,4 @@ export default {
   deduction_fee: "code::deduction_fee",
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
-
 };
