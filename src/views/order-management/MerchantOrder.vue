@@ -79,12 +79,12 @@
     <Column field="merchant_name" :header="$t('merchant')"></Column>
     <Column :header="$t('order_time')">
       <template #body="{ data }">
-        {{ moment(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
     <Column :header="$t('success_time')">
       <template #body="{ data }">
-        {{ moment(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{ moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
   </DataTable>
