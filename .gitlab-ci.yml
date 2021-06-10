@@ -16,6 +16,8 @@ stage-build-and-up:
     - cd $DOCKER_COMPOSE_DIRECTORY
     - docker-compose up -d $SERVICE_NAME
     - EOF
+  only: 
+    - /^dev$/
 
 stage-build-demo-and-up:
   image: docker:dind
