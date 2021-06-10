@@ -10,7 +10,7 @@
       </template>
       <Calendar
         showIcon
-        dateFormat="yy/m/d"
+        dateFormat="yy-m-d"
         :showOnFocus="false"
         :name="name"
         :style="inputStyle"
