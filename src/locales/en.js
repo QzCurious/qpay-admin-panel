@@ -85,7 +85,7 @@ export default {
   enabled: "Enabled",
   disabled: "Disabled",
   merchant: "Merchant",
-  create_at: "Create At",
+  created_at: "Create At",
   operation: "Operation",
   MD5_key: "MD5_key",
   bank: "Bank",

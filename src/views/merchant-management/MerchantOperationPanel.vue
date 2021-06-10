@@ -42,7 +42,7 @@
         />
       </template>
     </Column>
-    <Column field="created_at" :header="$t('create_at')">
+    <Column field="created_at" :header="$t('created_at')">
       <template #body="{ data }">
         {{
           data.created_at &&

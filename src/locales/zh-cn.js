@@ -85,7 +85,7 @@ export default {
   enabled: "启用",
   disabled: "停用",
   merchant: "商户",
-  create_at: "建立时间",
+  created_at: "建立时间",
   operation: "操作",
   MD5_key: "MD5_key",
   bank: "银行",
