@@ -75,22 +75,24 @@
     </Column>
   </DataTable>
   <Dialog modal :header="modal.header" v-model:visible="modal.visible">
-    <div class="p-mb-3">
-      {{ modal.message }}
+    <div class="modal-wrapper">
+      <div class="p-mb-3">
+        {{ modal.message }}
+      </div>
+      <form @submit.prevent="update_status" class="p-d-flex p-flex-column">
+        <InputText
+          required
+          :placeholder="$t('enter_2fa_to_permit_action')"
+          v-model="code"
+        />
+        <Button
+          :loading="modal.submitting"
+          type="submit"
+          class="p-mt-2"
+          :label="$t('form.submit')"
+        />
+      </form>
     </div>
-    <form @submit.prevent="update_status" class="p-d-flex p-flex-column">
-      <InputText
-        required
-        :placeholder="$t('enter_2fa_to_permit_action')"
-        v-model="code"
-      />
-      <Button
-        :loading="modal.submitting"
-        type="submit"
-        class="p-mt-2"
-        :label="$t('form.submit')"
-      />
-    </form>
   </Dialog>
 </template>
 
@@ -284,5 +286,9 @@ export default {
 <style scoped>
 .header > :not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.modal-wrapper {
+  width: min-content;
 }
 </style>
