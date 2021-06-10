@@ -151,10 +151,10 @@ export default {
   remitter_name: "汇款户名",
   operator: "操作账号",
   transaction_time: "交易时间",
-  operation_balance: "operation_balance",
-  before_balance: "before_balance",
-  after_balance: "after_balance",
-  transaction_record_type: "transaction_record_type",
+  operation_balance: "XXXXXXXX",
+  before_balance: "XXXXXXXX",
+  after_balance: "XXXXXXXX",
+  transaction_record_type: "XXXXXXXX",
 
   // action
   create_role: "建立角色",
