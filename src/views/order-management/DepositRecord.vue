@@ -67,10 +67,10 @@
       </form>
       <div class="summery p-mt-2">
         <!-- no api -->
-        <span>{{ $t("deposit_count") }}: {{}}</span>
-        <span>{{ $t("total_deposit") }}: {{}}</span>
-        <span>{{ $t("unknown_count") }}: {{}}</span>
-        <span>{{ $t("unknown_deposit") }}: {{}}</span>
+        <span>{{ $t("deposit_count") }}: {{ summery.count }}</span>
+        <span>{{ $t("total_deposit") }}: {{ summery.amount }}</span>
+        <span>{{ $t("unknown_count") }}: {{ summery.unknow_count }}</span>
+        <span>{{ $t("unknown_deposit") }}: {{ summery.unknow_amount }}</span>
       </div>
     </template>
     <template #empty> No log found. </template>
@@ -199,6 +199,7 @@ export default {
       },
       records: [],
       totalRecords: 0,
+      summery: {},
     };
   },
   computed: {
@@ -235,6 +236,7 @@ export default {
       ]);
       this.records = records.data.data;
       this.totalRecords = count.data.count;
+      this.summery = count.data;
       window.scrollTo(0, 0);
       this.loading = false;
     },

@@ -1,13 +1,8 @@
 import http from "./http";
 
-export const PENDING = 0;
-export const PROCESSING = 1;
-export const PAID = 2;
-export const REJECT = 3;
-
 class Funds {
   async count(params = {}) {
-    return http.get("funds/withdraw/summary", { params });
+    return http.get("funds/summary", { params });
   }
 
   async find(params) {
@@ -16,11 +11,11 @@ class Funds {
       limit: 10,
       ...params,
     };
-    return http.get("funds/withdraw", { params });
+    return http.get("funds/", { params });
   }
 
   async update(id, data) {
-    return http.put(`funds/withdraw/${id}`, data);
+    return http.put(`funds/${id}`, data);
   }
 }
 

@@ -155,6 +155,10 @@ export default {
   before_balance: "XXXXXXXX",
   after_balance: "XXXXXXXX",
   transaction_record_type: "XXXXXXXX",
+  balance_d0: "XXXXXXXX",
+  lock_balance_d0: "XXXXXXXX",
+  balance_t1: "XXXXXXXX",
+  lock_balance_t1: "XXXXXXXX",
 
   // action
   create_role: "建立角色",

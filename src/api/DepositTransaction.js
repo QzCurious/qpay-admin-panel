@@ -1,9 +1,9 @@
 import http from "./http";
 
 export const DEPOSIT_TRANSACTION_STATUS_VALUES = {
+  UNKNOWN_DEPOSIT: 0,
   AUTO_DEPOSIT: 1,
   MANUAL_DEPOSIT: 2,
-  UNKNOWN_DEPOSIT: 3,
 };
 
 class DepositTransaction {
