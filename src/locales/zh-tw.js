@@ -11,7 +11,7 @@ export default {
 
   // funds_management
   funds_management: "資金管理",
-  funds_operation_panel: "code::funds_operation_panel",
+  funds_operation_panel: "資金操作面板",
   transaction_record: "資金異動紀錄",
   funds_withdraw: "資金提領",
 
