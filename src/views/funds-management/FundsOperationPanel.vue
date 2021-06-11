@@ -109,7 +109,7 @@ export default defineComponent({
       ]);
       this.records = records.data.data;
       this.totalRecords = count.data.count;
-      this.summary = count.data.count;
+      this.summary = count.data;
       window.scrollTo(0, 0);
       this.loading = false;
     },
