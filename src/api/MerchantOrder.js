@@ -10,6 +10,7 @@ export const ORDER_STATUS = {
 };
 
 export const AUDIT_TYPE = {
+  PENDING: 0,
   PAID: 1,
   UNPAID: 2,
   REJECT: 3,

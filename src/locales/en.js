@@ -61,6 +61,7 @@ export default {
     FAIL_ORDER: "code::fail_order",
   },
   audit_type_values: {
+    PENDING: "code::paid",
     PAID: "code::paid",
     UNPAID: "code::unpaid",
     REJECT: "code::reject",

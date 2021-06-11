@@ -61,6 +61,7 @@ export default {
     FAIL_ORDER: "订单失败",
   },
   audit_type_values: {
+    PENDING: "XXXXXXXX",
     PAID: "支付",
     UNPAID: "未支付",
     REJECT: "拒绝",
