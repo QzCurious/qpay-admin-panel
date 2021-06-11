@@ -19,7 +19,7 @@
         <InputText
           name="transaction_number"
           :label="$t('transaction_number')"
-          v-model="filters.id"
+          v-model="filters.deposit_id"
         />
         <InputText
           name="merchant_order_id"
@@ -75,7 +75,7 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="merchant_order_id" :header="$t('order_number')"></Column>
-    <Column field="id" :header="$t('transaction_number')"></Column>
+    <Column field="deposit_id" :header="$t('transaction_number')"></Column>
     <Column :header="$t('order_amount')">
       <template #body="{ data }">
         {{ data.order_amount.toLocaleString("en-US") }}
@@ -186,7 +186,7 @@ export default {
       page: 1,
       limit: 10,
       filters: {
-        id: null,
+        deposit_id: null,
         merchant_order_id: null,
         status: null,
         bank_id: null,
