@@ -55,7 +55,7 @@ export default {
     return {
       name: this.data?.name,
       phone: this.data?.phone,
-      status: this.data?.status,
+      status: this.data?.status ?? true,
     };
   },
   methods: {
