@@ -66,7 +66,6 @@
         <Search />
       </form>
       <div class="summery p-mt-2">
-        <!-- no api -->
         <span>{{ $t("deposit_count") }}: {{ summery.count }}</span>
         <span>{{ $t("total_deposit") }}: {{ summery.amount }}</span>
         <span>{{ $t("unknown_count") }}: {{ summery.unknow_count }}</span>
