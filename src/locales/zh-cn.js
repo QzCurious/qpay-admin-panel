@@ -159,6 +159,8 @@ export default {
   lock_balance_d0: "XXXXXXXX",
   balance_t1: "XXXXXXXX",
   lock_balance_t1: "XXXXXXXX",
+  total_balance_d0: "XXXXXXXX",
+  total_balance_t1: "XXXXXXXX",
 
   // action
   create_role: "建立角色",

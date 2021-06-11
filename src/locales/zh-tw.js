@@ -159,6 +159,8 @@ export default {
   lock_balance_d0: "D0鎖定總餘額",
   balance_t1: "T1總餘額",
   lock_balance_t1: "T1鎖定總餘額",
+  total_balance_d0: "D0總餘額",
+  total_balance_t1: "T1總餘額",
 
   // action
   create_role: "建立職位",

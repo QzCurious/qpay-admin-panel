@@ -159,6 +159,8 @@ export default {
   lock_balance_d0: "D0 locked",
   balance_t1: "T1",
   lock_balance_t1: "T1 locked",
+  total_balance_d0: "D0 Total Balance",
+  total_balance_t1: "T1 Total Balance",
 
   // action
   create_role: "Create role",
