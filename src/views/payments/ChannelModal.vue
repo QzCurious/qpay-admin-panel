@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       channel: this.data?.name,
-      status: this.data?.status,
+      status: this.data?.status ?? true,
     };
   },
   methods: {
