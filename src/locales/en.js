@@ -71,6 +71,18 @@ export default {
     MANUAL_DEPOSIT: "Manual Deposit",
     UNKNOWN_DEPOSIT: "Unknown Deposit",
   },
+  transaction_record_type_values: {
+    ORDER_DEPOSIT: "code::order_deposit",
+    ORDER_DEPOSIT_FEE: "code::order_deposit_fee",
+    ORDER_WITHDRAW: "code::order_withdraw",
+    ORDER_WITHDRAW_FEE: "code::order_withdraw_fee",
+    MERCHANT_FUNDS_WITHDRAW: "code::merchant_funds_withdraw",
+    MERCHANT_FUNDS_WITHDRAW_FEE: "code::merchant_funds_withdraw_fee",
+    MERCHANT_RECHARGE: "code::merchant_recharge",
+    MERCHANT_RECHARGE_FEE: "code::merchant_recharge_fee",
+    MERCHANT_DEDUCTION: "code::merchant_deduction",
+    MERCHANT_DEDUCTION_FEE: "code::merchant_deduction_fee",
+  },
 
   // subject
   signin_id: "Account",
