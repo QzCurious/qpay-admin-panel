@@ -24,10 +24,10 @@ export default {
 
   // order_management
   order_management: "订单管理",
-  merchant_order: "商户订单管理",
-  merchant_order_post: "商户订单推送",
-  merchant_order_statistics: "商户订单统计",
-  merchant_order_operation: "商户订单操作",
+  merchant_order: "代收订单管理",
+  merchant_order_post: "代收订单推送",
+  merchant_order_statistics: "代收订单统计",
+  merchant_order_operation: "代收订单操作",
   deposit_order_operation: "收款记录操作",
   deposit_record: "收款记录",
 
