@@ -104,7 +104,10 @@
     <Column field="operator" :header="$t('operator')"></Column>
     <Column :header="$t('success_time')">
       <template #body="{ data }">
-        {{ moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{
+          data.success_at &&
+          moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
+        }}
       </template>
     </Column>
     <Column :header="$t('transaction_time')">
