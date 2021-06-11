@@ -59,14 +59,21 @@
         {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
-    <Column
-      field="transaction_record_type_name"
-      :header="$t('transaction_record_type')"
-    />
+    <Column :header="$t('transaction_record_type')">
+      <template #body="{ data }">
+        {{
+          transaction_record_type_list.find(
+            ({ value }) => value === data.transaction_record_type_name
+          ).label
+        }}
+      </template>
+    </Column>
   </DataTable>
 </template>
 <script>
-import TransactionRecord from "../../api/TransactionRecord";
+import TransactionRecord, {
+  TRANSACTION_RECORD_TYPE,
+} from "../../api/TransactionRecord";
 import MerchantDropdown from "../../components/MerchantDropdown";
 import ChannelDropdown from "../../components/ChannelDropdown";
 import CalendarStartTime from "../../components/CalendarStartTime.vue";
@@ -127,6 +134,16 @@ export default {
       records: [],
       totalRecords: 0,
     };
+  },
+  computed: {
+    transaction_record_type_list() {
+      return Object.entries(TRANSACTION_RECORD_TYPE).map(([key, value]) => {
+        return {
+          label: this.$i18n.t(`transaction_record_type_values.${key}`),
+          value,
+        };
+      });
+    },
   },
   methods: {
     handle_search() {

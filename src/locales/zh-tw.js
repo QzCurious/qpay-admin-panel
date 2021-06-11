@@ -11,7 +11,7 @@ export default {
 
   // funds_management
   funds_management: "資金管理",
-  funds_operation_panel: "code::funds_operation_panel",
+  funds_operation_panel: "資金操作面板",
   transaction_record: "資金異動紀錄",
   funds_withdraw: "資金提領",
 
@@ -61,6 +61,7 @@ export default {
     FAIL_ORDER: "code::fail_order",
   },
   audit_type_values: {
+    PENDING: "code::pending",
     PAID: "code::paid",
     UNPAID: "code::unpaid",
     REJECT: "code::reject",
@@ -69,6 +70,18 @@ export default {
     AUTO_DEPOSIT: "自動收款",
     MANUAL_DEPOSIT: "手動收款",
     UNKNOWN_DEPOSIT: "未知收款",
+  },
+  transaction_record_type_values: {
+    ORDER_DEPOSIT: "code::order_deposit",
+    ORDER_DEPOSIT_FEE: "code::order_deposit_fee",
+    ORDER_WITHDRAW: "code::order_withdraw",
+    ORDER_WITHDRAW_FEE: "code::order_withdraw_fee",
+    MERCHANT_FUNDS_WITHDRAW: "code::merchant_funds_withdraw",
+    MERCHANT_FUNDS_WITHDRAW_FEE: "code::merchant_funds_withdraw_fee",
+    MERCHANT_RECHARGE: "code::merchant_recharge",
+    MERCHANT_RECHARGE_FEE: "code::merchant_recharge_fee",
+    MERCHANT_DEDUCTION: "code::merchant_deduction",
+    MERCHANT_DEDUCTION_FEE: "code::merchant_deduction_fee",
   },
 
   // subject
@@ -159,6 +172,8 @@ export default {
   lock_balance_d0: "D0鎖定總餘額",
   balance_t1: "T1總餘額",
   lock_balance_t1: "T1鎖定總餘額",
+  total_balance_d0: "D0總餘額",
+  total_balance_t1: "T1總餘額",
 
   // action
   create_role: "建立職位",

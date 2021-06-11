@@ -65,12 +65,11 @@
         />
         <Search />
       </form>
-      <div class="summery p-mt-2">
-        <!-- no api -->
-        <span>{{ $t("deposit_count") }}: {{ summery.count }}</span>
-        <span>{{ $t("total_deposit") }}: {{ summery.amount }}</span>
-        <span>{{ $t("unknown_count") }}: {{ summery.unknow_count }}</span>
-        <span>{{ $t("unknown_deposit") }}: {{ summery.unknow_amount }}</span>
+      <div class="summary p-mt-2">
+        <span>{{ $t("deposit_count") }}: {{ summary.count }}</span>
+        <span>{{ $t("total_deposit") }}: {{ summary.amount }}</span>
+        <span>{{ $t("unknown_count") }}: {{ summary.unknow_count }}</span>
+        <span>{{ $t("unknown_deposit") }}: {{ summary.unknow_amount }}</span>
       </div>
     </template>
     <template #empty> No log found. </template>
@@ -199,7 +198,7 @@ export default {
       },
       records: [],
       totalRecords: 0,
-      summery: {},
+      summary: {},
     };
   },
   computed: {
@@ -236,7 +235,7 @@ export default {
       ]);
       this.records = records.data.data;
       this.totalRecords = count.data.count;
-      this.summery = count.data;
+      this.summary = count.data;
       window.scrollTo(0, 0);
       this.loading = false;
     },
@@ -253,13 +252,13 @@ form > :not(:last-child) {
   margin-right: 0.5rem;
 }
 
-.summery {
+.summary {
   display: flex;
   justify-content: flex-end;
   color: var(--blue-500);
 }
 
-.summery > * + *::before {
+.summary > * + *::before {
   margin: 0 0.5rem;
   content: "|";
 }

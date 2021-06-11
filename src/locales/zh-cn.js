@@ -61,6 +61,7 @@ export default {
     FAIL_ORDER: "订单失败",
   },
   audit_type_values: {
+    PENDING: "XXXXXXXX",
     PAID: "支付",
     UNPAID: "未支付",
     REJECT: "拒绝",
@@ -69,6 +70,18 @@ export default {
     AUTO_DEPOSIT: "自动处理",
     MANUAL_DEPOSIT: "人工处理",
     UNKNOWN_DEPOSIT: "未知存款",
+  },
+  transaction_record_type_values: {
+    ORDER_DEPOSIT: "XXXXXXXX",
+    ORDER_DEPOSIT_FEE: "XXXXXXXX",
+    ORDER_WITHDRAW: "XXXXXXXX",
+    ORDER_WITHDRAW_FEE: "XXXXXXXX",
+    MERCHANT_FUNDS_WITHDRAW: "XXXXXXXX",
+    MERCHANT_FUNDS_WITHDRAW_FEE: "XXXXXXXX",
+    MERCHANT_RECHARGE: "XXXXXXXX",
+    MERCHANT_RECHARGE_FEE: "XXXXXXXX",
+    MERCHANT_DEDUCTION: "XXXXXXXX",
+    MERCHANT_DEDUCTION_FEE: "XXXXXXXX",
   },
 
   // subject
@@ -159,6 +172,8 @@ export default {
   lock_balance_d0: "XXXXXXXX",
   balance_t1: "XXXXXXXX",
   lock_balance_t1: "XXXXXXXX",
+  total_balance_d0: "XXXXXXXX",
+  total_balance_t1: "XXXXXXXX",
 
   // action
   create_role: "建立角色",

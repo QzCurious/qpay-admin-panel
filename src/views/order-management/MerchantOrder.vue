@@ -68,14 +68,43 @@
       field="deposit_transaction_id"
       :header="$t('transaction_id')"
     ></Column>
-    <Column field="order_amount" :header="$t('order_amount')"></Column>
-    <Column field="real_amount" :header="$t('real_amount')"></Column>
-    <Column field="fee" :header="$t('fee')"></Column>
-    <Column field="credit_amount" :header="$t('credit_amount')"></Column>
-    <Column field="order_status" :header="$t('order_status')"></Column>
+    <Column :header="$t('order_amount')">
+      <template #body="{ data }">
+        {{ data.order_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('real_amount')">
+      <template #body="{ data }">
+        {{ data.real_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('fee')">
+      <template #body="{ data }">
+        {{ data.fee.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('credit_amount')">
+      <template #body="{ data }">
+        {{ data.credit_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('order_status')">
+      <template #body="{ data }">
+        {{
+          order_status_list.find(({ value }) => value === data.order_status)
+            .label
+        }}
+      </template>
+    </Column>
     <Column field="channel_name" :header="$t('channel')"></Column>
     <Column field="remark" :header="$t('remark')"></Column>
-    <Column field="audit_type" :header="$t('audit_type')"></Column>
+    <Column field="audit_type" :header="$t('audit_type')">
+      <template #body="{ data }">
+        {{
+          audit_status_list.find(({ value }) => value === data.audit_type).label
+        }}
+      </template>
+    </Column>
     <Column field="merchant_name" :header="$t('merchant')"></Column>
     <Column :header="$t('order_time')">
       <template #body="{ data }">
@@ -84,7 +113,10 @@
     </Column>
     <Column :header="$t('success_time')">
       <template #body="{ data }">
-        {{ moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT) }}
+        {{
+          data.success_at &&
+          moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
+        }}
       </template>
     </Column>
   </DataTable>
@@ -144,17 +176,7 @@ export default {
   },
   data() {
     return {
-      order_status_list: Object.entries(ORDER_STATUS).map(([key, value]) => {
-        return {
-          label: this.$i18n.t(`order_status_values.${key}`),
-          value,
-        };
-      }),
       audit_type: null,
-      audit_status_list: Object.entries(AUDIT_TYPE).map(([key, value]) => ({
-        label: this.$i18n.t(`audit_type_values.${key}`),
-        value,
-      })),
       loading: true,
       page: 1,
       limit: 10,
@@ -172,6 +194,22 @@ export default {
       records: [],
       totalRecords: 0,
     };
+  },
+  computed: {
+    order_status_list() {
+      return Object.entries(ORDER_STATUS).map(([key, value]) => {
+        return {
+          label: this.$i18n.t(`order_status_values.${key}`),
+          value,
+        };
+      });
+    },
+    audit_status_list() {
+      return Object.entries(AUDIT_TYPE).map(([key, value]) => ({
+        label: this.$i18n.t(`audit_type_values.${key}`),
+        value,
+      }));
+    },
   },
   methods: {
     handle_search() {

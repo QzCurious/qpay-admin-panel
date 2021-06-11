@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ $t("deposit_record") }}</h1>
+  <h1>{{ $t("funds_operation_panel") }}</h1>
   <DataTable
     responsiveLayout="scroll"
     :lazy="true"
@@ -21,6 +21,10 @@
         <StatusDropdown v-model="filters.merchant_channel_status" />
         <Search />
       </form>
+      <div class="summary p-mt-2">
+        <span>{{ $t("total_balance_d0") }}: {{ summary.amount_d0 }}</span>
+        <span>{{ $t("total_balance_t1") }}: {{ summary.amount_t1 }}</span>
+      </div>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
@@ -86,6 +90,7 @@ export default defineComponent({
       },
       records: [],
       totalRecords: 0,
+      summary: {},
     };
   },
   mounted() {
@@ -104,6 +109,7 @@ export default defineComponent({
       ]);
       this.records = records.data.data;
       this.totalRecords = count.data.count;
+      this.summary = count.data.count;
       window.scrollTo(0, 0);
       this.loading = false;
     },
@@ -118,5 +124,16 @@ export default defineComponent({
 <style scoped>
 .header > :not(:last-child) {
   margin-right: 0.5rem;
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--blue-500);
+}
+
+.summary > * + *::before {
+  margin: 0 0.5rem;
+  content: "|";
 }
 </style>
