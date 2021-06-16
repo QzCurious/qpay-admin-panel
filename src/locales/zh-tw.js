@@ -13,6 +13,7 @@ export default {
   funds_management: "資金管理",
   funds_operation_panel: "資金操作面板",
   transaction_record: "資金異動紀錄",
+  funds_withdraw: "資金提領",
   funds_withdraw_audit: "資金提領審核",
 
   // merchant_management
@@ -227,6 +228,8 @@ export default {
   deposit_without_fee: "加值 (無手續費)",
   withdraw_with_fee: "提領 (有手續費)",
   withdraw_without_fee: "提領 (無手續費)",
+  withdraw_application: "提領申請",
+  withdraw: "提領",
 
   // will be
   account_will_be_enabled: "帳號將被啟用",
@@ -312,6 +315,7 @@ export default {
   deposit_without_fee_successfully: "加值成功",
   withdraw_with_fee_successfully: "提領成功",
   withdraw_without_fee_successfully: "提領成功",
+  withdraw_applied_successfully: "提領申請成功",
 
   // informative
   enter_2fa_to_permit_action: "請輸入 2fa 以授權操作",

@@ -19,6 +19,10 @@ class FundsWithdraw {
     return http.get("funds/withdraw", { params });
   }
 
+  async apply_withdraw(id, data) {
+    return http.post(`funds/withdraw/${id}`, data);
+  }
+
   async update(id, data) {
     return http.put(`funds/withdraw/${id}`, data);
   }

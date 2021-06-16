@@ -13,6 +13,7 @@ export default {
   funds_management: "Funds Management",
   funds_operation_panel: "Funds Operation Panel",
   transaction_record: "Transaction Record",
+  funds_withdraw: "Funds Withdraw",
   funds_withdraw_audit: "Funds Withdraw Audit",
 
   // merchant_management
@@ -227,6 +228,8 @@ export default {
   deposit_without_fee: "Deposit without fee",
   withdraw_with_fee: "Withdraw with fee",
   withdraw_without_fee: "Withdraw without fee",
+  withdraw_application: "Withdraw application",
+  withdraw: "Withdraw",
 
   // will be
   account_will_be_enabled: "User will be enable",
@@ -312,6 +315,7 @@ export default {
   deposit_without_fee_successfully: "Deposit successfully",
   withdraw_with_fee_successfully: "Withdraw successfully",
   withdraw_without_fee_successfully: "Withdraw successfully",
+  withdraw_applied_successfully: "Applied withdraw",
 
   // informative
   enter_2fa_to_permit_action: "Enter 2fa code to permit",

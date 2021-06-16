@@ -15,3 +15,7 @@ export const date = (format = "YYYY/M/D") => ( value ) => {
 export function numBool(value) {
   return value => [0, 1].includes(value)
 }
+
+export const gt = (base_value) => (value) => {
+  return value > base_value
+};

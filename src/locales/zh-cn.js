@@ -13,6 +13,7 @@ export default {
   funds_management: "资金管理",
   funds_operation_panel: "资金操作面板",
   transaction_record: "资金异动记录",
+  funds_withdraw: "商户资金提领",
   funds_withdraw_audit: "XXXXXXXX",
 
   // merchant_management
@@ -227,6 +228,8 @@ export default {
   deposit_without_fee: "XXXXXXXX",
   withdraw_with_fee: "XXXXXXXX",
   withdraw_without_fee: "XXXXXXXX",
+  withdraw_application: "XXXXXXXX",
+  withdraw: "XXXXXXXX",
 
   // will be
   account_will_be_enabled: "账号将被启用",
@@ -312,6 +315,7 @@ export default {
   deposit_without_fee_successfully: "XXXXXXXX",
   withdraw_with_fee_successfully: "XXXXXXXX",
   withdraw_without_fee_successfully: "XXXXXXXX",
+  withdraw_applied_successfully: "XXXXXXXX",
 
   // informative
   enter_2fa_to_permit_action: "请输入谷歌二次验证码",
