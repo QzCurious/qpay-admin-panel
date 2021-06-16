@@ -13,7 +13,7 @@ export default {
   funds_management: "資金管理",
   funds_operation_panel: "資金操作面板",
   transaction_record: "資金異動紀錄",
-  funds_withdraw: "資金提領",
+  funds_withdraw_audit: "資金提領審核",
 
   // merchant_management
   merchant_management: "商戶管理",

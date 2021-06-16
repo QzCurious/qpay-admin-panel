@@ -13,7 +13,7 @@ export default {
   funds_management: "Funds Management",
   funds_operation_panel: "Funds Operation Panel",
   transaction_record: "Transaction Record",
-  funds_withdraw: "Funds Withdraw",
+  funds_withdraw_audit: "Funds Withdraw Audit",
 
   // merchant_management
   merchant_management: "Merchant Management",

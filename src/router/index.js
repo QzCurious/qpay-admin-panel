@@ -71,10 +71,10 @@ const routes = [
                   import("../views/funds-management/TransactionRecord.vue")
               },
               {
-                path: "funds-withdraw",
-                name: "funds_withdraw",
+                path: "funds-withdraw-audit",
+                name: "funds_withdraw_audit",
                 component: () =>
-                  import("../views/funds-management/FundsWithdraw.vue")
+                  import("../views/funds-management/FundsWithdrawAudit.vue")
               }
             ]
           },
