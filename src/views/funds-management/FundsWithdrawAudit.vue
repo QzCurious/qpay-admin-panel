@@ -57,16 +57,19 @@
     <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button
+          v-if="[PENDING, PROCESSING].includes(data.status)"
           class="p-button-warning"
           :label="$t('funds_withdraw_status.processing')"
           @click="show_update_status_modal(data, PROCESSING)"
         />
         <Button
+          v-if="[PENDING, PROCESSING].includes(data.status)"
           class="p-button-success"
           :label="$t('funds_withdraw_status.paid')"
           @click="show_update_status_modal(data, PAID)"
         />
         <Button
+          v-if="[PENDING, PROCESSING].includes(data.status)"
           class="p-button-danger"
           :label="$t('funds_withdraw_status.reject')"
           @click="show_update_status_modal(data, REJECT)"
