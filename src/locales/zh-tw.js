@@ -175,6 +175,7 @@ export default {
   lock_balance_t1: "T1鎖定總餘額",
   total_balance_d0: "D0總餘額",
   total_balance_t1: "T1總餘額",
+  amount: "金額",
 
   // action
   create_role: "建立職位",
@@ -222,6 +223,10 @@ export default {
   edit_merchant_channel_parameter: "編輯商戶參數",
   verify_2fa: "驗證 2fa",
   signin: "登入",
+  deposit_with_fee: "加值 (有手續費)",
+  deposit_without_fee: "加值 (無手續費)",
+  withdraw_with_fee: "提領 (有手續費)",
+  withdraw_without_fee: "提領 (無手續費)",
 
   // will be
   account_will_be_enabled: "帳號將被啟用",
@@ -303,6 +308,10 @@ export default {
   status_successfully_set_to_processing: "更新狀態為處理中",
   status_successfully_set_to_paid: "更新狀態為已支付",
   status_successfully_set_to_reject: "更新狀態為駁回",
+  deposit_with_fee_successfully: "加值成功",
+  deposit_without_fee_successfully: "加值成功",
+  withdraw_with_fee_successfully: "提領成功",
+  withdraw_without_fee_successfully: "提領成功",
 
   // informative
   enter_2fa_to_permit_action: "請輸入 2fa 以授權操作",

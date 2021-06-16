@@ -175,6 +175,7 @@ export default {
   lock_balance_t1: "T1 locked",
   total_balance_d0: "D0 Total Balance",
   total_balance_t1: "T1 Total Balance",
+  amount: "Amount",
 
   // action
   create_role: "Create role",
@@ -222,6 +223,10 @@ export default {
   edit_merchant_channel_parameter: "Edit merchant channel parameter",
   verify_2fa: "Verify 2fa",
   signin: "Sign In",
+  deposit_with_fee: "Deposit with fee",
+  deposit_without_fee: "Deposit without fee",
+  withdraw_with_fee: "Withdraw with fee",
+  withdraw_without_fee: "Withdraw without fee",
 
   // will be
   account_will_be_enabled: "User will be enable",
@@ -303,6 +308,10 @@ export default {
   status_successfully_set_to_processing: "Status is now processing",
   status_successfully_set_to_paid: "Status is now paid",
   status_successfully_set_to_reject: "Status is now rejected",
+  deposit_with_fee_successfully: "Deposit successfully",
+  deposit_without_fee_successfully: "Deposit successfully",
+  withdraw_with_fee_successfully: "Withdraw successfully",
+  withdraw_without_fee_successfully: "Withdraw successfully",
 
   // informative
   enter_2fa_to_permit_action: "Enter 2fa code to permit",

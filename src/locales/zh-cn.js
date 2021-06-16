@@ -175,6 +175,7 @@ export default {
   lock_balance_t1: "T1锁定余额",
   total_balance_d0: "D0总余额",
   total_balance_t1: "T1总余额",
+  amount: "XXXXXXXX",
 
   // action
   create_role: "建立角色",
@@ -222,6 +223,10 @@ export default {
   edit_merchant_channel_parameter: "编辑商户参数",
   verify_2fa: "谷歌二次验证",
   signin: "登入",
+  deposit_with_fee: "XXXXXXXX",
+  deposit_without_fee: "XXXXXXXX",
+  withdraw_with_fee: "XXXXXXXX",
+  withdraw_without_fee: "XXXXXXXX",
 
   // will be
   account_will_be_enabled: "账号将被启用",
@@ -303,6 +308,10 @@ export default {
   status_successfully_set_to_processing: "状态已更新为处理中",
   status_successfully_set_to_paid: "状态已更新为已支付",
   status_successfully_set_to_reject: "状态已更新为拒绝支付",
+  deposit_with_fee_successfully: "XXXXXXXX",
+  deposit_without_fee_successfully: "XXXXXXXX",
+  withdraw_with_fee_successfully: "XXXXXXXX",
+  withdraw_without_fee_successfully: "XXXXXXXX",
 
   // informative
   enter_2fa_to_permit_action: "请输入谷歌二次验证码",

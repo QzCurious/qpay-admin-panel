@@ -60,15 +60,81 @@
         </template>
       </template>
     </Column>
+    <Column>
+      <template #body="{ data }">
+        <div style="width: min-content">
+          <Button
+            class="p-d-flex p-text-nowrap"
+            :label="$t('deposit_with_fee')"
+            @click="show_modal(DEPOSIT_WITH_FEE, data)"
+          />
+          <Button
+            class="p-mt-1 p-d-flex p-text-nowrap"
+            :label="$t('deposit_without_fee')"
+            @click="show_modal(DEPOSIT_NO_FEE, data)"
+          />
+        </div>
+      </template>
+    </Column>
+    <Column>
+      <template #body="{ data }">
+        <div style="width: min-content">
+          <Button
+            class="p-d-flex p-text-nowrap"
+            :label="$t('withdraw_with_fee')"
+            @click="show_modal(WITHDRAW_WITH_FEE, data)"
+          />
+          <Button
+            class="p-mt-1 p-d-flex p-text-nowrap"
+            :label="$t('withdraw_without_fee')"
+            @click="show_modal(WITHDRAW_NO_FEE, data)"
+          />
+        </div>
+      </template>
+    </Column>
   </DataTable>
+  <Dialog modal :header="modal.header" v-model:visible="modal.visible">
+    <div class="modal-wrapper">
+      <form @submit.prevent="make_transaction" class="p-d-flex p-flex-column">
+        <InputText
+          float
+          autofocus
+          :label="$t('amount')"
+          v-model="modal.amount"
+          :errors="v$.modal.amount.$errors.map((e) => e.$message)"
+        />
+        <InputText
+          class="p-mt-5"
+          :placeholder="$t('enter_2fa_to_permit_action')"
+          v-model="modal.code"
+          :errors="v$.modal.code.$errors.map((e) => e.$message)"
+        />
+        <Button
+          :loading="modal.submitting"
+          type="submit"
+          class="p-mt-2"
+          :label="$t('form.submit')"
+        />
+      </form>
+    </div>
+  </Dialog>
 </template>
 <script>
 import { defineComponent } from "vue";
-import Funds from "../../api/Funds";
+import Funds, {
+  DEPOSIT_WITH_FEE,
+  DEPOSIT_NO_FEE,
+  WITHDRAW_WITH_FEE,
+  WITHDRAW_NO_FEE,
+} from "../../api/Funds";
 import MerchantDropdown from "../../components/MerchantDropdown";
 import ChannelDropdown from "../../components/ChannelDropdown";
 import Search from "../../components/Search";
 import StatusDropdown from "../../components/StatusDropdown";
+import InputText from "../../components/InputText";
+import { required, numeric } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import ToastService from "../../service/ToastService";
 
 export default defineComponent({
   name: "FundsOperationPanel",
@@ -77,6 +143,19 @@ export default defineComponent({
     MerchantDropdown,
     ChannelDropdown,
     Search,
+    InputText,
+  },
+  setup() {
+    const v$ = useVuelidate();
+    return { v$ };
+  },
+  validations() {
+    return {
+      modal: {
+        amount: { required, numeric },
+        code: { required },
+      },
+    };
   },
   data() {
     return {
@@ -91,7 +170,24 @@ export default defineComponent({
       records: [],
       totalRecords: 0,
       summary: {},
+      modal: {
+        visible: false,
+        header: null,
+        message: null,
+        data: {},
+        submitting: false,
+        operation_type: null,
+        amount: null,
+        code: null,
+      },
+      success_message: null,
     };
+  },
+  computed: {
+    DEPOSIT_WITH_FEE: () => DEPOSIT_WITH_FEE,
+    DEPOSIT_NO_FEE: () => DEPOSIT_NO_FEE,
+    WITHDRAW_WITH_FEE: () => WITHDRAW_WITH_FEE,
+    WITHDRAW_NO_FEE: () => WITHDRAW_NO_FEE,
   },
   mounted() {
     this.fetch();
@@ -116,6 +212,58 @@ export default defineComponent({
     on_page(e) {
       this.page = e.page + 1;
       this.fetch();
+    },
+    show_modal(operation_type, data) {
+      this.v$.$reset();
+      this.modal.operation_type = operation_type;
+      this.modal.data = data;
+      this.modal.amount = null;
+      this.modal.code = null;
+
+      switch (operation_type) {
+        case DEPOSIT_WITH_FEE:
+          this.modal.header = this.$i18n.t("deposit_with_fee");
+          this.success_message = this.$i18n.t("deposit_with_fee_successfully");
+          break;
+        case DEPOSIT_NO_FEE:
+          this.modal.header = this.$i18n.t("deposit_without_fee");
+          this.success_message = this.$i18n.t(
+            "deposit_without_fee_successfully"
+          );
+          break;
+        case WITHDRAW_WITH_FEE:
+          this.modal.header = this.$i18n.t("withdraw_with_fee");
+          this.success_message = this.$i18n.t("withdraw_with_fee_successfully");
+          break;
+        case WITHDRAW_NO_FEE:
+          this.modal.header = this.$i18n.t("withdraw_without_fee");
+          this.success_message = this.$i18n.t(
+            "withdraw_without_fee_successfully"
+          );
+          break;
+      }
+
+      this.modal.visible = true;
+    },
+    make_transaction() {
+      this.v$.$touch();
+      if (this.v$.$error) {
+        return;
+      }
+
+      this.modal.submitting = true;
+      Funds.make_transaction(this.modal.data.merchant_channel_id, {
+        operation_type: Number(this.modal.operation_type),
+        amount: Number(this.modal.amount),
+        code: this.modal.code,
+      })
+        .then(() => {
+          ToastService.success({ summary: this.$i18n.t(this.success_message) });
+          this.fetch();
+        })
+        .finally(() => {
+          this.modal.submitting = false;
+        });
     },
   },
 });
