@@ -75,6 +75,12 @@ const routes = [
                 name: "funds_withdraw",
                 component: () =>
                   import("../views/funds-management/FundsWithdraw.vue")
+              },
+              {
+                path: "funds-withdraw-audit",
+                name: "funds_withdraw_audit",
+                component: () =>
+                  import("../views/funds-management/FundsWithdrawAudit.vue")
               }
             ]
           },

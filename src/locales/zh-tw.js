@@ -14,6 +14,7 @@ export default {
   funds_operation_panel: "資金操作面板",
   transaction_record: "資金異動紀錄",
   funds_withdraw: "資金提領",
+  funds_withdraw_audit: "資金提領審核",
 
   // merchant_management
   merchant_management: "商戶管理",
@@ -70,6 +71,7 @@ export default {
     AUTO_DEPOSIT: "自動收款",
     MANUAL_DEPOSIT: "手動收款",
     UNKNOWN_DEPOSIT: "未知收款",
+    WAITING_DEPOSIT: "等待付款",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "code::order_deposit",
@@ -174,6 +176,7 @@ export default {
   lock_balance_t1: "T1鎖定總餘額",
   total_balance_d0: "D0總餘額",
   total_balance_t1: "T1總餘額",
+  amount: "金額",
 
   // action
   create_role: "建立職位",
@@ -221,6 +224,12 @@ export default {
   edit_merchant_channel_parameter: "編輯商戶參數",
   verify_2fa: "驗證 2fa",
   signin: "登入",
+  deposit_with_fee: "加值 (有手續費)",
+  deposit_without_fee: "加值 (無手續費)",
+  withdraw_with_fee: "提領 (有手續費)",
+  withdraw_without_fee: "提領 (無手續費)",
+  withdraw_application: "提領申請",
+  withdraw: "提領",
 
   // will be
   account_will_be_enabled: "帳號將被啟用",
@@ -302,6 +311,11 @@ export default {
   status_successfully_set_to_processing: "更新狀態為處理中",
   status_successfully_set_to_paid: "更新狀態為已支付",
   status_successfully_set_to_reject: "更新狀態為駁回",
+  deposit_with_fee_successfully: "加值成功",
+  deposit_without_fee_successfully: "加值成功",
+  withdraw_with_fee_successfully: "提領成功",
+  withdraw_without_fee_successfully: "提領成功",
+  withdraw_applied_successfully: "提領申請成功",
 
   // informative
   enter_2fa_to_permit_action: "請輸入 2fa 以授權操作",

@@ -14,6 +14,7 @@ export default {
   funds_operation_panel: "资金操作面板",
   transaction_record: "资金异动记录",
   funds_withdraw: "商户资金提领",
+  funds_withdraw_audit: "XXXXXXXX",
 
   // merchant_management
   merchant_management: "商戶管理",
@@ -70,6 +71,7 @@ export default {
     AUTO_DEPOSIT: "自动处理",
     MANUAL_DEPOSIT: "人工处理",
     UNKNOWN_DEPOSIT: "未知存款",
+    WAITING_DEPOSIT: "XXXXXXXX",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "代收订单",
@@ -174,6 +176,7 @@ export default {
   lock_balance_t1: "T1锁定余额",
   total_balance_d0: "D0总余额",
   total_balance_t1: "T1总余额",
+  amount: "XXXXXXXX",
 
   // action
   create_role: "建立角色",
@@ -221,6 +224,12 @@ export default {
   edit_merchant_channel_parameter: "编辑商户参数",
   verify_2fa: "谷歌二次验证",
   signin: "登入",
+  deposit_with_fee: "XXXXXXXX",
+  deposit_without_fee: "XXXXXXXX",
+  withdraw_with_fee: "XXXXXXXX",
+  withdraw_without_fee: "XXXXXXXX",
+  withdraw_application: "XXXXXXXX",
+  withdraw: "XXXXXXXX",
 
   // will be
   account_will_be_enabled: "账号将被启用",
@@ -302,6 +311,11 @@ export default {
   status_successfully_set_to_processing: "状态已更新为处理中",
   status_successfully_set_to_paid: "状态已更新为已支付",
   status_successfully_set_to_reject: "状态已更新为拒绝支付",
+  deposit_with_fee_successfully: "XXXXXXXX",
+  deposit_without_fee_successfully: "XXXXXXXX",
+  withdraw_with_fee_successfully: "XXXXXXXX",
+  withdraw_without_fee_successfully: "XXXXXXXX",
+  withdraw_applied_successfully: "XXXXXXXX",
 
   // informative
   enter_2fa_to_permit_action: "请输入谷歌二次验证码",
