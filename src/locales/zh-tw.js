@@ -70,6 +70,7 @@ export default {
     AUTO_DEPOSIT: "自動收款",
     MANUAL_DEPOSIT: "手動收款",
     UNKNOWN_DEPOSIT: "未知收款",
+    WAITING_DEPOSIT: "等待付款",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "code::order_deposit",

@@ -70,6 +70,7 @@ export default {
     AUTO_DEPOSIT: "Auto Deposit",
     MANUAL_DEPOSIT: "Manual Deposit",
     UNKNOWN_DEPOSIT: "Unknown Deposit",
+    WAITING_DEPOSIT: "Waiting",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "code::order_deposit",
