@@ -267,7 +267,10 @@ export default {
         status: this.modal.data.status,
         code: this.code,
       })
-        .then(() => ToastService.success({ summary: success_message }))
+        .then(() => {
+          ToastService.success({ summary: success_message });
+          this.fetch();
+        })
         .catch((err) => {
           if (err.response.status === 401 && err.response.data.code === 9003) {
             ToastService.error({ summary: this.$i18n.t("api.error.9003") });

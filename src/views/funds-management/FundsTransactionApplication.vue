@@ -84,7 +84,7 @@ export default {
     return {
       amount: { required, positive: gt(0) },
       bank_id: { required },
-      branch: { required, maxLength: maxLength(20) },
+      branch: { maxLength: maxLength(20) },
       account_number: { required, maxLength: maxLength(20) },
       account_name: { required, maxLength: maxLength(16) },
       code: { required },
