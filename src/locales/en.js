@@ -376,6 +376,7 @@ export default {
   December: "December",
 
   request_failed: "Request failed",
+  server_error: "Server Error",
   api: {
     error: {
       1001: "Incorrect password",

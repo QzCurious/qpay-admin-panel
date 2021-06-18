@@ -375,6 +375,7 @@ export default {
   December: "十二月",
 
   request_failed: "XXXXXXXX",
+  server_error: "XXXXXXXX",
   api: {
     error: {
       1001: "原密码不正确",

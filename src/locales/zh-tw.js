@@ -375,6 +375,7 @@ export default {
   December: "十二月",
 
   request_failed: "請求失敗",
+  server_error: "伺服器錯誤",
   api: {
     error: {
       1001: "原密碼不正確",
