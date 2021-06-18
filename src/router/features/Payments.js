@@ -23,8 +23,8 @@ export default {
         component: () => import("../../views/payments/Cards.vue")
       },
       {
-        name: "card_operation_management",
-        path: "card-operations",
+        name: "card_operation_panel",
+        path: "card-operation-panel",
         component: () => import("../../views/payments/CardOperations.vue")
       }
     ]

@@ -12,8 +12,8 @@ export default computed(() => [
     items: [
       {
         key: "role_management",
-        label: t("role_setting"),
-        to: { name: "role_setting" }
+        label: t("role_management"),
+        to: { name: "role_management" }
       },
       {
         key: "operation_log",
@@ -22,8 +22,8 @@ export default computed(() => [
       },
       {
         key: "change_signin_password",
-        label: t("change_password"),
-        to: { name: "change_password" }
+        label: t("change_signin_password"),
+        to: { name: "change_signin_password" }
       },
       {
         key: "change_payment_password",
@@ -64,8 +64,8 @@ export default computed(() => [
       },
       {
         key: "card_operation_panel",
-        label: t("card_operation_management"),
-        to: { name: "card_operation_management" }
+        label: t("card_operation_panel"),
+        to: { name: "card_operation_panel" }
       }
     ]
   },
@@ -123,13 +123,13 @@ export default computed(() => [
       },
       {
         key: "deposit_transaction_operation",
-        label: t("deposit_order_operation"),
-        to: { name: "deposit_order_operation" }
+        label: t("deposit_transaction_operation"),
+        to: { name: "deposit_transaction_operation" }
       },
       {
         key: "deposit_transaction",
-        label: t("deposit_record"),
-        to: { name: "deposit_record" }
+        label: t("deposit_transaction"),
+        to: { name: "deposit_transaction" }
       }
     ]
   },

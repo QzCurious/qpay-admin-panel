@@ -23,8 +23,8 @@ const routes = [
             component: ForwordRouterView,
             children: [
               {
-                name: "role_setting",
-                path: "role-setting",
+                name: "role_management",
+                path: "role-management",
                 component: () =>
                   import("../views/system-management/RoleSetting.vue")
               },
@@ -41,8 +41,8 @@ const routes = [
                   import("../views/system-management/ChangePaymentPassword.vue")
               },
               {
-                name: "change_password",
-                path: "change-password",
+                name: "change_signin_password",
+                path: "change-signin-password",
                 component: () =>
                   import("../views/system-management/ChangePassword.vue")
               },
@@ -150,14 +150,14 @@ const routes = [
                   import("../views/order-management/MerchantOrderOperation.vue")
               },
               {
-                name: "deposit_order_operation",
-                path: "deposit-order-operation",
+                name: "deposit_transaction_operation",
+                path: "deposit-transaction-operation",
                 component: () =>
                   import("../views/order-management/DepositOrderOperation.vue")
               },
               {
-                name: "deposit_record",
-                path: "deposit-record",
+                name: "deposit_transaction",
+                path: "deposit-transaction",
                 component: () =>
                   import("../views/order-management/DepositRecord.vue")
               }
