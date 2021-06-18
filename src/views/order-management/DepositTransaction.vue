@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ $t("deposit_record") }}</h1>
+  <h1>{{ $t("deposit_transaction") }}</h1>
   <DataTable
     responsiveLayout="scroll"
     :lazy="true"

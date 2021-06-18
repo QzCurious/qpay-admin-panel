@@ -1,6 +1,6 @@
 <template>
   <Card style="max-width: 20rem; margin: auto">
-    <template #title>{{ $t("change_password") }}</template>
+    <template #title>{{ $t("change_signin_password") }}</template>
     <template #content>
       <form
         ref="form"

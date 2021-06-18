@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ $t("role_setting") }}</h1>
+  <h1>{{ $t("role_management") }}</h1>
   <DataTable
     responsiveLayout="scroll"
     dataKey="id"
