@@ -3,9 +3,9 @@ export default {
 
   // system_management
   system_management: "System Management",
-  role_management: "Role Setting",
+  role_management: "Role Management",
   operation_log: "Operation Log",
-  change_signin_password: "Change Password",
+  change_signin_password: "Change Signin Password",
   change_payment_password: "Change Payment Password",
   user_management: "User Management",
 
@@ -18,7 +18,7 @@ export default {
 
   // merchant_management
   merchant_management: "Merchant Management",
-  merchant_operation_panel: "code::merchant_operation_panel",
+  merchant_operation_panel: "Merchant Operation Panel",
   merchant_channel_parameter: "Merchant Channel Parameter",
   merchant_channel_rate: "Merchant Channel Rate",
   merchant_channel_setting: "Merchant Channel Setting",
@@ -26,17 +26,17 @@ export default {
   // order_management
   order_management: "Order Management",
   merchant_order: "Merchant Order",
-  merchant_order_post: "code::merchant_order_post",
-  merchant_order_statistics: "code::merchant_order_statistics",
-  merchant_order_operation: "code::merchant_order_operation",
+  merchant_order_post: "Merchant Order Post",
+  merchant_order_statistics: "Merchant Order Statistic",
+  merchant_order_operation: "Merchant Order Operation",
   deposit_transaction_operation: "Deposit Transaction Operation",
-  deposit_transaction: "Deposit Record",
+  deposit_transaction: "Deposit Transaction",
 
   /**
    * Sidebar categories
    */
   payment_management: "Payment Management",
-  bank_management: "code::bank_management",
+  bank_management: "Bank Management",
   channel_management: "Channel Management",
   card_holder_management: "Card Holder Management",
   card_management: "Card Management",
