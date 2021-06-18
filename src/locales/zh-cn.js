@@ -378,10 +378,62 @@ export default {
   server_error: "XXXXXXXX",
   api: {
     error: {
-      1001: "原密码不正确",
-      1002: "账号已存在",
-      9003: "谷歌二次验证码失败",
-      9009: "账号不存在或登入密码错误",
+      // System
+      1001: "XXXXXXXX",
+      1002: "XXXXXXXX",
+      1003: "XXXXXXXX",
+
+      // Payment
+
+      // Merchant
+      1201: "XXXXXXXX",
+      1202: "XXXXXXXX",
+
+      // Order
+
+      // Funds
+      1401: "XXXXXXXX",
+      1402: "XXXXXXXX",
+      1403: "XXXXXXXX",
+      1404: "XXXXXXXX",
+      1405: "XXXXXXXX",
+      1406: "XXXXXXXX",
+      1407: "XXXXXXXX",
+      1408: "XXXXXXXX",
+      1409: "XXXXXXXX",
+      // Financial
+
+      // Deposit Transaction
+      1601: "XXXXXXXX",
+      1602: "XXXXXXXX",
+      1603: "XXXXXXXX",
+      1604: "XXXXXXXX",
+      1605: "XXXXXXXX",
+      1606: "XXXXXXXX",
+      1607: "XXXXXXXX",
+      1608: "XXXXXXXX",
+      1609: "XXXXXXXX",
+      1610: "XXXXXXXX",
+
+      // Auth
+      9001: "XXXXXXXX",
+      9002: "XXXXXXXX",
+      9003: "XXXXXXXX",
+      9009: "XXXXXXXX",
+      9010: "XXXXXXXX",
+
+      // General
+      9101: "XXXXXXXX",
+      9102: "XXXXXXXX",
+      9103: "XXXXXXXX",
+
+      //Pay Order
+      10002: "XXXXXXXX",
+      20000: "XXXXXXXX",
+      20001: "XXXXXXXX",
+      20002: "XXXXXXXX",
+      20003: "XXXXXXXX",
+      20004: "XXXXXXXX",
     },
   },
 

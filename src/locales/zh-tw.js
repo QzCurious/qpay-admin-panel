@@ -378,10 +378,62 @@ export default {
   server_error: "伺服器錯誤",
   api: {
     error: {
+      // System
       1001: "原密碼不正確",
       1002: "帳號已存在",
+      1003: "不可修改自己的權限",
+
+      // Payment
+
+      // Merchant
+      1201: "merchant_id, channel_id are already exist",
+      1202: "user_signin_id is already exist",
+
+      // Order
+
+      // Funds
+      1401: "illegal merchant channel id",
+      1402: "merchant channel is disable",
+      1403: "can not recharge (over merchant channel daily limit)",
+      1404: "illegal operation type",
+      1405: "D0 balance not enough",
+      1406: "can not withdraw (over merchant channel daily limit)",
+      1407: "illegal funds withdraw id",
+      1408: "Can not update processed orders",
+      1409: "There are still unprocessed orders",
+      // Financial
+
+      // Deposit Transaction
+      1601: "illegal bank card id",
+      1602: "duplicate deposit transaction id",
+      1603: "insert new deposit transaction fail",
+      1604: "request parameter validation fail",
+      1605: "find duplicate merchant order",
+      1606: "illegal merchant channel id",
+      1607: "insert transaction record fail",
+      1608: "update merchant channel amount fail",
+      1609: "update deposit transaction fail",
+      1610: "update bank card balance fail",
+
+      // Auth
+      9001: "2FA Permission Deined: no google_auth key",
+      9002: "2FA Permission Deined: has google_auth key",
       9003: "2fa 驗證碼錯誤",
       9009: "帳號不存在或密碼不正確",
+      9010: "Permission denied",
+
+      // General
+      9101: "No data",
+      9102: "Unprocessable Entity",
+      9103: "Your ip is not allow",
+
+      //Pay Order
+      10002: "validation fail",
+      20000: "unknow fail please check channel id",
+      20001: "signature fail",
+      20002: "customer not exist",
+      20003: "timestamp incorrect",
+      20004: "channel fail",
     },
   },
 
