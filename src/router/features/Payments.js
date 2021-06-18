@@ -4,28 +4,28 @@ export default {
     children: [
       {
         name: "bank_management",
-        path: "banks",
-        component: () => import("../../views/payments/Banks.vue")
+        path: "bank-management",
+        component: () => import("../../views/payments/BankManagement.vue")
       },
       {
         name: "channel_management",
-        path: "channels",
-        component: () => import("../../views/payments/Channels.vue")
+        path: "channel-management",
+        component: () => import("../../views/payments/ChannelManagement.vue")
       },
       {
         name: "card_holder_management",
-        path: "card-holders",
-        component: () => import("../../views/payments/CardHolders.vue")
+        path: "card-holder-management",
+        component: () => import("../../views/payments/CardHolderManagement.vue")
       },
       {
         name: "card_management",
-        path: "cards",
-        component: () => import("../../views/payments/Cards.vue")
+        path: "card-management",
+        component: () => import("../../views/payments/CardManagement.vue")
       },
       {
         name: "card_operation_panel",
         path: "card-operation-panel",
-        component: () => import("../../views/payments/CardOperations.vue")
+        component: () => import("../../views/payments/CardOperationPanel.vue")
       }
     ]
   }

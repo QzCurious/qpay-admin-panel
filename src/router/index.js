@@ -26,13 +26,13 @@ const routes = [
                 name: "role_management",
                 path: "role-management",
                 component: () =>
-                  import("../views/system-management/RoleSetting.vue")
+                  import("../views/system-management/RoleManagement.vue")
               },
               {
                 name: "operation_log",
                 path: "operation-log",
                 component: () =>
-                  import("../views/system-management/OperationLogList.vue")
+                  import("../views/system-management/OperationLog.vue")
               },
               {
                 name: "change_payment_password",
@@ -44,7 +44,7 @@ const routes = [
                 name: "change_signin_password",
                 path: "change-signin-password",
                 component: () =>
-                  import("../views/system-management/ChangePassword.vue")
+                  import("../views/system-management/ChangeSigninPassword.vue")
               },
               {
                 name: "user_management",
@@ -59,7 +59,7 @@ const routes = [
             component: () => import("./ForwordRouterView.vue"),
             children: [
               {
-                path: "operation-panel",
+                path: "funds-operation-panel",
                 name: "funds_operation_panel",
                 component: () =>
                   import("../views/funds-management/FundsOperationPanel.vue")
@@ -89,7 +89,7 @@ const routes = [
             component: () => import("./ForwordRouterView.vue"),
             children: [
               {
-                path: "parameter",
+                path: "merchant-channel-parameter",
                 name: "merchant_channel_parameter",
                 component: () =>
                   import("../views/merchant-management/MerchantChannelParameter.vue")
@@ -101,7 +101,7 @@ const routes = [
                   import("../views/merchant-management/MerchantChannelRate.vue")
               },
               {
-                path: "channel-setting",
+                path: "merchant-channel-setting",
                 name: "merchant_channel_setting",
                 component: () =>
                   import(
@@ -109,7 +109,7 @@ const routes = [
                   )
               },
               {
-                path: "operation-panel",
+                path: "merchant-operation-panel-panel",
                 name: "merchant_operation_panel",
                 component: () =>
                   import(
@@ -153,13 +153,13 @@ const routes = [
                 name: "deposit_transaction_operation",
                 path: "deposit-transaction-operation",
                 component: () =>
-                  import("../views/order-management/DepositOrderOperation.vue")
+                  import("../views/order-management/DepositTransactionOperation.vue")
               },
               {
                 name: "deposit_transaction",
                 path: "deposit-transaction",
                 component: () =>
-                  import("../views/order-management/DepositRecord.vue")
+                  import("../views/order-management/DepositTransaction.vue")
               }
             ]
           },
