@@ -1,27 +1,22 @@
 <template>
   <form @submit.prevent="handle_submit" class="p-fluid p-d-flex p-flex-column">
-    <template v-if="data.role">
-      <h2 style="font-size: 1.2rem">{{ role }}</h2>
-    </template>
-    <template v-if="!data.role">
-      <InputText
-        float
-        autofocus
-        class="p-mb-3"
-        v-model="role"
-        :label="$t('role')"
-        name="role"
-        :disabled="mode === 'edit'"
-        :errors="v$.role.$errors.map((e) => e.$message)"
-      />
-    </template>
+    <InputText
+      float
+      autofocus
+      class="p-mb-3"
+      v-model="name"
+      :label="$t('role')"
+      name="role"
+      :readonly="mode === 'edit'"
+      :errors="v$.role.$errors.map((e) => e.$message)"
+    />
     <Tree
       style="min-width: 20rem"
       :value="permissions"
       selectionMode="checkbox"
       v-model:selectionKeys="selected"
     ></Tree>
-    <Button class="p-mt-3" :label="$t('form.create')" type="submit" />
+    <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
   <Toast position="top-right" />
 </template>
@@ -37,13 +32,16 @@ import ToastService from "../../service/ToastService";
 
 export default {
   components: { InputText },
+  emits: ["success"],
   props: {
     mode: {
       type: String,
       validator: (value) => ["edit", "create"].includes(value),
       required: true,
     },
-    data: Object,
+    role_id: {
+      type: Number,
+    },
   },
   setup() {
     const v$ = useVuelidate();
@@ -56,13 +54,26 @@ export default {
   },
   data() {
     return {
-      role: this.data?.role_name,
-      selected: this.data?.selected || [],
+      name: null,
+      allow_auth: [],
+      available_auth: [],
+      selected: {},
     };
   },
   computed: {
     permissions() {
-      return rename_key(menu.value);
+      const permissions = rename_key(menu.value);
+      for (let i = permissions.length - 1; i >= 0; --i) {
+        for (let k = permissions[i].children.length - 1; k >= 0; --k) {
+          if (!this.available_auth.includes(permissions[i].children[k].key)) {
+            permissions[i].children.splice(k, 1);
+          }
+        }
+        if (permissions[i].children.length === 0) {
+          permissions.splice(i, 1);
+        }
+      }
+      return permissions;
     },
   },
   methods: {
@@ -73,24 +84,63 @@ export default {
       }
 
       const data = {
-        permissions: this.selected,
+        allow_auth: Object.entries(this.selected)
+          .filter(([key, value]) => value.checked)
+          .reduce((acc, cur) => [...acc, cur[0]], []),
       };
       if (this.mode === "create") {
-        Role.create(data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("role_successfully_created"),
-          });
+        data.name = this.name;
+        await Role.create(data);
+        ToastService.success({
+          summary: this.$i18n.t("role_successfully_created"),
         });
       } else if (this.mode === "edit") {
-        Role.update(this.role.id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("role_successfully_updated"),
-          });
+        await Role.update(this.role_id, data);
+        ToastService.success({
+          summary: this.$i18n.t("role_successfully_updated"),
         });
       }
+      this.$emit("success");
 
       this.v$.$reset();
     },
+  },
+  watch: {
+    role_id(new_value, old_value) {
+      if (new_value !== old_value) {
+        this.allow_auth = this.available_auth = [];
+      }
+    },
+  },
+  async mounted() {
+    if (this.mode === "edit") {
+      const res = await Role.get(this.role_id);
+      this.name = res.data.name;
+
+      // 雖說 api 叫 allow_auth，但其實是白名單
+      this.allow_auth = res.data.allow_auth;
+      this.available_auth = res.data.available_auth;
+
+      const selected = {};
+      for (const group of this.permissions) {
+        for (const child of group.children) {
+          selected[child.key] = {
+            checked: this.allow_auth.includes(child.key),
+          };
+        }
+        selected[group.key] = {
+          checked: group.children
+            .map((child) => child.key)
+            .every((child) => selected?.[child].checked),
+        };
+        selected[group.key].partialChecked =
+          group.children
+            .map((child) => child.key)
+            .some((child) => selected?.[child].checked) &&
+          !selected[group.key].checked;
+      }
+      this.selected = selected;
+    }
   },
 };
 </script>

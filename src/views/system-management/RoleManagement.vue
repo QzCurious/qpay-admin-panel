@@ -40,7 +40,11 @@
     <Column field="role_name" :header="$t('role')" />
   </DataTable>
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <RoleModal :mode="modal.mode" :data="modal.data" />
+    <RoleModal
+      :mode="modal.mode"
+      :role_id="modal.data.role_id"
+      @success="fetch"
+    />
   </Dialog>
 </template>
 
