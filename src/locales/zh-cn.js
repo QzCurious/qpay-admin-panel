@@ -3,9 +3,9 @@ export default {
 
   // system_management
   system_management: "系统管理",
-  role_setting: "权限设定",
+  role_management: "权限设定",
   operation_log: "操作记录",
-  change_password: "修改登入密码",
+  change_signin_password: "修改登入密码",
   change_payment_password: "修改支付密码",
   user_management: "使用者管理",
 
@@ -29,8 +29,8 @@ export default {
   merchant_order_post: "代收订单推送",
   merchant_order_statistics: "代收订单统计",
   merchant_order_operation: "代收订单操作",
-  deposit_order_operation: "收款记录操作",
-  deposit_record: "收款记录",
+  deposit_transaction_operation: "收款记录操作",
+  deposit_transaction: "收款记录",
 
   /**
    * Sidebar categories
@@ -40,7 +40,7 @@ export default {
   channel_management: "通道管理",
   card_holder_management: "持卡人管理",
   card_management: "銀行卡管理",
-  card_operation_management: "银行卡管理面板",
+  card_operation_panel: "银行卡管理面板",
 
   financial_reports: "财务报表",
   deposit_daily_report: "存款日报表",
