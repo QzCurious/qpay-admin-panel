@@ -140,6 +140,8 @@ export default {
           !selected[group.key].checked;
       }
       this.selected = selected;
+    } else {
+      this.available_auth = this.$store.state.auth.available_auth;
     }
   },
 };

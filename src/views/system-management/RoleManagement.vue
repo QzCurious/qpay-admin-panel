@@ -43,7 +43,7 @@
     <RoleModal
       :mode="modal.mode"
       :role_id="modal.data.role_id"
-      @success="fetch"
+      @success="handle_success"
     />
   </Dialog>
 </template>
@@ -101,6 +101,9 @@ export default {
       this.modal.mode = "create";
       this.modal.data = {};
       this.modal.visible = true;
+    },
+    handle_success() {
+      this.modal.visible = false;
     },
   },
   mounted() {
