@@ -54,6 +54,7 @@ import Password from "../components/Password";
 import store from "../store";
 import Verify2fa from "../components/Verify2fa";
 import LocaleDropdown from "../components/LocaleDropdown";
+import { ApiError } from "../api/ErrorHandler";
 
 export default {
   components: { InputText, Password, Verify2fa, LocaleDropdown },
@@ -86,29 +87,40 @@ export default {
       }
 
       this.submitting = true;
-      await auth
-        .signin({
+      try {
+        await auth.signin({
           signin_id: this.signin_id,
           signin_password: this.password,
-        })
-        .catch(() => {
-          this.submitting = false;
         });
+      } catch (err) {
+        this.submitting = false;
+        throw err;
+      }
+
       // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
       // 取 error 訊息判斷是否有註冊過 2fa
-      User.get(store.getters["auth/signin_id"]).catch((err) => {
-        if (err.response.data.code === 9002) {
-          this.show_verify_2fa = true;
-        } else if (err.response.data.code === 9001) {
-          auth.get_2fa_qrcode().then((res) => {
-            this.show_qrcode = true;
-            this.qrcode = URL.createObjectURL(res.data);
-
-            // 後端說要打 cookie 回去
-            auth.trigger_bind_2fa();
-          });
+      try {
+        await User.get(store.getters["auth/signin_id"]);
+      } catch (err) {
+        if (!(err instanceof ApiError)) {
+          throw err;
         }
-      });
+
+        if (err.code === 9002) {
+          this.show_verify_2fa = true;
+          return;
+        }
+
+        if (err.code === 9001) {
+          const res = await auth.get_2fa_qrcode();
+          this.show_qrcode = true;
+          this.qrcode = URL.createObjectURL(res.data);
+
+          // 後端說要打 cookie 回去
+          auth.trigger_bind_2fa();
+          return;
+        }
+      }
     },
     continue_to_signin() {
       this.show_qrcode = false;

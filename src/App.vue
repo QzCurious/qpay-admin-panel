@@ -7,6 +7,8 @@
 import i18n from "./i18n";
 import ToastService from "./service/ToastService";
 import store from "./store";
+import { ApiError } from "./api/ErrorHandler";
+import axios from "axios";
 
 export default {
   mounted() {
@@ -62,6 +64,22 @@ export default {
         today: i18n.global.t("today"),
       };
     },
+  },
+  errorCaptured(err) {
+    if (err instanceof ApiError) {
+      const message = i18n.global.te(`api.error.${err.code}`)
+        ? i18n.global.t(`api.error.${err.code}`)
+        : err.message;
+      ToastService.error({
+        summary: i18n.global.t("request_failed"),
+        detail: `${err.code}: ${message}`,
+      });
+      return false;
+    }
+    if (axios.isAxiosError(err) && err.response.status > 500) {
+      ToastService.error({ summary: i18n.global.t("server_error") });
+      return false;
+    }
   },
 };
 </script>

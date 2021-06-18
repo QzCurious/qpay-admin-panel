@@ -3,9 +3,9 @@
  */
 import axios from "axios";
 import store from "../store";
-import ToastService from "../service/ToastService";
 import { setupCache } from "axios-cache-adapter";
 import moment from "moment";
+import { transform_4xx_error } from "./ErrorHandler";
 
 const cache = setupCache({ maxAge: 0 });
 
@@ -54,24 +54,7 @@ http.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-http.interceptors.response.use(
-  function fulfilled(response) {
-    return response;
-  },
-  function rejected(error) {
-    // 處理 500
-    if (error.response.status >= 500) {
-      const toast = {
-        summary: "系統錯誤",
-      };
-      if (process.env.NODE_ENV !== "production") {
-        toast.detail = error.response.data.message;
-      }
 
-      ToastService.error(toast);
-    }
-    return Promise.reject(error);
-  }
-);
+http.interceptors.response.use(null, transform_4xx_error);
 
 export default http;
