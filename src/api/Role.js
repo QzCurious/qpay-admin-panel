@@ -6,6 +6,10 @@ class Role {
     return role.find({ limit: 99 });
   }
 
+  async get(id) {
+    return http.get(`role/${id}`);
+  }
+
   async find(params = {}) {
     params = {
       page: 1,
@@ -22,7 +26,7 @@ class Role {
   }
 
   async update(id, data) {
-    return http.patch(`role/${id}`, data);
+    return http.put(`role/${id}`, data);
   }
 }
 
