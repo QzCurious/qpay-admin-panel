@@ -38,23 +38,27 @@
     <template #loading> Loading... </template>
     <Column field="channel_name" :header="$t('channel')" />
     <Column field="merchant_name" :header="$t('merchant')" />
-    <Column field="transaction_id" :header="$t('transaction_id')" />
-    <Column :header="$t('operation_balance')">
+    <Column
+      field="transaction_id"
+      :header="$t('transaction_id')"
+      bodyClass="p-text-right"
+    />
+    <Column :header="$t('operation_balance')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('before_balance')">
+    <Column :header="$t('before_balance')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.before_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('after_balance')">
+    <Column :header="$t('after_balance')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.after_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('created_at')">
+    <Column :header="$t('created_at')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
