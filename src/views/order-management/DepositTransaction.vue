@@ -75,18 +75,22 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="merchant_order_id" :header="$t('order_number')"></Column>
-    <Column field="deposit_id" :header="$t('transaction_number')"></Column>
-    <Column :header="$t('order_amount')">
+    <Column
+      field="deposit_id"
+      :header="$t('transaction_number')"
+      bodyClass="p-text-right"
+    ></Column>
+    <Column :header="$t('order_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.order_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('real_amount')">
+    <Column :header="$t('real_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.real_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('deposit_amount')">
+    <Column :header="$t('deposit_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.deposit_amount.toLocaleString("en-US") }}
       </template>
@@ -96,13 +100,14 @@
     <Column
       field="bank_card_account_number"
       :header="$t('payee_number')"
+      bodyClass="p-text-right"
     ></Column>
     <Column field="remark" :header="$t('sms_message')"></Column>
     <Column field="remitter_name" :header="$t('remitter_name')"></Column>
     <Column field="channel_name" :header="$t('channel')"></Column>
     <Column field="merchant_name" :header="$t('merchant')"></Column>
     <Column field="operator" :header="$t('operator')"></Column>
-    <Column :header="$t('success_time')">
+    <Column :header="$t('success_time')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{
           data.success_at &&
@@ -110,7 +115,7 @@
         }}
       </template>
     </Column>
-    <Column :header="$t('transaction_time')">
+    <Column :header="$t('transaction_time')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
