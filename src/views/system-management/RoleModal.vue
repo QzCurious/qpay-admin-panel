@@ -8,7 +8,7 @@
       :label="$t('role')"
       name="role"
       :readonly="mode === 'edit'"
-      :errors="v$.role.$errors.map((e) => e.$message)"
+      :errors="v$.name.$errors.map((e) => e.$message)"
     />
     <Tree
       style="min-width: 20rem"
@@ -49,7 +49,7 @@ export default {
   },
   validations() {
     return {
-      role: this.mode === "create" ? { required } : {},
+      name: this.mode === "create" ? { required } : {},
     };
   },
   data() {
