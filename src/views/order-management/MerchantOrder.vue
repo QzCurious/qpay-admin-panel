@@ -63,27 +63,32 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="id" :header="$t('order_number')"></Column>
+    <Column
+      field="id"
+      :header="$t('order_number')"
+      bodyClass="p-text-right"
+    ></Column>
     <Column
       field="deposit_transaction_id"
       :header="$t('transaction_id')"
+      bodyClass="p-text-right"
     ></Column>
-    <Column :header="$t('order_amount')">
+    <Column :header="$t('order_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.order_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('real_amount')">
+    <Column :header="$t('real_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.real_amount.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('fee')">
+    <Column :header="$t('fee')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.fee.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('credit_amount')">
+    <Column :header="$t('credit_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.credit_amount.toLocaleString("en-US") }}
       </template>
@@ -106,12 +111,12 @@
       </template>
     </Column>
     <Column field="merchant_name" :header="$t('merchant')"></Column>
-    <Column :header="$t('order_time')">
+    <Column :header="$t('order_time')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
-    <Column :header="$t('success_time')">
+    <Column :header="$t('success_time')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{
           data.success_at &&
