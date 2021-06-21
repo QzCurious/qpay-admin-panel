@@ -35,7 +35,11 @@
     <Column field="merchant_name" :header="$t('merchant')" />
     <Column field="bank_name" :header="$t('bank')" />
     <Column field="card_holder_name" :header="$t('card_holder')" />
-    <Column field="account_number" :header="$t('card_number')" />
+    <Column
+      field="account_number"
+      :header="$t('card_number')"
+      bodyClass="p-text-right"
+    />
     <Column :header="$t('limit_deposit')">
       <template #body="{ data }">
         <div>
@@ -45,7 +49,7 @@
         </div>
       </template>
     </Column>
-    <Column :header="$t('deposit_limit_daily')">
+    <Column :header="$t('deposit_limit_daily')" bodyClass="p-text-right">
       <template #body="{ data }">
         <div class="p-text-center">
           <div>{{ data.deposit_limit_daily }}</div>
@@ -59,7 +63,7 @@
         </div>
       </template>
     </Column>
-    <Column :header="$t('deposit_limit_once')">
+    <Column :header="$t('deposit_limit_once')" bodyClass="p-text-right">
       <template #body="{ data }">
         <div class="p-text-center">
           <div>{{ data.deposit_limit_once }}</div>
