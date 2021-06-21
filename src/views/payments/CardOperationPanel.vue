@@ -45,9 +45,48 @@
         </div>
       </template>
     </Column>
-    <Column field="deposit_limit_daily" :header="$t('deposit_limit_daily')" />
-    <Column field="deposit_limit_once" :header="$t('deposit_limit_once')" />
-    <Column field="balance" :header="$t('balance')" />
+    <Column :header="$t('deposit_limit_daily')">
+      <template #body="{ data }">
+        <div class="p-text-center">
+          <div>{{ data.deposit_limit_daily }}</div>
+          <div>
+            <Button
+              @click="edit_deposit_limit_daily(data)"
+              class="p-button-sm"
+              :label="$t('form.edit')"
+            />
+          </div>
+        </div>
+      </template>
+    </Column>
+    <Column :header="$t('deposit_limit_once')">
+      <template #body="{ data }">
+        <div class="p-text-center">
+          <div>{{ data.deposit_limit_once }}</div>
+          <div>
+            <Button
+              @click="edit_deposit_limit_once(data)"
+              class="p-button-sm"
+              :label="$t('form.edit')"
+            />
+          </div>
+        </div>
+      </template>
+    </Column>
+    <Column :header="$t('balance')">
+      <template #body="{ data }">
+        <div class="p-text-center">
+          <div>{{ data.balance }}</div>
+          <div>
+            <Button
+              @click="edit_balance(data)"
+              class="p-button-sm"
+              :label="$t('form.edit')"
+            />
+          </div>
+        </div>
+      </template>
+    </Column>
     <Column field="online" :header="$t('online')">
       <template #body="{ data }">
         <InputSwitch
@@ -68,6 +107,33 @@
     </Column>
   </DataTable>
   <ConfirmDialog />
+  <Dialog
+    modal
+    :header="$t('edit_card')"
+    v-model:visible="deposit_limit_daily_modal.visible"
+  >
+    <EditDepositLimitDaily
+      :data="deposit_limit_daily_modal.data"
+      @success="success"
+    />
+  </Dialog>
+  <Dialog
+    modal
+    :header="$t('edit_card')"
+    v-model:visible="deposit_limit_once_modal.visible"
+  >
+    <EditDepositLimitOnce
+      :data="deposit_limit_once_modal.data"
+      @success="success"
+    />
+  </Dialog>
+  <Dialog
+    modal
+    :header="$t('edit_card')"
+    v-model:visible="balance_modal.visible"
+  >
+    <EditBalance :data="balance_modal.data" @success="success" />
+  </Dialog>
 </template>
 
 <script>
@@ -79,6 +145,10 @@ import BankDropdown from "../../components/BankDropdown";
 import StatusDropdown from "../../components/StatusDropdown";
 import InputText from "../../components/InputText";
 import Search from "../../components/Search.vue";
+import EditBalance from "./EditBalance.vue";
+import useVuelidate from "@vuelidate/core";
+import EditDepositLimitDaily from "./EditDepositLimitDaily.vue";
+import EditDepositLimitOnce from "./EditDepositLimitOnce.vue";
 
 export default {
   components: {
@@ -87,6 +157,18 @@ export default {
     StatusDropdown,
     InputText,
     Search,
+    EditBalance,
+    EditDepositLimitDaily,
+    EditDepositLimitOnce,
+  },
+  setup() {
+    const v$ = useVuelidate();
+    return { v$ };
+  },
+  validations() {
+    return {
+      filters: {},
+    };
   },
   data() {
     return {
@@ -103,6 +185,18 @@ export default {
       },
       records: [],
       totalRecords: 0,
+      deposit_limit_daily_modal: {
+        visible: false,
+        data: {},
+      },
+      deposit_limit_once_modal: {
+        visible: false,
+        data: {},
+      },
+      balance_modal: {
+        visible: false,
+        data: {},
+      },
     };
   },
   methods: {
@@ -116,7 +210,6 @@ export default {
 
         this.records = records.data.data;
         this.totalRecords = count.data.count;
-        window.scrollTo(0, 0);
       } catch (e) {
         if (e.response.status >= 500) {
           this.auto_refresh = false;
@@ -126,9 +219,10 @@ export default {
         this.loading = false;
       }
     },
-    on_page(e) {
+    async on_page(e) {
       this.page = e.page + 1;
-      this.fetch();
+      await this.fetch();
+      window.scrollTo(0, 0);
     },
     remove(data) {
       this.$confirm.require({
@@ -154,16 +248,36 @@ export default {
         message: status
           ? `${this.$i18n.t("card_will_be_online")}: ${data.account_number}`
           : `${this.$i18n.t("card_will_be_offline")}: ${data.account_number}`,
-        accept: () => {
-          Card.update(data.id, { online: Number(status) }).then(() => {
-            this.fetch();
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("card_successfully_online")
-                : this.$i18n.t("card_successfully_offline"),
-            });
+        accept: async () => {
+          await Card.update(data.id, { online: Number(status) });
+          this.fetch();
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("card_successfully_online")
+              : this.$i18n.t("card_successfully_offline"),
           });
         },
+      });
+    },
+    edit_deposit_limit_daily(data) {
+      this.deposit_limit_daily_modal.data = data;
+      this.deposit_limit_daily_modal.visible = true;
+    },
+    edit_deposit_limit_once(data) {
+      this.deposit_limit_once_modal.data = data;
+      this.deposit_limit_once_modal.visible = true;
+    },
+    edit_balance(data) {
+      this.balance_modal.data = data;
+      this.balance_modal.visible = true;
+    },
+    success() {
+      this.fetch();
+      this.balance_modal.visible = false;
+      this.deposit_limit_once_modal.visible = false;
+      this.deposit_limit_daily_modal.visible = false;
+      ToastService.success({
+        summary: this.$i18n.t("card_successfully_updated"),
       });
     },
   },

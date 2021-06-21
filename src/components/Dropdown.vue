@@ -9,6 +9,7 @@
         >
       </template>
       <Dropdown
+        showClear
         :name="name"
         :style="inputStyle"
         :class="{ ...computedInputClass, 'p-invalid': errors.length }"
