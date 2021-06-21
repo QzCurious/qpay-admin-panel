@@ -40,10 +40,22 @@
     <template #loading> Loading... </template>
     <Column field="channel_name" :header="$t('channel')" />
     <Column field="merchant_name" :header="$t('merchant')" />
-    <Column field="id" :header="$t('transaction_id')" />
-    <Column field="amount" :header="$t('withdraw_amount')" />
-    <Column field="fee" :header="$t('withdraw_fee')" />
-    <Column field="debit_amount" :header="$t('debit_amount')" />
+    <Column
+      field="id"
+      :header="$t('transaction_id')"
+      bodyClass="p-text-right"
+    />
+    <Column
+      field="amount"
+      :header="$t('withdraw_amount')"
+      bodyClass="p-text-right"
+    />
+    <Column field="fee" :header="$t('withdraw_fee')" bodyClass="p-text-right" />
+    <Column
+      field="debit_amount"
+      :header="$t('debit_amount')"
+      bodyClass="p-text-right"
+    />
     <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         {{ status_list.find(({ value }) => value === data.status).label }}

@@ -28,13 +28,25 @@
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
     <Column field="channel_name" :header="$t('channel')" />
-    <Column field="id" :header="`${$t('card')} id`" />
+    <Column field="id" :header="`${$t('card')} id`" bodyClass="p-text-right" />
     <Column field="merchant_name" :header="$t('merchant')" />
     <Column field="bank_name" :header="$t('bank')" />
     <Column field="card_holder_name" :header="$t('card_holder')" />
-    <Column field="account_number" :header="$t('card_number')" />
-    <Column field="deposit_limit_daily" :header="$t('deposit_limit_daily')" />
-    <Column field="deposit_limit_once" :header="$t('deposit_limit_once')" />
+    <Column
+      field="account_number"
+      :header="$t('card_number')"
+      bodyClass="p-text-right"
+    />
+    <Column
+      field="deposit_limit_daily"
+      :header="$t('deposit_limit_daily')"
+      bodyClass="p-text-right"
+    />
+    <Column
+      field="deposit_limit_once"
+      :header="$t('deposit_limit_once')"
+      bodyClass="p-text-right"
+    />
     <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <InputSwitch
