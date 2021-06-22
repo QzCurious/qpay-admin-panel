@@ -53,6 +53,7 @@
     <Dropdown
       float
       :label="$t('plugin_mode')"
+      v-model="plugin_mode"
       optionLabel="name"
       optionValue="id"
       :options="plugin_mode_options"
@@ -179,7 +180,7 @@ export default {
       this.ibanking_id = data.ibanking_id;
       this.ibanking_password = data.ibanking_password;
       this.pb_api_key = data.pb_api_key;
-      this.plugin_mode_id = data.plugin_mode;
+      this.plugin_mode = data.plugin_mode;
       this.status = Boolean(data.status);
     });
   },
