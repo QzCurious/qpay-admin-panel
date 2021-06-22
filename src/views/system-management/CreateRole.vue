@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core"
+import { required } from "@vuelidate/validators"
 export default {
   props: {
     p_name: {
@@ -36,35 +36,34 @@ export default {
   },
   emits: ["submitted"],
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     if (!this.p_name) {
       return {
         name: { required },
-      };
+      }
     }
   },
   data() {
     return {
       name: this.p_name,
       permissions: this.p_permissions,
-    };
+    }
   },
   methods: {
     handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.$refs.reset();
-      this.$emit("submitted");
+      this.$refs.reset()
+      this.$emit("submitted")
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

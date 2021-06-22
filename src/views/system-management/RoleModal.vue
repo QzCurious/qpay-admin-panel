@@ -22,13 +22,13 @@
 </template>
 
 <script>
-import Role from "../../api/Role";
-import useVuelidate from "@vuelidate/core";
-import { required } from "@vuelidate/validators";
-import menu from "../../layouts/AdminLayout/menu";
-import { rename_key } from "../../helper/array";
-import InputText from "../../components/InputText";
-import ToastService from "../../service/ToastService";
+import Role from "../../api/Role"
+import useVuelidate from "@vuelidate/core"
+import { required } from "@vuelidate/validators"
+import menu from "../../layouts/AdminLayout/menu"
+import { rename_key } from "../../helper/array"
+import InputText from "../../components/InputText"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText },
@@ -44,13 +44,13 @@ export default {
     },
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       name: this.mode === "create" ? { required } : {},
-    };
+    }
   },
   data() {
     return {
@@ -58,94 +58,93 @@ export default {
       allow_auth: [],
       available_auth: [],
       selected: {},
-    };
+    }
   },
   computed: {
     permissions() {
-      const permissions = rename_key(menu.value);
+      const permissions = rename_key(menu.value)
       for (let i = permissions.length - 1; i >= 0; --i) {
         for (let k = permissions[i].children.length - 1; k >= 0; --k) {
           if (!this.available_auth.includes(permissions[i].children[k].key)) {
-            permissions[i].children.splice(k, 1);
+            permissions[i].children.splice(k, 1)
           }
         }
         if (permissions[i].children.length === 0) {
-          permissions.splice(i, 1);
+          permissions.splice(i, 1)
         }
       }
-      return permissions;
+      return permissions
     },
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
         allow_auth: Object.entries(this.selected)
           .filter(([key, value]) => value.checked)
           .reduce((acc, cur) => [...acc, cur[0]], []),
-      };
+      }
       if (this.mode === "create") {
-        data.name = this.name;
-        await Role.create(data);
+        data.name = this.name
+        await Role.create(data)
         ToastService.success({
           summary: this.$i18n.t("role_successfully_created"),
-        });
+        })
       } else if (this.mode === "edit") {
-        await Role.update(this.role_id, data);
+        await Role.update(this.role_id, data)
         ToastService.success({
           summary: this.$i18n.t("role_successfully_updated"),
-        });
+        })
       }
-      this.$emit("success");
+      this.$emit("success")
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
   watch: {
     role_id(new_value, old_value) {
       if (new_value !== old_value) {
-        this.allow_auth = this.available_auth = [];
+        this.allow_auth = this.available_auth = []
       }
     },
   },
   async mounted() {
     if (this.mode === "edit") {
-      const res = await Role.get(this.role_id);
-      this.name = res.data.name;
+      const res = await Role.get(this.role_id)
+      this.name = res.data.name
 
       // 雖說 api 叫 allow_auth，但其實是白名單
-      this.allow_auth = res.data.allow_auth;
-      this.available_auth = res.data.available_auth;
+      this.allow_auth = res.data.allow_auth
+      this.available_auth = res.data.available_auth
 
-      const selected = {};
+      const selected = {}
       for (const group of this.permissions) {
         for (const child of group.children) {
           selected[child.key] = {
             checked: this.allow_auth.includes(child.key),
-          };
+          }
         }
         selected[group.key] = {
           checked: group.children
             .map((child) => child.key)
             .every((child) => selected?.[child].checked),
-        };
+        }
         selected[group.key].partialChecked =
           group.children
             .map((child) => child.key)
             .some((child) => selected?.[child].checked) &&
-          !selected[group.key].checked;
+          !selected[group.key].checked
       }
-      this.selected = selected;
+      this.selected = selected
     } else {
-      this.available_auth = this.$store.state.auth.available_auth;
+      this.available_auth = this.$store.state.auth.available_auth
     }
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

@@ -1,4 +1,4 @@
-import http from "./http";
+import http from "./http"
 
 export const TRANSACTION_RECORD_TYPE = {
   ORDER_DEPOSIT: "order_deposit",
@@ -11,11 +11,11 @@ export const TRANSACTION_RECORD_TYPE = {
   MERCHANT_RECHARGE_FEE: "merchant_recharge_fee",
   MERCHANT_DEDUCTION: "merchant_deduction",
   MERCHANT_DEDUCTION_FEE: "merchant_deduction_fee",
-};
+}
 
 class TransactionRecord {
   async count(params = {}) {
-    return http.get("transaction_record/summary", { params });
+    return http.get("transaction_record/summary", { params })
   }
 
   async find(params) {
@@ -23,15 +23,15 @@ class TransactionRecord {
       page: 1,
       limit: 10,
       ...params,
-    };
-    return http.get("transaction_record", { params });
+    }
+    return http.get("transaction_record", { params })
   }
 
   async update(id, data) {
-    return http.put(`transaction_record/${id}`, data);
+    return http.put(`transaction_record/${id}`, data)
   }
 }
 
-const transaction_record = new TransactionRecord();
+const transaction_record = new TransactionRecord()
 
-export default transaction_record;
+export default transaction_record

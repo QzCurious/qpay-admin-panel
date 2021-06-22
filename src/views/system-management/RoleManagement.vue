@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import User from "../../api/User";
-import RoleModal from "./RoleModal";
+import User from "../../api/User"
+import RoleModal from "./RoleModal"
 
 export default {
   components: { RoleModal },
@@ -67,50 +67,49 @@ export default {
         mode: null,
         data: {},
       },
-    };
+    }
   },
   computed: {
     modal_title() {
       return this.modal.mode === "edit"
         ? this.$i18n.t("edit_role")
-        : this.$i18n.t("create_role");
+        : this.$i18n.t("create_role")
     },
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         User.find({ ...this.filters, page: this.page, limit: this.limit }),
         User.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     edit_role(data) {
-      this.modal.mode = "edit";
-      this.modal.data = data;
-      this.modal.visible = true;
+      this.modal.mode = "edit"
+      this.modal.data = data
+      this.modal.visible = true
     },
     create_role() {
-      this.modal.mode = "create";
-      this.modal.data = {};
-      this.modal.visible = true;
+      this.modal.mode = "create"
+      this.modal.data = {}
+      this.modal.visible = true
     },
     handle_success() {
-      this.modal.visible = false;
+      this.modal.visible = false
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

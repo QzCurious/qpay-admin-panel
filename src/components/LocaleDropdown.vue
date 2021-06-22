@@ -15,15 +15,14 @@ export default {
         label: this.$i18n.t("name", locale),
         value: locale,
       })),
-    };
+    }
   },
   watch: {
     locale(value) {
-      this.$store.dispatch("locale/set", value);
+      this.$store.dispatch("locale/set", value)
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

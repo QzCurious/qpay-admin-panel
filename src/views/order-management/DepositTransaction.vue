@@ -111,7 +111,7 @@
       <template #body="{ data }">
         {{
           data.success_at &&
-          moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
+            moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
         }}
       </template>
     </Column>
@@ -133,20 +133,20 @@
 </template>
 
 <script>
-import InputText from "../../components/InputText.vue";
-import Dropdown from "../../components/Dropdown.vue";
-import BankDropdown from "../../components/BankDropdown";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
+import InputText from "../../components/InputText.vue"
+import Dropdown from "../../components/Dropdown.vue"
+import BankDropdown from "../../components/BankDropdown"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
 import DepositTransaction, {
   DEPOSIT_TRANSACTION_STATUS_VALUES,
-} from "../../api/DepositTransaction";
-import useVuelidate from "@vuelidate/core";
-import { date } from "../../helper/validator";
-import { helpers, minValue } from "@vuelidate/validators";
-import CalendarStartTime from "../../components/CalendarStartTime.vue";
-import CalendarEndTime from "../../components/CalendarEndTime.vue";
-import Search from "../../components/Search";
+} from "../../api/DepositTransaction"
+import useVuelidate from "@vuelidate/core"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Search from "../../components/Search"
 
 export default {
   components: {
@@ -160,8 +160,8 @@ export default {
     Search,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -183,7 +183,7 @@ export default {
           ),
         },
       },
-    };
+    }
   },
   data() {
     return {
@@ -201,13 +201,17 @@ export default {
         bank_card_id: null,
         card_holder_id: null,
         order_amount: null,
-        start_time: this.moment().startOf("day").toDate(),
-        end_time: this.moment().endOf("day").toDate(),
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
       },
       records: [],
       totalRecords: 0,
       summary: {},
-    };
+    }
   },
   computed: {
     deposit_transaction_status_values() {
@@ -216,23 +220,23 @@ export default {
           label: this.$i18n.t(`deposit_transaction_status_values.${key}`),
           value,
         })
-      );
+      )
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
   methods: {
     handle_search() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.fetch();
+      this.fetch()
     },
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         DepositTransaction.find({
           ...this.filters,
@@ -240,19 +244,19 @@ export default {
           limit: this.limit,
         }),
         DepositTransaction.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      this.summary = count.data;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      this.summary = count.data
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
   },
-};
+}
 </script>
 
 <style scoped>

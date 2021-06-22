@@ -10,18 +10,19 @@
 </template>
 
 <script>
-import Calendar from "./Calendar.vue";
-import moment from "moment";
+import Calendar from "./Calendar.vue"
+import moment from "moment"
 export default {
   components: { Calendar },
   props: {
     modelValue: {
       type: Date,
-      default: moment().startOf("day").toDate(),
+      default: moment()
+        .startOf("day")
+        .toDate(),
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

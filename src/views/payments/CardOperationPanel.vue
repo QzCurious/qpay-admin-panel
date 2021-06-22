@@ -141,18 +141,18 @@
 </template>
 
 <script>
-import { PrimeIcons } from "primevue/api";
-import Card from "../../api/Card";
-import ToastService from "../../service/ToastService";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import BankDropdown from "../../components/BankDropdown";
-import StatusDropdown from "../../components/StatusDropdown";
-import InputText from "../../components/InputText";
-import Search from "../../components/Search.vue";
-import EditBalance from "./EditBalance.vue";
-import useVuelidate from "@vuelidate/core";
-import EditDepositLimitDaily from "./EditDepositLimitDaily.vue";
-import EditDepositLimitOnce from "./EditDepositLimitOnce.vue";
+import { PrimeIcons } from "primevue/api"
+import Card from "../../api/Card"
+import ToastService from "../../service/ToastService"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import BankDropdown from "../../components/BankDropdown"
+import StatusDropdown from "../../components/StatusDropdown"
+import InputText from "../../components/InputText"
+import Search from "../../components/Search.vue"
+import EditBalance from "./EditBalance.vue"
+import useVuelidate from "@vuelidate/core"
+import EditDepositLimitDaily from "./EditDepositLimitDaily.vue"
+import EditDepositLimitOnce from "./EditDepositLimitOnce.vue"
 
 export default {
   components: {
@@ -166,13 +166,13 @@ export default {
     EditDepositLimitOnce,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       filters: {},
-    };
+    }
   },
   data() {
     return {
@@ -201,32 +201,32 @@ export default {
         visible: false,
         data: {},
       },
-    };
+    }
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       try {
         const [records, count] = await Promise.all([
           Card.find({ ...this.filters, page: this.page, limit: this.limit }),
           Card.count(this.filters),
-        ]);
+        ])
 
-        this.records = records.data.data;
-        this.totalRecords = count.data.count;
+        this.records = records.data.data
+        this.totalRecords = count.data.count
       } catch (e) {
         if (e.response.status >= 500) {
-          this.auto_refresh = false;
-          return;
+          this.auto_refresh = false
+          return
         }
       } finally {
-        this.loading = false;
+        this.loading = false
       }
     },
     async on_page(e) {
-      this.page = e.page + 1;
-      await this.fetch();
-      window.scrollTo(0, 0);
+      this.page = e.page + 1
+      await this.fetch()
+      window.scrollTo(0, 0)
     },
     remove(data) {
       this.$confirm.require({
@@ -237,11 +237,11 @@ export default {
           Card.delete(data.id).then(() => {
             ToastService.success({
               summary: this.$i18n.t("card_successfully_deleted"),
-            });
-            this.fetch();
-          });
+            })
+            this.fetch()
+          })
         },
-      });
+      })
     },
     update_online(data, status) {
       this.$confirm.require({
@@ -253,56 +253,56 @@ export default {
           ? `${this.$i18n.t("card_will_be_online")}: ${data.account_number}`
           : `${this.$i18n.t("card_will_be_offline")}: ${data.account_number}`,
         accept: async () => {
-          await Card.update(data.id, { online: Number(status) });
-          this.fetch();
+          await Card.update(data.id, { online: Number(status) })
+          this.fetch()
           ToastService.success({
             summary: status
               ? this.$i18n.t("card_successfully_online")
               : this.$i18n.t("card_successfully_offline"),
-          });
+          })
         },
-      });
+      })
     },
     edit_deposit_limit_daily(data) {
-      this.deposit_limit_daily_modal.data = data;
-      this.deposit_limit_daily_modal.visible = true;
+      this.deposit_limit_daily_modal.data = data
+      this.deposit_limit_daily_modal.visible = true
     },
     edit_deposit_limit_once(data) {
-      this.deposit_limit_once_modal.data = data;
-      this.deposit_limit_once_modal.visible = true;
+      this.deposit_limit_once_modal.data = data
+      this.deposit_limit_once_modal.visible = true
     },
     edit_balance(data) {
-      this.balance_modal.data = data;
-      this.balance_modal.visible = true;
+      this.balance_modal.data = data
+      this.balance_modal.visible = true
     },
     success() {
-      this.fetch();
-      this.balance_modal.visible = false;
-      this.deposit_limit_once_modal.visible = false;
-      this.deposit_limit_daily_modal.visible = false;
+      this.fetch()
+      this.balance_modal.visible = false
+      this.deposit_limit_once_modal.visible = false
+      this.deposit_limit_daily_modal.visible = false
       ToastService.success({
         summary: this.$i18n.t("card_successfully_updated"),
-      });
+      })
     },
   },
   mounted() {
-    this.auto_refresh = true;
-    this.fetch();
+    this.auto_refresh = true
+    this.fetch()
   },
   unmounted() {
-    clearInterval(this.auto_refresh_interval_id);
+    clearInterval(this.auto_refresh_interval_id)
   },
   watch: {
     auto_refresh(new_auto_refresh) {
       if (new_auto_refresh) {
-        this.auto_refresh_interval_id = setInterval(this.fetch, 5000);
+        this.auto_refresh_interval_id = setInterval(this.fetch, 5000)
       } else {
-        clearInterval(this.auto_refresh_interval_id);
-        this.auto_refresh_interval_id = null;
+        clearInterval(this.auto_refresh_interval_id)
+        this.auto_refresh_interval_id = null
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>

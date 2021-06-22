@@ -4,10 +4,21 @@
     buttonLayout="horizontal"
     suffix="%"
     :step="0.1"
-    :modelValue="modelValue && numeral(modelValue).multiply(100).value()"
+    :modelValue="
+      modelValue &&
+        numeral(modelValue)
+          .multiply(100)
+          .value()
+    "
     @input="
       ({ value }) =>
-        $emit('update:modelValue', value && numeral(value).divide(100).value())
+        $emit(
+          'update:modelValue',
+          value &&
+            numeral(value)
+              .divide(100)
+              .value()
+        )
     "
     @focus="isFocused = true"
     @blur="isFocused = false"
@@ -16,7 +27,7 @@
 </template>
 
 <script>
-import InputNumber from "./InputNumber.vue";
+import InputNumber from "./InputNumber.vue"
 export default {
   components: {
     InputNumber,
@@ -28,23 +39,22 @@ export default {
   data() {
     return {
       isFocused: false,
-    };
+    }
   },
   computed: {
     forward_props() {
-      const forward = { ...this.$props };
-      delete forward.modelValue;
-      return forward;
+      const forward = { ...this.$props }
+      delete forward.modelValue
+      return forward
     },
   },
   emits: ["update:modelValue"],
   methods: {
     input(event) {
-      console.log("input", event.value);
+      console.log("input", event.value)
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

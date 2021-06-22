@@ -73,15 +73,15 @@
 </template>
 
 <script>
-import { PrimeIcons } from "primevue/api";
-import Card from "../../api/Card";
-import ToastService from "../../service/ToastService";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import BankDropdown from "../../components/BankDropdown";
-import StatusDropdown from "../../components/StatusDropdown";
-import InputText from "../../components/InputText";
-import CardModal from "./CardModal";
-import Search from "../../components/Search.vue";
+import { PrimeIcons } from "primevue/api"
+import Card from "../../api/Card"
+import ToastService from "../../service/ToastService"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import BankDropdown from "../../components/BankDropdown"
+import StatusDropdown from "../../components/StatusDropdown"
+import InputText from "../../components/InputText"
+import CardModal from "./CardModal"
+import Search from "../../components/Search.vue"
 
 export default {
   components: {
@@ -110,40 +110,40 @@ export default {
         mode: null,
         data: {},
       },
-    };
+    }
   },
   computed: {
     modal_title() {
       return this.modal.mode === "edit"
         ? this.$i18n.t("edit_card")
-        : this.$i18n.t("create_card");
+        : this.$i18n.t("create_card")
     },
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         Card.find({ ...this.filters, page: this.page, limit: this.limit }),
         Card.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     edit(data) {
-      this.modal.mode = "edit";
-      this.modal.data = data;
-      this.modal.visible = true;
+      this.modal.mode = "edit"
+      this.modal.data = data
+      this.modal.visible = true
     },
     create() {
-      this.modal.mode = "create";
-      this.modal.data = {};
-      this.modal.visible = true;
+      this.modal.mode = "create"
+      this.modal.data = {}
+      this.modal.visible = true
     },
     remove(data) {
       this.$confirm.require({
@@ -154,11 +154,11 @@ export default {
           Card.delete(data.id).then(() => {
             ToastService.success({
               summary: this.$i18n.t("card_successfully_deleted"),
-            });
-            this.fetch();
-          });
+            })
+            this.fetch()
+          })
         },
-      });
+      })
     },
     update_status(data, status) {
       this.$confirm.require({
@@ -171,21 +171,21 @@ export default {
           : `${this.$i18n.t("card_will_be_disabled")}: ${data.id}`,
         accept: () => {
           Card.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch();
+            this.fetch()
             ToastService.success({
               summary: status
                 ? this.$i18n.t("card_successfully_enabled")
                 : this.$i18n.t("card_successfully_disabled"),
-            });
-          });
+            })
+          })
         },
-      });
+      })
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

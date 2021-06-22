@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
+import Dropdown from "./Dropdown.vue"
 
 export default {
   components: { Dropdown },
@@ -22,16 +22,15 @@ export default {
   data() {
     return {
       value: null,
-    };
+    }
   },
   computed: {
     data_label() {
-      return this.label ?? this.$i18n.t("status");
+      return this.label ?? this.$i18n.t("status")
     },
   },
   emits: ["update:modelValue"],
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

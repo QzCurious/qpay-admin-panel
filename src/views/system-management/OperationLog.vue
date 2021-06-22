@@ -148,9 +148,9 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { FilterMatchMode, FilterOperator } from "primevue/api";
-import operationLogApi from "../../api/OperationLog";
+import { defineComponent } from "vue"
+import { FilterMatchMode, FilterOperator } from "primevue/api"
+import operationLogApi from "../../api/OperationLog"
 
 export default defineComponent({
   name: "OperationLog",
@@ -159,7 +159,7 @@ export default defineComponent({
       records: [],
       loading: true,
       filters: {},
-    };
+    }
   },
   methods: {
     clearFilter() {
@@ -176,18 +176,18 @@ export default defineComponent({
           operator: FilterOperator.AND,
           constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
         },
-      };
+      }
     },
     formatDate(date) {
       return date.toLocaleDateString("zh-TW", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      });
+      })
     },
   },
   created() {
-    this.clearFilter();
+    this.clearFilter()
   },
   mounted() {
     operationLogApi
@@ -196,12 +196,11 @@ export default defineComponent({
         this.records = data.map((record) => ({
           ...record,
           time: new Date(record.timestamp),
-        }));
+        }))
       })
-      .finally(() => (this.loading = false));
+      .finally(() => (this.loading = false))
   },
-});
+})
 </script>
 
-<style>
-</style>
+<style></style>

@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import Holder from "../../api/Holder";
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength } from "@vuelidate/validators";
-import InputText from "../../components/InputText";
-import ToastService from "../../service/ToastService";
+import Holder from "../../api/Holder"
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength } from "@vuelidate/validators"
+import InputText from "../../components/InputText"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText },
@@ -42,55 +42,54 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       name: { required, maxLength: maxLength(16) },
       phone: { maxLength: maxLength(20) },
-    };
+    }
   },
   data() {
     return {
       name: this.data?.name,
       phone: this.data?.phone,
       status: this.data?.status ?? true,
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
         name: this.name,
         phone: this.phone,
         status: Number(this.status),
-      };
+      }
       if (this.mode === "create") {
         Holder.create(data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("card_holder_successfully_created"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       } else if (this.mode === "edit") {
         Holder.update(this.data.id, data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("card_holder_successfully_updated"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       }
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

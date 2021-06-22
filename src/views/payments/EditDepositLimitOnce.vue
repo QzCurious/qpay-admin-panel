@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import { required, numeric } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import Card from "../../api/Card";
-import InputText from "../../components/InputText";
+import { required, numeric } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
+import Card from "../../api/Card"
+import InputText from "../../components/InputText"
 
 export default {
   components: {
@@ -31,38 +31,37 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       deposit_limit_once: { required, numeric },
-    };
+    }
   },
   data() {
     return {
       deposit_limit_once: this.data.deposit_limit_once,
       submitting: false,
-    };
+    }
   },
   methods: {
     async submit() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.submitting = true;
+      this.submitting = true
       await Card.update(this.data.id, {
         deposit_limit_once: this.deposit_limit_once,
-      });
-      this.submitting = false;
-      this.$emit("success");
+      })
+      this.submitting = false
+      this.$emit("success")
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

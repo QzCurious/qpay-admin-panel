@@ -58,14 +58,14 @@
 </template>
 
 <script>
-import MerchantChannel from "../../api/MerchantChannel";
-import FundsWithdraw from "../../api/FundsWithdraw";
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength } from "@vuelidate/validators";
-import { gt } from "../../helper/validator";
-import InputText from "../../components/InputText";
-import BankDropdown from "../../components/BankDropdown";
-import ToastService from "../../service/ToastService";
+import MerchantChannel from "../../api/MerchantChannel"
+import FundsWithdraw from "../../api/FundsWithdraw"
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength } from "@vuelidate/validators"
+import { gt } from "../../helper/validator"
+import InputText from "../../components/InputText"
+import BankDropdown from "../../components/BankDropdown"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText, BankDropdown },
@@ -77,8 +77,8 @@ export default {
     },
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -88,7 +88,7 @@ export default {
       account_number: { required, maxLength: maxLength(20) },
       account_name: { required, maxLength: maxLength(16) },
       code: { required },
-    };
+    }
   },
   data() {
     return {
@@ -101,7 +101,7 @@ export default {
       account_name: null,
       code: null,
       remark: null,
-    };
+    }
   },
   computed: {
     fee() {
@@ -111,19 +111,19 @@ export default {
         isNaN(this.withdraw_fee) ||
         isNaN(this.withdraw_fee_rate)
       ) {
-        return null;
+        return null
       }
       return (
         Number(this.amount) * Number(this.withdraw_fee_rate) +
           Number(this.withdraw_fee) || null
-      );
+      )
     },
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
@@ -135,27 +135,27 @@ export default {
         account_name: this.account_name,
         code: this.code,
         remark: this.remark,
-      };
+      }
       FundsWithdraw.apply_withdraw(this.data.merchant_channel_id, data).then(
         () => {
           ToastService.success({
             summary: this.$i18n.t("withdraw_applied_successfully"),
-          });
-          this.$emit("success", data);
+          })
+          this.$emit("success", data)
         }
-      );
+      )
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
   mounted() {
     MerchantChannel.get(this.data.merchant_channel_id).then((res) => {
-      const { withdraw_fee, withdraw_fee_rate } = res.data;
-      this.withdraw_fee = withdraw_fee;
-      this.withdraw_fee_rate = withdraw_fee_rate;
-    });
+      const { withdraw_fee, withdraw_fee_rate } = res.data
+      this.withdraw_fee = withdraw_fee
+      this.withdraw_fee_rate = withdraw_fee_rate
+    })
   },
-};
+}
 </script>
 
 <style scoped>

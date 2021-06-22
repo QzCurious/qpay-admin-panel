@@ -36,24 +36,24 @@
 </template>
 
 <script>
-import auth from "../../api/Auth";
-import useVuelidate from "@vuelidate/core";
-import { required, sameAs } from "@vuelidate/validators";
-import Password from "../../components/Password";
-import ToastService from "../../service/ToastService";
+import auth from "../../api/Auth"
+import useVuelidate from "@vuelidate/core"
+import { required, sameAs } from "@vuelidate/validators"
+import Password from "../../components/Password"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { Password },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   data() {
     return {
       old_password: null,
       new_password: null,
       confirm_new_password: null,
-    };
+    }
   },
   validations() {
     return {
@@ -63,14 +63,14 @@ export default {
         required,
         sameAsnew_password: sameAs(this.new_password),
       },
-    };
+    }
   },
   methods: {
     handleSubmit() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
       auth
@@ -79,11 +79,11 @@ export default {
           new_password: this.new_password,
         })
         .then(() => {
-          this.v$.$reset();
+          this.v$.$reset()
 
           ToastService.success({
             summary: this.$i18n.t("payment_password_successfully_changed"),
-          });
+          })
         })
         .catch((err) => {
           if (
@@ -93,13 +93,12 @@ export default {
           ) {
             ToastService.error({
               summary: this.$i18n.t("api.error.1001"),
-            });
+            })
           }
-        });
+        })
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

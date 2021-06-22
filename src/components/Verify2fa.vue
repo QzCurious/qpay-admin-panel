@@ -6,44 +6,43 @@
 </template>
 
 <script>
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength, minLength } from "@vuelidate/validators";
-import Auth from "../api/Auth";
-import ToastService from "../service/ToastService";
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength, minLength } from "@vuelidate/validators"
+import Auth from "../api/Auth"
+import ToastService from "../service/ToastService"
 
 export default {
   emits: ["success"],
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       code: { required, minLength: minLength(6), maxLength: maxLength(6) },
-    };
+    }
   },
   data() {
     return {
       code: null,
-    };
+    }
   },
   methods: {
     handle_submit() {
       Auth.singin_2fa(this.code)
         .then(() => {
-          this.$emit("success");
+          this.$emit("success")
         })
         .catch((err) => {
           if (err.response.status === 401 && err.response.data.code === 9003) {
             ToastService.error({
               summary: this.$i18n.t("api.error.9003"),
-            });
+            })
           }
-        });
+        })
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

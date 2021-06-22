@@ -53,13 +53,13 @@
 </template>
 
 <script>
-import { PrimeIcons } from "primevue/api";
-import MerchantChannel from "../../api/MerchantChannel";
-import ToastService from "../../service/ToastService";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import StatusDropdown from "../../components/StatusDropdown";
-import Search from "../../components/Search.vue";
-import CreateMerchantChannel from "./CreateMerchantChannel";
+import { PrimeIcons } from "primevue/api"
+import MerchantChannel from "../../api/MerchantChannel"
+import ToastService from "../../service/ToastService"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import StatusDropdown from "../../components/StatusDropdown"
+import Search from "../../components/Search.vue"
+import CreateMerchantChannel from "./CreateMerchantChannel"
 
 export default {
   components: {
@@ -81,11 +81,11 @@ export default {
       records: [],
       totalRecords: 0,
       modal_visible: false,
-    };
+    }
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         MerchantChannel.find({
           ...this.filters,
@@ -93,18 +93,18 @@ export default {
           limit: this.limit,
         }),
         MerchantChannel.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     create() {
-      this.modal_visible = true;
+      this.modal_visible = true
     },
     remove(data) {
       this.$confirm.require({
@@ -115,11 +115,11 @@ export default {
           MerchantChannel.delete(data.id).then(() => {
             ToastService.success({
               summary: this.$i18n.t("merchant_channel_successfully_deleted"),
-            });
-            this.fetch();
-          });
+            })
+            this.fetch()
+          })
         },
-      });
+      })
     },
     update_status(data, status) {
       this.$confirm.require({
@@ -133,22 +133,22 @@ export default {
         accept: () => {
           MerchantChannel.update(data.id, { status: Number(status) }).then(
             () => {
-              this.fetch();
+              this.fetch()
               ToastService.success({
                 summary: status
                   ? this.$i18n.t("merchant_channel_successfully_enabled")
                   : this.$i18n.t("merchant_channel_successfully_disabled"),
-              });
+              })
             }
-          );
+          )
         },
-      });
+      })
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

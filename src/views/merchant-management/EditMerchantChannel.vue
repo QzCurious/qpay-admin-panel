@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import MerchantChannel from "../../api/MerchantChannel";
-import useVuelidate from "@vuelidate/core";
-import InputText from "../../components/InputText";
-import RateNumber from "../../components/RateNumber";
-import ToastService from "../../service/ToastService";
-import { minValue, maxValue, numeric } from "@vuelidate/validators";
-import { empty_to_null, falsy_to_0 } from "../../helper/transform";
+import MerchantChannel from "../../api/MerchantChannel"
+import useVuelidate from "@vuelidate/core"
+import InputText from "../../components/InputText"
+import RateNumber from "../../components/RateNumber"
+import ToastService from "../../service/ToastService"
+import { minValue, maxValue, numeric } from "@vuelidate/validators"
+import { empty_to_null, falsy_to_0 } from "../../helper/transform"
 
 export default {
   components: {
@@ -68,8 +68,8 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -89,7 +89,7 @@ export default {
       },
       withdraw_fee: { numeric },
       withdraw_limit_daily: { numeric },
-    };
+    }
   },
   data() {
     return {
@@ -101,13 +101,13 @@ export default {
       withdraw_fee_rate: this.data?.withdraw_fee_rate,
       withdraw_fee: this.data?.withdraw_fee,
       withdraw_limit_daily: this.data?.withdraw_limit_daily,
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
@@ -117,17 +117,17 @@ export default {
         withdraw_fee_rate: falsy_to_0(this.withdraw_fee_rate),
         withdraw_fee: falsy_to_0(this.withdraw_fee),
         withdraw_limit_daily: empty_to_null(this.withdraw_limit_daily),
-      };
-      await MerchantChannel.update(this.data.id, data);
+      }
+      await MerchantChannel.update(this.data.id, data)
       ToastService.success({
         summary: this.$i18n.t("merchant_channel_successfully_updated"),
-      });
-      this.$emit("success", data);
+      })
+      this.$emit("success", data)
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
-};
+}
 </script>
 
 <style scoped>

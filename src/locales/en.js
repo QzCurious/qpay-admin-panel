@@ -457,4 +457,4 @@ export default {
   deduction_fee: "code::deduction_fee",
   opening_balance: "code::opening_balance",
   ending_balance: "code::ending_balance",
-};
+}

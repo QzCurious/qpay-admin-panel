@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import auth from "../../../api/Auth";
-import { PrimeIcons } from "primevue/api";
+import auth from "../../../api/Auth"
+import { PrimeIcons } from "primevue/api"
 export default {
   data() {
     return {
@@ -28,15 +28,14 @@ export default {
           command: auth.logout,
         },
       ],
-    };
+    }
   },
   methods: {
     toggle(event) {
-      this.$refs.menu.toggle(event);
+      this.$refs.menu.toggle(event)
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

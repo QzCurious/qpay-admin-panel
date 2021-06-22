@@ -120,21 +120,21 @@
   </Dialog>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent } from "vue"
 import Funds, {
   DEPOSIT_WITH_FEE,
   DEPOSIT_NO_FEE,
   WITHDRAW_WITH_FEE,
   WITHDRAW_NO_FEE,
-} from "../../api/Funds";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import Search from "../../components/Search";
-import StatusDropdown from "../../components/StatusDropdown";
-import InputText from "../../components/InputText";
-import { required, numeric } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import ToastService from "../../service/ToastService";
+} from "../../api/Funds"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import Search from "../../components/Search"
+import StatusDropdown from "../../components/StatusDropdown"
+import InputText from "../../components/InputText"
+import { required, numeric } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
+import ToastService from "../../service/ToastService"
 
 export default defineComponent({
   name: "FundsOperationPanel",
@@ -146,8 +146,8 @@ export default defineComponent({
     InputText,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -155,7 +155,7 @@ export default defineComponent({
         amount: { required, numeric },
         code: { required },
       },
-    };
+    }
   },
   data() {
     return {
@@ -181,7 +181,7 @@ export default defineComponent({
         code: null,
       },
       success_message: null,
-    };
+    }
   },
   computed: {
     DEPOSIT_WITH_FEE: () => DEPOSIT_WITH_FEE,
@@ -190,11 +190,11 @@ export default defineComponent({
     WITHDRAW_NO_FEE: () => WITHDRAW_NO_FEE,
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         Funds.find({
           ...this.filters,
@@ -202,71 +202,71 @@ export default defineComponent({
           limit: this.limit,
         }),
         Funds.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      this.summary = count.data;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      this.summary = count.data
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     show_modal(operation_type, data) {
-      this.v$.$reset();
-      this.modal.operation_type = operation_type;
-      this.modal.data = data;
-      this.modal.amount = null;
-      this.modal.code = null;
+      this.v$.$reset()
+      this.modal.operation_type = operation_type
+      this.modal.data = data
+      this.modal.amount = null
+      this.modal.code = null
 
       switch (operation_type) {
         case DEPOSIT_WITH_FEE:
-          this.modal.header = this.$i18n.t("deposit_with_fee");
-          this.success_message = this.$i18n.t("deposit_with_fee_successfully");
-          break;
+          this.modal.header = this.$i18n.t("deposit_with_fee")
+          this.success_message = this.$i18n.t("deposit_with_fee_successfully")
+          break
         case DEPOSIT_NO_FEE:
-          this.modal.header = this.$i18n.t("deposit_without_fee");
+          this.modal.header = this.$i18n.t("deposit_without_fee")
           this.success_message = this.$i18n.t(
             "deposit_without_fee_successfully"
-          );
-          break;
+          )
+          break
         case WITHDRAW_WITH_FEE:
-          this.modal.header = this.$i18n.t("withdraw_with_fee");
-          this.success_message = this.$i18n.t("withdraw_with_fee_successfully");
-          break;
+          this.modal.header = this.$i18n.t("withdraw_with_fee")
+          this.success_message = this.$i18n.t("withdraw_with_fee_successfully")
+          break
         case WITHDRAW_NO_FEE:
-          this.modal.header = this.$i18n.t("withdraw_without_fee");
+          this.modal.header = this.$i18n.t("withdraw_without_fee")
           this.success_message = this.$i18n.t(
             "withdraw_without_fee_successfully"
-          );
-          break;
+          )
+          break
       }
 
-      this.modal.visible = true;
+      this.modal.visible = true
     },
     make_transaction() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.modal.submitting = true;
+      this.modal.submitting = true
       Funds.make_transaction(this.modal.data.merchant_channel_id, {
         operation_type: Number(this.modal.operation_type),
         amount: Number(this.modal.amount),
         code: this.modal.code,
       })
         .then(() => {
-          ToastService.success({ summary: this.$i18n.t(this.success_message) });
-          this.fetch();
+          ToastService.success({ summary: this.$i18n.t(this.success_message) })
+          this.fetch()
         })
         .finally(() => {
-          this.modal.submitting = false;
-        });
+          this.modal.submitting = false
+        })
     },
   },
-});
+})
 </script>
 
 <style scoped>

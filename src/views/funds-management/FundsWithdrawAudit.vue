@@ -117,18 +117,18 @@ import FundsWithdraw, {
   PROCESSING,
   PAID,
   REJECT,
-} from "../../api/FundsWithdraw";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import Dropdown from "../../components/Dropdown";
-import Search from "../../components/Search.vue";
-import InputText from "../../components/InputText.vue";
-import { date } from "../../helper/validator";
-import { helpers, minValue } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
-import ToastService from "../../service/ToastService";
-import CalendarStartTime from "../../components/CalendarStartTime.vue";
-import CalendarEndTime from "../../components/CalendarEndTime.vue";
+} from "../../api/FundsWithdraw"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import Dropdown from "../../components/Dropdown"
+import Search from "../../components/Search.vue"
+import InputText from "../../components/InputText.vue"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
+import ToastService from "../../service/ToastService"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
 
 export default {
   components: {
@@ -141,8 +141,8 @@ export default {
     CalendarEndTime,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -164,7 +164,7 @@ export default {
           ),
         },
       },
-    };
+    }
   },
   data() {
     return {
@@ -193,8 +193,12 @@ export default {
         channel_id: null,
         status: null,
         transaction_id: null,
-        start_time: this.moment().startOf("day").toDate(),
-        end_time: this.moment().endOf("day").toDate(),
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
       },
       records: [],
       totalRecords: 0,
@@ -209,20 +213,20 @@ export default {
         submitting: false,
       },
       code: null,
-    };
+    }
   },
   methods: {
     handle_search() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.fetch();
+      this.fetch()
     },
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         FundsWithdraw.find({
           ...this.filters,
@@ -230,75 +234,73 @@ export default {
           limit: this.limit,
         }),
         FundsWithdraw.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     show_update_status_modal(data, status) {
-      this.modal.data.id = data.id;
-      this.modal.data.status = status;
+      this.modal.data.id = data.id
+      this.modal.data.status = status
 
       if (status === PROCESSING) {
         this.modal.message = `${this.$i18n.t(
           "status_will_be_updated_to_processing"
-        )}: ${data.id}`;
+        )}: ${data.id}`
       } else if (status === PAID) {
         this.modal.message = `${this.$i18n.t(
           "status_will_be_updated_to_paid"
-        )}: ${data.id}`;
+        )}: ${data.id}`
       } else if (status === REJECT) {
         this.modal.message = `${this.$i18n.t(
           "status_will_be_updated_to_reject"
-        )}: ${data.id}`;
+        )}: ${data.id}`
       }
-      this.modal.visible = true;
+      this.modal.visible = true
     },
     async update_status() {
-      let success_message = null;
+      let success_message = null
       if (this.modal.data.status === PROCESSING) {
-        this.modal.header = this.$i18n.t(
-          "status_will_be_updated_to_processing"
-        );
-        success_message = this.$i18n.t("status_successfully_set_to_processing");
+        this.modal.header = this.$i18n.t("status_will_be_updated_to_processing")
+        success_message = this.$i18n.t("status_successfully_set_to_processing")
       } else if (this.modal.data.status === PAID) {
-        this.modal.header = this.$i18n.t("status_will_be_updated_to_paid");
-        success_message = this.$i18n.t("status_successfully_set_to_paid");
+        this.modal.header = this.$i18n.t("status_will_be_updated_to_paid")
+        success_message = this.$i18n.t("status_successfully_set_to_paid")
       } else if (this.modal.data.status === REJECT) {
-        this.modal.header = this.$i18n.t("status_will_be_updated_to_reject");
-        success_message = this.$i18n.t("status_successfully_set_to_reject");
+        this.modal.header = this.$i18n.t("status_will_be_updated_to_reject")
+        success_message = this.$i18n.t("status_successfully_set_to_reject")
       }
 
-      this.modal.submitting = true;
+      this.modal.submitting = true
       FundsWithdraw.update(this.modal.data.id, {
         status: this.modal.data.status,
         code: this.code,
       })
         .then(() => {
-          ToastService.success({ summary: success_message });
-          this.fetch();
+          ToastService.success({ summary: success_message })
+          this.fetch()
         })
         .catch((err) => {
           if (err.response.status === 401 && err.response.data.code === 9003) {
-            ToastService.error({ summary: this.$i18n.t("api.error.9003") });
-            return;
+            ToastService.error({ summary: this.$i18n.t("api.error.9003") })
+            return
           }
-          throw err;
+          throw err
         })
         .finally(() => {
-          this.modal.submitting = false;
-        });
+          this.modal.submitting = false
+        })
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

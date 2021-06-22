@@ -59,12 +59,12 @@
 </template>
 
 <script>
-import MerchantChannelParameter from "../../api/MerchantChannelParameter";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import StatusDropdown from "../../components/StatusDropdown";
-import Search from "../../components/Search.vue";
-import EditMerchantChannelParameter from "./EditMerchantChannelParameter";
+import MerchantChannelParameter from "../../api/MerchantChannelParameter"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import StatusDropdown from "../../components/StatusDropdown"
+import Search from "../../components/Search.vue"
+import EditMerchantChannelParameter from "./EditMerchantChannelParameter"
 
 export default {
   components: {
@@ -90,11 +90,11 @@ export default {
         visible: false,
         data: null,
       },
-    };
+    }
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         MerchantChannelParameter.find({
           ...this.filters,
@@ -102,25 +102,25 @@ export default {
           limit: this.limit,
         }),
         MerchantChannelParameter.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     edit(data) {
-      this.edit_modal.data = data;
-      this.edit_modal.visible = true;
+      this.edit_modal.data = data
+      this.edit_modal.visible = true
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

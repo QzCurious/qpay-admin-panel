@@ -44,29 +44,29 @@
 </template>
 
 <script>
-import auth from "../api/Auth";
-import User from "../api/User";
-import router from "../router";
-import useVuelidate from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
-import InputText from "../components/InputText";
-import Password from "../components/Password";
-import store from "../store";
-import Verify2fa from "../components/Verify2fa";
-import LocaleDropdown from "../components/LocaleDropdown";
-import { ApiError } from "../api/ErrorHandler";
+import auth from "../api/Auth"
+import User from "../api/User"
+import router from "../router"
+import useVuelidate from "@vuelidate/core"
+import { required, minLength } from "@vuelidate/validators"
+import InputText from "../components/InputText"
+import Password from "../components/Password"
+import store from "../store"
+import Verify2fa from "../components/Verify2fa"
+import LocaleDropdown from "../components/LocaleDropdown"
+import { ApiError } from "../api/ErrorHandler"
 
 export default {
   components: { InputText, Password, Verify2fa, LocaleDropdown },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       signin_id: { required, minLength: minLength(2) },
       password: { required },
-    };
+    }
   },
   data() {
     return {
@@ -76,69 +76,69 @@ export default {
       show_verify_2fa: false,
       qrcode: null,
       show_qrcode: false,
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.submitting = true;
+      this.submitting = true
       try {
         await auth.signin({
           signin_id: this.signin_id,
           signin_password: this.password,
-        });
+        })
       } catch (err) {
-        this.submitting = false;
-        throw err;
+        this.submitting = false
+        throw err
       }
 
       // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
       // 取 error 訊息判斷是否有註冊過 2fa
       try {
-        await User.get(store.getters["auth/signin_id"]);
+        await User.get(store.getters["auth/signin_id"])
       } catch (err) {
         if (!(err instanceof ApiError)) {
-          throw err;
+          throw err
         }
 
         if (err.code === 9002) {
-          this.show_verify_2fa = true;
-          return;
+          this.show_verify_2fa = true
+          return
         }
 
         if (err.code === 9001) {
-          const res = await auth.get_2fa_qrcode();
-          this.show_qrcode = true;
-          this.qrcode = URL.createObjectURL(res.data);
+          const res = await auth.get_2fa_qrcode()
+          this.show_qrcode = true
+          this.qrcode = URL.createObjectURL(res.data)
 
           // 後端說要打 cookie 回去
-          auth.trigger_bind_2fa();
-          return;
+          auth.trigger_bind_2fa()
+          return
         }
       }
     },
     continue_to_signin() {
-      this.show_qrcode = false;
-      this.show_verify_2fa = true;
+      this.show_qrcode = false
+      this.show_verify_2fa = true
     },
     next_page() {
-      router.push(this.$route.redirectedFrom?.fullPath || "/");
+      router.push(this.$route.redirectedFrom?.fullPath || "/")
     },
   },
   watch: {
     show_verify_2fa(new_value) {
-      this.submitting = new_value;
+      this.submitting = new_value
     },
     show_qrcode(new_value) {
-      this.submitting = new_value;
+      this.submitting = new_value
     },
   },
-};
+}
 </script>
 
 <style scoped>

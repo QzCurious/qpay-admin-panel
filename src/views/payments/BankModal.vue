@@ -35,11 +35,11 @@
 </template>
 
 <script>
-import Bank from "../../api/Bank";
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength, minLength } from "@vuelidate/validators";
-import InputText from "../../components/InputText";
-import ToastService from "../../service/ToastService";
+import Bank from "../../api/Bank"
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength, minLength } from "@vuelidate/validators"
+import InputText from "../../components/InputText"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText },
@@ -53,8 +53,8 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -63,7 +63,7 @@ export default {
       code: { maxLength: maxLength(10) },
       status: { required },
       transfer: { required },
-    };
+    }
   },
   data() {
     return {
@@ -72,13 +72,13 @@ export default {
       code: this.data?.code,
       status: this.data?.status ?? true,
       transfer: this.data?.transfer ?? true,
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
@@ -87,29 +87,29 @@ export default {
         code: this.code,
         status: Number(this.status),
         transfer: Number(this.transfer),
-      };
+      }
       if (this.mode === "create") {
         Bank.create(data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("bank_successfully_created"),
-          });
+          })
 
-          this.$emit("success", data);
-        });
+          this.$emit("success", data)
+        })
       } else if (this.mode === "edit") {
         Bank.update(this.data.id, data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("bank_successfully_updated"),
-          });
+          })
 
-          this.$emit("success", data);
-        });
+          this.$emit("success", data)
+        })
       }
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
-};
+}
 </script>
 
 <style scoped>

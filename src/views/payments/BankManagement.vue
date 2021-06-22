@@ -55,10 +55,10 @@
   </Dialog>
 </template>
 <script>
-import { PrimeIcons } from "primevue/api";
-import Bank from "../../api/Bank";
-import ToastService from "../../service/ToastService";
-import BankModal from "./BankModal";
+import { PrimeIcons } from "primevue/api"
+import Bank from "../../api/Bank"
+import ToastService from "../../service/ToastService"
+import BankModal from "./BankModal"
 
 export default {
   components: { BankModal },
@@ -77,26 +77,26 @@ export default {
         mode: null,
         data: {},
       },
-    };
+    }
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         Bank.find({ ...this.filters, page: this.page, limit: this.limit }),
         Bank.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     update_status(data, status) {
       this.$confirm.require({
@@ -109,16 +109,16 @@ export default {
           : `${this.$i18n.t("bank_will_be_disabled")}: ${data.name}`,
         accept: () => {
           Bank.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch();
+            this.fetch()
             ToastService.success({
               summary: status
                 ? this.$i18n.t("bank_successfully_enabled")
                 : this.$i18n.t("bank_successfully_disabled"),
-            });
-          });
+            })
+          })
         },
-      });
-      this.show_update_status_modal = true;
+      })
+      this.show_update_status_modal = true
     },
     update_transfer(data, status) {
       this.$confirm.require({
@@ -131,26 +131,26 @@ export default {
           : `${this.$i18n.t("bank_transfer_will_be_disabled")}: ${data.name}`,
         accept: () => {
           Bank.update(data.id, { transfer: Number(status) }).then(() => {
-            this.fetch();
+            this.fetch()
             ToastService.success({
               summary: status
                 ? this.$i18n.t("bank_transfer_successfully_enabled")
                 : this.$i18n.t("bank_transfer_successfully_disabled"),
-            });
-          });
+            })
+          })
         },
-      });
-      this.show_update_status_modal = true;
+      })
+      this.show_update_status_modal = true
     },
     edit(data) {
-      this.modal.mode = "edit";
-      this.modal.data = data;
-      this.modal.visible = true;
+      this.modal.mode = "edit"
+      this.modal.data = data
+      this.modal.visible = true
     },
     create() {
-      this.modal.mode = "create";
-      this.modal.data = {};
-      this.modal.visible = true;
+      this.modal.mode = "create"
+      this.modal.data = {}
+      this.modal.visible = true
     },
     remove(data) {
       this.$confirm.require({
@@ -163,21 +163,20 @@ export default {
               summary: `${this.$i18n.t("bank_successfully_deleted")}: ${
                 data.name
               }`,
-            });
-            this.fetch();
-          });
+            })
+            this.fetch()
+          })
         },
-      });
+      })
     },
   },
   computed: {
     modal_title() {
       return this.modal.mode === "edit"
         ? this.$i18n.t("edit_bank")
-        : this.$i18n.t("create_bank");
+        : this.$i18n.t("create_bank")
     },
   },
-};
+}
 </script>
-<style scoped>
-</style>
+<style scoped></style>

@@ -73,8 +73,8 @@
 </template>
 
 <script>
-import Funds from "../../api/Funds";
-import WithdrawApplication from "./FundsTransactionApplication.vue";
+import Funds from "../../api/Funds"
+import WithdrawApplication from "./FundsTransactionApplication.vue"
 
 export default {
   components: {
@@ -94,11 +94,11 @@ export default {
         message: null,
         data: {},
       },
-    };
+    }
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         Funds.find({
           ...this.filters,
@@ -106,26 +106,26 @@ export default {
           limit: this.limit,
         }),
         Funds.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      this.summary = count.data;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      this.summary = count.data
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     show_modal(data) {
-      this.modal.visible = true;
-      this.modal.data = data;
+      this.modal.visible = true
+      this.modal.data = data
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

@@ -1,17 +1,17 @@
-import http from "./http";
-import store from "../store";
+import http from "./http"
+import store from "../store"
 
 class Merchant {
   async count(params = { status: null }) {
-    return http.get("merchant/summary", { params });
+    return http.get("merchant/summary", { params })
   }
 
   async get(id) {
-    return http.get(`merchant/${id}`);
+    return http.get(`merchant/${id}`)
   }
 
   async all() {
-    return merchant.find({ limit: 99 });
+    return merchant.find({ limit: 99 })
   }
 
   async find(params = {}) {
@@ -19,27 +19,27 @@ class Merchant {
       status: null,
       page: 1,
       limit: 10,
-      ...params
-    };
-    return http.get("merchant", { params }).then(res => {
-      store.dispatch("api/set_merchant_list", res.data.data);
-      return res;
-    });
+      ...params,
+    }
+    return http.get("merchant", { params }).then((res) => {
+      store.dispatch("api/set_merchant_list", res.data.data)
+      return res
+    })
   }
 
   async create(params) {
-    return http.post("merchant", params);
+    return http.post("merchant", params)
   }
 
   async update(id, data) {
-    return http.put(`merchant/${id}`, data);
+    return http.put(`merchant/${id}`, data)
   }
 
   async delete(id) {
-    return http.delete(`merchant/${id}`);
+    return http.delete(`merchant/${id}`)
   }
 }
 
-const merchant = new Merchant();
+const merchant = new Merchant()
 
-export default merchant;
+export default merchant

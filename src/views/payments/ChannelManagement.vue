@@ -55,10 +55,10 @@
 </template>
 
 <script>
-import { PrimeIcons } from "primevue/api";
-import Channel from "../../api/Channel";
-import ChannelModal from "./ChannelModal";
-import ToastService from "../../service/ToastService";
+import { PrimeIcons } from "primevue/api"
+import Channel from "../../api/Channel"
+import ChannelModal from "./ChannelModal"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { ChannelModal },
@@ -75,40 +75,40 @@ export default {
         mode: null,
         data: {},
       },
-    };
+    }
   },
   computed: {
     modal_title() {
       return this.modal.mode === "edit"
         ? this.$i18n.t("edit_channel")
-        : this.$i18n.t("create_channel");
+        : this.$i18n.t("create_channel")
     },
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         Channel.find({ ...this.filters, page: this.page, limit: this.limit }),
         Channel.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     edit(data) {
-      this.modal.mode = "edit";
-      this.modal.data = data;
-      this.modal.visible = true;
+      this.modal.mode = "edit"
+      this.modal.data = data
+      this.modal.visible = true
     },
     create() {
-      this.modal.mode = "create";
-      this.modal.data = {};
-      this.modal.visible = true;
+      this.modal.mode = "create"
+      this.modal.data = {}
+      this.modal.visible = true
     },
     remove(data) {
       this.$confirm.require({
@@ -119,11 +119,11 @@ export default {
           Channel.delete(data.id).then(() => {
             ToastService.success({
               summary: this.$i18n.t("channel_successfully_deleted"),
-            });
-            this.fetch();
-          });
+            })
+            this.fetch()
+          })
         },
-      });
+      })
     },
     update_status(data, status) {
       this.$confirm.require({
@@ -136,22 +136,21 @@ export default {
           : `${this.$i18n.t("channel_will_be_disabled")}: ${data.name}`,
         accept: () => {
           Channel.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch();
+            this.fetch()
             ToastService.success({
               summary: status
                 ? this.$i18n.t("channel_successfully_enabled")
                 : this.$i18n.t("channel_successfully_disabled"),
-            });
-          });
+            })
+          })
         },
-      });
+      })
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

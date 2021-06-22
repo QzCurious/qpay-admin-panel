@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import InputNumber from "primevue/inputnumber";
+import InputNumber from "primevue/inputnumber"
 export default {
   inheritAttrs: false,
   components: { InputNumber },
@@ -61,22 +61,22 @@ export default {
   },
   computed: {
     forward() {
-      const forward = { ...this.$attrs };
-      delete forward.style;
-      delete forward.class;
-      return forward;
+      const forward = { ...this.$attrs }
+      delete forward.style
+      delete forward.class
+      return forward
     },
     computedInputClass() {
       if (
         typeof this.inputClass === "string" ||
         this.inputClass instanceof String
       ) {
-        return { [this.inputClass]: true };
+        return { [this.inputClass]: true }
       } else if (Array.isArray(this.inputClass)) {
-        return this.inputClass.map((cls) => ({ [cls]: true }));
+        return this.inputClass.map((cls) => ({ [cls]: true }))
       }
-      return this.inputClass;
+      return this.inputClass
     },
   },
-};
+}
 </script>

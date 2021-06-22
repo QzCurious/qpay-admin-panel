@@ -1,13 +1,13 @@
 /**
  * AXIOS 封裝
  */
-import axios from "axios";
-import store from "../store";
-import { setupCache } from "axios-cache-adapter";
-import moment from "moment";
-import { transform_4xx_error } from "./ErrorHandler";
+import axios from "axios"
+import store from "../store"
+import { setupCache } from "axios-cache-adapter"
+import moment from "moment"
+import { transform_4xx_error } from "./ErrorHandler"
 
-const cache = setupCache({ maxAge: 0 });
+const cache = setupCache({ maxAge: 0 })
 
 const config = {
   baseURL: `${process.env.VUE_APP_API_HOST}/api`,
@@ -16,18 +16,18 @@ const config = {
     "Content-Type": "application/json",
   },
   adapter: cache.adapter,
-};
+}
 
-const http = axios.create(config);
+const http = axios.create(config)
 http.interceptors.request.use(
   function(config) {
     // 有登入就塞 token
-    const token = store.state.auth.token;
+    const token = store.state.auth.token
     if (token) {
       config.headers = {
         ...config.headers,
         Authorization: `bearer ${token}`,
-      };
+      }
     }
 
     // 如果 query string 中帶有 Date 型態的值就轉成 unix timestamp
@@ -36,25 +36,25 @@ http.interceptors.request.use(
         config.params[key] instanceof Date ||
         moment.isMoment(config.params[key])
       ) {
-        config.params[key] = moment(config.params[key]).unix();
+        config.params[key] = moment(config.params[key]).unix()
       }
     }
 
     // 如果 query string 中帶有空字串就拿掉
     for (const key in config.params) {
       if (config.params[key] === "") {
-        config.params[key] = undefined;
+        config.params[key] = undefined
       }
     }
 
-    return config;
+    return config
   },
   function(error) {
     // Do something with request error
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
-);
+)
 
-http.interceptors.response.use(null, transform_4xx_error);
+http.interceptors.response.use(null, transform_4xx_error)
 
-export default http;
+export default http

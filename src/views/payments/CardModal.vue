@@ -60,7 +60,7 @@
     />
     <div class="p-d-flex p-ai-center p-mt-3">
       <InputSwitch v-model="status" />
-      <span class="p-ml-2">{{$t('status')}}</span>
+      <span class="p-ml-2">{{ $t("status") }}</span>
     </div>
     <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
@@ -68,15 +68,15 @@
 </template>
 
 <script>
-import Card from "../../api/Card";
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength, numeric } from "@vuelidate/validators";
-import InputText from "../../components/InputText";
-import HolderDropdown from "../../components/HolderDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import ToastService from "../../service/ToastService";
-import Dropdown from "../../components/Dropdown.vue";
-import BankDropdown from "../../components/BankDropdown.vue";
+import Card from "../../api/Card"
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength, numeric } from "@vuelidate/validators"
+import InputText from "../../components/InputText"
+import HolderDropdown from "../../components/HolderDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import ToastService from "../../service/ToastService"
+import Dropdown from "../../components/Dropdown.vue"
+import BankDropdown from "../../components/BankDropdown.vue"
 
 export default {
   components: {
@@ -96,8 +96,8 @@ export default {
   },
   emits: ["success"],
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -111,7 +111,7 @@ export default {
       pb_api_key: { maxLength: maxLength(100) },
       plugin_mode: {},
       status: { required },
-    };
+    }
   },
   data() {
     return {
@@ -130,13 +130,13 @@ export default {
         { id: 1, name: "push bullet SMS" },
         { id: 2, name: "ibanking Back-office spider" },
       ],
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
@@ -150,41 +150,41 @@ export default {
         pb_api_key: this.pb_api_key,
         plugin_mode: this.plugin_mode,
         status: Number(this.status),
-      };
+      }
       if (this.mode === "create") {
         Card.create(data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("card_successfully_created"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       } else if (this.mode === "edit") {
         Card.update(this.data.id, data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("card_successfully_updated"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       }
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
   mounted() {
     Card.get(this.data.id).then(({ data }) => {
-      this.channel_id = data.channel_id;
-      this.card_holder_id = data.card_holder_id;
-      this.bank_id = data.bank_id;
-      this.branch = data.branch;
-      this.account_number = data.account_number;
-      this.ibanking_id = data.ibanking_id;
-      this.ibanking_password = data.ibanking_password;
-      this.pb_api_key = data.pb_api_key;
-      this.plugin_mode = data.plugin_mode;
-      this.status = Boolean(data.status);
-    });
+      this.channel_id = data.channel_id
+      this.card_holder_id = data.card_holder_id
+      this.bank_id = data.bank_id
+      this.branch = data.branch
+      this.account_number = data.account_number
+      this.ibanking_id = data.ibanking_id
+      this.ibanking_password = data.ibanking_password
+      this.pb_api_key = data.pb_api_key
+      this.plugin_mode = data.plugin_mode
+      this.status = Boolean(data.status)
+    })
   },
-};
+}
 </script>
 
 <style scoped>

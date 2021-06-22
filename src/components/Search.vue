@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Button from "primevue/button";
-import i18n from "../i18n";
+import Button from "primevue/button"
+import i18n from "../i18n"
 
 export default {
   inheritAttrs: false,
@@ -19,5 +19,5 @@ export default {
     modelValue: Number,
     label: { type: String, default: () => i18n.global.t("form.search") },
   },
-};
+}
 </script>

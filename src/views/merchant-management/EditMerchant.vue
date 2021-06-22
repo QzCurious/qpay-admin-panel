@@ -37,14 +37,14 @@
 </template>
 
 <script>
-import Merchant from "../../api/Merchant";
-import useVuelidate from "@vuelidate/core";
-import { required, minLength, maxLength } from "@vuelidate/validators";
-import { ipv4 } from "../../helper/validator";
-import InputText from "../../components/InputText";
-import ToastService from "../../service/ToastService";
-import cryptoRandomString from "crypto-random-string";
-import copy from "copy-to-clipboard";
+import Merchant from "../../api/Merchant"
+import useVuelidate from "@vuelidate/core"
+import { required, minLength, maxLength } from "@vuelidate/validators"
+import { ipv4 } from "../../helper/validator"
+import InputText from "../../components/InputText"
+import ToastService from "../../service/ToastService"
+import cryptoRandomString from "crypto-random-string"
+import copy from "copy-to-clipboard"
 
 export default {
   components: { InputText },
@@ -56,8 +56,8 @@ export default {
     },
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -67,7 +67,7 @@ export default {
         maxLength: maxLength(20),
       },
       md5_key: { required },
-    };
+    }
   },
   data() {
     return {
@@ -79,68 +79,68 @@ export default {
         class: "p-button-info",
         tooltip: this.$i18n.t("form.copy"),
       },
-    };
+    }
   },
   methods: {
     ip_allow_added(e) {
-      this.ip_allow_invlid = null;
+      this.ip_allow_invlid = null
 
       // remove invalid
-      const new_ip = e.value[e.value.length - 1];
+      const new_ip = e.value[e.value.length - 1]
       if (!ipv4(new_ip)) {
-        this.ip_allow_invlid = new_ip;
-        return;
+        this.ip_allow_invlid = new_ip
+        return
       }
 
       // remove duplicate
-      this.ip_allow = [...new Set(e.value)];
+      this.ip_allow = [...new Set(e.value)]
     },
     ip_allow_remove(e) {
-      this.ip_allow_invlid = null;
-      this.ip_allow = this.ip_allow.filter((item) => !e.value.includes(item));
+      this.ip_allow_invlid = null
+      this.ip_allow = this.ip_allow.filter((item) => !e.value.includes(item))
     },
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
         name: this.name,
         md5_key: this.md5_key,
-      };
+      }
       Merchant.update(this.id, data).then(() => {
         ToastService.success({
           summary: this.$i18n.t("merchant_successfully_updated"),
-        });
-        this.$emit("success", data);
-      });
+        })
+        this.$emit("success", data)
+      })
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
     copy() {
-      const copy_btn_props = { ...this.copy_btn_props };
+      const copy_btn_props = { ...this.copy_btn_props }
       this.copy_btn_props = {
         icon: "pi pi-check",
         class: "p-button-success",
-      };
+      }
       setTimeout(() => {
-        this.copy_btn_props = copy_btn_props;
-      }, 1000);
-      copy(this.md5_key);
-      ToastService.success({ summary: this.$i18n.t("MD5_key_copied") });
+        this.copy_btn_props = copy_btn_props
+      }, 1000)
+      copy(this.md5_key)
+      ToastService.success({ summary: this.$i18n.t("MD5_key_copied") })
     },
     refresh_md5_key() {
-      this.md5_key = cryptoRandomString({ length: 64, type: "alphanumeric" });
+      this.md5_key = cryptoRandomString({ length: 64, type: "alphanumeric" })
     },
   },
   mounted() {
     Merchant.get(this.id).then((res) => {
-      this.name = res.data.name;
-      this.md5_key = res.data.md5_key;
-    });
+      this.name = res.data.name
+      this.md5_key = res.data.md5_key
+    })
   },
-};
+}
 </script>
 
 <style scoped>

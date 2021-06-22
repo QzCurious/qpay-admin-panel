@@ -1,13 +1,13 @@
-import { VuexPersistence } from "vuex-persist";
-import { createStore } from "vuex";
-import * as auth from "./auth";
-import * as locale from "./locale";
-import * as api from "./api";
+import { VuexPersistence } from "vuex-persist"
+import { createStore } from "vuex"
+import * as auth from "./auth"
+import * as locale from "./locale"
+import * as api from "./api"
 
 const vuexLocalStorage = new VuexPersistence({
   modules: ["auth"],
-  storage: window.localStorage
-});
+  storage: window.localStorage,
+})
 
 export default createStore({
   state: {},
@@ -16,7 +16,7 @@ export default createStore({
   modules: {
     auth: auth.store,
     locale: locale.store,
-    api: api.store
+    api: api.store,
   },
-  plugins: [vuexLocalStorage.plugin]
-});
+  plugins: [vuexLocalStorage.plugin],
+})

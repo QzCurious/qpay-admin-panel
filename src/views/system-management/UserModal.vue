@@ -58,14 +58,14 @@
 </template>
 
 <script>
-import user from "../../api/User";
-import useVuelidate from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
-import { ipv4 } from "../../helper/validator";
-import InputText from "../../components/InputText";
-import Password from "../../components/Password";
-import RoleDropdown from "../../components/RoleDropdown";
-import ToastService from "../../service/ToastService";
+import user from "../../api/User"
+import useVuelidate from "@vuelidate/core"
+import { required, minLength } from "@vuelidate/validators"
+import { ipv4 } from "../../helper/validator"
+import InputText from "../../components/InputText"
+import Password from "../../components/Password"
+import RoleDropdown from "../../components/RoleDropdown"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText, Password, RoleDropdown },
@@ -79,8 +79,8 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -89,7 +89,7 @@ export default {
       payment_password: this.mode === "create" ? { required } : {},
       role_id: { required },
       phone: {},
-    };
+    }
   },
   data() {
     return {
@@ -101,30 +101,30 @@ export default {
       ip_allow_invlid: this.data?.ip_allow_invlid,
       phone: this.data?.phone,
       status: this.data?.status ?? true,
-    };
+    }
   },
   methods: {
     ip_allow_added(e) {
-      this.ip_allow_invlid = null;
+      this.ip_allow_invlid = null
 
       // remove invalid
-      const new_ip = e.value[e.value.length - 1];
+      const new_ip = e.value[e.value.length - 1]
       if (!ipv4(new_ip)) {
-        this.ip_allow_invlid = new_ip;
-        return;
+        this.ip_allow_invlid = new_ip
+        return
       }
 
       // remove duplicate
-      this.ip_allow = [...new Set(e.value)];
+      this.ip_allow = [...new Set(e.value)]
     },
     ip_allow_remove(e) {
-      this.ip_allow_invlid = null;
-      this.ip_allow = this.ip_allow.filter((item) => !e.value.includes(item));
+      this.ip_allow_invlid = null
+      this.ip_allow = this.ip_allow.filter((item) => !e.value.includes(item))
     },
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
@@ -134,37 +134,37 @@ export default {
         payment_password: this.payment_password,
         ip_allow: this.ip_allow.length ? this.ip_allow : null,
         phone: this.phone,
-      };
+      }
       if (this.mode === "create") {
         user
           .create(data)
           .then(() => {
             ToastService.success({
               summary: this.$i18n.t("account_successfully_created"),
-            });
+            })
 
-            this.$emit("success", data);
+            this.$emit("success", data)
           })
           .catch((err) => {
             if (err.response.status === 400 && err.response.data.code === 1002)
               ToastService.error({
                 summary: `${this.$i18n.t("api.error.1002")}: ${this.signin_id}`,
-              });
-          });
+              })
+          })
       } else if (this.mode === "edit") {
         user.update(this.signin_id, data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("account_successfully_updated"),
-          });
+          })
 
-          this.$emit("success", data);
-        });
+          this.$emit("success", data)
+        })
       }
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
-};
+}
 </script>
 
 <style scoped>

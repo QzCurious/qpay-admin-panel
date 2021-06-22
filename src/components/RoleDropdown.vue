@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
-import Role from "../api/Role";
-import store from "../store";
+import Dropdown from "./Dropdown.vue"
+import Role from "../api/Role"
+import store from "../store"
 
 export default {
   components: { Dropdown },
@@ -23,17 +23,16 @@ export default {
   emits: ["update:modelValue"],
   computed: {
     data_label() {
-      return this.label ?? this.$i18n.t("role");
+      return this.label ?? this.$i18n.t("role")
     },
     options() {
-      return store.state.api.role_list;
+      return store.state.api.role_list
     },
   },
   mounted() {
-    Role.all();
+    Role.all()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

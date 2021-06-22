@@ -1,9 +1,9 @@
-import http from "./http";
+import http from "./http"
 
 class OperationLogApi {
   async get() {
-    return http.get("operation-log");
+    return http.get("operation-log")
   }
 }
 
-export default new OperationLogApi();
+export default new OperationLogApi()

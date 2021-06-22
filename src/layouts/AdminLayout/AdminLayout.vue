@@ -29,15 +29,14 @@
       @layout-change="onLayoutChange"
       @layout-color-change="onLayoutColorChange"
     /> -->
-
   </div>
 </template>
 
 <script>
-import TopBar from "./Topbar";
-import Profile from "./Profile.vue";
-import Menu from "./Menu.vue";
-import menu from "./menu";
+import TopBar from "./Topbar"
+import Profile from "./Profile.vue"
+import Menu from "./Menu.vue"
+import menu from "./menu"
 
 export default {
   data() {
@@ -48,64 +47,64 @@ export default {
       overlayMenuActive: false,
       mobileMenuActive: false,
       menu: menu,
-    };
+    }
   },
   watch: {
     $route() {
-      this.menuActive = false;
-      this.$toast.removeAllGroups();
+      this.menuActive = false
+      this.$toast.removeAllGroups()
     },
   },
   methods: {
     onWrapperClick() {
       if (!this.menuClick) {
-        this.overlayMenuActive = false;
-        this.mobileMenuActive = false;
+        this.overlayMenuActive = false
+        this.mobileMenuActive = false
       }
 
-      this.menuClick = false;
+      this.menuClick = false
     },
     onMenuToggle() {
-      this.menuClick = true;
+      this.menuClick = true
 
       if (this.isDesktop()) {
         if (this.layoutMode === "overlay") {
           if (this.mobileMenuActive === true) {
-            this.overlayMenuActive = true;
+            this.overlayMenuActive = true
           }
 
-          this.overlayMenuActive = !this.overlayMenuActive;
-          this.mobileMenuActive = false;
+          this.overlayMenuActive = !this.overlayMenuActive
+          this.mobileMenuActive = false
         } else if (this.layoutMode === "static") {
-          this.staticMenuInactive = !this.staticMenuInactive;
+          this.staticMenuInactive = !this.staticMenuInactive
         }
       } else {
-        this.mobileMenuActive = !this.mobileMenuActive;
+        this.mobileMenuActive = !this.mobileMenuActive
       }
 
-      event.preventDefault();
+      event.preventDefault()
     },
     onSidebarClick() {
-      this.menuClick = true;
+      this.menuClick = true
     },
     onMenuItemClick(event) {
       if (event.item && !event.item.items) {
-        this.overlayMenuActive = false;
-        this.mobileMenuActive = false;
+        this.overlayMenuActive = false
+        this.mobileMenuActive = false
       }
     },
     onLayoutChange(layoutMode) {
-      this.layoutMode = layoutMode;
+      this.layoutMode = layoutMode
     },
     onLayoutColorChange(layoutColorMode) {
-      this.layoutColorMode = layoutColorMode;
+      this.layoutColorMode = layoutColorMode
     },
     addClass(element, className) {
-      if (element.classList) element.classList.add(className);
-      else element.className += " " + className;
+      if (element.classList) element.classList.add(className)
+      else element.className += " " + className
     },
     removeClass(element, className) {
-      if (element.classList) element.classList.remove(className);
+      if (element.classList) element.classList.remove(className)
       else
         element.className = element.className.replace(
           new RegExp(
@@ -113,18 +112,18 @@ export default {
             "gi"
           ),
           " "
-        );
+        )
     },
     isDesktop() {
-      return window.innerWidth > 1024;
+      return window.innerWidth > 1024
     },
     isSidebarVisible() {
       if (this.isDesktop()) {
-        if (this.layoutMode === "static") return !this.staticMenuInactive;
-        else if (this.layoutMode === "overlay") return this.overlayMenuActive;
-        else return true;
+        if (this.layoutMode === "static") return !this.staticMenuInactive
+        else if (this.layoutMode === "overlay") return this.overlayMenuActive
+        else return true
       } else {
-        return true;
+        return true
       }
     },
   },
@@ -143,7 +142,7 @@ export default {
           "p-input-filled": this.$appState.inputStyle === "filled",
           "p-ripple-disabled": this.$primevue.config.ripple === false,
         },
-      ];
+      ]
     },
     sidebarClass() {
       return [
@@ -152,25 +151,25 @@ export default {
           "layout-sidebar-dark": this.layoutColorMode === "dark",
           "layout-sidebar-light": this.layoutColorMode === "light",
         },
-      ];
+      ]
     },
     logo() {
       return this.layoutColorMode === "dark"
         ? "/assets/layout/images/logo-white.svg"
-        : "/assets/layout/images/logo.svg";
+        : "/assets/layout/images/logo.svg"
     },
   },
   beforeUpdate() {
     if (this.mobileMenuActive)
-      this.addClass(document.body, "body-overflow-hidden");
-    else this.removeClass(document.body, "body-overflow-hidden");
+      this.addClass(document.body, "body-overflow-hidden")
+    else this.removeClass(document.body, "body-overflow-hidden")
   },
   components: {
     TopBar,
     Profile,
     Menu,
   },
-};
+}
 </script>
 
 <style lang="scss">

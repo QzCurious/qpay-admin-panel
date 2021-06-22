@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { PrimeIcons } from "primevue/api";
-import { mapState } from "vuex";
+import { PrimeIcons } from "primevue/api"
+import { mapState } from "vuex"
 
 export default {
   data() {
@@ -28,23 +28,22 @@ export default {
           })),
         },
       ],
-    };
+    }
   },
   computed: {
     ...mapState({ locale: (state) => state.locale.locale }),
   },
   watch: {
     locale() {
-      this.items[0].label = `語言 (${this.$i18n.t("name", this.locale)})`;
+      this.items[0].label = `語言 (${this.$i18n.t("name", this.locale)})`
     },
   },
   methods: {
     toggle(event) {
-      this.$refs.menu.toggle(event);
+      this.$refs.menu.toggle(event)
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

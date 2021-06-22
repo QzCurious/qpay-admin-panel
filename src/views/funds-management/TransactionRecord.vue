@@ -77,16 +77,16 @@
 <script>
 import TransactionRecord, {
   TRANSACTION_RECORD_TYPE,
-} from "../../api/TransactionRecord";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import CalendarStartTime from "../../components/CalendarStartTime.vue";
-import CalendarEndTime from "../../components/CalendarEndTime.vue";
-import InputText from "../../components/InputText.vue";
-import Search from "../../components/Search.vue";
-import { date } from "../../helper/validator";
-import { helpers, minValue } from "@vuelidate/validators";
-import useVuelidate from "@vuelidate/core";
+} from "../../api/TransactionRecord"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import InputText from "../../components/InputText.vue"
+import Search from "../../components/Search.vue"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
 
 export default {
   components: {
@@ -98,8 +98,8 @@ export default {
     CalendarEndTime,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -121,7 +121,7 @@ export default {
           ),
         },
       },
-    };
+    }
   },
   data() {
     return {
@@ -132,12 +132,16 @@ export default {
         transaction_id: null,
         merchant_id: null,
         channel_id: null,
-        start_time: this.moment().startOf("day").toDate(),
-        end_time: this.moment().endOf("day").toDate(),
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
       },
       records: [],
       totalRecords: 0,
-    };
+    }
   },
   computed: {
     transaction_record_type_list() {
@@ -145,22 +149,22 @@ export default {
         return {
           label: this.$i18n.t(`transaction_record_type_values.${key}`),
           value,
-        };
-      });
+        }
+      })
     },
   },
   methods: {
     handle_search() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.fetch();
+      this.fetch()
     },
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         TransactionRecord.find({
           ...this.filters,
@@ -168,21 +172,21 @@ export default {
           limit: this.limit,
         }),
         TransactionRecord.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

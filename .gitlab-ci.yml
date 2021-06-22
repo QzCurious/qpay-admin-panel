@@ -16,12 +16,12 @@ stage-build-and-up:
     - cd $DOCKER_COMPOSE_DIRECTORY
     - docker-compose up -d $SERVICE_NAME
     - EOF
-  only: 
+  only:
     - /^dev$/
 
 stage-build-demo-and-up:
   image: docker:dind
-  script: 
+  script:
     - cp .env.development.demo .env.production
     - docker build -t qpay-client:demo .
     - *init_ssh
@@ -29,5 +29,5 @@ stage-build-demo-and-up:
     - cd $DEMO_DOCKER_COMPOSE_DIRECTORY
     - docker-compose up -d $SERVICE_NAME
     - EOF
-  only: 
+  only:
     - /^demo$/

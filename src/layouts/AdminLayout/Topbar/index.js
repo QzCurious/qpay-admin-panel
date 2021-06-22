@@ -1,1 +1,1 @@
-export { default } from "./Topbar.vue";
+export { default } from "./Topbar.vue"

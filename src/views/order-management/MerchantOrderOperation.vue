@@ -80,27 +80,29 @@
       <template #body="{ data }">
         <Button class="p-button-success" @click="success(data)">success</Button>
         <Button class="p-button-danger" @click="fail(data)">fail</Button>
-        <Button class="p-button-info" @click="processing(data)">processing</Button>
+        <Button class="p-button-info" @click="processing(data)"
+          >processing</Button
+        >
       </template>
     </Column>
   </DataTable>
 </template>
 
 <script>
-import InputText from "../../components/InputText.vue";
-import Dropdown from "../../components/Dropdown.vue";
-import Calendar from "../../components/Calendar.vue";
-import MerchantOrder from "../../api/MerchantOrder";
-import useVuelidate from "@vuelidate/core";
-import { date } from "../../helper/validator";
-import { helpers } from "@vuelidate/validators";
-import moment from "moment";
+import InputText from "../../components/InputText.vue"
+import Dropdown from "../../components/Dropdown.vue"
+import Calendar from "../../components/Calendar.vue"
+import MerchantOrder from "../../api/MerchantOrder"
+import useVuelidate from "@vuelidate/core"
+import { date } from "../../helper/validator"
+import { helpers } from "@vuelidate/validators"
+import moment from "moment"
 
 export default {
   components: { InputText, Dropdown, Calendar },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -108,7 +110,7 @@ export default {
         valid_date: helpers.withMessage("It's not a valid date", date()),
       },
       end: { valid_date: helpers.withMessage("It's not a valid date", date()) },
-    };
+    }
   },
   data() {
     return {
@@ -130,33 +132,27 @@ export default {
       end: null,
 
       records: [],
-    };
+    }
   },
   created() {
-    this.moment = moment;
+    this.moment = moment
   },
   async mounted() {
-    this.records = (await MerchantOrder.all()).data;
-    this.loading = false;
+    this.records = (await MerchantOrder.all()).data
+    this.loading = false
   },
   methods: {
     handle_search() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
     },
-    success(data){
-
-    },
-    fail(data){
-
-    },
-    processing(data){
-
-    }
+    success(data) {},
+    fail(data) {},
+    processing(data) {},
   },
-};
+}
 </script>
 
 <style scoped>

@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
-import Holder from "../api/Holder";
-import store from "../store";
+import Dropdown from "./Dropdown.vue"
+import Holder from "../api/Holder"
+import store from "../store"
 
 export default {
   components: { Dropdown },
@@ -23,17 +23,16 @@ export default {
   emits: ["update:modelValue"],
   computed: {
     data_label() {
-      return this.label ?? this.$i18n.t("card_holder");
+      return this.label ?? this.$i18n.t("card_holder")
     },
     options() {
-      return store.state.api.holder_list;
+      return store.state.api.holder_list
     },
   },
   async mounted() {
-    await Holder.all();
+    await Holder.all()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

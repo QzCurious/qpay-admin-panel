@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import Channel from "../../api/Channel";
-import useVuelidate from "@vuelidate/core";
-import { required, maxLength } from "@vuelidate/validators";
-import InputText from "../../components/InputText";
-import ToastService from "../../service/ToastService";
+import Channel from "../../api/Channel"
+import useVuelidate from "@vuelidate/core"
+import { required, maxLength } from "@vuelidate/validators"
+import InputText from "../../components/InputText"
+import ToastService from "../../service/ToastService"
 
 export default {
   components: { InputText },
@@ -34,52 +34,51 @@ export default {
     data: Object,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
       channel: { required, maxLength: maxLength(16) },
-    };
+    }
   },
   data() {
     return {
       channel: this.data?.name,
       status: this.data?.status ?? true,
-    };
+    }
   },
   methods: {
     async handle_submit() {
-      this.v$.$touch();
+      this.v$.$touch()
       if (this.v$.$error) {
-        return;
+        return
       }
 
       const data = {
         name: this.channel,
         status: Number(this.status),
-      };
+      }
       if (this.mode === "create") {
         Channel.create(data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("channel_successfully_created"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       } else if (this.mode === "edit") {
         Channel.update(this.data.id, data).then(() => {
           ToastService.success({
             summary: this.$i18n.t("channel_successfully_updated"),
-          });
-          this.$emit("success", data);
-        });
+          })
+          this.$emit("success", data)
+        })
       }
 
-      this.v$.$reset();
+      this.v$.$reset()
     },
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

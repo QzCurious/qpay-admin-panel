@@ -1,35 +1,35 @@
-import http from "./http";
-import store from "../store";
+import http from "./http"
+import store from "../store"
 
 class Role {
   async all() {
-    return role.find({ limit: 99 });
+    return role.find({ limit: 99 })
   }
 
   async get(id) {
-    return http.get(`role/${id}`);
+    return http.get(`role/${id}`)
   }
 
   async find(params = {}) {
     params = {
       page: 1,
       limit: 10,
-      ...params
-    };
-    return http.get("role", { params }).then(res => {
-      store.dispatch("api/set_role_list", res.data.data);
-    });
+      ...params,
+    }
+    return http.get("role", { params }).then((res) => {
+      store.dispatch("api/set_role_list", res.data.data)
+    })
   }
 
   async create(data) {
-    return http.post("role", data);
+    return http.post("role", data)
   }
 
   async update(id, data) {
-    return http.put(`role/${id}`, data);
+    return http.put(`role/${id}`, data)
   }
 }
 
-const role = new Role();
+const role = new Role()
 
-export default role;
+export default role

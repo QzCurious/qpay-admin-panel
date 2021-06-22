@@ -120,7 +120,7 @@
       <template #body="{ data }">
         {{
           data.success_at &&
-          moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
+            moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
         }}
       </template>
     </Column>
@@ -128,20 +128,20 @@
 </template>
 
 <script>
-import InputText from "../../components/InputText.vue";
-import Dropdown from "../../components/Dropdown.vue";
+import InputText from "../../components/InputText.vue"
+import Dropdown from "../../components/Dropdown.vue"
 import MerchantOrder, {
   ORDER_STATUS,
   AUDIT_TYPE,
-} from "../../api/MerchantOrder";
-import useVuelidate from "@vuelidate/core";
-import { date } from "../../helper/validator";
-import { helpers, minValue } from "@vuelidate/validators";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import Search from "../../components/Search";
-import CalendarStartTime from "../../components/CalendarStartTime.vue";
-import CalendarEndTime from "../../components/CalendarEndTime.vue";
+} from "../../api/MerchantOrder"
+import useVuelidate from "@vuelidate/core"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import Search from "../../components/Search"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
 
 export default {
   components: {
@@ -154,8 +154,8 @@ export default {
     CalendarEndTime,
   },
   setup() {
-    const v$ = useVuelidate();
-    return { v$ };
+    const v$ = useVuelidate()
+    return { v$ }
   },
   validations() {
     return {
@@ -177,7 +177,7 @@ export default {
           ),
         },
       },
-    };
+    }
   },
   data() {
     return {
@@ -193,12 +193,16 @@ export default {
         order_status: null,
         merchant: null,
         channel: null,
-        start_time: this.moment().startOf("day").toDate(),
-        end_time: this.moment().endOf("day").toDate(),
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
       },
       records: [],
       totalRecords: 0,
-    };
+    }
   },
   computed: {
     order_status_list() {
@@ -206,28 +210,28 @@ export default {
         return {
           label: this.$i18n.t(`order_status_values.${key}`),
           value,
-        };
-      });
+        }
+      })
     },
     audit_status_list() {
       return Object.entries(AUDIT_TYPE).map(([key, value]) => ({
         label: this.$i18n.t(`audit_type_values.${key}`),
         value,
-      }));
+      }))
     },
   },
   methods: {
     handle_search() {
-      this.v$.$touch();
+      this.v$.$touch()
 
       if (this.v$.$error) {
-        return;
+        return
       }
 
-      this.fetch();
+      this.fetch()
     },
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         MerchantOrder.find({
           ...this.filters,
@@ -235,21 +239,21 @@ export default {
           limit: this.limit,
         }),
         MerchantOrder.count(this.filters),
-      ]);
-      this.records = records.data.data;
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>

@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
-import Channel from "../api/Channel";
-import store from "../store";
+import Dropdown from "./Dropdown.vue"
+import Channel from "../api/Channel"
+import store from "../store"
 
 export default {
   components: { Dropdown },
@@ -23,17 +23,16 @@ export default {
   emits: ["update:modelValue"],
   computed: {
     data_label() {
-      return this.label ?? this.$i18n.t("channel");
+      return this.label ?? this.$i18n.t("channel")
     },
     options() {
-      return store.state.api.channel_list;
+      return store.state.api.channel_list
     },
   },
   async mounted() {
-    await Channel.all();
+    await Channel.all()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

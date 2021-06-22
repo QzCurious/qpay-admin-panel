@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import Dropdown from "./Dropdown.vue";
-import Bank from "../api/Bank";
-import store from "../store";
+import Dropdown from "./Dropdown.vue"
+import Bank from "../api/Bank"
+import store from "../store"
 
 export default {
   components: { Dropdown },
@@ -23,17 +23,16 @@ export default {
   emits: ["update:modelValue"],
   computed: {
     data_label() {
-      return this.label ?? this.$i18n.t("bank");
+      return this.label ?? this.$i18n.t("bank")
     },
     options() {
-      return store.state.api.bank_list;
+      return store.state.api.bank_list
     },
   },
   async mounted() {
-    await Bank.all();
+    await Bank.all()
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

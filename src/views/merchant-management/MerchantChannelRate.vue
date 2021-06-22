@@ -68,13 +68,13 @@
 </template>
 
 <script>
-import MerchantChannel from "../../api/MerchantChannel";
-import MerchantDropdown from "../../components/MerchantDropdown";
-import ChannelDropdown from "../../components/ChannelDropdown";
-import StatusDropdown from "../../components/StatusDropdown";
-import Search from "../../components/Search.vue";
-import EditMerchantChannel from "./EditMerchantChannel";
-import { falsy_to_null } from "../../helper/transform";
+import MerchantChannel from "../../api/MerchantChannel"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import StatusDropdown from "../../components/StatusDropdown"
+import Search from "../../components/Search.vue"
+import EditMerchantChannel from "./EditMerchantChannel"
+import { falsy_to_null } from "../../helper/transform"
 
 export default {
   components: {
@@ -100,11 +100,11 @@ export default {
         visible: false,
         data: null,
       },
-    };
+    }
   },
   methods: {
     async fetch() {
-      this.loading = true;
+      this.loading = true
       const [records, count] = await Promise.all([
         MerchantChannel.find({
           ...this.filters,
@@ -112,35 +112,35 @@ export default {
           limit: this.limit,
         }),
         MerchantChannel.count(this.filters),
-      ]);
+      ])
       this.records = records.data.data.map((data) => ({
         ...data,
         deposit_fee_rate: falsy_to_null(data.deposit_fee_rate),
         deposit_fee: falsy_to_null(this.data?.deposit_fee),
         withdraw_fee_rate: falsy_to_null(this.data?.withdraw_fee_rate),
         withdraw_fee: falsy_to_null(this.data?.withdraw_fee),
-      }));
-      this.totalRecords = count.data.count;
-      window.scrollTo(0, 0);
-      this.loading = false;
+      }))
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
     },
     on_page(e) {
-      this.page = e.page + 1;
-      this.fetch();
+      this.page = e.page + 1
+      this.fetch()
     },
     edit(data) {
-      this.edit_modal.data = data;
-      this.edit_modal.visible = true;
+      this.edit_modal.data = data
+      this.edit_modal.visible = true
     },
     success() {
-      this.fetch();
-      this.edit_modal.visible = false;
+      this.fetch()
+      this.edit_modal.visible = false
     },
   },
   mounted() {
-    this.fetch();
+    this.fetch()
   },
-};
+}
 </script>
 
 <style scoped>
