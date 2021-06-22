@@ -1,13 +1,16 @@
 <template>
+  <h1>{{ $t("merchant_order_operation") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    @page="on_page($event)"
   >
     <template #header>
       <form
@@ -15,165 +18,286 @@
         class="p-d-flex p-flex-wrap p-ai-start"
       >
         <InputText
-          :label="$t('transaction_number')"
           name="transation_number"
-          v-model="transation_number"
+          :label="$t('transaction_number')"
+          v-model="filters.transaction_id"
         />
         <InputText
           name="order_number"
           :label="$t('order_number')"
-          v-model="order_number"
+          v-model="filters.order_number"
         />
         <InputText
           name="order_amount"
           :label="$t('order_amount')"
-          v-model="order_amount"
+          v-model="filters.order_amount"
         />
         <InputText
           name="order_over"
           :label="$t('order_over')"
-          v-model="order_over"
+          v-model="filters.order_over"
         />
         <Dropdown
           :label="$t('order_status')"
-          v-model="order_status"
+          v-model="filters.order_status"
           :options="order_status_list"
         />
         <Dropdown
           :label="$t('audit_type')"
-          v-model="audit_type"
+          v-model="filters.audit_type"
           :options="audit_status_list"
         />
-        <Dropdown
-          :label="$t('merchant')"
-          v-model="merchant"
-          :options="merchant_list"
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <ChannelDropdown v-model="filters.channel_id" />
+        <CalendarStartTime
+          v-model="filters.start_time"
+          :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
         />
-        <Dropdown
-          :label="$t('channel')"
-          v-model="channel"
-          :options="channel_list"
+        <CalendarEndTime
+          v-model="filters.end_time"
+          :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
-        <Calendar
-          name="start"
-          :label="$t('form.start_time')"
-          v-model="start"
-          :showSeconds="true"
-          :showTime="true"
-          :errors="v$.start.$errors.map((e) => e.$message)"
-        />
-        <Calendar
-          name="end"
-          :label="$t('form.end_time')"
-          v-model="end"
-          :showSeconds="true"
-          :showTime="true"
-          :errors="v$.end.$errors.map((e) => e.$message)"
-        />
-        <Button class="p-mt-4" type="submit">{{ $t("form.search") }}</Button>
+        <Search />
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="order_number" :header="$t('order_number')"></Column>
+    <Column field="id" :header="$t('order_number')" bodyClass="p-text-right">
+    </Column>
     <Column
-      field="transation_number"
-      :header="$t('transaction_number')"
+      field="deposit_transaction_id"
+      :header="$t('transaction_id')"
+      bodyClass="p-text-right"
     ></Column>
-    <Column field="order_amount" :header="$t('order_amount')"></Column>
-    <Column field="real_amount" :header="$t('real_amount')"></Column>
-    <Column field="fee" :header="$t('fee')"></Column>
-    <Column field="credit_amount" :header="$t('credit_amount')"></Column>
-    <Column field="order_status" :header="$t('order_status')"></Column>
-    <Column field="channel" :header="$t('channel')"></Column>
+    <Column :header="$t('order_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data.order_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('real_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data.real_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('fee')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data.fee.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('credit_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data.credit_amount.toLocaleString("en-US") }}
+      </template>
+    </Column>
+    <Column :header="$t('order_status')">
+      <template #body="{ data }">
+        {{
+          order_status_list.find(({ value }) => value === data.order_status)
+            .label
+        }}
+      </template>
+    </Column>
+    <Column field="channel_name" :header="$t('channel')"></Column>
     <Column field="remark" :header="$t('remark')"></Column>
-    <Column field="audit_type" :header="$t('audit_type')"></Column>
-    <Column field="merchant" :header="$t('merchant')"></Column>
+    <Column field="audit_type" :header="$t('audit_type')">
+      <template #body="{ data }">
+        {{
+          audit_status_list.find(({ value }) => value === data.audit_type).label
+        }}
+      </template>
+    </Column>
+    <Column field="merchant_name" :header="$t('merchant')"></Column>
     <Column field="order_time" :header="$t('order_time')">
       <template #body="{ data }">
-        {{ moment(data.order_time).format("YYYY-MM-DD HH:mm:ss") }}
+        {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
     <Column field="success_time" :header="$t('success_time')">
       <template #body="{ data }">
-        {{ moment(data.order_time).format("YYYY-MM-DD HH:mm:ss") }}
+        {{
+          data.success_at &&
+            moment.unix(data.success_at).format(CONSTANTS.DATETIME_FORMAT)
+        }}
       </template>
     </Column>
     <Column :header="$t('operation')">
+      <!-- TODO -->
       <template #body="{ data }">
-        <Button class="p-button-success" @click="success(data)">success</Button>
-        <Button class="p-button-danger" @click="fail(data)">fail</Button>
-        <Button class="p-button-info" @click="processing(data)"
-          >processing</Button
+        <Button
+          class="p-button-success"
+          @click="paid(data)"
+          v-model:visible="data.audit_type"
+          >{{ $t("audit_type_values.PAID") }}</Button
         >
+        <Button class="p-button-danger" @click="reject(data)">{{
+          $t("audit_type_values.REJECT")
+        }}</Button>
       </template>
     </Column>
   </DataTable>
+  <Dialog modal :header="$t('verify_2fa')" v-model:visible="show_verify_2fa">
+    <!-- <Form @submit.prevent="handle_operation"> -->
+    <InputText v-model="operation_data.code" />
+    <Button :label="$t('form.submit')" @click="handle_operation" />
+    <!-- </Form> -->
+    <!-- <Verify2fa @success="next_page" /> -->
+  </Dialog>
 </template>
 
 <script>
 import InputText from "../../components/InputText.vue"
 import Dropdown from "../../components/Dropdown.vue"
-import Calendar from "../../components/Calendar.vue"
-import MerchantOrder from "../../api/MerchantOrder"
+import MerchantOrder, {
+  ORDER_STATUS,
+  AUDIT_TYPE,
+} from "../../api/MerchantOrder"
 import useVuelidate from "@vuelidate/core"
 import { date } from "../../helper/validator"
-import { helpers } from "@vuelidate/validators"
-import moment from "moment"
+import { helpers, minValue } from "@vuelidate/validators"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import Search from "../../components/Search"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
 
 export default {
-  components: { InputText, Dropdown, Calendar },
+  components: {
+    InputText,
+    Dropdown,
+    Search,
+    MerchantDropdown,
+    ChannelDropdown,
+    CalendarStartTime,
+    CalendarEndTime,
+  },
   setup() {
     const v$ = useVuelidate()
     return { v$ }
   },
   validations() {
     return {
-      start: {
-        valid_date: helpers.withMessage("It's not a valid date", date()),
+      filters: {
+        start_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_time)
+          ),
+        },
       },
-      end: { valid_date: helpers.withMessage("It's not a valid date", date()) },
     }
   },
   data() {
     return {
-      loading: true,
-
-      transation_number: null,
-      order_number: null,
-      order_amount: null,
-      order_over: null,
-      order_status: null,
-      order_status_list: [{ label: "d", value: "adsf" }],
       audit_type: null,
-      audit_status_list: [{ label: "d", value: "adsf" }],
-      merchant: null,
-      merchant_list: [],
-      channel: null,
-      channel_list: [],
-      start: null,
-      end: null,
-
+      loading: true,
+      page: 1,
+      limit: 10,
+      filters: {
+        transation_id: null,
+        order_number: null,
+        order_amount: null,
+        order_over: null,
+        order_status: null,
+        merchant: null,
+        channel: null,
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
+      },
       records: [],
+      totalRecords: 0,
+      show_verify_2fa: false,
+      operation_data: {
+        id: null,
+        audit_type: null,
+        code: null,
+      },
     }
   },
-  created() {
-    this.moment = moment
-  },
-  async mounted() {
-    this.records = (await MerchantOrder.all()).data
-    this.loading = false
+  computed: {
+    order_status_list() {
+      return Object.entries(ORDER_STATUS).map(([key, value]) => {
+        return {
+          label: this.$i18n.t(`order_status_values.${key}`),
+          value,
+        }
+      })
+    },
+    audit_status_list() {
+      return Object.entries(AUDIT_TYPE).map(([key, value]) => ({
+        label: this.$i18n.t(`audit_type_values.${key}`),
+        value,
+      }))
+    },
   },
   methods: {
     handle_search() {
       this.v$.$touch()
+
       if (this.v$.$error) {
         return
       }
+
+      this.fetch()
     },
-    success(data) {},
-    fail(data) {},
-    processing(data) {},
+    async fetch() {
+      this.loading = true
+      const [records, count] = await Promise.all([
+        MerchantOrder.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        MerchantOrder.count(this.filters),
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
+    },
+    on_page(e) {
+      this.page = e.page + 1
+      this.fetch()
+    },
+    paid(data) {
+      console.log(data)
+      this.show_verify_2fa = true
+      let audit_type = AUDIT_TYPE.PAID
+      this.operation_data = { id: data.id, audit_type, code: "" }
+      // MerchantOrder.update(data.id, {audit_type})
+    },
+    reject(data) {
+      console.log(data)
+      this.show_verify_2fa = true
+      let audit_type = AUDIT_TYPE.REJECT
+      this.operation_data = { id: data.id, audit_type, code: "" }
+      // MerchantOrder.update(data.id, { audit_type })
+    },
+    handle_operation() {
+      console.log(this.operation_data)
+      MerchantOrder.update(this.operation_data.id, {
+        audit_type: this.operation_data.audit_type,
+        code: this.operation_data.code,
+      })
+      this.show_verify_2fa = false
+      // this.operation_data = { id: null, audit_type: null, code: "" }
+    },
+  },
+  async mounted() {
+    this.fetch()
   },
 }
 </script>
