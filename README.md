@@ -2,11 +2,6 @@
 
 ## Development
 
-Fake server
-```
-npm run mock
-```
-
 .env.development.local
 ```
 VUE_APP_API_HOST=http://localhost:3000
