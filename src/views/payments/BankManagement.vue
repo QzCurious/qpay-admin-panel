@@ -19,7 +19,7 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="code" :header="$t('create_bank')" />
+    <Column field="code" :header="$t('bank_code')" />
     <Column field="name" :header="$t('bank')" />
     <Column field="transfer" :header="$t('transfer')">
       <template #body="{ data }">
