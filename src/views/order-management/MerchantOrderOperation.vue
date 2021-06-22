@@ -15,28 +15,48 @@
         class="p-d-flex p-flex-wrap p-ai-start"
       >
         <InputText
-          label="交易代號"
+          :label="$t('transaction_number')"
           name="transation_number"
           v-model="transation_number"
         />
-        <InputText name="order_number" label="訂單號" v-model="order_number" />
-        <InputText name="order_amount" label="金額" v-model="order_amount" />
-        <InputText name="order_over" label="order_over" v-model="order_over" />
+        <InputText
+          name="order_number"
+          :label="$t('order_number')"
+          v-model="order_number"
+        />
+        <InputText
+          name="order_amount"
+          :label="$t('order_amount')"
+          v-model="order_amount"
+        />
+        <InputText
+          name="order_over"
+          :label="$t('order_over')"
+          v-model="order_over"
+        />
         <Dropdown
-          label="訂單狀態"
+          :label="$t('order_status')"
           v-model="order_status"
           :options="order_status_list"
         />
         <Dropdown
-          label="審核狀態"
+          :label="$t('audit_type')"
           v-model="audit_type"
           :options="audit_status_list"
         />
-        <Dropdown label="商家" v-model="merchant" :options="merchant_list" />
-        <Dropdown label="通道" v-model="channel" :options="channel_list" />
+        <Dropdown
+          :label="$t('merchant')"
+          v-model="merchant"
+          :options="merchant_list"
+        />
+        <Dropdown
+          :label="$t('channel')"
+          v-model="channel"
+          :options="channel_list"
+        />
         <Calendar
           name="start"
-          label="開始"
+          :label="$t('form.start_time')"
           v-model="start"
           :showSeconds="true"
           :showTime="true"
@@ -44,39 +64,42 @@
         />
         <Calendar
           name="end"
-          label="結束"
+          :label="$t('form.end_time')"
           v-model="end"
           :showSeconds="true"
           :showTime="true"
           :errors="v$.end.$errors.map((e) => e.$message)"
         />
-        <Button class="p-mt-4" type="submit">搜尋</Button>
+        <Button class="p-mt-4" type="submit">{{ $t("form.search") }}</Button>
       </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="order_number" header="訂單號"></Column>
-    <Column field="transation_number" header="交易代號"></Column>
-    <Column field="order_amount" header="金額"></Column>
-    <Column field="real_amount" header="實際金額"></Column>
-    <Column field="fee" header="手續費"></Column>
-    <Column field="credit_amount" header="credit_amount"></Column>
-    <Column field="order_status" header="訂單狀態"></Column>
-    <Column field="channel" header="通道"></Column>
-    <Column field="remark" header="備註"></Column>
-    <Column field="audit_type" header="審核狀態"></Column>
-    <Column field="merchant" header="商家"></Column>
-    <Column field="order_time" header="下單時間">
+    <Column field="order_number" :header="$t('order_number')"></Column>
+    <Column
+      field="transation_number"
+      :header="$t('transaction_number')"
+    ></Column>
+    <Column field="order_amount" :header="$t('order_amount')"></Column>
+    <Column field="real_amount" :header="$t('real_amount')"></Column>
+    <Column field="fee" :header="$t('fee')"></Column>
+    <Column field="credit_amount" :header="$t('credit_amount')"></Column>
+    <Column field="order_status" :header="$t('order_status')"></Column>
+    <Column field="channel" :header="$t('channel')"></Column>
+    <Column field="remark" :header="$t('remark')"></Column>
+    <Column field="audit_type" :header="$t('audit_type')"></Column>
+    <Column field="merchant" :header="$t('merchant')"></Column>
+    <Column field="order_time" :header="$t('order_time')">
       <template #body="{ data }">
         {{ moment(data.order_time).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
     </Column>
-    <Column field="success_time" header="入帳時間">
+    <Column field="success_time" :header="$t('success_time')">
       <template #body="{ data }">
         {{ moment(data.order_time).format("YYYY-MM-DD HH:mm:ss") }}
       </template>
     </Column>
-    <Column header="操作">
+    <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button class="p-button-success" @click="success(data)">success</Button>
         <Button class="p-button-danger" @click="fail(data)">fail</Button>
