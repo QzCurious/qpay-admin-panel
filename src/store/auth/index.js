@@ -5,6 +5,7 @@ export const store = {
   state: () => ({
     token: null,
     available_auth: [],
+    allow_auth: [],
   }),
   getters: {
     jwt(state) {
@@ -22,6 +23,7 @@ export const store = {
       commit("set_token", token)
       const res = await Role.get(getters["jwt"].role_id)
       commit("set_available_auth", res.data.available_auth)
+      commit("set_allow_auth", res.data.allow_auth)
     },
     logout({ commit }) {
       commit("clear")
@@ -31,12 +33,16 @@ export const store = {
     set_token(state, token) {
       state.token = token
     },
+    set_allow_auth(state, allow_auth) {
+      state.allow_auth = allow_auth
+    },
     set_available_auth(state, available_auth) {
       state.available_auth = available_auth
     },
     clear(state) {
       state.token = null
       state.available_auth = []
+      state.allow_auth = []
     },
   },
 }
