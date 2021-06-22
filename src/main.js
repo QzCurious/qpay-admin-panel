@@ -8,6 +8,7 @@ import './assets/layout/flags/flags.css';
 
 import { createApp, reactive } from 'vue';
 import moment from 'moment';
+import numeral from "numeral";
 import router from './router';
 import store from './store'
 import i18n from './i18n'
@@ -108,6 +109,7 @@ const app = createApp(App);
 
 app.config.globalProperties.$appState = reactive({ inputStyle: 'outlined' });
 app.config.globalProperties.moment = moment
+app.config.globalProperties.numeral = numeral
 app.config.globalProperties.CONSTANTS = CONSTANTS
 
 app.use(PrimeVue, { ripple: true });

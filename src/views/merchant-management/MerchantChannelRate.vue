@@ -27,10 +27,18 @@
     <template #loading> Loading... </template>
     <Column field="merchant_name" :header="$t('merchant')" />
     <Column field="channel_name" :header="$t('channel')" />
-    <Column field="deposit_fee_rate" :header="$t('deposit_fee_rate')" />
+    <Column :header="$t('deposit_fee_rate')">
+      <template #body="{ data }">{{
+        data.deposit_fee_rate && numeral(data.deposit_fee_rate).format("0%")
+      }}</template>
+    </Column>
     <Column field="deposit_fee" :header="$t('deposit_fee')" />
     <Column field="deposit_limit_daily" :header="$t('deposit_limit_daily')" />
-    <Column field="withdraw_fee_rate" :header="$t('withdraw_fee_rate')" />
+    <Column :header="$t('withdraw_fee_rate')">
+      <template #body="{ data }">{{
+        data.withdraw_fee_rate && numeral(data.withdraw_fee_rate).format("0%")
+      }}</template>
+    </Column>
     <Column field="withdraw_fee" :header="$t('withdraw_fee')" />
     <Column field="withdraw_limit_daily" :header="$t('withdraw_limit_daily')" />
     <Column field="status" :header="$t('status')">
@@ -55,7 +63,7 @@
     :header="$t('edit_merchant_channel')"
     v-model:visible="edit_modal.visible"
   >
-    <EditMerchantChannel :data="edit_modal.data" @success="fetch" />
+    <EditMerchantChannel :data="edit_modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -66,6 +74,7 @@ import ChannelDropdown from "../../components/ChannelDropdown";
 import StatusDropdown from "../../components/StatusDropdown";
 import Search from "../../components/Search.vue";
 import EditMerchantChannel from "./EditMerchantChannel";
+import { falsy_to_null } from "../../helper/transform";
 
 export default {
   components: {
@@ -104,7 +113,13 @@ export default {
         }),
         MerchantChannel.count(this.filters),
       ]);
-      this.records = records.data.data;
+      this.records = records.data.data.map((data) => ({
+        ...data,
+        deposit_fee_rate: falsy_to_null(data.deposit_fee_rate),
+        deposit_fee: falsy_to_null(this.data?.deposit_fee),
+        withdraw_fee_rate: falsy_to_null(this.data?.withdraw_fee_rate),
+        withdraw_fee: falsy_to_null(this.data?.withdraw_fee),
+      }));
       this.totalRecords = count.data.count;
       window.scrollTo(0, 0);
       this.loading = false;
@@ -116,6 +131,10 @@ export default {
     edit(data) {
       this.edit_modal.data = data;
       this.edit_modal.visible = true;
+    },
+    success() {
+      this.fetch();
+      this.edit_modal.visible = false;
     },
   },
   mounted() {

@@ -1,18 +1,8 @@
 <template>
   <form @submit.prevent="handle_submit" class="p-fluid p-d-flex p-flex-column">
-    <InputText
-      float
-      v-model="merchant_name"
-      :label="$t('merchant')"
-      readonly
-    />
-    <InputText
-      float
-      v-model="channel_name"
-      :label="$t('channel')"
-      readonly
-    />
-    <InputText
+    <InputText float v-model="merchant_name" :label="$t('merchant')" readonly />
+    <InputText float v-model="channel_name" :label="$t('channel')" readonly />
+    <RateNumber
       float
       v-model="deposit_fee_rate"
       :label="$t('deposit_fee_rate')"
@@ -33,7 +23,7 @@
       name="deposit_limit_daily"
       :errors="v$.deposit_limit_daily.$errors.map((e) => e.$message)"
     />
-    <InputText
+    <RateNumber
       float
       v-model="withdraw_fee_rate"
       :label="$t('withdraw_fee_rate')"
@@ -63,12 +53,15 @@
 import MerchantChannel from "../../api/MerchantChannel";
 import useVuelidate from "@vuelidate/core";
 import InputText from "../../components/InputText";
+import RateNumber from "../../components/RateNumber";
 import ToastService from "../../service/ToastService";
-import { required, numeric } from "@vuelidate/validators";
+import { minValue, maxValue, numeric } from "@vuelidate/validators";
+import { empty_to_null, falsy_to_0 } from "../../helper/transform";
 
 export default {
   components: {
     InputText,
+    RateNumber,
   },
   emits: ["success"],
   props: {
@@ -80,24 +73,34 @@ export default {
   },
   validations() {
     return {
-      deposit_fee_rate: { numeric },
-      deposit_fee: { numeric },
+      deposit_fee_rate: {
+        numeric,
+        minValue: minValue(0),
+        maxValue: maxValue(1),
+      },
+      deposit_fee: {
+        numeric,
+      },
       deposit_limit_daily: { numeric },
-      withdraw_fee_rate: { numeric },
+      withdraw_fee_rate: {
+        numeric,
+        minValue: minValue(0),
+        maxValue: maxValue(1),
+      },
       withdraw_fee: { numeric },
       withdraw_limit_daily: { numeric },
     };
   },
   data() {
     return {
-      channel_name: this.data?.channel_name ?? undefined,
-      merchant_name: this.data?.merchant_name ?? undefined,
-      deposit_fee_rate: this.data?.deposit_fee_rate ?? undefined,
-      deposit_fee: this.data?.deposit_fee ?? undefined,
-      deposit_limit_daily: this.data?.deposit_limit_daily ?? undefined,
-      withdraw_fee_rate: this.data?.withdraw_fee_rate ?? undefined,
-      withdraw_fee: this.data?.withdraw_fee ?? undefined,
-      withdraw_limit_daily: this.data?.withdraw_limit_daily ?? undefined,
+      channel_name: this.data?.channel_name,
+      merchant_name: this.data?.merchant_name,
+      deposit_fee_rate: this.data?.deposit_fee_rate,
+      deposit_fee: this.data?.deposit_fee,
+      deposit_limit_daily: this.data?.deposit_limit_daily,
+      withdraw_fee_rate: this.data?.withdraw_fee_rate,
+      withdraw_fee: this.data?.withdraw_fee,
+      withdraw_limit_daily: this.data?.withdraw_limit_daily,
     };
   },
   methods: {
@@ -108,22 +111,18 @@ export default {
       }
 
       const data = {
-        deposit_fee_rate: this.deposit_fee_rate,
-        deposit_fee: this.deposit_fee,
-        deposit_limit_daily: this.deposit_limit_daily,
-        withdraw_fee_rate: this.withdraw_fee_rate,
-        withdraw_fee: this.withdraw_fee,
-        withdraw_limit_daily: this.withdraw_limit_daily,
+        deposit_fee_rate: falsy_to_0(this.deposit_fee_rate),
+        deposit_fee: falsy_to_0(this.deposit_fee),
+        deposit_limit_daily: empty_to_null(this.deposit_limit_daily),
+        withdraw_fee_rate: falsy_to_0(this.withdraw_fee_rate),
+        withdraw_fee: falsy_to_0(this.withdraw_fee),
+        withdraw_limit_daily: empty_to_null(this.withdraw_limit_daily),
       };
-      if (Object.values(data).every((d) => !d)) {
-        return;
-      }
-      MerchantChannel.update(this.data.id, data).then(() => {
-        ToastService.success({
-          summary: this.$i18n.t("merchant_channel_successfully_updated"),
-        });
-        this.$emit("success", data);
+      await MerchantChannel.update(this.data.id, data);
+      ToastService.success({
+        summary: this.$i18n.t("merchant_channel_successfully_updated"),
       });
+      this.$emit("success", data);
 
       this.v$.$reset();
     },
@@ -133,6 +132,6 @@ export default {
 
 <style scoped>
 form {
-  min-width: 15rem;
+  width: 15rem;
 }
 </style>
