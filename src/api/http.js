@@ -7,7 +7,11 @@ import { setupCache } from "axios-cache-adapter"
 import moment from "moment"
 import { transform_4xx_error } from "./ErrorHandler"
 
-const cache = setupCache({ maxAge: 0 })
+export const CACHE_MAX_AGE = 5 * 60 * 1000
+
+const cache = setupCache({
+  maxAge: 0, // 預設不 cache
+})
 
 const config = {
   baseURL: `${process.env.VUE_APP_API_HOST}/api`,

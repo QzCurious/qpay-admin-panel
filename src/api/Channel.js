@@ -1,16 +1,28 @@
-import http from "./http"
+import http, { CACHE_MAX_AGE } from "./http"
 import store from "../store"
 
+let clear_all = false
 class Channel {
   async count(params = { status: null }) {
     return http.get("channel/summary", { params })
   }
 
   async all() {
-    return channel.find(
+    const res = await channel.find(
       { limit: 99 },
-      { cache: { maxAge: 5 * 60 * 1000, exclude: { query: false } } }
+      {
+        cache: {
+          maxAge: CACHE_MAX_AGE,
+          exclude: {
+            query: false,
+            filter: () => clear_all,
+          },
+        },
+      }
     )
+    clear_all = false
+    store.dispatch("api/set_channel_list", res.data.data)
+    return res
   }
 
   async find(params = {}, config) {
@@ -19,14 +31,13 @@ class Channel {
       limit: 10,
       ...params,
     }
-    return http.get("channel", { params, ...config }).then((res) => {
-      store.dispatch("api/set_channel_list", res.data.data)
-      return res
-    })
+    return http.get("channel", { params, ...config })
   }
 
   async create(data) {
-    return http.post("channel", data)
+    const res = await http.post("channel", data)
+    clear_all = true
+    return res
   }
 
   async update(id, data) {
@@ -34,7 +45,9 @@ class Channel {
   }
 
   async delete(id, data) {
-    return http.delete(`channel/${id}`, data)
+    const res = await http.delete(`channel/${id}`, data)
+    clear_all = true
+    return res
   }
 }
 

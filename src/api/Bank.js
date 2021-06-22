@@ -1,16 +1,28 @@
-import http from "./http"
+import http, { CACHE_MAX_AGE } from "./http"
 import store from "../store"
 
+let clear_all = false
 class Bank {
   async count(params = {}) {
     return http.get("bank/summary", { params })
   }
 
   async all() {
-    return bank.find(
+    const res = await bank.find(
       { limit: 99 },
-      { cache: { maxAge: 5 * 60 * 1000, exclude: { query: false } } }
+      {
+        cache: {
+          maxAge: CACHE_MAX_AGE,
+          exclude: {
+            query: false,
+            filter: () => clear_all,
+          },
+        },
+      }
     )
+    clear_all = false
+    store.dispatch("api/set_bank_list", res.data.data)
+    return res
   }
 
   async find(params, config) {
@@ -19,10 +31,7 @@ class Bank {
       limit: 10,
       ...params,
     }
-    return http.get("bank", { params, ...config }).then((res) => {
-      store.dispatch("api/set_bank_list", res.data.data)
-      return res
-    })
+    return http.get("bank", { params, ...config })
   }
 
   async get(id) {
@@ -30,7 +39,9 @@ class Bank {
   }
 
   async create(params) {
-    return http.post("bank", params)
+    const res = await http.post("bank", params)
+    clear_all = true
+    return res
   }
 
   async update(id, data) {
@@ -38,7 +49,9 @@ class Bank {
   }
 
   async delete(id) {
-    return http.delete(`bank/${id}`)
+    const res = await http.delete(`bank/${id}`)
+    clear_all = true
+    return res
   }
 }
 

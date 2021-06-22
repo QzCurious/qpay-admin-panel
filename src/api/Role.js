@@ -1,28 +1,43 @@
-import http from "./http"
+import http, { CACHE_MAX_AGE } from "./http"
 import store from "../store"
 
+let clear_all = false
 class Role {
   async all() {
-    return role.find({ limit: 99 })
+    const res = await role.find(
+      { limit: 99 },
+      {
+        cache: {
+          maxAge: CACHE_MAX_AGE,
+          exclude: {
+            query: false,
+            filter: () => clear_all,
+          },
+        },
+      }
+    )
+    clear_all = false
+    store.dispatch("api/set_role_list", res.data.data)
+    return res
   }
 
   async get(id) {
     return http.get(`role/${id}`)
   }
 
-  async find(params = {}) {
+  async find(params = {}, config) {
     params = {
       page: 1,
       limit: 10,
       ...params,
     }
-    return http.get("role", { params }).then((res) => {
-      store.dispatch("api/set_role_list", res.data.data)
-    })
+    return http.get("role", { params, ...config })
   }
 
   async create(data) {
-    return http.post("role", data)
+    const res = await http.post("role", data)
+    clear_all = true
+    return res
   }
 
   async update(id, data) {

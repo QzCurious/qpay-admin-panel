@@ -1,16 +1,28 @@
-import http from "./http"
+import http, { CACHE_MAX_AGE } from "./http"
 import store from "../store"
 
+let clear_all = false
 class Holder {
   async count(params = { status: null }) {
     return http.get("holder/summary", { params })
   }
 
   async all() {
-    return holder.find(
+    const res = await holder.find(
       { limit: 99 },
-      { cache: { maxAge: 5 * 60 * 1000, exclude: { query: false } } }
+      {
+        cache: {
+          maxAge: CACHE_MAX_AGE,
+          exclude: {
+            query: false,
+            filter: () => clear_all,
+          },
+        },
+      }
     )
+    clear_all = false
+    store.dispatch("api/set_holder_list", res.data.data)
+    return res
   }
 
   async find(params = {}, config) {
@@ -19,14 +31,13 @@ class Holder {
       limit: 10,
       ...params,
     }
-    return http.get("holder", { params, ...config }).then((res) => {
-      store.dispatch("api/set_holder_list", res.data.data)
-      return res
-    })
+    return http.get("holder", { params, ...config })
   }
 
   async create(data) {
-    return http.post("holder", data)
+    const res = await http.post("holder", data)
+    clear_all = true
+    return res
   }
 
   async update(id, data) {
@@ -34,7 +45,9 @@ class Holder {
   }
 
   async delete(id, data) {
-    return http.delete(`holder/${id}`, data)
+    const res = await http.delete(`holder/${id}`, data)
+    clear_all = true
+    return res
   }
 }
 
