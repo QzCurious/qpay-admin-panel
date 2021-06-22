@@ -22,22 +22,22 @@
     <template #loading> Loading... </template>
     <Column field="channel_name" :header="$t('channel')" />
     <Column field="merchant_name" :header="$t('merchant')" />
-    <Column :header="$t('balance_d0')">
+    <Column :header="$t('balance_d0')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.amount_d0.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('lock_balance_d0')">
+    <Column :header="$t('lock_balance_d0')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.lock_amount_d0.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('balance_t1')">
+    <Column :header="$t('balance_t1')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.amount_t1.toLocaleString("en-US") }}
       </template>
     </Column>
-    <Column :header="$t('lock_balance_t1')">
+    <Column :header="$t('lock_balance_t1')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.lock_amount_t1.toLocaleString("en-US") }}
       </template>
