@@ -116,13 +116,12 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_card_holder"),
         message: this.$i18n.t("card_holder_will_be_deleted"),
-        accept: () => {
-          Holder.delete(data.id).then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("card_holder_successfully_deleted"),
-            })
-            this.fetch()
+        accept: async () => {
+          await Holder.delete(data.id)
+          ToastService.success({
+            summary: this.$i18n.t("card_holder_successfully_deleted"),
           })
+          this.fetch()
         },
       })
     },
@@ -135,14 +134,13 @@ export default {
         message: status
           ? `${this.$i18n.t("card_holder_will_be_enabled")}: ${data.name}`
           : `${this.$i18n.t("card_holder_will_be_disabled")}: ${data.name}`,
-        accept: () => {
-          Holder.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("card_holder_successfully_enabled")
-                : this.$i18n.t("card_holder_successfully_disabled"),
-            })
+        accept: async () => {
+          await Holder.update(data.id, { status: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("card_holder_successfully_enabled")
+              : this.$i18n.t("card_holder_successfully_disabled"),
           })
         },
       })

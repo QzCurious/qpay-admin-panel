@@ -66,36 +66,22 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       this.v$.$touch()
 
       if (this.v$.$error) {
         return
       }
 
-      auth
-        .change_payment_password({
-          old_password: this.old_password,
-          new_password: this.new_password,
-        })
-        .then(() => {
-          this.v$.$reset()
+      await auth.change_payment_password({
+        old_password: this.old_password,
+        new_password: this.new_password,
+      })
+      this.v$.$reset()
 
-          ToastService.success({
-            summary: this.$i18n.t("payment_password_successfully_changed"),
-          })
-        })
-        .catch((err) => {
-          if (
-            err.response.status === 400 &&
-            err.response.data.code === 1001 &&
-            !this.v$.$error
-          ) {
-            ToastService.error({
-              summary: this.$i18n.t("api.error.1001"),
-            })
-          }
-        })
+      ToastService.success({
+        summary: this.$i18n.t("payment_password_successfully_changed"),
+      })
     },
   },
 }

@@ -109,14 +109,13 @@ export default {
         message: status
           ? `${this.$i18n.t("account_will_be_enabled")}: ${data.signin_id}`
           : `${this.$i18n.t("account_will_be_disabled")}: ${data.signin_id}`,
-        accept: () => {
-          User.update(data.signin_id, { status: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("account_successfully_enabled")
-                : this.$i18n.t("account_successfully_disabled"),
-            })
+        accept: async () => {
+          await User.update(data.signin_id, { status: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("account_successfully_enabled")
+              : this.$i18n.t("account_successfully_disabled"),
           })
         },
       })
@@ -129,8 +128,9 @@ export default {
         message: `${this.$i18n.t("account_2fa_will_be_reset")}: ${
           data.signin_id
         }`,
-        accept: () => {
-          User.reset_2fa(data.signin_id).then(() => this.fetch())
+        accept: async () => {
+          await User.reset_2fa(data.signin_id)
+          this.fetch()
         },
       })
       this.show_update_status_modal = true

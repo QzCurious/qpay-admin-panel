@@ -115,13 +115,12 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_channel"),
         message: this.$i18n.t("channel_will_be_deleted"),
-        accept: () => {
-          Channel.delete(data.id).then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("channel_successfully_deleted"),
-            })
-            this.fetch()
+        accept: async () => {
+          await Channel.delete(data.id)
+          ToastService.success({
+            summary: this.$i18n.t("channel_successfully_deleted"),
           })
+          this.fetch()
         },
       })
     },
@@ -134,14 +133,13 @@ export default {
         message: status
           ? `${this.$i18n.t("channel_will_be_enabled")}: ${data.name}`
           : `${this.$i18n.t("channel_will_be_disabled")}: ${data.name}`,
-        accept: () => {
-          Channel.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("channel_successfully_enabled")
-                : this.$i18n.t("channel_successfully_disabled"),
-            })
+        accept: async () => {
+          await Channel.update(data.id, { status: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("channel_successfully_enabled")
+              : this.$i18n.t("channel_successfully_disabled"),
           })
         },
       })

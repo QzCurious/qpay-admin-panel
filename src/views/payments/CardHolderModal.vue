@@ -71,19 +71,17 @@ export default {
         status: Number(this.status),
       }
       if (this.mode === "create") {
-        Holder.create(data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("card_holder_successfully_created"),
-          })
-          this.$emit("success", data)
+        await Holder.create(data)
+        ToastService.success({
+          summary: this.$i18n.t("card_holder_successfully_created"),
         })
+        this.$emit("success", data)
       } else if (this.mode === "edit") {
-        Holder.update(this.data.id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("card_holder_successfully_updated"),
-          })
-          this.$emit("success", data)
+        await Holder.update(this.data.id, data)
+        ToastService.success({
+          summary: this.$i18n.t("card_holder_successfully_updated"),
         })
+        this.$emit("success", data)
       }
 
       this.v$.$reset()

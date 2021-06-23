@@ -9,7 +9,6 @@
 import useVuelidate from "@vuelidate/core"
 import { required, maxLength, minLength } from "@vuelidate/validators"
 import Auth from "../api/Auth"
-import ToastService from "../service/ToastService"
 
 export default {
   emits: ["success"],
@@ -28,18 +27,9 @@ export default {
     }
   },
   methods: {
-    handle_submit() {
-      Auth.singin_2fa(this.code)
-        .then(() => {
-          this.$emit("success")
-        })
-        .catch((err) => {
-          if (err.response.status === 401 && err.response.data.code === 9003) {
-            ToastService.error({
-              summary: this.$i18n.t("api.error.9003"),
-            })
-          }
-        })
+    async handle_submit() {
+      await Auth.singin_2fa(this.code)
+      this.$emit("success")
     },
   },
 }

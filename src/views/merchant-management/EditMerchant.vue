@@ -109,12 +109,11 @@ export default {
         name: this.name,
         md5_key: this.md5_key,
       }
-      Merchant.update(this.id, data).then(() => {
-        ToastService.success({
-          summary: this.$i18n.t("merchant_successfully_updated"),
-        })
-        this.$emit("success", data)
+      await Merchant.update(this.id, data)
+      ToastService.success({
+        summary: this.$i18n.t("merchant_successfully_updated"),
       })
+      this.$emit("success", data)
 
       this.v$.$reset()
     },
@@ -134,11 +133,10 @@ export default {
       this.md5_key = cryptoRandomString({ length: 64, type: "alphanumeric" })
     },
   },
-  mounted() {
-    Merchant.get(this.id).then((res) => {
-      this.name = res.data.name
-      this.md5_key = res.data.md5_key
-    })
+  async mounted() {
+    const res = await Merchant.get(this.id)
+    this.name = res.data.name
+    this.md5_key = res.data.md5_key
   },
 }
 </script>

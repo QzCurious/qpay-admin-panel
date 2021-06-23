@@ -107,14 +107,13 @@ export default {
         message: status
           ? `${this.$i18n.t("bank_will_be_enabled")}: ${data.name}`
           : `${this.$i18n.t("bank_will_be_disabled")}: ${data.name}`,
-        accept: () => {
-          Bank.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("bank_successfully_enabled")
-                : this.$i18n.t("bank_successfully_disabled"),
-            })
+        accept: async () => {
+          await Bank.update(data.id, { status: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("bank_successfully_enabled")
+              : this.$i18n.t("bank_successfully_disabled"),
           })
         },
       })
@@ -129,14 +128,13 @@ export default {
         message: status
           ? `${this.$i18n.t("bank_transfer_will_be_enabled")}: ${data.name}`
           : `${this.$i18n.t("bank_transfer_will_be_disabled")}: ${data.name}`,
-        accept: () => {
-          Bank.update(data.id, { transfer: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("bank_transfer_successfully_enabled")
-                : this.$i18n.t("bank_transfer_successfully_disabled"),
-            })
+        accept: async () => {
+          await Bank.update(data.id, { transfer: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("bank_transfer_successfully_enabled")
+              : this.$i18n.t("bank_transfer_successfully_disabled"),
           })
         },
       })
@@ -157,15 +155,14 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_bank"),
         message: `${this.$i18n.t("bank_will_be_deleted")}: ${data.name}`,
-        accept: () => {
-          Bank.delete(data.id).then(() => {
-            ToastService.success({
-              summary: `${this.$i18n.t("bank_successfully_deleted")}: ${
-                data.name
-              }`,
-            })
-            this.fetch()
+        accept: async () => {
+          await Bank.delete(data.id)
+          ToastService.success({
+            summary: `${this.$i18n.t("bank_successfully_deleted")}: ${
+              data.name
+            }`,
           })
+          this.fetch()
         },
       })
     },

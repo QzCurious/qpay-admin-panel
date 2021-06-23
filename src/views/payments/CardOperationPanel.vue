@@ -233,13 +233,12 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_card"),
         message: this.$i18n.t("card_will_be_deleted"),
-        accept: () => {
-          Card.delete(data.id).then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("card_successfully_deleted"),
-            })
-            this.fetch()
+        accept: async () => {
+          await Card.delete(data.id)
+          ToastService.success({
+            summary: this.$i18n.t("card_successfully_deleted"),
           })
+          this.fetch()
         },
       })
     },

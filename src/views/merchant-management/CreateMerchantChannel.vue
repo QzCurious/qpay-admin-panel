@@ -56,12 +56,11 @@ export default {
         channel_id: this.channel_id,
         merchant_id: this.merchant_id,
       }
-      MerchantChannel.create(data).then(() => {
-        ToastService.success({
-          summary: this.$i18n.t("merchant_channel_successfully_created"),
-        })
-        this.$emit("success", data)
+      await MerchantChannel.create(data)
+      ToastService.success({
+        summary: this.$i18n.t("merchant_channel_successfully_created"),
       })
+      this.$emit("success", data)
 
       this.v$.$reset()
     },
