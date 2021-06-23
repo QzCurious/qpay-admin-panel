@@ -10,7 +10,7 @@ class Auth {
       { signin_id, signin_password },
       { baseURL: process.env.VUE_APP_API_HOST }
     )
-    store.dispatch("auth/signin", res.data.access_token)
+    store.dispatch("auth/set_token", res.data.access_token)
     return res
   }
 
