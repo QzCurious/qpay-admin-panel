@@ -36,6 +36,14 @@ docker run -p 80:80 paypay
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+## Hack the Code
+
+### 不管身份顯示所有 menu
+
+_src/layouts/AdminLayout/AdminLayout.vue_
+
+[找到](http://git.llamatech.top/qzcurious/admin-panel//blob/eae7b93dd091ed49f856c3bb3f581699217c530f/src/layouts/AdminLayout/AdminLayout.vue#L130) computed -> menu function，改成 `return menu.value`
+
 ## Coding Style
 
 - `snake_case` for variable, function
