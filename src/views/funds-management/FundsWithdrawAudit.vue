@@ -286,6 +286,7 @@ export default {
         this.modal.submitting = false
       }
       ToastService.success({ summary: success_message })
+      this.modal.visible = false
       this.fetch()
     },
   },

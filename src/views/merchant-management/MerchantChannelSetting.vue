@@ -48,7 +48,7 @@
     :header="$t('create_merchant_channel')"
     v-model:visible="modal_visible"
   >
-    <CreateMerchantChannel @success="fetch" />
+    <CreateMerchantChannel @success="success" />
   </Dialog>
 </template>
 
@@ -139,6 +139,10 @@ export default {
           this.fetch()
         },
       })
+    },
+    success() {
+      this.modal_visible = false
+      this.fetch()
     },
   },
   mounted() {

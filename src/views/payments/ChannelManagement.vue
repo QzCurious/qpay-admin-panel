@@ -50,7 +50,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <ChannelModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+    <ChannelModal :mode="modal.mode" :data="modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -143,6 +143,10 @@ export default {
           })
         },
       })
+    },
+    success() {
+      this.fetch()
+      this.modal.visible = false
     },
   },
   mounted() {

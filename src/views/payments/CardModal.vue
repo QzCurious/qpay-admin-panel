@@ -169,17 +169,19 @@ export default {
     },
   },
   async mounted() {
-    const { data } = await Card.get(this.data.id)
-    this.channel_id = data.channel_id
-    this.card_holder_id = data.card_holder_id
-    this.bank_id = data.bank_id
-    this.branch = data.branch
-    this.account_number = data.account_number
-    this.ibanking_id = data.ibanking_id
-    this.ibanking_password = data.ibanking_password
-    this.pb_api_key = data.pb_api_key
-    this.plugin_mode = data.plugin_mode
-    this.status = Boolean(data.status)
+    if (this.mode === "edit") {
+      const { data } = await Card.get(this.data.id)
+      this.channel_id = data.channel_id
+      this.card_holder_id = data.card_holder_id
+      this.bank_id = data.bank_id
+      this.branch = data.branch
+      this.account_number = data.account_number
+      this.ibanking_id = data.ibanking_id
+      this.ibanking_password = data.ibanking_password
+      this.pb_api_key = data.pb_api_key
+      this.plugin_mode = data.plugin_mode
+      this.status = Boolean(data.status)
+    }
   },
 }
 </script>

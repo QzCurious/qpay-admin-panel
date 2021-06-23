@@ -67,7 +67,7 @@
       <div class="p-mb-3">
         {{ modal.message }}
       </div>
-      <WithdrawApplication :data="modal.data" />
+      <WithdrawApplication :data="modal.data" @success="success" />
     </div>
   </Dialog>
 </template>
@@ -120,6 +120,10 @@ export default {
     show_modal(data) {
       this.modal.visible = true
       this.modal.data = data
+    },
+    success() {
+      this.modal.data.visible = false
+      this.fetch()
     },
   },
   mounted() {

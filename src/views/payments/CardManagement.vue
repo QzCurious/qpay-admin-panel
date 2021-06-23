@@ -68,7 +68,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <CardModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+    <CardModal :mode="modal.mode" :data="modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -178,6 +178,10 @@ export default {
           })
         },
       })
+    },
+    success() {
+      this.fetch()
+      this.modal.visible = false
     },
   },
   mounted() {

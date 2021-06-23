@@ -71,14 +71,14 @@
     :header="$t('create_merchant')"
     v-model:visible="create_modal.visible"
   >
-    <CreateMerchant @success="fetch" />
+    <CreateMerchant @success="success" />
   </Dialog>
   <Dialog
     modal
     :header="$t('edit_merchant')"
     v-model:visible="edit_modal.visible"
   >
-    <EditMerchant :id="edit_modal.data.id" @success="fetch" />
+    <EditMerchant :id="edit_modal.data.id" @success="success" />
   </Dialog>
 </template>
 <script>
@@ -172,6 +172,11 @@ export default defineComponent({
           this.fetch()
         },
       })
+    },
+    success() {
+      this.edit_modal.visible = false
+      this.create_modal.visible = false
+      this.fetch()
     },
   },
 })

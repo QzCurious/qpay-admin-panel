@@ -51,7 +51,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <UserModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+    <UserModal :mode="modal.mode" :data="modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -144,6 +144,10 @@ export default {
       this.modal.mode = "create"
       this.modal.data = {}
       this.modal.visible = true
+    },
+    success() {
+      this.fetch()
+      this.modal.visible = false
     },
   },
   computed: {

@@ -263,6 +263,7 @@ export default defineComponent({
       }
       ToastService.success({ summary: this.$i18n.t(this.success_message) })
       this.fetch()
+      this.modal.visible = false
     },
   },
 })

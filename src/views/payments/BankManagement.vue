@@ -51,7 +51,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <BankModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+    <BankModal :mode="modal.mode" :data="modal.data" @success="success" />
   </Dialog>
 </template>
 <script>
@@ -165,6 +165,10 @@ export default {
           this.fetch()
         },
       })
+    },
+    success() {
+      this.fetch()
+      this.modal.visible = false
     },
   },
   computed: {
