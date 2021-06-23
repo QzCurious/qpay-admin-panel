@@ -123,21 +123,20 @@
     <Column :header="$t('operation')">
       <!-- TODO -->
       <template #body="{ data }">
-        <Button
-          class="p-button-success"
-          @click="paid(data)"
-          v-model:visible="data.audit_type"
-          >{{ $t("audit_type_values.PAID") }}</Button
-        >
-        <Button class="p-button-danger" @click="reject(data)">{{
-          $t("audit_type_values.REJECT")
-        }}</Button>
+        <div v-if="isOperationVisible(data)">
+          <Button class="p-button-success" @click="paid(data)">{{
+            $t("audit_type_values.PAID")
+          }}</Button>
+          <Button class="p-button-danger" @click="reject(data)">{{
+            $t("audit_type_values.REJECT")
+          }}</Button>
+        </div>
       </template>
     </Column>
   </DataTable>
-  <Dialog modal :header="$t('verify_2fa')" v-model:visible="show_verify_2fa">
+  <Dialog modal :header="$t('verify_2fa')" v-model:visible="modal.visible">
     <!-- <Form @submit.prevent="handle_operation"> -->
-    <InputText v-model="operation_data.code" />
+    <InputText v-model="modal.data.code" />
     <Button :label="$t('form.submit')" @click="handle_operation" />
     <!-- </Form> -->
     <!-- <Verify2fa @success="next_page" /> -->
@@ -219,11 +218,13 @@ export default {
       },
       records: [],
       totalRecords: 0,
-      show_verify_2fa: false,
-      operation_data: {
-        id: null,
-        audit_type: null,
-        code: null,
+      modal: {
+        visible: false,
+        data: {
+          id: null,
+          audit_type: null,
+          code: null,
+        },
       },
     }
   },
@@ -273,27 +274,24 @@ export default {
       this.fetch()
     },
     paid(data) {
-      console.log(data)
-      this.show_verify_2fa = true
+      this.modal.visible = true
       let audit_type = AUDIT_TYPE.PAID
-      this.operation_data = { id: data.id, audit_type, code: "" }
-      // MerchantOrder.update(data.id, {audit_type})
+      this.modal.data = { id: data.id, audit_type, code: "" }
     },
     reject(data) {
-      console.log(data)
-      this.show_verify_2fa = true
+      this.modal.visible = true
       let audit_type = AUDIT_TYPE.REJECT
-      this.operation_data = { id: data.id, audit_type, code: "" }
-      // MerchantOrder.update(data.id, { audit_type })
+      this.modal.data = { id: data.id, audit_type, code: "" }
     },
     handle_operation() {
-      console.log(this.operation_data)
-      MerchantOrder.update(this.operation_data.id, {
-        audit_type: this.operation_data.audit_type,
-        code: this.operation_data.code,
+      MerchantOrder.update(this.modal.data.id, {
+        audit_type: this.modal.data.audit_type,
+        code: this.modal.data.code,
       })
-      this.show_verify_2fa = false
-      // this.operation_data = { id: null, audit_type: null, code: "" }
+      this.modal.visible = false
+    },
+    isOperationVisible(data) {
+      return data.audit_type == AUDIT_TYPE.PENDING
     },
   },
   async mounted() {
