@@ -9,14 +9,14 @@
       name="deposit_fee_rate"
       :errors="v$.deposit_fee_rate.$errors.map((e) => e.$message)"
     />
-    <InputText
+    <InputNumber
       float
       v-model="deposit_fee"
       :label="$t('deposit_fee')"
       name="deposit_fee"
       :errors="v$.deposit_fee.$errors.map((e) => e.$message)"
     />
-    <InputText
+    <InputNumber
       float
       v-model="deposit_limit_daily"
       :label="$t('deposit_limit_daily')"
@@ -30,14 +30,14 @@
       name="withdraw_fee_rate"
       :errors="v$.withdraw_fee_rate.$errors.map((e) => e.$message)"
     />
-    <InputText
+    <InputNumber
       float
       v-model="withdraw_fee"
       :label="$t('withdraw_fee')"
       name="withdraw_fee"
       :errors="v$.withdraw_fee.$errors.map((e) => e.$message)"
     />
-    <InputText
+    <InputNumber
       float
       v-model="withdraw_limit_daily"
       :label="$t('withdraw_limit_daily')"
@@ -53,6 +53,7 @@
 import MerchantChannel from "../../api/MerchantChannel"
 import useVuelidate from "@vuelidate/core"
 import InputText from "../../components/InputText"
+import InputNumber from "../../components/InputNumber"
 import RateNumber from "../../components/RateNumber"
 import ToastService from "../../service/ToastService"
 import { minValue, maxValue, numeric } from "@vuelidate/validators"
@@ -62,6 +63,7 @@ export default {
   components: {
     InputText,
     RateNumber,
+    InputNumber,
   },
   emits: ["success"],
   props: {

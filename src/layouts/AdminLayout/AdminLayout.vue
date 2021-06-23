@@ -46,7 +46,6 @@ export default {
       staticMenuInactive: false,
       overlayMenuActive: false,
       mobileMenuActive: false,
-      menu: menu,
     }
   },
   watch: {
@@ -128,6 +127,19 @@ export default {
     },
   },
   computed: {
+    menu() {
+      // 開啟所有 menu
+      // return menu.value
+      const allowed_menu = menu.value
+        .map((group) => {
+          const items = group.items.filter((item) =>
+            this.$store.state.auth.allow_auth.includes(item.key)
+          )
+          return { ...group, items }
+        })
+        .filter((group) => group.items.length)
+      return allowed_menu
+    },
     containerClass() {
       return [
         "layout-wrapper",

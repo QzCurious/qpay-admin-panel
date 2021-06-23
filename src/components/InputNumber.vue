@@ -12,6 +12,8 @@
         :name="name"
         :style="inputStyle"
         :class="{ ...computedInputClass, 'p-invalid': errors.length }"
+        :minFractionDigits="2"
+        :maxFractionDigits="6"
         v-bind="forward"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
