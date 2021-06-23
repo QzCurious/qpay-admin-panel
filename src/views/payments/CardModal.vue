@@ -152,26 +152,25 @@ export default {
         status: Number(this.status),
       }
       if (this.mode === "create") {
-        Card.create(data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("card_successfully_created"),
-          })
-          this.$emit("success", data)
+        await Card.create(data)
+        ToastService.success({
+          summary: this.$i18n.t("card_successfully_created"),
         })
+        this.$emit("success", data)
       } else if (this.mode === "edit") {
-        Card.update(this.data.id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("card_successfully_updated"),
-          })
-          this.$emit("success", data)
+        await Card.update(this.data.id, data)
+        ToastService.success({
+          summary: this.$i18n.t("card_successfully_updated"),
         })
+        this.$emit("success", data)
       }
 
       this.v$.$reset()
     },
   },
-  mounted() {
-    Card.get(this.data.id).then(({ data }) => {
+  async mounted() {
+    if (this.mode === "edit") {
+      const { data } = await Card.get(this.data.id)
       this.channel_id = data.channel_id
       this.card_holder_id = data.card_holder_id
       this.bank_id = data.bank_id
@@ -182,7 +181,7 @@ export default {
       this.pb_api_key = data.pb_api_key
       this.plugin_mode = data.plugin_mode
       this.status = Boolean(data.status)
-    })
+    }
   },
 }
 </script>

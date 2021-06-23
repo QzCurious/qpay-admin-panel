@@ -136,24 +136,21 @@ export default {
         code: this.code,
         remark: this.remark,
       }
-      FundsWithdraw.apply_withdraw(this.data.merchant_channel_id, data).then(
-        () => {
-          ToastService.success({
-            summary: this.$i18n.t("withdraw_applied_successfully"),
-          })
-          this.$emit("success", data)
-        }
-      )
+      await FundsWithdraw.apply_withdraw(this.data.merchant_channel_id, data)
+
+      ToastService.success({
+        summary: this.$i18n.t("withdraw_applied_successfully"),
+      })
+      this.$emit("success", data)
 
       this.v$.$reset()
     },
   },
-  mounted() {
-    MerchantChannel.get(this.data.merchant_channel_id).then((res) => {
-      const { withdraw_fee, withdraw_fee_rate } = res.data
-      this.withdraw_fee = withdraw_fee
-      this.withdraw_fee_rate = withdraw_fee_rate
-    })
+  async mounted() {
+    const res = await MerchantChannel.get(this.data.merchant_channel_id)
+    const { withdraw_fee, withdraw_fee_rate } = res.data
+    this.withdraw_fee = withdraw_fee
+    this.withdraw_fee_rate = withdraw_fee_rate
   },
 }
 </script>

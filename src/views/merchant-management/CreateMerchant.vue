@@ -160,12 +160,12 @@ export default {
         ip_allow: this.ip_allow.length ? this.ip_allow : null,
         md5_key: this.md5_key,
       }
-      Merchant.create(data).then(() => {
-        ToastService.success({
-          summary: this.$i18n.t("merchant_successfully_created"),
-        })
-        this.$emit("success", data)
+      await Merchant.create(data)
+
+      ToastService.success({
+        summary: this.$i18n.t("merchant_successfully_created"),
       })
+      this.$emit("success", data)
 
       this.v$.$reset()
     },

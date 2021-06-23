@@ -5,16 +5,13 @@ import router from "../router"
 class Auth {
   async signin({ signin_id, signin_password }) {
     // 一定會拿到 twofa_flag = 0 的 token，沒辦法拿來 call api
-    return http
-      .post(
-        "/user/signin",
-        { signin_id, signin_password },
-        { baseURL: process.env.VUE_APP_API_HOST }
-      )
-      .then((res) => {
-        store.dispatch("auth/signin", res.data.access_token)
-        return res
-      })
+    const res = await http.post(
+      "/user/signin",
+      { signin_id, signin_password },
+      { baseURL: process.env.VUE_APP_API_HOST }
+    )
+    store.dispatch("auth/signin", res.data.access_token)
+    return res
   }
 
   async get_2fa_qrcode() {
@@ -26,10 +23,9 @@ class Auth {
   }
 
   async singin_2fa(code) {
-    return http.post("auth/2fa/verify", { code }).then((res) => {
-      store.dispatch("auth/signin", res.data.access_token)
-      return res
-    })
+    const res = await http.post("auth/2fa/verify", { code })
+    store.dispatch("auth/signin", res.data.access_token)
+    return res
   }
 
   logout() {

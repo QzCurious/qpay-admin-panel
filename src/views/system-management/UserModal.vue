@@ -136,29 +136,18 @@ export default {
         phone: this.phone,
       }
       if (this.mode === "create") {
-        user
-          .create(data)
-          .then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("account_successfully_created"),
-            })
-
-            this.$emit("success", data)
-          })
-          .catch((err) => {
-            if (err.response.status === 400 && err.response.data.code === 1002)
-              ToastService.error({
-                summary: `${this.$i18n.t("api.error.1002")}: ${this.signin_id}`,
-              })
-          })
-      } else if (this.mode === "edit") {
-        user.update(this.signin_id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("account_successfully_updated"),
-          })
-
-          this.$emit("success", data)
+        await user.create(data)
+        ToastService.success({
+          summary: this.$i18n.t("account_successfully_created"),
         })
+
+        this.$emit("success", data)
+      } else if (this.mode === "edit") {
+        await user.update(this.signin_id, data)
+        ToastService.success({
+          summary: this.$i18n.t("account_successfully_updated"),
+        })
+        this.$emit("success", data)
       }
 
       this.v$.$reset()

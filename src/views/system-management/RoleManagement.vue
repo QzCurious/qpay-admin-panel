@@ -104,6 +104,7 @@ export default {
     },
     handle_success() {
       this.modal.visible = false
+      this.fetch()
     },
   },
   mounted() {

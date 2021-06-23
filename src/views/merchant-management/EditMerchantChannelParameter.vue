@@ -79,7 +79,7 @@ export default {
     }
   },
   methods: {
-    async handle_submit() {
+     async handle_submit() {
       this.v$.$touch()
       if (this.v$.$error) {
         return
@@ -95,12 +95,11 @@ export default {
       if (Object.values(data).every((d) => !d)) {
         return
       }
-      MerchantChannelParameter.update(this.data.id, data).then(() => {
-        ToastService.success({
-          summary: this.$i18n.t("merchant_channel_successfully_updated"),
-        })
-        this.$emit("success", data)
+      await MerchantChannelParameter.update(this.data.id, data)
+      ToastService.success({
+        summary: this.$i18n.t("merchant_channel_successfully_updated"),
       })
+      this.$emit("success", data)
 
       this.v$.$reset()
     },

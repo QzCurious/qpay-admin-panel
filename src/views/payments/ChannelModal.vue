@@ -60,19 +60,17 @@ export default {
         status: Number(this.status),
       }
       if (this.mode === "create") {
-        Channel.create(data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("channel_successfully_created"),
-          })
-          this.$emit("success", data)
+        await Channel.create(data)
+        ToastService.success({
+          summary: this.$i18n.t("channel_successfully_created"),
         })
+        this.$emit("success", data)
       } else if (this.mode === "edit") {
-        Channel.update(this.data.id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("channel_successfully_updated"),
-          })
-          this.$emit("success", data)
+        await Channel.update(this.data.id, data)
+        ToastService.success({
+          summary: this.$i18n.t("channel_successfully_updated"),
         })
+        this.$emit("success", data)
       }
 
       this.v$.$reset()

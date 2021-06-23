@@ -277,24 +277,17 @@ export default {
       }
 
       this.modal.submitting = true
-      FundsWithdraw.update(this.modal.data.id, {
-        status: this.modal.data.status,
-        code: this.code,
-      })
-        .then(() => {
-          ToastService.success({ summary: success_message })
-          this.fetch()
+      try {
+        await FundsWithdraw.update(this.modal.data.id, {
+          status: this.modal.data.status,
+          code: this.code,
         })
-        .catch((err) => {
-          if (err.response.status === 401 && err.response.data.code === 9003) {
-            ToastService.error({ summary: this.$i18n.t("api.error.9003") })
-            return
-          }
-          throw err
-        })
-        .finally(() => {
-          this.modal.submitting = false
-        })
+      } finally {
+        this.modal.submitting = false
+      }
+      ToastService.success({ summary: success_message })
+      this.modal.visible = false
+      this.fetch()
     },
   },
   mounted() {

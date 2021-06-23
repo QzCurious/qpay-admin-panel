@@ -48,7 +48,7 @@
     :header="$t('create_merchant_channel')"
     v-model:visible="modal_visible"
   >
-    <CreateMerchantChannel @success="fetch" />
+    <CreateMerchantChannel @success="success" />
   </Dialog>
 </template>
 
@@ -111,13 +111,12 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_merchant_channel"),
         message: this.$i18n.t("merchant_channel_will_be_deleted"),
-        accept: () => {
-          MerchantChannel.delete(data.id).then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("merchant_channel_successfully_deleted"),
-            })
-            this.fetch()
+        accept: async () => {
+          await MerchantChannel.delete(data.id)
+          ToastService.success({
+            summary: this.$i18n.t("merchant_channel_successfully_deleted"),
           })
+          this.fetch()
         },
       })
     },
@@ -130,19 +129,20 @@ export default {
         message: status
           ? this.$i18n.t("merchant_channel_will_be_enabled")
           : this.$i18n.t("merchant_channel_will_be_disabled"),
-        accept: () => {
-          MerchantChannel.update(data.id, { status: Number(status) }).then(
-            () => {
-              this.fetch()
-              ToastService.success({
-                summary: status
-                  ? this.$i18n.t("merchant_channel_successfully_enabled")
-                  : this.$i18n.t("merchant_channel_successfully_disabled"),
-              })
-            }
-          )
+        accept: async () => {
+          await MerchantChannel.update(data.id, { status: Number(status) })
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("merchant_channel_successfully_enabled")
+              : this.$i18n.t("merchant_channel_successfully_disabled"),
+          })
+          this.fetch()
         },
       })
+    },
+    success() {
+      this.modal_visible = false
+      this.fetch()
     },
   },
   mounted() {

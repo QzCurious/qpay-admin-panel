@@ -58,6 +58,7 @@ export default {
       allow_auth: [],
       available_auth: [],
       selected: {},
+      submitting: false,
     }
   },
   computed: {
@@ -83,6 +84,7 @@ export default {
         return
       }
 
+      this.submitting = true
       const data = {
         allow_auth: Object.entries(this.selected)
           .filter(([key, value]) => value.checked)
@@ -90,12 +92,22 @@ export default {
       }
       if (this.mode === "create") {
         data.name = this.name
-        await Role.create(data)
+        try {
+          await Role.create(data)
+        } finally {
+          this.submitting = false
+        }
+
         ToastService.success({
           summary: this.$i18n.t("role_successfully_created"),
         })
       } else if (this.mode === "edit") {
-        await Role.update(this.role_id, data)
+        try {
+          await Role.update(this.role_id, data)
+        } finally {
+          this.submitting = false
+        }
+
         ToastService.success({
           summary: this.$i18n.t("role_successfully_updated"),
         })

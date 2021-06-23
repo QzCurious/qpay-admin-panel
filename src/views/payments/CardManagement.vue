@@ -68,7 +68,7 @@
   </DataTable>
   <ConfirmDialog />
   <Dialog modal :header="modal_title" v-model:visible="modal.visible">
-    <CardModal :mode="modal.mode" :data="modal.data" @success="fetch" />
+    <CardModal :mode="modal.mode" :data="modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -150,13 +150,12 @@ export default {
         icon: PrimeIcons.EXCLAMATION_TRIANGLE,
         header: this.$i18n.t("delete_card"),
         message: this.$i18n.t("card_will_be_deleted"),
-        accept: () => {
-          Card.delete(data.id).then(() => {
-            ToastService.success({
-              summary: this.$i18n.t("card_successfully_deleted"),
-            })
-            this.fetch()
+        accept: async () => {
+          await Card.delete(data.id)
+          ToastService.success({
+            summary: this.$i18n.t("card_successfully_deleted"),
           })
+          this.fetch()
         },
       })
     },
@@ -169,17 +168,20 @@ export default {
         message: status
           ? `${this.$i18n.t("card_will_be_enabled")}: ${data.id}`
           : `${this.$i18n.t("card_will_be_disabled")}: ${data.id}`,
-        accept: () => {
-          Card.update(data.id, { status: Number(status) }).then(() => {
-            this.fetch()
-            ToastService.success({
-              summary: status
-                ? this.$i18n.t("card_successfully_enabled")
-                : this.$i18n.t("card_successfully_disabled"),
-            })
+        accept: async () => {
+          await Card.update(data.id, { status: Number(status) })
+          this.fetch()
+          ToastService.success({
+            summary: status
+              ? this.$i18n.t("card_successfully_enabled")
+              : this.$i18n.t("card_successfully_disabled"),
           })
         },
       })
+    },
+    success() {
+      this.fetch()
+      this.modal.visible = false
     },
   },
   mounted() {

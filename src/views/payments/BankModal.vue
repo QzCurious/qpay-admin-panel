@@ -89,21 +89,17 @@ export default {
         transfer: Number(this.transfer),
       }
       if (this.mode === "create") {
-        Bank.create(data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("bank_successfully_created"),
-          })
-
-          this.$emit("success", data)
+        await Bank.create(data)
+        ToastService.success({
+          summary: this.$i18n.t("bank_successfully_created"),
         })
+        this.$emit("success", data)
       } else if (this.mode === "edit") {
-        Bank.update(this.data.id, data).then(() => {
-          ToastService.success({
-            summary: this.$i18n.t("bank_successfully_updated"),
-          })
-
-          this.$emit("success", data)
+        await Bank.update(this.data.id, data)
+        ToastService.success({
+          summary: this.$i18n.t("bank_successfully_updated"),
         })
+        this.$emit("success", data)
       }
 
       this.v$.$reset()

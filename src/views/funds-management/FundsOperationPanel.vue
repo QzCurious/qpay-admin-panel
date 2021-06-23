@@ -245,25 +245,25 @@ export default defineComponent({
 
       this.modal.visible = true
     },
-    make_transaction() {
+    async make_transaction() {
       this.v$.$touch()
       if (this.v$.$error) {
         return
       }
 
       this.modal.submitting = true
-      Funds.make_transaction(this.modal.data.merchant_channel_id, {
-        operation_type: Number(this.modal.operation_type),
-        amount: Number(this.modal.amount),
-        code: this.modal.code,
-      })
-        .then(() => {
-          ToastService.success({ summary: this.$i18n.t(this.success_message) })
-          this.fetch()
+      try {
+        await Funds.make_transaction(this.modal.data.merchant_channel_id, {
+          operation_type: Number(this.modal.operation_type),
+          amount: Number(this.modal.amount),
+          code: this.modal.code,
         })
-        .finally(() => {
-          this.modal.submitting = false
-        })
+      } finally {
+        this.modal.submitting = false
+      }
+      ToastService.success({ summary: this.$i18n.t(this.success_message) })
+      this.fetch()
+      this.modal.visible = false
     },
   },
 })

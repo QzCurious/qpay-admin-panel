@@ -54,7 +54,7 @@
     :header="$t('edit_merchant_channel_parameter')"
     v-model:visible="edit_modal.visible"
   >
-    <EditMerchantChannelParameter :data="edit_modal.data" @success="fetch" />
+    <EditMerchantChannelParameter :data="edit_modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -115,6 +115,10 @@ export default {
     edit(data) {
       this.edit_modal.data = data
       this.edit_modal.visible = true
+    },
+    success() {
+      this.edit_modal.visible = false
+      this.fetch()
     },
   },
   mounted() {
