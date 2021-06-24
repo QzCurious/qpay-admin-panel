@@ -231,9 +231,9 @@ export default {
   signin: "登入",
   deposit_with_fee: "有费用充值",
   deposit_without_fee: "无费用充值",
-  withdraw_with_fee: "有费用充值",
+  withdraw_with_fee: "有费用扣款",
   withdraw_without_fee: "无费用扣款",
-  withdraw_application: "有费用扣款",
+  withdraw_application: "提款申请",
   withdraw: "提款",
 
   // will be
