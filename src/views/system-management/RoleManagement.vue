@@ -11,6 +11,8 @@
     v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    showGridlines
+    class="p-datatable-sm"
     @page="on_page($event)"
   >
     <template #header>
