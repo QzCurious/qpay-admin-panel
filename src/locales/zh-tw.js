@@ -42,8 +42,8 @@ export default {
   card_management: "銀行卡管理",
   card_operation_panel: "銀行卡管理面板",
 
-  financial_reports: "code::financial_reports",
-  deposit_daily_report: "code::deposit_daily_report",
+  financial_reports: "財務報表",
+  deposit_daily_report: "日收益報表",
   merchant_daily_report: "code::merchant_daily_report",
 
   // value
@@ -109,8 +109,10 @@ export default {
   country: "國家",
   channel: "通道",
   card: "銀行卡",
+  card_id: "銀行卡 ID",
   card_holder: "持卡人",
   card_number: "卡號",
+  account_name: "卡片持有者名",
   deposit_limit_daily: "日收款上限",
   deposit_limit_once: "單次收款上限",
   pb_api_key: "PushBullet Key",
@@ -125,6 +127,7 @@ export default {
   credit_today: "今日已入帳額度",
   remaining_today: "今日剩餘收款額度",
   balance: "帳戶餘額",
+  current_balance: "卡片餘額",
   deposit_fee: "收款手續費",
   withdraw_fee_rate: "提款手續費率",
   withdraw_fee: "提款手續費",
@@ -177,6 +180,8 @@ export default {
   total_balance_d0: "D0總餘額",
   total_balance_t1: "T1總餘額",
   amount: "金額",
+  auto_deposit: "卡片自動收款總金額",
+  manual_deposit: "卡片手動收款總金額",
 
   // action
   create_role: "建立職位",
@@ -444,11 +449,6 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  card_id: "code::card_id",
-
-  auto_deposit: "code::auto_deposit",
-  manual_deposit: "code::manual_deposit",
 
   date: "code::date",
   recharge_fee: "code::recharge_fee",

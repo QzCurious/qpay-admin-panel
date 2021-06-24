@@ -1,106 +1,216 @@
 <template>
+  <h1>{{ $t("deposit_daily_report") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    v-model:filters="filters"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+      <form
+        @submit.prevent="handle_search"
+        class="header p-d-flex p-flex-wrap p-ai-start"
+      >
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <BankDropdown v-model="filters.bank_id" />
+        <InputText :label="$t('card_id')" v-model="filters.bank_card_id" />
+        <InputText
+          :label="$t('card_number')"
+          v-model="filters.bank_card_account_number"
         />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
+        <CalendarStartTime
+          v-model="filters.start_date"
+          :errors="v$.filters.start_date.$errors.map((e) => e.$message)"
+        />
+        <CalendarEndTime
+          v-model="filters.end_date"
+          :errors="v$.filters.end_date.$errors.map((e) => e.$message)"
+        />
+        <Search />
+      </form>
+      <div class="summary p-mt-2">
+        <span
+          >{{ $t("deposit_count") }}:
+          {{ summary.deposit_transaction_count?.toLocaleString("en-US") }}</span
+        >
+        <span
+          >{{ $t("total_deposit") }}:
+          {{
+            summary.deposit_transaction_deposit_amount?.toLocaleString("en-US")
+          }}</span
+        >
+        <span
+          >{{ $t("auto_deposit") }}:
+          {{ summary.auto_deposit_amount?.toLocaleString("en-US") }}</span
+        >
+        <span
+          >{{ $t("manual_deposit") }}:
+          {{ summary.manual_deposit_amount?.toLocaleString("en-US") }}</span
+        >
       </div>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="merchant" :header="i18n.merchant">
-      <template #body="{ data }">{{ data.merchant }}</template>
+    <Column field="merchant_name" :header="$t('merchant')"></Column>
+    <Column field="bank_name" :header="$t('bank')"></Column>
+    <Column field="bank_card_id" :header="$t('card_id')"></Column>
+    <Column
+      field="bank_card_account_number"
+      :header="$t('card_number')"
+      bodyClass="p-text-right"
+    />
+    <Column field="card_holder_name" :header="$t('account_name')" />
+    <Column :header="$t('current_balance')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.bank_card_balance?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="bank" :header="i18n.bank">
-      <template #body="{ data }">{{ data.bank }}</template>
+    <Column :header="$t('auto_deposit')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.auto_deposit_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="card_id" :header="i18n.card_id">
-      <template #body="{ data }">{{ data.card_id }}</template>
+    <Column :header="$t('manual_deposit')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.manual_deposit_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="card_number" :header="i18n.card_number">
-      <template #body="{ data }">{{ data.card_number }}</template>
+    <Column :header="$t('total_deposit')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.deposit_transaction_deposit_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="account_name" :header="i18n.account_name">
-      <template #body="{ data }">{{ data.account_name }}</template>
-    </Column>
-    <Column field="current_balance" :header="i18n.current_balance">
-      <template #body="{ data }">{{ data.current_balance }}</template>
-    </Column>
-    <Column field="auto_deposit" :header="i18n.auto_deposit">
-      <template #body="{ data }">{{ data.auto_deposit }}</template>
-    </Column>
-    <Column field="manual_deposit" :header="i18n.manual_deposit">
-      <template #body="{ data }">{{ data.manual_deposit }}</template>
-    </Column>
-    <Column field="total_deposit" :header="i18n.total_deposit">
-      <template #body="{ data }">{{ data.total_deposit }}</template>
-    </Column>
-    <Column field="deposit_count" :header="i18n.deposit_count">
-      <template #body="{ data }">{{ data.deposit_count }}</template>
+    <Column :header="$t('deposit_count')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.deposit_transaction_count?.toLocaleString("en-US") }}
+      </template>
     </Column>
   </DataTable>
 </template>
 <script>
-import { FilterMatchMode } from "primevue/api"
-import user from "../../api/User"
-import depositDailyReport from "../../api/DepositDailyReport"
-import i18n from "../../helper/i18n.zh-CN.js"
+import DepositReport from "../../api/DepositReport"
+import InputText from "../../components/InputText.vue"
+import BankDropdown from "../../components/BankDropdown.vue"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Search from "../../components/Search"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
 
 export default {
-  data() {
+  components: {
+    MerchantDropdown,
+    InputText,
+    BankDropdown,
+    CalendarStartTime,
+    CalendarEndTime,
+    Search,
+  },
+  setup() {
+    const v$ = useVuelidate()
+    return { v$ }
+  },
+  validations() {
     return {
-      records: [],
-      loading: true,
-      filters: {},
-      i18n: i18n,
+      filters: {
+        start_date: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_date: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_date)
+          ),
+        },
+      },
     }
   },
-  methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
-      }
-    },
-    addBank() {},
-  },
-  created() {
-    this.clearFilter()
+  data() {
+    return {
+      loading: true,
+      page: 1,
+      limit: 10,
+      filters: {
+        merchant_id: null,
+        bank_id: null,
+        bank_card_id: null,
+        bank_card_account_number: null,
+        start_date: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_date: this.moment()
+          .endOf("day")
+          .toDate(),
+      },
+      records: [],
+      totalRecords: 0,
+      summary: {},
+    }
   },
   mounted() {
-    depositDailyReport
-      .all()
-      .then(({ data }) => {
-        this.records = data
-      })
-      .finally(() => (this.loading = false))
+    this.fetch()
+  },
+  methods: {
+    handle_search() {
+      this.v$.$touch()
+      if (this.v$.$error) {
+        return
+      }
+
+      this.fetch()
+    },
+    async fetch() {
+      this.loading = true
+      const [records, count] = await Promise.all([
+        DepositReport.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        DepositReport.count(this.filters),
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      this.summary = count.data
+      window.scrollTo(0, 0)
+      this.loading = false
+    },
+    on_page(e) {
+      this.page = e.page + 1
+      this.fetch()
+    },
   },
 }
 </script>
-<style scoped></style>
+
+<style scoped>
+.header > :not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--blue-500);
+}
+
+.summary > * + *::before {
+  margin: 0 0.5rem;
+  content: "|";
+}
+</style>

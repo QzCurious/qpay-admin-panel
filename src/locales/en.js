@@ -42,8 +42,8 @@ export default {
   card_management: "Card Management",
   card_operation_panel: "Card Operation Panel",
 
-  financial_reports: "code::financial_reports",
-  deposit_daily_report: "code::deposit_daily_report",
+  financial_reports: "Financial Report",
+  deposit_daily_report: "Deposit Daily Report",
   merchant_daily_report: "code::merchant_daily_report",
 
   // value
@@ -109,8 +109,10 @@ export default {
   country: "Country",
   channel: "Channel",
   card: "Card",
+  card_id: "Card ID",
   card_holder: "Card Holder",
   card_number: "Card Number",
+  account_name: "Account Name",
   deposit_limit_daily: "Daily Deposit Limit",
   deposit_limit_once: "Once Deposit Limit",
   pb_api_key: "PushBullet Key",
@@ -125,6 +127,7 @@ export default {
   credit_today: "Credit Today",
   remaining_today: "Remaining Today",
   balance: "Balance",
+  current_balance: "Current Balance",
   deposit_fee: "Deposit Fee",
   withdraw_fee_rate: "Withdraw Fee Rate",
   withdraw_fee: "Withdraw Fee",
@@ -177,6 +180,8 @@ export default {
   total_balance_d0: "D0 Total Balance",
   total_balance_t1: "T1 Total Balance",
   amount: "Amount",
+  auto_deposit: "Auto Deposit",
+  manual_deposit: "Manual Deposit",
 
   // action
   create_role: "Create role",
@@ -445,11 +450,6 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  card_id: "code::card_id",
-
-  auto_deposit: "code::auto_deposit",
-  manual_deposit: "code::manual_deposit",
 
   date: "code::date",
   recharge_fee: "code::recharge_fee",

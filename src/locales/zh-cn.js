@@ -42,8 +42,8 @@ export default {
   card_management: "銀行卡管理",
   card_operation_panel: "银行卡管理面板",
 
-  financial_reports: "财务报表",
-  deposit_daily_report: "存款日报表",
+  financial_reports: "XXXXXXXX",
+  deposit_daily_report: "XXXXXXXX",
   merchant_daily_report: "商户通道日报表",
 
   // value
@@ -109,8 +109,10 @@ export default {
   country: "国家/地区",
   channel: "通道",
   card: "银行卡",
+  card_id: "XXXXXXXX",
   card_holder: "持卡人",
   card_number: "账户号码",
+  account_name: "XXXXXXXX",
   deposit_limit_daily: "每日收款上限",
   deposit_limit_once: "每次收款上限",
   pb_api_key: "自动工具KEY",
@@ -125,6 +127,7 @@ export default {
   credit_today: "今日已入账额度",
   remaining_today: "今日剩余收款额度",
   balance: "余额",
+  current_balance: "XXXXXXXX",
   deposit_fee: "收款手续费",
   withdraw_fee_rate: "提款手续费率",
   withdraw_fee: "提款手续费率",
@@ -177,6 +180,8 @@ export default {
   total_balance_d0: "D0总余额",
   total_balance_t1: "T1总余额",
   amount: "XXXXXXXX",
+  auto_deposit: "XXXXXXXX",
+  manual_deposit: "XXXXXXXX",
 
   // action
   create_role: "建立角色",
@@ -444,11 +449,6 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  card_id: "code::card_id",
-
-  auto_deposit: "code::auto_deposit",
-  manual_deposit: "code::manual_deposit",
 
   date: "code::date",
   recharge_fee: "code::recharge_fee",
