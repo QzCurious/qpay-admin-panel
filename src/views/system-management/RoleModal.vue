@@ -88,7 +88,11 @@ export default {
       const data = {
         allow_auth: Object.entries(this.selected)
           .filter(([key, value]) => value.checked)
-          .reduce((acc, cur) => [...acc, cur[0]], []),
+          .reduce((acc, cur) => [...acc, cur[0]], [])
+          .filter(
+            (permission) =>
+              !menu.value.map((group) => group.key).includes(permission)
+          ),
       }
       if (this.mode === "create") {
         data.name = this.name

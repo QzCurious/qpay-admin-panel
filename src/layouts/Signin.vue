@@ -92,9 +92,8 @@ export default {
           signin_id: this.signin_id,
           signin_password: this.password,
         })
-      } catch (err) {
+      } finally {
         this.submitting = false
-        throw err
       }
 
       // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
@@ -120,6 +119,8 @@ export default {
           auth.trigger_bind_2fa()
           return
         }
+
+        throw err
       }
     },
     continue_to_signin() {

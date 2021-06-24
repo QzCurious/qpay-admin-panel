@@ -29,6 +29,9 @@ export const store = {
     },
   },
   actions: {
+    set_token({ commit }, token) {
+      commit("set_token", token)
+    },
     async signin({ commit, getters }, token) {
       commit("set_token", token)
       const res = await Role.get(getters["jwt"].role_id)
