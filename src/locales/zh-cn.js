@@ -14,7 +14,7 @@ export default {
   funds_operation_panel: "资金操作面板",
   transaction_record: "资金异动记录",
   funds_withdraw: "商户资金提领",
-  funds_withdraw_audit: "XXXXXXXX",
+  funds_withdraw_audit: "资金提领审核",
 
   // merchant_management
   merchant_management: "商戶管理",
@@ -42,8 +42,8 @@ export default {
   card_management: "銀行卡管理",
   card_operation_panel: "银行卡管理面板",
 
-  financial_reports: "XXXXXXXX",
-  deposit_daily_report: "XXXXXXXX",
+  financial_reports: "财务报表",
+  deposit_daily_report: "代收日报表",
   merchant_daily_report: "商户通道日报表",
 
   // value
@@ -71,7 +71,7 @@ export default {
     AUTO_DEPOSIT: "自动处理",
     MANUAL_DEPOSIT: "人工处理",
     UNKNOWN_DEPOSIT: "未知存款",
-    WAITING_DEPOSIT: "XXXXXXXX",
+    WAITING_DEPOSIT: "等待存款",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "代收订单",
@@ -109,10 +109,10 @@ export default {
   country: "国家/地区",
   channel: "通道",
   card: "银行卡",
-  card_id: "XXXXXXXX",
+  card_id: "卡片编号",
   card_holder: "持卡人",
   card_number: "账户号码",
-  account_name: "XXXXXXXX",
+  account_name: "账户名称",
   deposit_limit_daily: "每日收款上限",
   deposit_limit_once: "每次收款上限",
   pb_api_key: "自动工具KEY",
@@ -127,7 +127,7 @@ export default {
   credit_today: "今日已入账额度",
   remaining_today: "今日剩余收款额度",
   balance: "余额",
-  current_balance: "XXXXXXXX",
+  current_balance: "当前余额",
   deposit_fee: "收款手续费",
   withdraw_fee_rate: "提款手续费率",
   withdraw_fee: "提款手续费率",
@@ -179,9 +179,9 @@ export default {
   lock_balance_t1: "T1锁定余额",
   total_balance_d0: "D0总余额",
   total_balance_t1: "T1总余额",
-  amount: "XXXXXXXX",
-  auto_deposit: "XXXXXXXX",
-  manual_deposit: "XXXXXXXX",
+  amount: "金额",
+  auto_deposit: "自动交易",
+  manual_deposit: "人工处理",
 
   // action
   create_role: "建立角色",
@@ -229,12 +229,12 @@ export default {
   edit_merchant_channel_parameter: "编辑商户参数",
   verify_2fa: "谷歌二次验证",
   signin: "登入",
-  deposit_with_fee: "XXXXXXXX",
-  deposit_without_fee: "XXXXXXXX",
-  withdraw_with_fee: "XXXXXXXX",
-  withdraw_without_fee: "XXXXXXXX",
-  withdraw_application: "XXXXXXXX",
-  withdraw: "XXXXXXXX",
+  deposit_with_fee: "有费用充值",
+  deposit_without_fee: "无费用充值",
+  withdraw_with_fee: "有费用充值",
+  withdraw_without_fee: "无费用扣款",
+  withdraw_application: "有费用扣款",
+  withdraw: "提款",
 
   // will be
   account_will_be_enabled: "账号将被启用",
@@ -316,11 +316,11 @@ export default {
   status_successfully_set_to_processing: "状态已更新为处理中",
   status_successfully_set_to_paid: "状态已更新为已支付",
   status_successfully_set_to_reject: "状态已更新为拒绝支付",
-  deposit_with_fee_successfully: "XXXXXXXX",
-  deposit_without_fee_successfully: "XXXXXXXX",
-  withdraw_with_fee_successfully: "XXXXXXXX",
-  withdraw_without_fee_successfully: "XXXXXXXX",
-  withdraw_applied_successfully: "XXXXXXXX",
+  deposit_with_fee_successfully: "有费用充值成功",
+  deposit_without_fee_successfully: "无费用充值成功",
+  withdraw_with_fee_successfully: "有费用扣款成功",
+  withdraw_without_fee_successfully: "无费用扣款成功",
+  withdraw_applied_successfully: "提款申请成功",
 
   // informative
   enter_2fa_to_permit_action: "请输入谷歌二次验证码",
@@ -379,66 +379,66 @@ export default {
   November: "十一月",
   December: "十二月",
 
-  request_failed: "XXXXXXXX",
-  server_error: "XXXXXXXX",
+  request_failed: "请求失败",
+  server_error: "服务器错误",
   api: {
     error: {
       // System
-      1001: "XXXXXXXX",
-      1002: "XXXXXXXX",
-      1003: "XXXXXXXX",
+      1001: "原密码错误",
+      1002: "账号已存在",
+      1003: "不可修改自己的权限",
 
       // Payment
 
       // Merchant
-      1201: "XXXXXXXX",
-      1202: "XXXXXXXX",
+      1201: "商户id, 通道id已存在",
+      1202: "使用者账号已存在",
 
       // Order
 
       // Funds
-      1401: "XXXXXXXX",
-      1402: "XXXXXXXX",
-      1403: "XXXXXXXX",
-      1404: "XXXXXXXX",
-      1405: "XXXXXXXX",
-      1406: "XXXXXXXX",
-      1407: "XXXXXXXX",
-      1408: "XXXXXXXX",
-      1409: "XXXXXXXX",
+      1401: "商户通道id错误",
+      1402: "商户通道未开启",
+      1403: "充值失败 (超过当日商店通道充值上限)",
+      1404: "操作类别错误",
+      1405: "D0余额不足",
+      1406: "提款失败 (超过当日商店通道提款上限)",
+      1407: "提款表单id错误",
+      1408: "不可修改已处理完成订单",
+      1409: "仍有处理中的商户通道提款",
       // Financial
 
       // Deposit Transaction
-      1601: "XXXXXXXX",
-      1602: "XXXXXXXX",
-      1603: "XXXXXXXX",
-      1604: "XXXXXXXX",
-      1605: "XXXXXXXX",
-      1606: "XXXXXXXX",
-      1607: "XXXXXXXX",
-      1608: "XXXXXXXX",
-      1609: "XXXXXXXX",
-      1610: "XXXXXXXX",
+      1601: "银行卡id错误",
+      1602: "重复的存款交易id",
+      1603: "新增存款交易失败",
+      1604: "参数验证失败",
+      1605: "找到多笔商户订单",
+      1606: "商户通道id错误",
+      1607: "新增交易资料失败",
+      1608: "更新商户通道余额失败",
+      1609: "更新存款交易单失败",
+      1610: "更新银行卡余额失败",
 
       // Auth
-      9001: "XXXXXXXX",
-      9002: "XXXXXXXX",
-      9003: "XXXXXXXX",
-      9009: "XXXXXXXX",
-      9010: "XXXXXXXX",
+      9001: "谷歌二次验证权限:金钥未建立",
+      9002: "谷歌二次验证权限: 金钥已建立",
+      9003: "谷歌二次验证权限错误: 输入错误",
+      9009: "帐号或密码不正确",
+      9010: "权限不足",
 
       // General
-      9101: "XXXXXXXX",
-      9102: "XXXXXXXX",
-      9103: "XXXXXXXX",
+      9101: "没有资料",
+      9102: "无法处理的物件",
+      9103: "你的登入ip不允许",
 
       //Pay Order
-      10002: "XXXXXXXX",
-      20000: "XXXXXXXX",
-      20001: "XXXXXXXX",
-      20002: "XXXXXXXX",
-      20003: "XXXXXXXX",
-      20004: "XXXXXXXX",
+      10002: "参数验证错误",
+      20000: "未知错误,请确认通道id",
+      20001: "签名错误",
+      20002: "商户不存在",
+      20003: "时间戳记不正确",
+      20004: "通道错误",
     },
   },
 
