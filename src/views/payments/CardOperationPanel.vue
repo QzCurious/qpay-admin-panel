@@ -13,7 +13,10 @@
     @page="on_page($event)"
   >
     <template #header>
-      <form @submit.prevent="fetch" class="p-d-flex p-jc-end p-flex-wrap">
+      <form
+        @submit.prevent="fetch"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
+      >
         <MerchantDropdown v-model="filters.merchant_id" />
         <BankDropdown v-model="filters.bank_id" />
         <StatusDropdown v-model="filters.status" />
@@ -21,7 +24,7 @@
           :label="$t('card_number')"
           v-model="filters.account_number"
         />
-        <div class="p-d-flex p-ai-center">
+        <div class="p-d-flex p-ai-center p-as-center">
           <label :for="auto_refresh" class="p-mr-2">{{
             $t("auto_refresh")
           }}</label>
@@ -305,7 +308,7 @@ export default {
 </script>
 
 <style scoped>
-form > :not(:last-child) {
-  margin-right: 0.5rem;
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
 }
 </style>

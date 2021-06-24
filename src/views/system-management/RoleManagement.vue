@@ -14,7 +14,10 @@
     @page="on_page($event)"
   >
     <template #header>
-      <form @submit.prevent="fetch" class="p-d-flex p-ai-start p-jc-end">
+      <form
+        @submit.prevent="fetch"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
+      >
         <Button
           class="p-mr-auto"
           :label="$t('form.create')"

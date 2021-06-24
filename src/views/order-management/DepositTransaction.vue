@@ -14,7 +14,7 @@
     <template #header>
       <form
         @submit.prevent="handle_search"
-        class="p-d-flex p-flex-wrap p-ai-start"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <InputText
           name="transaction_number"
@@ -260,8 +260,8 @@ export default {
 </script>
 
 <style scoped>
-form > :not(:last-child) {
-  margin-right: 0.5rem;
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
 }
 
 .summary {

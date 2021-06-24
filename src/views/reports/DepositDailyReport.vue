@@ -15,7 +15,7 @@
     <template #header>
       <form
         @submit.prevent="handle_search"
-        class="header p-d-flex p-flex-wrap p-ai-start"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <MerchantDropdown v-model="filters.merchant_id" />
         <BankDropdown v-model="filters.bank_id" />
@@ -200,7 +200,7 @@ export default {
 
 <style scoped>
 .header > :not(:last-child) {
-  margin-right: 0.5rem;
+  margin: 0 0.5rem 0.5rem 0;
 }
 
 .summary {

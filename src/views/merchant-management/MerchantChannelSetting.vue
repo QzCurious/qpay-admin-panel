@@ -13,7 +13,10 @@
     @page="on_page($event)"
   >
     <template #header>
-      <form @submit.prevent="fetch" class="p-d-flex p-ai-center p-flex-wrap">
+      <form
+        @submit.prevent="fetch"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
+      >
         <Button class="p-mr-auto" :label="$t('form.create')" @click="create" />
         <MerchantDropdown v-model="filters.merchant_id" />
         <StatusDropdown v-model="filters.status" />
@@ -152,7 +155,7 @@ export default {
 </script>
 
 <style scoped>
-form > :not(:last-child) {
-  margin-right: 0.5rem;
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
 }
 </style>

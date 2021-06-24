@@ -14,7 +14,7 @@
     <template #header>
       <form
         @submit.prevent="fetch"
-        class="header p-d-flex p-ai-center p-flex-wrap"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <MerchantDropdown v-model="filters.merchant_id" />
         <ChannelDropdown v-model="filters.channel_id" />
@@ -271,7 +271,7 @@ export default defineComponent({
 
 <style scoped>
 .header > :not(:last-child) {
-  margin-right: 0.5rem;
+  margin: 0 0.5rem 0.5rem 0;
 }
 
 .summary {
