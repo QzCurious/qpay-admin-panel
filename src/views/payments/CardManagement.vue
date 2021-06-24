@@ -23,7 +23,10 @@
         <MerchantDropdown v-model="filters.merchant_id" />
         <BankDropdown v-model="filters.bank_id" />
         <StatusDropdown v-model="filters.status" />
-        <InputText :label="$t('card_number')" v-model="filters.card_number" />
+        <InputText
+          :label="$t('card_number')"
+          v-model="filters.account_number"
+        />
         <Search />
       </form>
     </template>
@@ -103,7 +106,7 @@ export default {
         merchant_id: null,
         bank_id: null,
         status: null,
-        card_number: null,
+        account_number: null,
       },
       records: [],
       totalRecords: 0,

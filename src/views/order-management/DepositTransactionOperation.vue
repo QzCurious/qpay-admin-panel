@@ -22,12 +22,12 @@
         <InputText
           name="transaction_number"
           :label="$t('transaction_number')"
-          v-model="filters.transaction_id"
+          v-model="filters.deposit_id"
         />
         <InputText
           name="order_number"
           :label="$t('order_number')"
-          v-model="filters.order_number"
+          v-model="filters.merchant_order_id"
         />
         <InputText
           name="payee_number"
@@ -50,11 +50,12 @@
           v-model="filters.order_status"
           :options="order_status_list"
         />
-        <Dropdown
+        <!-- <Dropdown
           :label="$t('payee_bank')"
           v-model="filters.payee_bank"
           :options="payee_bank_list"
-        />
+        /> -->
+        <BankDropdown v-model="filters.bank_id" />
         <MerchantDropdown v-model="filters.merchant_id" />
         <ChannelDropdown v-model="filters.channel_id" />
         <CalendarStartTime
@@ -194,6 +195,7 @@ import { date } from "../../helper/validator"
 import { helpers, minValue } from "@vuelidate/validators"
 import { required, numeric } from "@vuelidate/validators"
 import moment from "moment"
+import BankDropdown from "../../components/BankDropdown"
 import MerchantDropdown from "../../components/MerchantDropdown"
 import ChannelDropdown from "../../components/ChannelDropdown"
 import Search from "../../components/Search"
@@ -204,6 +206,7 @@ export default {
   components: {
     InputText,
     Dropdown,
+    BankDropdown,
     MerchantDropdown,
     ChannelDropdown,
     Search,
@@ -246,8 +249,9 @@ export default {
       page: 1,
       limit: 10,
       filters: {
+        bank_id: null,
         transation_id: null,
-        order_number: null,
+        merchant_order_id: null,
         order_amount: null,
         order_over: null,
         order_status: null,
