@@ -10,6 +10,8 @@
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
     v-model:filters="filters"
+    showGridlines
+    class="p-datatable-sm"
   >
     <template #header>
       <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
