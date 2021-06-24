@@ -10,12 +10,14 @@
     v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    showGridlines
+    class="p-datatable-sm"
     @page="on_page($event)"
   >
     <template #header>
       <form
         @submit.prevent="handle_search"
-        class="p-d-flex p-flex-wrap p-ai-start"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <InputText
           name="transaction_number"
@@ -70,14 +72,15 @@
     <template #loading> Loading... </template>
     <Column
       field="merchant_order_id"
-      :header="$t('order_number')"
+      :header="$t('order_number') + '>' + $t('transaction_id')"
       bodyClass="p-text-right"
-    ></Column>
-    <Column
-      field="deposit_id"
-      :header="$t('transaction_id')"
-      bodyClass="p-text-right"
-    ></Column>
+    >
+      <template #body="{ data }">
+        {{ data.merchant_order_id || " - " }}
+        <br />
+        {{ data.deposit_id || " - " }}
+      </template>
+    </Column>
     <Column
       field="order_amount"
       :header="$t('order_amount')"
@@ -99,11 +102,11 @@
       :header="$t('payee_account')"
       bodyClass="p-text-right"
     ></Column>
-    <Column
-      field="bank_card_account_number"
-      :header="$t('payee_number')"
-      bodyClass="p-text-right"
-    ></Column>
+    <Column :header="$t('payee_number')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ shortenAccount(data.bank_card_account_number) }}
+      </template>
+    </Column>
     <Column field="remitter_name" :header="$t('remitter_name')"></Column>
     <!-- <Column field="channel" :header="$t('channel')"></Column> -->
     <Column field="merchant_name" :header="$t('merchant')"></Column>
@@ -125,8 +128,16 @@
       </template>
     </Column>
     <Column :header="$t('operation')">
-      <template #body>
-        <Button>manual_deposit</Button>
+      <template #body="{ data }">
+        <!-- 0, 3 才顯示 -->
+        {{ data.order_status }}
+        <template v-if="data.status === 0 || data.status === 3">
+          <Button
+            class="p-mt-1 p-d-flex p-text-nowrap p-button-sm"
+            :label="$t('deposit_transaction_status_values.MANUAL_DEPOSIT')"
+            @click="show_modal(data)"
+          />
+        </template>
       </template>
     </Column>
     <Column field="channel_name" :header="$t('channel')"></Column>
@@ -136,6 +147,36 @@
       </template>
     </Column>
   </DataTable>
+  <Dialog modal :header="$t('manual_deposit')" v-model:visible="modal.visible">
+    <div class="modal-wrapper">
+      <form @submit.prevent="handle_modal" class="p-d-flex p-flex-column">
+        <InputText
+          float
+          autofocus
+          :label="$t('amount')"
+          v-model="modal.data.amount"
+        />
+        <InputText
+          float
+          autofocus
+          :label="$t('remark')"
+          v-model="modal.data.remark"
+        />
+        <InputText
+          float
+          autofocus
+          :label="$t('verify_2fa')"
+          v-model="modal.data.code"
+        />
+        <Button
+          :loading="modal.submitting"
+          type="submit"
+          class="p-mt-2"
+          :label="$t('form.submit')"
+        />
+      </form>
+    </div>
+  </Dialog>
 </template>
 
 <script>
@@ -151,6 +192,7 @@ import DepositTransaction, {
 import useVuelidate from "@vuelidate/core"
 import { date } from "../../helper/validator"
 import { helpers, minValue } from "@vuelidate/validators"
+import { required, numeric } from "@vuelidate/validators"
 import moment from "moment"
 import MerchantDropdown from "../../components/MerchantDropdown"
 import ChannelDropdown from "../../components/ChannelDropdown"
@@ -192,6 +234,10 @@ export default {
           ),
         },
       },
+      // modal: {
+      //   amount: { required, numeric },
+      //   code: { required },
+      // },
     }
   },
   data() {
@@ -216,6 +262,15 @@ export default {
       },
       records: [],
       totalRecores: 0,
+      modal: {
+        visible: false,
+        data: {
+          id: null,
+          amount: null,
+          remark: null,
+          code: null,
+        },
+      },
     }
   },
   computed: {
@@ -266,6 +321,36 @@ export default {
       this.page = e.page + 1
       this.fetch()
     },
+    show_modal(data) {
+      this.modal.data.amount = ""
+      this.modal.data.code = ""
+      this.modal.data.id = data.id
+      this.modal.data.remark = ""
+      this.modal.visible = true
+      console.log(this.modal)
+    },
+    async handle_modal(data) {
+      console.log(data)
+      let resp = await DepositTransaction.update(this.modal.data.id, {
+        real_amount: this.modal.data.amount,
+        code: this.modal.data.code,
+        remark: this.modal.data.remark,
+      })
+
+      if (resp.data.message === "success") {
+        this.modal.visible = false
+      }
+    },
+    shortenAccount(account) {
+      if (account) {
+        let last4 = account.substr(account.length - 4)
+        let maskRest = account.substring(0, account.length - 4)
+        maskRest = maskRest.replace(/./g, "*")
+        return `${maskRest}${last4}` || ""
+      } else {
+        return ""
+      }
+    },
   },
   mounted() {
     this.fetch()
@@ -274,7 +359,18 @@ export default {
 </script>
 
 <style scoped>
-form > :not(:last-child) {
-  margin-right: 0.5rem;
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
+}
+
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--blue-500);
+}
+
+.summary > * + *::before {
+  margin: 0 0.5rem;
+  content: "|";
 }
 </style>

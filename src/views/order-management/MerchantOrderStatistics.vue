@@ -8,6 +8,8 @@
     :rows="10"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    showGridlines
+    class="p-datatable-sm"
   >
     <template #header>
       <form

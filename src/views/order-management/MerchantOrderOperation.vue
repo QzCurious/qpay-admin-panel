@@ -10,6 +10,8 @@
     v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    showGridlines
+    class="p-datatable-sm"
     @page="on_page($event)"
   >
     <template #header>
@@ -124,10 +126,10 @@
       <!-- TODO -->
       <template #body="{ data }">
         <div v-if="isOperationVisible(data)">
-          <Button class="p-button-success" @click="paid(data)">{{
+          <Button class="p-button-success p-button-sm" @click="paid(data)">{{
             $t("audit_type_values.PAID")
           }}</Button>
-          <Button class="p-button-danger" @click="reject(data)">{{
+          <Button class="p-button-danger p-button-sm" @click="reject(data)">{{
             $t("audit_type_values.REJECT")
           }}</Button>
         </div>
