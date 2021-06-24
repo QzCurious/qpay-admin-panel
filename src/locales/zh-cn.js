@@ -130,7 +130,7 @@ export default {
   current_balance: "当前余额",
   deposit_fee: "收款手续费",
   withdraw_fee_rate: "提款手续费率",
-  withdraw_fee: "提款手续费率",
+  withdraw_fee: "提款手续费",
   withdraw_limit_daily: "每日提款上限",
   deposit_fee_rate: "收款手续费率",
   recharge_limit_daily: "每日充值上限",
