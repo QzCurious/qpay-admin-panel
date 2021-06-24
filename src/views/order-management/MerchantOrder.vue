@@ -48,7 +48,10 @@
           v-model="filters.audit_type"
           :options="audit_status_list"
         />
-        <MerchantDropdown v-model="filters.merchant_id" />
+        <MerchantDropdown
+          v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
+          v-model="filters.merchant_id"
+        />
         <ChannelDropdown v-model="filters.channel_id" />
         <CalendarStartTime
           v-model="filters.start_time"
@@ -142,6 +145,7 @@ import ChannelDropdown from "../../components/ChannelDropdown"
 import Search from "../../components/Search"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import { mapGetters } from "vuex"
 
 export default {
   components: {
@@ -219,6 +223,7 @@ export default {
         value,
       }))
     },
+    ...mapGetters("auth", ["merchant_type", "MERCHANT_TYPE"]),
   },
   methods: {
     handle_search() {

@@ -21,7 +21,10 @@
           :label="$t('transaction_id')"
           v-model="filters.transaction_id"
         />
-        <MerchantDropdown v-model="filters.merchant_id" />
+        <MerchantDropdown
+          v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
+          v-model="filters.merchant_id"
+        />
         <ChannelDropdown v-model="filters.channel_id" />
         <CalendarStartTime
           v-model="filters.start_time"
@@ -87,6 +90,7 @@ import Search from "../../components/Search.vue"
 import { date } from "../../helper/validator"
 import { helpers, minValue } from "@vuelidate/validators"
 import useVuelidate from "@vuelidate/core"
+import { mapGetters } from "vuex"
 
 export default {
   components: {
@@ -152,6 +156,7 @@ export default {
         }
       })
     },
+    ...mapGetters("auth", ["merchant_type", "MERCHANT_TYPE"]),
   },
   methods: {
     handle_search() {

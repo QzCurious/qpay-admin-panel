@@ -17,6 +17,16 @@ export const store = {
     signin_id(state, { jwt }) {
       return jwt.signin_id
     },
+    merchant_type(state, getters) {
+      return getters["jwt"].merchant_type
+    },
+    MERCHANT_TYPE() {
+      return {
+        MERCHANT: 1,
+        AGENT: 2,
+        SYSTEM: 3,
+      }
+    },
   },
   actions: {
     async signin({ commit, getters }, token) {

@@ -21,6 +21,7 @@
           @click="create_user"
         />
         <MerchantDropdown
+          v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
           :label="$t('company')"
           v-model="filters.merchant_id"
         />
@@ -61,6 +62,7 @@ import User from "../../api/User"
 import UserModal from "./UserModal"
 import MerchantDropdown from "../../components/MerchantDropdown"
 import ToastService from "../../service/ToastService"
+import { mapGetters } from "vuex"
 
 export default {
   components: { UserModal, MerchantDropdown },
@@ -156,6 +158,7 @@ export default {
         ? this.$i18n.t("edit_account")
         : this.$i18n.t("create_account")
     },
+    ...mapGetters("auth", ["merchant_type", "MERCHANT_TYPE"]),
   },
 }
 </script>
