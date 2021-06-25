@@ -86,7 +86,27 @@ export default {
       activeIndex: null,
     }
   },
+  mounted() {
+    this.activeIndex = this.currentRouteToIndex(this.items)
+  },
+  watch: {
+    $route() {
+      this.activeIndex = this.currentRouteToIndex(this.items)
+    },
+  },
   methods: {
+    currentRouteToIndex(items) {
+      if (!items) {
+        return null
+      }
+      let index = items.findIndex(
+        (item) =>
+          item.to?.name === this.$router.currentRoute.value.name ||
+          (item.items && this.currentRouteToIndex(item.items) !== null)
+      )
+      index = index === -1 ? null : index
+      return index
+    },
     onMenuItemClick(event, item, index) {
       if (item.disabled) {
         event.preventDefault()
