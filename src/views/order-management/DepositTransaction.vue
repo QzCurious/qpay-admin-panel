@@ -76,12 +76,34 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="merchant_order_id" :header="$t('order_number')"></Column>
+    <Column field="merchant_order_id" :header="$t('order_number')">
+      <template #body="{ data }">
+        <i v-if="data.merchant_order_id" v-tooltip="data.merchant_order_id">
+          {{
+            data.merchant_order_id.substring(0, 3) +
+              "..." +
+              data.merchant_order_id.substr(data.merchant_order_id.length - 10)
+          }}
+        </i>
+        <i v-else> - </i>
+      </template>
+    </Column>
     <Column
       field="deposit_id"
       :header="$t('transaction_number')"
       bodyClass="p-text-right"
-    ></Column>
+    >
+      <template #body="{ data }">
+        <i v-if="data.deposit_id" v-tooltip="data.deposit_id">
+          {{
+            data.deposit_id.substring(0, 3) +
+              "..." +
+              data.deposit_id.substr(data.deposit_id.length - 10)
+          }}
+        </i>
+        <i v-else> - </i>
+      </template>
+    </Column>
     <Column :header="$t('order_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.order_amount.toLocaleString("en-US") }}
@@ -104,7 +126,14 @@
       :header="$t('payee_number')"
       bodyClass="p-text-right"
     ></Column>
-    <Column field="remark" :header="$t('sms_message')"></Column>
+    <Column :header="$t('sms_message')">
+      <template #body="{ data }">
+        <i
+          v-tooltip="data.remark"
+          class="p-button-raised p-button-rounded p-button-sm pi pi-eye"
+        />
+      </template>
+    </Column>
     <Column field="remitter_name" :header="$t('remitter_name')"></Column>
     <Column field="channel_name" :header="$t('channel')"></Column>
     <Column field="merchant_name" :header="$t('merchant')"></Column>

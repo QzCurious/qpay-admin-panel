@@ -132,7 +132,7 @@
       <template #body="{ data }">
         <!-- 0, 3 才顯示 -->
         {{ data.order_status }}
-        <template v-if="data.status === 0 || data.status === 3">
+        <template v-if="isOperationVisible(data)">
           <Button
             class="p-mt-1 p-d-flex p-text-nowrap p-button-sm"
             :label="$t('deposit_transaction_status_values.MANUAL_DEPOSIT')"
@@ -354,6 +354,12 @@ export default {
       } else {
         return ""
       }
+    },
+    isOperationVisible(data) {
+      let visible = true
+      visible &= data.status === 0 || data.status === 3
+      visible &= data.merchant_order_id !== null
+      return visible
     },
   },
   mounted() {
