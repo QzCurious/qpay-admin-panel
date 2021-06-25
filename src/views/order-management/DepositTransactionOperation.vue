@@ -10,6 +10,7 @@
     v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
+    fronzen
     showGridlines
     class="p-datatable-sm"
     @page="on_page($event)"
@@ -73,13 +74,33 @@
     <template #loading> Loading... </template>
     <Column
       field="merchant_order_id"
-      :header="$t('order_number') + '>' + $t('transaction_id')"
+      :header="$t('order_number')"
       bodyClass="p-text-right"
     >
       <template #body="{ data }">
-        {{ data.merchant_order_id || " - " }}
-        <br />
-        {{ data.deposit_id || " - " }}
+        <i v-if="data.merchant_order_id" v-tooltip.top="data.merchant_order_id">
+          {{
+            data.merchant_order_id.substring(0, 3) +
+              "..." +
+              data.merchant_order_id.substr(data.merchant_order_id.length - 10)
+          }}
+        </i>
+        <i v-else> - </i>
+      </template>
+    </Column>
+    <Column
+      field="deposit_id"
+      :header="$t('transaction_id')"
+      bodyClass="p-text-right"
+    >
+      <template #body="data">
+        <i v-if="data.deposit_id" v-tooltip.top="data.deposit_id">
+          {{
+            data.deposit_id.substring(0, 3) +
+              "..." +
+              data.deposit_id.substring(data.deposit_id.length - 10)
+          }} </i
+        ><i v-else> - </i>
       </template>
     </Column>
     <Column

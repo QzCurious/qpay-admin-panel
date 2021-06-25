@@ -64,13 +64,39 @@
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="id" :header="$t('order_number')" bodyClass="p-text-right">
+    <Column :header="$t('order_number')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        <i v-if="data.id" v-tooltip.top="data.id">
+          {{
+            data.id.substring(0, 3) +
+              "..." +
+              data.id.substr(data.id.length - 10)
+          }}
+        </i>
+        <i v-else> - </i>
+      </template>
     </Column>
     <Column
       field="deposit_transaction_id"
       :header="$t('transaction_id')"
       bodyClass="p-text-right"
-    ></Column>
+    >
+      <template #body="{ data }">
+        <i
+          v-if="data.deposit_transaction_id"
+          v-tooltip.top="data.deposit_transaction_id"
+        >
+          {{
+            data.deposit_transaction_id.substring(0, 3) +
+              "..." +
+              data.deposit_transaction_id.substr(
+                data.deposit_transaction_id.length - 10
+              )
+          }}
+        </i>
+        <i v-else> - </i>
+      </template>
+    </Column>
     <Column :header="$t('order_amount')" bodyClass="p-text-right">
       <template #body="{ data }">
         {{ data.order_amount.toLocaleString("en-US") }}

@@ -78,7 +78,7 @@
     <template #loading> Loading... </template>
     <Column field="merchant_order_id" :header="$t('order_number')">
       <template #body="{ data }">
-        <i v-if="data.merchant_order_id" v-tooltip="data.merchant_order_id">
+        <i v-if="data.merchant_order_id" v-tooltip.top="data.merchant_order_id">
           {{
             data.merchant_order_id.substring(0, 3) +
               "..." +
@@ -94,7 +94,7 @@
       bodyClass="p-text-right"
     >
       <template #body="{ data }">
-        <i v-if="data.deposit_id" v-tooltip="data.deposit_id">
+        <i v-if="data.deposit_id" v-tooltip.top="data.deposit_id">
           {{
             data.deposit_id.substring(0, 3) +
               "..." +
@@ -129,7 +129,8 @@
     <Column :header="$t('sms_message')">
       <template #body="{ data }">
         <i
-          v-tooltip="data.remark"
+          v-if="data.remark"
+          v-tooltip.top="data.remark"
           class="p-button-raised p-button-rounded p-button-sm pi pi-eye"
         />
       </template>
