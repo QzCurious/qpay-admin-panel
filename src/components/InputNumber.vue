@@ -16,7 +16,7 @@
         :maxFractionDigits="6"
         v-bind="forward"
         :modelValue="modelValue"
-        @update:modelValue="(value) => $emit('update:modelValue', value)"
+        @input="({ value }) => $emit('update:modelValue', value)"
       />
       <template v-if="float">
         <label :for="name" :class="{ 'p-error': errors.length }">{{

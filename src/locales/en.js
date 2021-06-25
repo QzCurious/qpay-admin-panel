@@ -44,7 +44,7 @@ export default {
 
   financial_reports: "Financial Report",
   deposit_daily_report: "Deposit Daily Report",
-  merchant_daily_report: "code::merchant_daily_report",
+  merchant_daily_report: "Merchant Daily Report",
 
   // value
   funds_withdraw_status: {
@@ -182,6 +182,15 @@ export default {
   amount: "Amount",
   auto_deposit: "Auto Deposit",
   manual_deposit: "Manual Deposit",
+  recharge_amount: "Recharge Amount",
+  recharge_fee: "Recharge Fee",
+  deduction_amount: "Deduction Amount",
+  deduction_fee: "Deduction Fee",
+  funds_withdraw_amount: "Funds Withdraw Amount",
+  funds_withdraw_fee: "Funds Withdraw Fee",
+  opening_balance: "Opening Balance",
+  ending_balance: "Ending Balance",
+  date: "Date",
 
   // action
   create_role: "Create role",
@@ -450,11 +459,4 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  date: "code::date",
-  recharge_fee: "code::recharge_fee",
-  deduction_amount: "code::deduction_amount",
-  deduction_fee: "code::deduction_fee",
-  opening_balance: "code::opening_balance",
-  ending_balance: "code::ending_balance",
 }

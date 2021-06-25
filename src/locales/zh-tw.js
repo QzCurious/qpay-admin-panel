@@ -44,7 +44,7 @@ export default {
 
   financial_reports: "財務報表",
   deposit_daily_report: "日收益報表",
-  merchant_daily_report: "code::merchant_daily_report",
+  merchant_daily_report: "商户通道日报表",
 
   // value
   funds_withdraw_status: {
@@ -182,6 +182,15 @@ export default {
   amount: "金額",
   auto_deposit: "卡片自動收款總金額",
   manual_deposit: "卡片手動收款總金額",
+  recharge_amount: "商店通道充值金額",
+  recharge_fee: "商店通道充值費用",
+  deduction_amount: "商店通道扣款金額",
+  deduction_fee: "商店通道扣款費用",
+  funds_withdraw_amount: "商店通道提領金額",
+  funds_withdraw_fee: "商店通道提領費用",
+  opening_balance: "今日開帳金額",
+  ending_balance: "今日結帳金額",
+  date: "日期",
 
   // action
   create_role: "建立職位",
@@ -449,11 +458,4 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  date: "code::date",
-  recharge_fee: "code::recharge_fee",
-  deduction_amount: "code::deduction_amount",
-  deduction_fee: "code::deduction_fee",
-  opening_balance: "code::opening_balance",
-  ending_balance: "code::ending_balance",
 }

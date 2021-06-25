@@ -37,6 +37,10 @@ import TopBar from "./Topbar"
 import Profile from "./Profile.vue"
 import Menu from "./Menu.vue"
 import menu from "./menu"
+import i18n from "../../i18n"
+import ToastService from "../../service/ToastService"
+import { ApiError } from "../../api/ErrorHandler"
+import axios from "axios"
 
 export default {
   data() {
@@ -125,6 +129,24 @@ export default {
         return true
       }
     },
+  },
+  mounted() {
+    onunhandledrejection = ({ reason: err }) => {
+      if (err instanceof ApiError) {
+        const message = i18n.global.te(`api.error.${err.code}`)
+          ? i18n.global.t(`api.error.${err.code}`)
+          : err.message
+        ToastService.error({
+          summary: i18n.global.t("request_failed"),
+          detail: `${err.code}: ${message}`,
+        })
+        return false
+      }
+      if (axios.isAxiosError(err) && err.response.status > 500) {
+        ToastService.error({ summary: i18n.global.t("server_error") })
+        return false
+      }
+    }
   },
   computed: {
     menu() {

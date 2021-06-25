@@ -1,123 +1,201 @@
 <template>
+  <h1>{{ $t("merchant_daily_report") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    v-model:filters="filters"
     showGridlines
     class="p-datatable-sm"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Add"
-          class="p-button-outlined p-mb-2"
-          @click="addBank"
+      <form
+        @submit.prevent="handle_search"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
+      >
+        <MerchantDropdown v-model="filters.merchant_id" />
+        <ChannelDropdown v-model="filters.channel_id" />
+        <CalendarStartTime
+          v-model="filters.start_date"
+          :errors="v$.filters.start_date.$errors.map((e) => e.$message)"
         />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
-      </div>
+        <CalendarEndTime
+          v-model="filters.end_date"
+          :errors="v$.filters.end_date.$errors.map((e) => e.$message)"
+        />
+        <Search />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column field="date" :header="i18n.date">
-      <template #body="{ data }">{{ data.date }}</template>
+    <Column field="created_at" :header="$t('date')" bodyClass="p-text-right" />
+    <Column field="merchant_name" :header="$t('merchant')"></Column>
+    <Column field="channel_name" :header="$t('channel')" />
+    <Column :header="$t('deposit_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_order_real_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="merchant" :header="i18n.merchant">
-      <template #body="{ data }">{{ data.merchant }}</template>
+    <Column :header="$t('deposit_fee')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_order_fee?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="channel" :header="i18n.channel">
-      <template #body="{ data }">{{ data.channel }}</template>
+    <Column :header="$t('deposit_count')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_order_count?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="deposit_amount" :header="i18n.deposit_amount">
-      <template #body="{ data }">{{ data.deposit_amount }}</template>
+    <Column :header="$t('recharge_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_channel_recharge_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="deposit_fee" :header="i18n.deposit_fee">
-      <template #body="{ data }">{{ data.deposit_fee }}</template>
+    <Column :header="$t('recharge_fee')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_channel_recharge_fee?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="deposit_count" :header="i18n.deposit_count">
-      <template #body="{ data }">{{ data.deposit_count }}</template>
+    <Column :header="$t('deduction_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_channel_deduction_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="auto_deposit" :header="i18n.auto_deposit">
-      <template #body="{ data }">{{ data.auto_deposit }}</template>
+    <Column :header="$t('deduction_fee')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.merchant_channel_deduction_fee?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="manual_deposit" :header="i18n.manual_deposit">
-      <template #body="{ data }">{{ data.manual_deposit }}</template>
+    <Column :header="$t('funds_withdraw_amount')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.funds_withdraw_amount?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="total_deposit" :header="i18n.total_deposit">
-      <template #body="{ data }">{{ data.total_deposit }}</template>
+    <Column :header="$t('funds_withdraw_fee')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.funds_withdraw_fee?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="deposit_count" :header="i18n.deposit_count">
-      <template #body="{ data }">{{ data.deposit_count }}</template>
+    <Column :header="$t('opening_balance')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.opening_balance?.toLocaleString("en-US") }}
+      </template>
     </Column>
-    <Column field="recharge_fee" :header="i18n.recharge_fee">
-      <template #body="{ data }">{{ data.recharge_fee }}</template>
-    </Column>
-    <Column field="deduction_amount" :header="i18n.deduction_amount">
-      <template #body="{ data }">{{ data.deduction_amount }}</template>
-    </Column>
-    <Column field="deduction_fee" :header="i18n.deduction_fee">
-      <template #body="{ data }">{{ data.deduction_fee }}</template>
-    </Column>
-    <Column field="opening_balance" :header="i18n.opening_balance">
-      <template #body="{ data }">{{ data.opening_balance }}</template>
-    </Column>
-    <Column field="ending_balance" :header="i18n.ending_balance">
-      <template #body="{ data }">{{ data.ending_balance }}</template>
+    <Column :header="$t('ending_balance')" bodyClass="p-text-right">
+      <template #body="{ data }">
+        {{ data?.ending_balance?.toLocaleString("en-US") }}
+      </template>
     </Column>
   </DataTable>
 </template>
 <script>
-import { FilterMatchMode } from "primevue/api"
-import user from "../../api/User"
-import merchantDailyReport from "../../api/MerchantDailyReport"
-import i18n from "../../helper/i18n.zh-CN.js"
+import MerchantChannelReport from "../../api/MerchantChannelReport"
+import ChannelDropdown from "../../components/ChannelDropdown"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Search from "../../components/Search"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import useVuelidate from "@vuelidate/core"
 
 export default {
-  data() {
+  components: {
+    MerchantDropdown,
+    ChannelDropdown,
+    CalendarStartTime,
+    CalendarEndTime,
+    Search,
+  },
+  setup() {
+    const v$ = useVuelidate()
+    return { v$ }
+  },
+  validations() {
     return {
-      records: [],
-      loading: true,
-      filters: {},
-      i18n: i18n,
+      filters: {
+        start_date: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_date: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_date)
+          ),
+        },
+      },
     }
   },
-  methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.id": { value: null, matchMode: FilterMatchMode.CONTAINS },
-        "role.name": { value: null, matchMode: FilterMatchMode.CONTAINS },
-      }
-    },
-    addBank() {},
-  },
-  created() {
-    this.clearFilter()
+  data() {
+    return {
+      loading: true,
+      page: 1,
+      limit: 10,
+      filters: {
+        merchant_id: null,
+        channel_id: null,
+        start_date: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_date: this.moment()
+          .endOf("day")
+          .toDate(),
+      },
+      records: [],
+      totalRecords: 0,
+    }
   },
   mounted() {
-    merchantDailyReport
-      .all()
-      .then(({ data }) => {
-        this.records = data
-      })
-      .finally(() => (this.loading = false))
+    this.fetch()
+  },
+  methods: {
+    handle_search() {
+      this.v$.$touch()
+      if (this.v$.$error) {
+        return
+      }
+
+      this.fetch()
+    },
+    async fetch() {
+      this.loading = true
+      const [records, count] = await Promise.all([
+        MerchantChannelReport.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        MerchantChannelReport.count(this.filters),
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      this.summary = count.data
+      window.scrollTo(0, 0)
+      this.loading = false
+    },
+    on_page(e) {
+      this.page = e.page + 1
+      this.fetch()
+    },
   },
 }
 </script>
-<style scoped></style>
+
+<style scoped>
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
+}
+</style>

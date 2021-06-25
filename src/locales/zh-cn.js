@@ -182,6 +182,15 @@ export default {
   amount: "金额",
   auto_deposit: "自动交易",
   manual_deposit: "人工处理",
+  recharge_amount: "XXXXXXXX",
+  recharge_fee: "XXXXXXXX",
+  deduction_amount: "XXXXXXXX",
+  deduction_fee: "XXXXXXXX",
+  funds_withdraw_amount: "XXXXXXXX",
+  funds_withdraw_fee: "XXXXXXXX",
+  opening_balance: "XXXXXXXX",
+  ending_balance: "XXXXXXXX",
+  date: "XXXXXXXX",
 
   // action
   create_role: "建立角色",
@@ -449,11 +458,4 @@ export default {
   index: "code::index",
 
   card_list: "code::card_list",
-
-  date: "code::date",
-  recharge_fee: "code::recharge_fee",
-  deduction_amount: "code::deduction_amount",
-  deduction_fee: "code::deduction_fee",
-  opening_balance: "code::opening_balance",
-  ending_balance: "code::ending_balance",
 }

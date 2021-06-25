@@ -6,14 +6,14 @@
       :modelValue="data.channel_name"
       :label="$t('channel')"
     />
-    <InputText
+    <InputNumber
       float
       v-model="amount"
       :label="$t('amount')"
       name="amount"
       :errors="v$.amount.$errors.map((e) => e.$message)"
     />
-    <InputText readonly float :modelValue="fee" :label="$t('withdraw_fee')" />
+    <InputNumber readonly float :modelValue="fee" :label="$t('withdraw_fee')" />
     <BankDropdown
       float
       v-model="bank_id"
@@ -66,9 +66,10 @@ import { gt } from "../../helper/validator"
 import InputText from "../../components/InputText"
 import BankDropdown from "../../components/BankDropdown"
 import ToastService from "../../service/ToastService"
+import InputNumber from "../../components/InputNumber.vue"
 
 export default {
-  components: { InputText, BankDropdown },
+  components: { InputText, BankDropdown, InputNumber },
   emits: ["success"],
   props: {
     data: {
@@ -105,17 +106,9 @@ export default {
   },
   computed: {
     fee() {
-      if (
-        this.amount === null ||
-        isNaN(this.amount) ||
-        isNaN(this.withdraw_fee) ||
-        isNaN(this.withdraw_fee_rate)
-      ) {
-        return null
-      }
       return (
         Number(this.amount) * Number(this.withdraw_fee_rate) +
-          Number(this.withdraw_fee) || null
+        Number(this.withdraw_fee)
       )
     },
   },
