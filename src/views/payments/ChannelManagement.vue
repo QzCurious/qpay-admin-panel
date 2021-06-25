@@ -35,9 +35,13 @@
     </Column>
     <Column :header="$t('operation')">
       <template #body="{ data }">
-        <Button :label="$t('form.edit')" @click="edit(data)" />
         <Button
-          class="p-button-danger"
+          class="p-button-sm"
+          :label="$t('form.edit')"
+          @click="edit(data)"
+        />
+        <Button
+          class="p-button-sm p-button-danger"
           :label="$t('form.delete')"
           @click="remove(data)"
         />
@@ -45,9 +49,9 @@
     </Column>
     <Column :header="$t('card')">
       <template #body="{ data }">
-        <div class="p-d-flex p-flex-column">
+        <div class="p-fluid p-flex-column">
           <Chip :key="bank_card_id" v-for="bank_card_id in data.bank_card_id">
-            {{ bank_card_id }}
+            <i class="pi pi-credit-card" /> {{ bank_card_id }}
           </Chip>
         </div>
       </template>
