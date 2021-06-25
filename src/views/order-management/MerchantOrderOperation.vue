@@ -33,11 +33,13 @@
           name="order_amount"
           :label="$t('order_amount')"
           v-model="filters.order_amount"
+          :errors="v$.filters.order_amount.$errors.map((e) => e.$message)"
         />
         <InputText
           name="order_over"
           :label="$t('order_over')"
           v-model="filters.order_over"
+          :errors="v$.filters.order_over.$errors.map((e) => e.$message)"
         />
         <Dropdown
           :label="$t('order_status')"
@@ -180,7 +182,7 @@ import MerchantOrder, {
 } from "../../api/MerchantOrder"
 import useVuelidate from "@vuelidate/core"
 import { date } from "../../helper/validator"
-import { helpers, minValue } from "@vuelidate/validators"
+import { helpers, minValue, numeric } from "@vuelidate/validators"
 import MerchantDropdown from "../../components/MerchantDropdown"
 import ChannelDropdown from "../../components/ChannelDropdown"
 import Search from "../../components/Search"
@@ -204,6 +206,8 @@ export default {
   validations() {
     return {
       filters: {
+        order_amount: { numeric },
+        order_over: { numeric },
         start_time: {
           valid_date: helpers.withMessage(
             this.$i18n.t("invalid_date_format"),

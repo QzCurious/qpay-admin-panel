@@ -44,6 +44,7 @@
           name="order_amount"
           :label="$t('order_amount')"
           v-model="filters.order_amount"
+          :errors="v$.filters.order_amount.$errors.map((e) => e.$message)"
         />
         <Dropdown
           name="order_status"
@@ -244,6 +245,9 @@ export default {
   validations() {
     return {
       filters: {
+        order_amount: {
+          numeric,
+        },
         start_time: {
           valid_date: helpers.withMessage(
             this.$i18n.t("invalid_date_format"),
