@@ -66,6 +66,7 @@
           :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
       <div class="summary p-mt-2">
         <span>{{ $t("deposit_count") }}: {{ summary.count }}</span>
@@ -179,6 +180,7 @@ import { helpers, minValue } from "@vuelidate/validators"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
 import Search from "../../components/Search"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -190,6 +192,7 @@ export default {
     MerchantDropdown,
     ChannelDropdown,
     Search,
+    Clear,
   },
   setup() {
     const v$ = useVuelidate()
@@ -286,6 +289,17 @@ export default {
     on_page(e) {
       this.page = e.page + 1
       this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
     },
   },
 }

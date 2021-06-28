@@ -22,6 +22,7 @@
         <ChannelDropdown v-model="filters.channel_id" />
         <StatusDropdown v-model="filters.merchant_channel_status" />
         <Search />
+        <Clear @click="clear" />
       </form>
       <div class="summary p-mt-2">
         <span>{{ $t("total_balance_d0") }}: {{ summary.amount_d0 }}</span>
@@ -137,6 +138,7 @@ import InputText from "../../components/InputText"
 import { required, numeric } from "@vuelidate/validators"
 import useVuelidate from "@vuelidate/core"
 import ToastService from "../../service/ToastService"
+import Clear from "../../components/Clear"
 
 export default defineComponent({
   name: "FundsOperationPanel",
@@ -145,6 +147,7 @@ export default defineComponent({
     MerchantDropdown,
     ChannelDropdown,
     Search,
+    Clear,
     InputText,
   },
   setup() {
@@ -266,6 +269,11 @@ export default defineComponent({
       ToastService.success({ summary: this.$i18n.t(this.success_message) })
       this.fetch()
       this.modal.visible = false
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
 })

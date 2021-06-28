@@ -28,6 +28,7 @@
           v-model="filters.account_number"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -87,6 +88,7 @@ import StatusDropdown from "../../components/StatusDropdown"
 import InputText from "../../components/InputText"
 import CardModal from "./CardModal"
 import Search from "../../components/Search.vue"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -96,6 +98,7 @@ export default {
     StatusDropdown,
     InputText,
     Search,
+    Clear,
   },
   data() {
     return {
@@ -187,6 +190,11 @@ export default {
     success() {
       this.fetch()
       this.modal.visible = false
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
   mounted() {

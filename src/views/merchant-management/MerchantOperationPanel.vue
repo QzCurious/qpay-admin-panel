@@ -28,12 +28,8 @@
             { label: $t('enabled'), value: 1 },
           ]"
         />
-        <Button
-          type="submit"
-          icon="pi pi-search"
-          :label="$t('form.search')"
-          class="p-button-outlined"
-        />
+        <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -94,10 +90,12 @@ import ToastService from "../../service/ToastService"
 import Dropdown from "../../components/Dropdown"
 import CreateMerchant from "./CreateMerchant"
 import EditMerchant from "./EditMerchant"
+import Search from "../../components/Search"
+import Clear from "../../components/Clear"
 
 export default defineComponent({
   name: "FundsOperationPanel",
-  components: { Dropdown, CreateMerchant, EditMerchant },
+  components: { Dropdown, CreateMerchant, EditMerchant, Search, Clear },
   data() {
     return {
       loading: true,
@@ -182,6 +180,11 @@ export default defineComponent({
       this.edit_modal.visible = false
       this.create_modal.visible = false
       this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
 })
