@@ -293,7 +293,7 @@ export default {
           .toDate(),
       },
       records: [],
-      totalRecores: 0,
+      totalRecords: 0,
       modal: {
         visible: false,
         data: {

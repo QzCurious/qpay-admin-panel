@@ -244,6 +244,8 @@ export default {
   withdraw_without_fee: "Withdraw without fee",
   withdraw_application: "Withdraw application",
   withdraw: "Withdraw",
+  post: "Post",
+  stop_post: "Stop post",
 
   // will be
   account_will_be_enabled: "User will be enable",

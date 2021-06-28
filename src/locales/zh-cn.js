@@ -244,6 +244,8 @@ export default {
   withdraw_without_fee: "无费用扣款",
   withdraw_application: "提款申请",
   withdraw: "提款",
+  post: "XXXXXX",
+  stop_post: "XXXXXX",
 
   // will be
   account_will_be_enabled: "账号将被启用",
