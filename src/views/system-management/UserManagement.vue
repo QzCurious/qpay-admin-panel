@@ -30,9 +30,8 @@
           :label="$t('company')"
           v-model="filters.merchant_id"
         />
-        <Button class="p-button-outlined" type="submit">{{
-          $t("form.search")
-        }}</Button>
+        <Search v-if="merchant_type !== MERCHANT_TYPE.MERCHANT" />
+        <Clear v-if="merchant_type !== MERCHANT_TYPE.MERCHANT" @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -66,11 +65,13 @@ import { PrimeIcons } from "primevue/api"
 import User from "../../api/User"
 import UserModal from "./UserModal"
 import MerchantDropdown from "../../components/MerchantDropdown"
+import Search from "../../components/Search"
+import Clear from "../../components/Clear"
 import ToastService from "../../service/ToastService"
 import { mapGetters } from "vuex"
 
 export default {
-  components: { UserModal, MerchantDropdown },
+  components: { UserModal, MerchantDropdown, Search, Clear },
   data() {
     return {
       loading: true,
@@ -155,6 +156,11 @@ export default {
     success() {
       this.fetch()
       this.modal.visible = false
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
   computed: {
