@@ -36,6 +36,7 @@
           :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -131,6 +132,7 @@ import useVuelidate from "@vuelidate/core"
 import ToastService from "../../service/ToastService"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -141,6 +143,7 @@ export default {
     InputText,
     CalendarStartTime,
     CalendarEndTime,
+    Clear,
   },
   setup() {
     const v$ = useVuelidate()
@@ -290,6 +293,17 @@ export default {
       ToastService.success({ summary: success_message })
       this.modal.visible = false
       this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
     },
   },
   mounted() {
