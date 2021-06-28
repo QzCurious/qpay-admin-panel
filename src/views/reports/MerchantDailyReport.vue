@@ -151,9 +151,11 @@ export default {
         merchant_id: null,
         channel_id: null,
         start_date: this.moment()
+          .subtract(1, "day")
           .startOf("day")
           .toDate(),
         end_date: this.moment()
+          .subtract(1, "day")
           .endOf("day")
           .toDate(),
       },
@@ -198,9 +200,11 @@ export default {
         this.filters[filter] = null
       }
       this.filters.start_date = this.moment()
+        .subtract(1, "day")
         .startOf("day")
         .toDate()
       this.filters.end_date = this.moment()
+        .subtract(1, "day")
         .endOf("day")
         .toDate()
     },
