@@ -62,7 +62,14 @@
           :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
+      <div class="summary p-mt-2">
+        <span>{{ $t("deposit_count") }}: {{ summary.count }}</span>
+        <span>{{ $t("fee") }}: {{ summary.fee }}</span>
+        <span>{{ $t("credit_amount") }}: {{ summary.credit_amount }}</span>
+        <span>{{ $t("real_amount") }}: {{ summary.real_amount }}</span>
+      </div>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
@@ -186,6 +193,7 @@ import { helpers, minValue, numeric } from "@vuelidate/validators"
 import MerchantDropdown from "../../components/MerchantDropdown"
 import ChannelDropdown from "../../components/ChannelDropdown"
 import Search from "../../components/Search"
+import Clear from "../../components/Clear"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
 
@@ -194,6 +202,7 @@ export default {
     InputText,
     Dropdown,
     Search,
+    Clear,
     MerchantDropdown,
     ChannelDropdown,
     CalendarStartTime,
@@ -250,6 +259,7 @@ export default {
       },
       records: [],
       totalRecords: 0,
+      summary: {},
       modal: {
         visible: false,
         data: {
@@ -298,6 +308,7 @@ export default {
       ])
       this.records = records.data.data
       this.totalRecords = count.data.count
+      this.summary = count.data
       window.scrollTo(0, 0)
       this.loading = false
     },
