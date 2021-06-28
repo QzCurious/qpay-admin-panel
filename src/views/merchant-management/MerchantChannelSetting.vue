@@ -23,6 +23,7 @@
         <MerchantDropdown v-model="filters.merchant_id" />
         <StatusDropdown v-model="filters.status" />
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -65,6 +66,7 @@ import MerchantDropdown from "../../components/MerchantDropdown"
 import StatusDropdown from "../../components/StatusDropdown"
 import Search from "../../components/Search.vue"
 import CreateMerchantChannel from "./CreateMerchantChannel"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -72,6 +74,7 @@ export default {
     MerchantDropdown,
     StatusDropdown,
     Search,
+    Clear,
   },
   data() {
     return {
@@ -148,6 +151,11 @@ export default {
     success() {
       this.modal_visible = false
       this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
   mounted() {
