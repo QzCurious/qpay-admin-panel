@@ -33,6 +33,7 @@
           <InputSwitch id="auto_refresh" v-model="auto_refresh" />
         </div>
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -158,6 +159,7 @@ import EditBalance from "./EditBalance.vue"
 import useVuelidate from "@vuelidate/core"
 import EditDepositLimitDaily from "./EditDepositLimitDaily.vue"
 import EditDepositLimitOnce from "./EditDepositLimitOnce.vue"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -166,6 +168,7 @@ export default {
     StatusDropdown,
     InputText,
     Search,
+    Clear,
     EditBalance,
     EditDepositLimitDaily,
     EditDepositLimitOnce,
@@ -287,6 +290,11 @@ export default {
       ToastService.success({
         summary: this.$i18n.t("card_successfully_updated"),
       })
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
     },
   },
   mounted() {
