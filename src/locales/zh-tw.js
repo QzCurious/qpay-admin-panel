@@ -27,7 +27,7 @@ export default {
   order_management: "訂單管理",
   merchant_order: "商戶訂單",
   merchant_order_post: "code::merchant_order_post",
-  merchant_order_statistics: "code::merchant_order_statistics",
+  merchant_order_statistics: "代收訂單統計",
   merchant_order_operation: "code::merchant_order_operation",
   deposit_transaction_operation: "收款紀錄操作",
   deposit_transaction: "收款紀錄",
