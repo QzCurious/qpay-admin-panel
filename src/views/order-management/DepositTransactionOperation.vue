@@ -68,6 +68,7 @@
           :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -222,6 +223,7 @@ import ChannelDropdown from "../../components/ChannelDropdown"
 import Search from "../../components/Search"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -233,6 +235,7 @@ export default {
     Search,
     CalendarStartTime,
     CalendarEndTime,
+    Clear,
   },
   setup() {
     const v$ = useVuelidate()
@@ -381,6 +384,17 @@ export default {
       visible &= data.status === 0 || data.status === 3
       visible &= data.merchant_order_id !== null
       return visible
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
     },
   },
   mounted() {
