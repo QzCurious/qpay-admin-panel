@@ -18,7 +18,7 @@ export default {
 
   // merchant_management
   merchant_management: "商戶管理",
-  merchant_operation_panel: "code::merchant_operation_panel",
+  merchant_operation_panel: "商戶操作面板",
   merchant_channel_parameter: "商戶通道參數",
   merchant_channel_rate: "商戶通道費率",
   merchant_channel_setting: "商戶通道管理",
