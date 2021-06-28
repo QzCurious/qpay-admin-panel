@@ -19,7 +19,10 @@
         @submit.prevent="handle_search"
         class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
-        <MerchantDropdown v-model="filters.merchant_id" />
+        <MerchantDropdown
+          v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
+          v-model="filters.merchant_id"
+        />
         <ChannelDropdown v-model="filters.channel_id" />
         <CalendarStartTime
           v-model="filters.start_date"
@@ -106,6 +109,7 @@ import { date } from "../../helper/validator"
 import { helpers, minValue } from "@vuelidate/validators"
 import useVuelidate from "@vuelidate/core"
 import Clear from "../../components/Clear"
+import { mapGetters } from "vuex"
 
 export default {
   components: {
@@ -208,6 +212,9 @@ export default {
         .endOf("day")
         .toDate()
     },
+  },
+  computed: {
+    ...mapGetters("auth", ["merchant_type", "MERCHANT_TYPE"]),
   },
 }
 </script>
