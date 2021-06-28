@@ -37,6 +37,7 @@
           :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
         />
         <Search />
+        <Clear @click="clear" />
       </form>
     </template>
     <template #empty> No log found. </template>
@@ -93,6 +94,7 @@ import { date } from "../../helper/validator"
 import { helpers, minValue } from "@vuelidate/validators"
 import useVuelidate from "@vuelidate/core"
 import { mapGetters } from "vuex"
+import Clear from "../../components/Clear"
 
 export default {
   components: {
@@ -102,6 +104,7 @@ export default {
     InputText,
     CalendarStartTime,
     CalendarEndTime,
+    Clear,
   },
   setup() {
     const v$ = useVuelidate()
@@ -188,6 +191,17 @@ export default {
     on_page(e) {
       this.page = e.page + 1
       this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
     },
   },
   mounted() {
