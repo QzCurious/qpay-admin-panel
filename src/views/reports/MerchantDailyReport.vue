@@ -19,6 +19,11 @@
         @submit.prevent="handle_search"
         class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
+        <Button
+          class="p-mr-auto"
+          :label="$t('form.export')"
+          @click="download"
+        />
         <MerchantDropdown
           v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
           v-model="filters.merchant_id"
@@ -211,6 +216,15 @@ export default {
         .subtract(1, "day")
         .endOf("day")
         .toDate()
+    },
+    async download() {
+      const res = await MerchantChannelReport.export(this.filters)
+      const a = document.createElement("a")
+      const url = URL.createObjectURL(res.data)
+      a.href = url
+      a.download = res.headers["content-disposition"].replace("filename=", "")
+      a.click()
+      URL.revokeObjectURL(url)
     },
   },
   computed: {
