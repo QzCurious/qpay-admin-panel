@@ -67,6 +67,11 @@ export default computed(() => [
         label: t("card_operation_panel"),
         to: { name: "card_operation_panel" },
       },
+      {
+        key: "card_sms_management",
+        label: t("card_sms_management"),
+        to: { name: "card_sms_management" },
+      },
     ],
   },
   {

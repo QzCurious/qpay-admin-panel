@@ -27,5 +27,10 @@ export default {
       path: "card-operation-panel",
       component: () => import("../../views/payments/CardOperationPanel.vue"),
     },
+    {
+      name: "card_sms_management",
+      path: "card-sms-management",
+      component: () => import("../../views/payments/CardSmsManagement.vue"),
+    },
   ],
 }
