@@ -40,14 +40,17 @@
         /> -->
         <MerchantDropdown v-model="filters.merchant_id" />
         <ChannelDropdown v-model="filters.channel_id" />
-        <CalendarStartTime
-          v-model="filters.start_time"
-          :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
-        />
-        <CalendarEndTime
-          v-model="filters.end_time"
-          :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
-        />
+        <div class="p-d-flex">
+          <CalendarStartTime
+            class="p-mr-2"
+            v-model="filters.start_time"
+            :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
+          />
+          <CalendarEndTime
+            v-model="filters.end_time"
+            :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
+          />
+        </div>
         <Search />
         <Clear @click="clear" />
       </form>
