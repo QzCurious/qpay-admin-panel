@@ -6,6 +6,7 @@ export const store = {
     bank_list: [],
     channel_list: [],
     holder_list: [],
+    card_list: [],
   }),
   getters: {
     role_name: (state) => (role_id) => {
@@ -40,6 +41,9 @@ export const store = {
     set_holder_list({ commit }, data) {
       commit("set_holder_list", data)
     },
+    set_card_list({ commit }, data) {
+      commit("set_card_list", data)
+    },
   },
   mutations: {
     set_role_list(state, data) {
@@ -56,6 +60,9 @@ export const store = {
     },
     set_holder_list(state, data) {
       state.holder_list = data
+    },
+    set_card_list(state, data) {
+      state.card_list = data
     },
   },
 }
