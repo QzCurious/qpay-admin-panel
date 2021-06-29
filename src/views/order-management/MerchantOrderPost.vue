@@ -1,4 +1,5 @@
 <template>
+  <h1>{{ $t("merchant_order_post") }}</h1>
   <DataTable
     responsiveLayout="scroll"
     :lazy="true"
