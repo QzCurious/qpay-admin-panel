@@ -373,6 +373,7 @@ export default {
     next: "Next",
     start_time: "Start",
     end_time: "End",
+    export: "Export",
   },
 
   // day

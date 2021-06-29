@@ -366,6 +366,7 @@ export default {
     next: "下一步",
     start_time: "開始",
     end_time: "結束",
+    export: "匯出",
   },
 
   // error

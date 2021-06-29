@@ -19,6 +19,11 @@
         @submit.prevent="handle_search"
         class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
+        <Button
+          class="p-mr-auto"
+          :label="$t('form.export')"
+          @click="download"
+        />
         <MerchantDropdown v-model="filters.merchant_id" />
         <BankDropdown v-model="filters.bank_id" />
         <InputText :label="$t('card_id')" v-model="filters.bank_card_id" />
@@ -26,14 +31,17 @@
           :label="$t('card_number')"
           v-model="filters.bank_card_account_number"
         />
-        <CalendarStartTime
-          v-model="filters.start_date"
-          :errors="v$.filters.start_date.$errors.map((e) => e.$message)"
-        />
-        <CalendarEndTime
-          v-model="filters.end_date"
-          :errors="v$.filters.end_date.$errors.map((e) => e.$message)"
-        />
+        <div class="p-d-flex">
+          <CalendarStartTime
+            class="p-mr-2"
+            v-model="filters.start_date"
+            :errors="v$.filters.start_date.$errors.map((e) => e.$message)"
+          />
+          <CalendarEndTime
+            v-model="filters.end_date"
+            :errors="v$.filters.end_date.$errors.map((e) => e.$message)"
+          />
+        </div>
         <Search />
         <Clear @click="clear" />
       </form>
@@ -213,6 +221,15 @@ export default {
         .subtract(1, "day")
         .endOf("day")
         .toDate()
+    },
+    async download() {
+      const res = await DepositReport.export(this.filters)
+      const a = document.createElement("a")
+      const url = URL.createObjectURL(res.data)
+      a.href = url
+      a.download = res.headers["content-disposition"].replace("filename=", "")
+      a.click()
+      URL.revokeObjectURL(url)
     },
   },
 }

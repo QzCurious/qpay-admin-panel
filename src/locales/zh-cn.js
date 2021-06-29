@@ -368,6 +368,7 @@ export default {
     next: "下一步",
     start_time: "开始时间",
     end_time: "结束时间",
+    export: "XXXXXXXX"
   },
 
   // error
