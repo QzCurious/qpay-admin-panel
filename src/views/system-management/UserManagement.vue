@@ -49,8 +49,16 @@
     </Column>
     <Column>
       <template #body="{ data }">
-        <Button :label="$t('form.edit')" @click="edit_user(data)" />
-        <Button :label="$t('reset_2fa')" @click="reset_2fa(data)" />
+        <Button
+          class="p-mr-1 p-button-sm"
+          :label="$t('form.edit')"
+          @click="edit_user(data)"
+        />
+        <Button
+          class="p-button-sm"
+          :label="$t('reset_2fa')"
+          @click="reset_2fa(data)"
+        />
       </template>
     </Column>
   </DataTable>

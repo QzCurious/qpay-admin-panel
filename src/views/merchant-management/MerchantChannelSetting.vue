@@ -41,7 +41,7 @@
     <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button
-          class="p-button-danger"
+          class="p-button-danger p-button-sm"
           :label="$t('form.delete')"
           @click="remove(data)"
         />

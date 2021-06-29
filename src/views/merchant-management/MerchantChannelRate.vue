@@ -56,7 +56,11 @@
     </Column>
     <Column :header="$t('operation')">
       <template #body="{ data }">
-        <Button :label="$t('form.edit')" @click="edit(data)" />
+        <Button
+          class="p-button-sm"
+          :label="$t('form.edit')"
+          @click="edit(data)"
+        />
       </template>
     </Column>
   </DataTable>

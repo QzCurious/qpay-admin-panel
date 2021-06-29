@@ -51,15 +51,15 @@
         }}
       </template>
     </Column>
-    <Column :header="$t('operation')" :sortable="false">
+    <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button
-          class="p-button-primary p-m-1"
+          class="p-button-primary p-button-sm p-mr-1"
           :label="$t('form.edit')"
           @click="edit(data)"
         />
         <Button
-          class="p-button-danger p-m-1"
+          class="p-button-danger p-button-sm"
           :label="$t('form.delete')"
           @click="remove(data)"
         />

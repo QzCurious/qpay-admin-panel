@@ -46,7 +46,7 @@
     <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button
-          class="p-button-sm"
+          class="p-mr-1 p-button-sm"
           :label="$t('form.edit')"
           @click="edit(data)"
         />

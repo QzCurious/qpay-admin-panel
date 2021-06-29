@@ -47,7 +47,11 @@
     <Column field="deposit_limit_daily" :header="$t('order_limit_daily')" />
     <Column :header="$t('operation')">
       <template #body="{ data }">
-        <Button :label="$t('form.edit')" @click="edit(data)" />
+        <Button
+          class="p-button-sm"
+          :label="$t('form.edit')"
+          @click="edit(data)"
+        />
       </template>
     </Column>
   </DataTable>

@@ -45,9 +45,13 @@
     <Column field="country" :header="$t('country')" />
     <Column :header="$t('operation')">
       <template #body="{ data }">
-        <Button :label="$t('form.edit')" @click="edit(data)" />
         <Button
-          class="p-button-danger"
+          class="p-mr-1 p-button-sm"
+          :label="$t('form.edit')"
+          @click="edit(data)"
+        />
+        <Button
+          class="p-button-danger p-button-sm"
           :label="$t('form.delete')"
           @click="remove(data)"
         />
