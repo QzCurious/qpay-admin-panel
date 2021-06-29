@@ -90,20 +90,7 @@
   </DataTable>
   <Dialog modal :header="modal.header" v-model:visible="modal.visible">
     <div class="modal-wrapper">
-      <form @submit.prevent="handle_modal" class="p-d-flex p-flex-column">
-        <InputText
-          float
-          autofocus
-          :label="$t('verify_2fa')"
-          v-model="modal.data.code"
-        />
-        <Button
-          :loading="modal.submitting"
-          type="submit"
-          class="p-mt-2"
-          :label="$t('form.submit')"
-        />
-      </form>
+      <Form2FA :data="modal.data" @success="handle_modal" />
     </div>
   </Dialog>
 </template>
@@ -125,6 +112,7 @@ import Search from "../../components/Search"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
 import Clear from "../../components/Clear"
+import Form2FA from "./Form2FA.vue"
 
 export default {
   components: {
@@ -136,6 +124,7 @@ export default {
     CalendarStartTime,
     CalendarEndTime,
     Clear,
+    Form2FA,
   },
   setup() {
     const v$ = useVuelidate()
@@ -253,7 +242,10 @@ export default {
       this.fetch()
     },
     async handle_modal(data) {
-      await MerchantOrder.update(this.modal.data.id, this.modal.data)
+      await MerchantOrder.update(data.id, {
+        post_status: this.modal.data.post_status,
+        code: data.code,
+      })
       this.modal.visible = false
     },
     clear() {

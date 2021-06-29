@@ -161,22 +161,22 @@
       <!-- TODO -->
       <template #body="{ data }">
         <div v-if="isOperationVisible(data)">
-          <Button class="p-button-success p-button-sm" @click="paid(data)">{{
-            $t("audit_type_values.PAID")
-          }}</Button>
-          <Button class="p-button-danger p-button-sm" @click="reject(data)">{{
-            $t("audit_type_values.REJECT")
-          }}</Button>
+          <Button class="p-button-success p-button-sm" @click="paid(data)">
+            <i class="pi pi-check">{{
+              $t("audit_type_values.PAID")
+            }}</i></Button
+          >
+          <Button class="p-button-danger p-button-sm" @click="reject(data)">
+            <i class="pi pi-times">
+              {{ $t("audit_type_values.REJECT") }}</i
+            ></Button
+          >
         </div>
       </template>
     </Column>
   </DataTable>
   <Dialog modal :header="$t('verify_2fa')" v-model:visible="modal.visible">
-    <!-- <Form @submit.prevent="handle_operation"> -->
-    <InputText v-model="modal.data.code" />
-    <Button :label="$t('form.submit')" @click="handle_operation" />
-    <!-- </Form> -->
-    <!-- <Verify2fa @success="next_page" /> -->
+    <Form2FA :data="modal.data" @success="success" />
   </Dialog>
 </template>
 
@@ -196,6 +196,7 @@ import Search from "../../components/Search"
 import Clear from "../../components/Clear"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import Form2FA from "./Form2FA.vue"
 
 export default {
   components: {
@@ -207,6 +208,7 @@ export default {
     ChannelDropdown,
     CalendarStartTime,
     CalendarEndTime,
+    Form2FA,
   },
   setup() {
     const v$ = useVuelidate()
@@ -326,16 +328,18 @@ export default {
       let audit_type = AUDIT_TYPE.REJECT
       this.modal.data = { id: data.id, audit_type, code: "" }
     },
-    handle_operation() {
-      MerchantOrder.update(this.modal.data.id, {
-        audit_type: this.modal.data.audit_type,
-        code: this.modal.data.code,
-      })
-      this.modal.visible = false
-    },
     isOperationVisible(data) {
       return data.audit_type == AUDIT_TYPE.PENDING
     },
+    async success(data) {
+      await MerchantOrder.update(data.id, {
+        audit_type: this.modal.data.audit_type,
+        code: data.code,
+      })
+
+      this.modal.visible = false
+    },
+    clear() {},
   },
   async mounted() {
     this.fetch()

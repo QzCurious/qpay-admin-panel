@@ -173,32 +173,7 @@
   </DataTable>
   <Dialog modal :header="$t('manual_deposit')" v-model:visible="modal.visible">
     <div class="modal-wrapper">
-      <form @submit.prevent="handle_modal" class="p-d-flex p-flex-column">
-        <InputText
-          float
-          autofocus
-          :label="$t('amount')"
-          v-model="modal.data.amount"
-        />
-        <InputText
-          float
-          autofocus
-          :label="$t('remark')"
-          v-model="modal.data.remark"
-        />
-        <InputText
-          float
-          autofocus
-          :label="$t('verify_2fa')"
-          v-model="modal.data.code"
-        />
-        <Button
-          :loading="modal.submitting"
-          type="submit"
-          class="p-mt-2"
-          :label="$t('form.submit')"
-        />
-      </form>
+      <FormManualDeposit :data="modal.data" @success="handle_modal" />
     </div>
   </Dialog>
 </template>
@@ -225,6 +200,7 @@ import Search from "../../components/Search"
 import CalendarStartTime from "../../components/CalendarStartTime.vue"
 import CalendarEndTime from "../../components/CalendarEndTime.vue"
 import Clear from "../../components/Clear"
+import FormManualDeposit from "./FormManualDeposit"
 
 export default {
   components: {
@@ -237,6 +213,7 @@ export default {
     CalendarStartTime,
     CalendarEndTime,
     Clear,
+    FormManualDeposit,
   },
   setup() {
     const v$ = useVuelidate()
