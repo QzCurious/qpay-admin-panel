@@ -72,7 +72,11 @@
     <Column field="merchant_name" :header="$t('merchant')"></Column>
     <Column>
       <template #body="{ data }">
-        <Button class="p-button-sm" :label="$t('post')" @click="post(data)" />
+        <Button
+          class="p-button-sm p-mr-1"
+          :label="$t('post')"
+          @click="post(data)"
+        />
         <Button
           class="p-button-sm"
           :label="$t('stop_post')"
