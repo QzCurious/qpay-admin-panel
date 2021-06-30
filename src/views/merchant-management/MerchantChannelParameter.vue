@@ -30,9 +30,33 @@
     <template #loading> Loading... </template>
     <Column field="merchant_name" :header="$t('merchant')" />
     <Column field="channel_name" :header="$t('channel')" />
-    <Column field="recharge_limit_daily" :header="$t('recharge_limit_daily')" />
-    <Column field="manual_deposit_limit" :header="$t('manual_deposit_limit')" />
-    <Column field="deposit_limit_once" :header="$t('order_limit_once')" />
+    <Column
+      field="recharge_limit_daily"
+      :header="$t('recharge_limit_daily')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.recharge_limit_daily?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
+    <Column
+      field="manual_deposit_limit"
+      :header="$t('manual_deposit_limit')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.manual_deposit_limit?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
+    <Column
+      field="deposit_limit_once"
+      :header="$t('order_limit_once')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.deposit_limit_once?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
     <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <template v-if="data.status === 0">
@@ -43,8 +67,24 @@
         </template>
       </template>
     </Column>
-    <Column field="order_per_minute" :header="$t('order_per_minute')" />
-    <Column field="deposit_limit_daily" :header="$t('order_limit_daily')" />
+    <Column
+      field="order_per_minute"
+      :header="$t('order_per_minute')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.order_per_minute?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
+    <Column
+      field="deposit_limit_daily"
+      :header="$t('order_limit_daily')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.deposit_limit_daily?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
     <Column :header="$t('operation')">
       <template #body="{ data }">
         <Button

@@ -30,20 +30,52 @@
     <template #loading> Loading... </template>
     <Column field="merchant_name" :header="$t('merchant')" />
     <Column field="channel_name" :header="$t('channel')" />
-    <Column :header="$t('deposit_fee_rate')">
+    <Column :header="$t('deposit_fee_rate')" bodyClass="p-text-right">
       <template #body="{ data }">{{
-        data.deposit_fee_rate && numeral(data.deposit_fee_rate).format("0%")
+        numeral(data.deposit_fee_rate || 0).format("0%")
       }}</template>
     </Column>
-    <Column field="deposit_fee" :header="$t('deposit_fee')" />
-    <Column field="deposit_limit_daily" :header="$t('deposit_limit_daily')" />
-    <Column :header="$t('withdraw_fee_rate')">
+    <Column
+      field="deposit_fee"
+      :header="$t('deposit_fee')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.deposit_fee || 0 }}
+      </template>
+    </Column>
+    <Column
+      field="deposit_limit_daily"
+      :header="$t('deposit_limit_daily')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{data}">
+        {{ data.deposit_limit_daily?.toLocaleString("en-US") || $t("∞") }}
+      </template>
+    </Column>
+    <Column :header="$t('withdraw_fee_rate')" bodyClass="p-text-right">
       <template #body="{ data }">{{
-        data.withdraw_fee_rate && numeral(data.withdraw_fee_rate).format("0%")
+        numeral(data.withdraw_fee_rate || 0).format("0%")
       }}</template>
     </Column>
-    <Column field="withdraw_fee" :header="$t('withdraw_fee')" />
-    <Column field="withdraw_limit_daily" :header="$t('withdraw_limit_daily')" />
+    <Column
+      field="withdraw_fee"
+      :header="$t('withdraw_fee')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.withdraw_fee || 0 }}
+      </template>
+    </Column>
+    <Column
+      field="withdraw_limit_daily"
+      :header="$t('withdraw_limit_daily')"
+      bodyClass="p-text-right"
+    >
+      <template #body="{ data }">
+        {{ data.withdraw_limit_daily?.toLocaleString("en-US") || "∞" }}
+      </template>
+    </Column>
     <Column field="status" :header="$t('status')">
       <template #body="{ data }">
         <template v-if="data.status === 0">
