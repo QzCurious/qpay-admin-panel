@@ -20,14 +20,14 @@
         class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <InputText
-          name="transation_number"
-          :label="$t('transaction_number')"
-          v-model="filters.transaction_id"
-        />
-        <InputText
           name="order_number"
           :label="$t('order_number')"
           v-model="filters.order_number"
+        />
+        <InputText
+          name="transation_number"
+          :label="$t('transaction_number')"
+          v-model="filters.transaction_id"
         />
         <InputText
           name="order_amount"
@@ -339,7 +339,17 @@ export default {
 
       this.modal.visible = false
     },
-    clear() {},
+    clear() {
+      Object.keys(this.filters).forEach((x) => {
+        this.filters[x] = null
+      })
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
+    },
   },
   async mounted() {
     this.fetch()

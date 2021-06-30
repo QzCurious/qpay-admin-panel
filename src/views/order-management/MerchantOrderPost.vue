@@ -20,14 +20,14 @@
         class="header p-d-flex p-jc-end p-flex-wrap p-ai-start"
       >
         <InputText
-          :label="$t('transaction_number')"
-          name="transaction_number"
-          v-model="filters.deposit_id"
-        />
-        <InputText
           name="order_number"
           :label="$t('order_number')"
           v-model="filters.merchant_order_id"
+        />
+        <InputText
+          :label="$t('transaction_number')"
+          name="transaction_number"
+          v-model="filters.deposit_id"
         />
         <Dropdown
           :label="$t('order_status')"

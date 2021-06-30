@@ -20,14 +20,14 @@
         class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
       >
         <InputText
-          name="transaction_id"
-          :label="$t('transaction_id')"
-          v-model="filters.deposit_transaction_id"
-        />
-        <InputText
           name="order_number"
           :label="$t('order_number')"
           v-model="filters.id"
+        />
+        <InputText
+          name="transaction_id"
+          :label="$t('transaction_id')"
+          v-model="filters.deposit_transaction_id"
         />
         <InputText
           name="order_amount"
