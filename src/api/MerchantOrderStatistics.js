@@ -2,7 +2,7 @@ import http from "./http"
 
 class MerchantOrderStatistics {
   async count(params = {}) {
-    return http.get("merchant_order/statistic/summary", { params })
+    return http.get("merchant_order/statistics/summary", { params })
   }
 
   async all() {
@@ -15,7 +15,7 @@ class MerchantOrderStatistics {
       limit: 10,
       ...params,
     }
-    return http.get("merchant_order/statistic", { params })
+    return http.get("merchant_order/statistics", { params })
   }
 }
 
