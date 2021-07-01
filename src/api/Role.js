@@ -41,7 +41,9 @@ class Role {
   }
 
   async update(id, data) {
-    return http.put(`role/${id}`, data)
+    const res = await http.put(`role/${id}`, data)
+    clear_all = true
+    return res
   }
 }
 

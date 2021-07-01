@@ -12,10 +12,6 @@ class DepositTransaction {
     return http.get("deposit_transaction/summary", { params })
   }
 
-  async all() {
-    return depositTransaction.find({ limit: 99 })
-  }
-
   async find(params) {
     params = {
       page: 1,

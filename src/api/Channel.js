@@ -41,7 +41,9 @@ class Channel {
   }
 
   async update(id, data) {
-    return http.put(`channel/${id}`, data)
+    const res = await http.put(`channel/${id}`, data)
+    clear_all = true
+    return res
   }
 
   async delete(id, data) {

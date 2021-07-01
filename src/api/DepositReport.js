@@ -5,10 +5,6 @@ class DepositReport {
     return http.get("report/deposit_report/summary", { params })
   }
 
-  async all() {
-    return deposit_report.find({ limit: 99 })
-  }
-
   async find(params) {
     params = {
       page: 1,

@@ -46,7 +46,9 @@ class Merchant {
   }
 
   async update(id, data) {
-    return http.put(`merchant/${id}`, data)
+    const res = await http.put(`merchant/${id}`, data)
+    clear_all = true
+    return res
   }
 
   async delete(id) {

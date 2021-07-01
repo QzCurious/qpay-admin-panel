@@ -41,7 +41,9 @@ class Holder {
   }
 
   async update(id, data) {
-    return http.put(`holder/${id}`, data)
+    const res = await http.put(`holder/${id}`, data)
+    clear_all = true
+    return res
   }
 
   async delete(id, data) {

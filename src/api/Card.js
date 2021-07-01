@@ -45,7 +45,7 @@ class Card {
   }
 
   async update(id, data) {
-    const res = await http.put(`card/${id}`)
+    const res = await http.put(`card/${id}`, data)
     clear_all = true
     return res
   }

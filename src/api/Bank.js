@@ -45,7 +45,9 @@ class Bank {
   }
 
   async update(id, data) {
-    return http.put(`bank/${id}`, data)
+    const res = await http.put(`bank/${id}`, data)
+    clear_all = true
+    return res
   }
 
   async delete(id) {
