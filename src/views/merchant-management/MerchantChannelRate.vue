@@ -32,7 +32,7 @@
     <Column field="channel_name" :header="$t('channel')" />
     <Column :header="$t('deposit_fee_rate')" bodyClass="p-text-right">
       <template #body="{ data }">{{
-        numeral(data.deposit_fee_rate || 0).format("0%")
+        numeral(data.deposit_fee_rate || 0).format("0.00%")
       }}</template>
     </Column>
     <Column
@@ -54,9 +54,9 @@
       </template>
     </Column>
     <Column :header="$t('withdraw_fee_rate')" bodyClass="p-text-right">
-      <template #body="{ data }">{{
-        numeral(data.withdraw_fee_rate || 0).format("0%")
-      }}</template>
+      <template #body="{ data }">
+        {{ numeral(data.withdraw_fee_rate || 0).format("0.00%") }}</template
+      >
     </Column>
     <Column
       field="withdraw_fee"
@@ -157,9 +157,9 @@ export default {
       this.records = records.data.data.map((data) => ({
         ...data,
         deposit_fee_rate: falsy_to_null(data.deposit_fee_rate),
-        deposit_fee: falsy_to_null(this.data?.deposit_fee),
-        withdraw_fee_rate: falsy_to_null(this.data?.withdraw_fee_rate),
-        withdraw_fee: falsy_to_null(this.data?.withdraw_fee),
+        deposit_fee: falsy_to_null(data?.deposit_fee),
+        withdraw_fee_rate: falsy_to_null(data?.withdraw_fee_rate),
+        withdraw_fee: falsy_to_null(data?.withdraw_fee),
       }))
       this.totalRecords = count.data.count
       window.scrollTo(0, 0)
