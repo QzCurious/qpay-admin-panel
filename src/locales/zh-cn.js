@@ -86,6 +86,55 @@ export default {
     MERCHANT_DEDUCTION: "商户扣款",
     MERCHANT_DEDUCTION_FEE: "商户扣款手续费",
   },
+  operation_type: {
+    ROLE: "XXXXXXXX",
+    SIGNIN_PASSWORD: "XXXXXXXX",
+    PAYMENT_PASSWORD: "XXXXXXXX",
+    USER: "XXXXXXXX",
+    BANK: "XXXXXXXX",
+    CHANNEL: "XXXXXXXX",
+    HOLDER: "XXXXXXXX",
+    CARD: "XXXXXXXX",
+    FUNDS: "XXXXXXXX",
+    MERCHANT_ORDER: "XXXXXXXX",
+    DEPOSIT_ORDER: "XXXXXXXX",
+    MERCHANT: "XXXXXXXX",
+    MERCHANT_CHANNEL: "XXXXXXXX",
+    CARD_SMS: "XXXXXXXX",
+  },
+  operation_sub_type: {
+    ADD: "XXXXXXXX",
+    EDIT: "XXXXXXXX",
+    DELETE: "XXXXXXXX",
+    WITHDRAW: "XXXXXXXX",
+    ORDER_AUDIT: "XXXXXXXX",
+    ORDER_POST: "XXXXXXXX",
+  },
+  operation_action_type: {
+    1000: "XXXXXXXX",
+    //User (status)
+    3000: "XXXXXXXX",
+    3001: "XXXXXXXX",
+    //bank (status 400X, transfer 401X)
+    4000: "XXXXXXXX",
+    4001: "XXXXXXXX",
+    4010: "XXXXXXXX",
+    4011: "XXXXXXXX",
+    //channel (status)
+    5000: "XXXXXXXX",
+    5001: "XXXXXXXX",
+    //holder (status)
+    6000: "XXXXXXXX",
+    6001: "XXXXXXXX",
+    //card (status 700X, online 701X, plugin_mode 702X)
+    7000: "XXXXXXXX",
+    7001: "XXXXXXXX",
+    7010: "XXXXXXXX",
+    7011: "XXXXXXXX",
+    7021: "XXXXXXXX",
+    7022: "XXXXXXXX",
+    7023: "XXXXXXXX",
+  },
 
   // subject
   signin_id: "账号",
@@ -96,6 +145,10 @@ export default {
   new_password: "新密码",
   signin_password: "登入密码",
   payment_password: "取款密码",
+  ip: "XXXXXXXX",
+  type: "XXXXXXXX",
+  sub_type: "XXXXXXXX",
+  action_type: "XXXXXXXX",
   ip_allow: "允許 IP 名單",
   phone: "电话",
   enabled: "启用",
@@ -368,7 +421,7 @@ export default {
     next: "下一步",
     start_time: "开始时间",
     end_time: "结束时间",
-    export: "XXXXXXXX"
+    export: "XXXXXXXX",
   },
 
   // error
