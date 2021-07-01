@@ -1,208 +1,210 @@
 <template>
+  <h1>{{ $t("operation_log") }}</h1>
   <DataTable
     responsiveLayout="scroll"
-    dataKey="id"
-    filterDisplay="menu"
+    :lazy="true"
     :loading="loading"
     :value="records"
     :paginator="true"
-    :rows="10"
+    :totalRecords="totalRecords"
+    v-model:rows="limit"
     :rowsPerPageOptions="[10, 15, 20, 25]"
     :rowHover="true"
-    v-model:filters="filters"
     showGridlines
     class="p-datatable-sm"
+    @page="on_page($event)"
   >
     <template #header>
-      <div class="p-d-flex p-jc-between p-flex-column p-flex-sm-row">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          class="p-button-outlined p-mb-2"
-          @click="clearFilter"
+      <form
+        @submit.prevent="fetch"
+        class="header p-d-flex p-jc-end p-ai-start p-flex-wrap"
+      >
+        <InputText :label="$t('operator')" v-model="filters.user_signin_id" />
+        <MerchantDropdown
+          :label="$t('company')"
+          v-if="merchant_type !== MERCHANT_TYPE.MERCHANT"
+          v-model="filters.merchant_id"
         />
-        <span class="p-input-icon-left p-mb-2">
-          <i class="pi pi-search" />
-          <InputText
-            v-model="filters.global.value"
-            placeholder="Keyword Search"
-            style="width: 100%"
-          />
-        </span>
-      </div>
+        <Dropdown
+          :label="$t('type')"
+          v-model="filters.type"
+          :options="operation_type_list"
+        />
+        <InputText :label="$t('ip')" v-model="filters.ip" />
+        <CalendarStartTime
+          v-model="filters.start_time"
+          :errors="v$.filters.start_time.$errors.map((e) => e.$message)"
+        />
+        <CalendarEndTime
+          v-model="filters.end_time"
+          :errors="v$.filters.end_time.$errors.map((e) => e.$message)"
+        />
+        <Search />
+        <Clear @click="clear" />
+      </form>
     </template>
     <template #empty> No log found. </template>
     <template #loading> Loading... </template>
-    <Column header="index" :sortable="false">
-      <template #body="{ index }">
-        {{ index + 1 }}
+    <Column field="user_signin_id" :header="$t('operator')" />
+    <Column field="merchant_name" :header="$t('merchant')" />
+    <Column :header="$t('type')">
+      <template #body="{ data }">
+        {{ operation_type_list.find(({ value }) => value === data.type).label }}
       </template>
     </Column>
-    <Column field="signin_id" header="operator" :showFilterMatchModes="false">
+    <Column :header="$t('sub_type')">
       <template #body="{ data }">
-        {{ data.signin_id }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
+        {{
+          operation_sud_type_list.find(({ value }) => value === data.sub_type)
+            .label
+        }}
       </template>
     </Column>
-    <Column field="company" header="company" :showFilterMatchModes="false">
+    <Column :header="$t('action_type')">
       <template #body="{ data }">
-        {{ data.company }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
+        {{ $t(`operation_action_type.${data.action_type}`) }}
       </template>
     </Column>
-    <Column field="type" header="type" :showFilterMatchModes="false">
+    <Column field="remark" :header="$t('remark')" />
+    <Column field="ip" :header="$t('ip')" />
+    <Column :header="$t('created_at')" bodyClass="p-text-right">
       <template #body="{ data }">
-        {{ data.type }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column field="sub_type" header="sub_type" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        {{ data.sub_type }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column field="remark" header="remark" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        {{ data.remark }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column
-      field="action_type"
-      header="action_type"
-      :showFilterMatchModes="false"
-    >
-      <template #body="{ data }">
-        {{ data.action_type }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column field="ip" header="operator_ip" :showFilterMatchModes="false">
-      <template #body="{ data }">
-        {{ data.ip }}
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <InputText
-          type="text"
-          v-model="filterModel.value"
-          class="p-column-filter"
-          @keydown.enter="filterCallback"
-        />
-      </template>
-    </Column>
-    <Column field="time" header="operator_time" dataType="date">
-      <template #body="{ data }">
-        {{ formatDate(data.time) }}
-      </template>
-      <template #filter="{ filterModel }">
-        <Calendar
-          v-model="filterModel.value"
-          dateFormat="yy/mm/dd"
-          placeholder="yyyy/mm/dd"
-        />
+        {{ moment.unix(data.created_at).format(CONSTANTS.DATETIME_FORMAT) }}
       </template>
     </Column>
   </DataTable>
+  <ConfirmDialog />
 </template>
 
 <script>
-import { defineComponent } from "vue"
-import { FilterMatchMode, FilterOperator } from "primevue/api"
-import operationLogApi from "../../api/OperationLog"
+import OperationLog, {
+  OPERATION_TYPE,
+  OPERATION_SUB_TYPE,
+} from "../../api/OperationLog"
+import Dropdown from "../../components/Dropdown"
+import MerchantDropdown from "../../components/MerchantDropdown"
+import CalendarStartTime from "../../components/CalendarStartTime.vue"
+import CalendarEndTime from "../../components/CalendarEndTime.vue"
+import InputText from "../../components/InputText"
+import Search from "../../components/Search.vue"
+import Clear from "../../components/Clear"
+import { date } from "../../helper/validator"
+import { helpers, minValue } from "@vuelidate/validators"
+import { mapGetters } from "vuex"
+import useVuelidate from "@vuelidate/core"
 
-export default defineComponent({
-  name: "OperationLog",
-  data() {
+export default {
+  components: {
+    MerchantDropdown,
+    InputText,
+    Dropdown,
+    Search,
+    Clear,
+    CalendarStartTime,
+    CalendarEndTime,
+  },
+  setup() {
+    const v$ = useVuelidate()
+    return { v$ }
+  },
+  validations() {
     return {
-      records: [],
-      loading: true,
-      filters: {},
+      filters: {
+        start_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+        },
+        end_time: {
+          valid_date: helpers.withMessage(
+            this.$i18n.t("invalid_date_format"),
+            date()
+          ),
+          minValue: helpers.withMessage(
+            this.$i18n.t("end_time_should_not_be_older_then_start_time"),
+            minValue(this.filters.start_time)
+          ),
+        },
+      },
     }
   },
-  methods: {
-    clearFilter() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        signin_id: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        company: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        type: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        sub_type: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        remark: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        action_type: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        ip: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        time: {
-          operator: FilterOperator.AND,
-          constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-        },
-      }
-    },
-    formatDate(date) {
-      return date.toLocaleDateString("zh-TW", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-    },
+  data() {
+    return {
+      loading: true,
+      page: 1,
+      limit: 10,
+      filters: {
+        user_signin_id: null,
+        merchant_id: null,
+        type: null,
+        ip: null,
+        start_time: this.moment()
+          .startOf("day")
+          .toDate(),
+        end_time: this.moment()
+          .endOf("day")
+          .toDate(),
+      },
+      records: [],
+      totalRecords: 0,
+    }
   },
-  created() {
-    this.clearFilter()
+  computed: {
+    operation_type_list() {
+      return Object.entries(OPERATION_TYPE).map(([key, value]) => ({
+        label: this.$i18n.t(`operation_type.${key}`),
+        value,
+      }))
+    },
+    operation_sud_type_list() {
+      return Object.entries(OPERATION_SUB_TYPE).map(([key, value]) => ({
+        label: this.$i18n.t(`operation_sub_type.${key}`),
+        value,
+      }))
+    },
+    ...mapGetters("auth", ["merchant_type", "MERCHANT_TYPE"]),
+  },
+  methods: {
+    async fetch() {
+      this.loading = true
+      const [records, count] = await Promise.all([
+        OperationLog.find({
+          ...this.filters,
+          page: this.page,
+          limit: this.limit,
+        }),
+        OperationLog.count(this.filters),
+      ])
+      this.records = records.data.data
+      this.totalRecords = count.data.count
+      window.scrollTo(0, 0)
+      this.loading = false
+    },
+    on_page(e) {
+      this.page = e.page + 1
+      this.fetch()
+    },
+    clear() {
+      for (let filter in this.filters) {
+        this.filters[filter] = null
+      }
+      this.filters.start_time = this.moment()
+        .startOf("day")
+        .toDate()
+      this.filters.end_time = this.moment()
+        .endOf("day")
+        .toDate()
+    },
   },
   mounted() {
-    operationLogApi
-      .get()
-      .then(({ data }) => {
-        this.records = data.map((record) => ({
-          ...record,
-          time: new Date(record.timestamp),
-        }))
-      })
-      .finally(() => (this.loading = false))
+    this.fetch()
   },
-})
+}
 </script>
 
-<style></style>
+<style scoped>
+.header > :not(:last-child) {
+  margin: 0 0.5rem 0.5rem 0;
+}
+</style>
