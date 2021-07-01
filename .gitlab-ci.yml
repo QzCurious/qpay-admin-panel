@@ -19,15 +19,15 @@ stage-build-and-up:
   only:
     - /^dev$/
 
-stage-build-demo-and-up:
+stage-build-tag:
   image: docker:dind
   script:
     - cp .env.development.demo .env.production
-    - docker build -t qpay-client:demo .
-    - *init_ssh
-    - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
-    - cd $DEMO_DOCKER_COMPOSE_DIRECTORY
-    - docker-compose up -d $SERVICE_NAME
-    - EOF
+    - docker build -t qpay-client:$CI_COMMIT_TAG .
+    # - *init_ssh
+    # - ssh $SSH_USER_TEST@$SERVER_TEST << EOF
+    # - cd $DEMO_DOCKER_COMPOSE_DIRECTORY
+    # - docker-compose up -d $SERVICE_NAME
+    # - EOF
   only:
-    - /^demo$/
+    - tags
