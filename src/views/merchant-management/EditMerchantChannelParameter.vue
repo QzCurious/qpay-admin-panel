@@ -1,7 +1,17 @@
 <template>
   <form @submit.prevent="handle_submit" class="p-fluid p-d-flex p-flex-column">
-    <InputText float v-model="merchant_name" :label="$t('merchant')" readonly />
-    <InputText float v-model="channel_name" :label="$t('channel')" readonly />
+    <InputText
+      float
+      :modelValue="data.merchant_name"
+      :label="$t('merchant')"
+      readonly
+    />
+    <InputText
+      float
+      :modelValue="data.channel_name"
+      :label="$t('channel')"
+      readonly
+    />
     <InputText
       float
       v-model="recharge_limit_daily"
@@ -79,7 +89,7 @@ export default {
     }
   },
   methods: {
-     async handle_submit() {
+    async handle_submit() {
       this.v$.$touch()
       if (this.v$.$error) {
         return
