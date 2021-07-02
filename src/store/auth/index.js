@@ -9,7 +9,11 @@ export const store = {
   }),
   getters: {
     jwt(state) {
-      return JSON.parse(atob(state.token.split(".")[1]))
+      try {
+        return JSON.parse(atob(state.token.split(".")[1]))
+      } catch {
+        return null
+      }
     },
     isAuthenticated(state) {
       return Boolean(state.token)

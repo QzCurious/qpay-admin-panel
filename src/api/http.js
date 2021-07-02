@@ -6,6 +6,8 @@ import store from "../store"
 import { setupCache } from "axios-cache-adapter"
 import moment from "moment"
 import { transform_4xx_error } from "./ErrorHandler"
+import router from "../router"
+import auth from "../api/Auth"
 
 export const CACHE_MAX_AGE = 5 * 60 * 1000
 
@@ -32,6 +34,13 @@ http.interceptors.request.use(
         ...config.headers,
         Authorization: `bearer ${token}`,
       }
+    }
+
+    // 如果 jwt 過期就自動登出並跳轉登入
+    const exp = store.getters["auth/jwt"]?.exp
+    if (exp && exp < Date.now() / 1000) {
+      auth.logout()
+      router.push({ name: "signin" })
     }
 
     // 如果 query string 中帶有 Date 型態的值就轉成 unix timestamp
