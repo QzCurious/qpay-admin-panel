@@ -111,29 +111,85 @@ export default {
     ORDER_POST: "订单推送",
   },
   operation_action_type: {
-    1000: "更新权限",
-    //User (status)
-    3000: "停用",
-    3001: "启用",
-    //bank (status 400X, transfer 401X)
-    4000: "停用",
-    4001: "启用",
-    4010: "停用",
-    4011: "启用",
-    //channel (status)
-    5000: "停用",
-    5001: "启用",
-    //holder (status)
-    6000: "停用",
-    6001: "启用",
-    //card (status 700X, online 701X, plugin_mode 702X)
-    7000: "停用",
-    7001: "启用",
-    7010: "卸载",
-    7011: "挂载",
-    7021: "信习推送工具",
-    7022: "短信2",
-    7023: "后台爬虫",
+    /* role */
+    //role:  10XX
+    1000: "XXXXXXXX",
+    /* user */
+    // status
+    2000: "XXXXXXXX",
+    2001: "XXXXXXXX",
+    /* bank */
+    //status
+    3000: "XXXXXXXX",
+    3001: "XXXXXXXX",
+    //transfer
+    3010: "XXXXXXXX",
+    3011: "XXXXXXXX",
+    /* channel */
+    //status
+    4000: "XXXXXXXX",
+    4001: "XXXXXXXX",
+    /* holder */
+    //status
+    5000: "XXXXXXXX",
+    5001: "XXXXXXXX",
+    /* card */
+    //status
+    6000: "XXXXXXXX",
+    6001: "XXXXXXXX",
+    //online
+    6010: "XXXXXXXX",
+    6011: "XXXXXXXX",
+    //plugin_mode
+    6021: "XXXXXXXX",
+    6022: "XXXXXXXX",
+    6023: "XXXXXXXX",
+    /* sms */
+    //stuats
+    6101: "XXXXXXXX",
+    6102: "XXXXXXXX",
+    /* funds */
+    //status
+    7000: "XXXXXXXX",
+    7001: "XXXXXXXX",
+    7002: "XXXXXXXX",
+    7003: "XXXXXXXX",
+    //operation_type
+    7010: "XXXXXXXX",
+    7011: "XXXXXXXX",
+    7012: "XXXXXXXX",
+    7013: "XXXXXXXX",
+    /* merchant_order */
+    //order_status
+    8000: "XXXXXXXX",
+    8001: "XXXXXXXX",
+    8002: "XXXXXXXX",
+    8003: "XXXXXXXX",
+    8004: "XXXXXXXX",
+    8005: "XXXXXXXX",
+    //audit_type審核狀態 1-paid 2-unpaid 3-reject
+    8011: "XXXXXXXX",
+    8012: "XXXXXXXX",
+    8013: "XXXXXXXX",
+    //post_status
+    8021: "XXXXXXXX",
+    8022: "XXXXXXXX",
+    8023: "XXXXXXXX",
+    /* deposit_order */
+    9000: "XXXXXXXX",
+    9001: "XXXXXXXX",
+    /* merchant */
+    //status
+    10000: "XXXXXXXX",
+    10001: "XXXXXXXX",
+    //type
+    10011: "XXXXXXXX",
+    10012: "XXXXXXXX",
+    10013: "XXXXXXXX",
+    /*merchant_channel*/
+    //status
+    11000: "XXXXXXXX",
+    11001: "XXXXXXXX",
   },
 
   // subject

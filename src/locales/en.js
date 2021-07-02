@@ -111,29 +111,85 @@ export default {
     ORDER_POST: "Order Post",
   },
   operation_action_type: {
+    /* role */
+    //role:  10XX
     1000: "update allow auth",
-    //User (status)
+    /* user */
+    // status
+    2000: "disabled",
+    2001: "enabled",
+    /* bank */
+    //status
     3000: "disabled",
     3001: "enabled",
-    //bank (status 400X, transfer 401X)
+    //transfer
+    3010: "disabled",
+    3011: "enabled",
+    /* channel */
+    //status
     4000: "disabled",
     4001: "enabled",
-    4010: "disabled",
-    4011: "enabled",
-    //channel (status)
+    /* holder */
+    //status
     5000: "disabled",
     5001: "enabled",
-    //holder (status)
+    /* card */
+    //status
     6000: "disabled",
     6001: "enabled",
-    //card (status 700X, online 701X, plugin_mode 702X)
-    7000: "disabled",
-    7001: "enabled",
-    7010: "unmounted",
-    7011: "mounted",
-    7021: "push bullet",
-    7022: "SMS 2",
-    7023: "ibanking Back-office spider",
+    //online
+    6010: "unmounted",
+    6011: "mounted",
+    //plugin_mode
+    6021: "push bullet",
+    6022: "SMS 2",
+    6023: "ibanking Back-office spider",
+    /* sms */
+    //stuats
+    6101: "enabled",
+    6102: "disabled",
+    /* funds */
+    //status
+    7000: "pending",
+    7001: "processing",
+    7002: "paid",
+    7003: "reject",
+    //operation_type
+    7010: "pending",
+    7011: "processing",
+    7012: "paid",
+    7013: "reject",
+    /* merchant_order */
+    //order_status
+    8000: "unpaid",
+    8001: "success",
+    8002: "suceess not notify",
+    8003: "fail expire",
+    8004: "fail amount not match",
+    8005: "fail order",
+    //audit_type審核狀態 1-paid 2-unpaid 3-reject
+    8011: "paid",
+    8012: "unpaid",
+    8013: "reject",
+    //post_status
+    8021: "none_post",
+    8022: "post_done",
+    8023: "stop_post",
+    /* deposit_order */
+    9000: "disabled",
+    9001: "enabled",
+    /* merchant */
+    //status
+    10000: "disabled",
+    10001: "enabled",
+    //type
+    10011: "merchant",
+    10012: "agent",
+    10013: "system",
+    /*merchant_channel*/
+    //status
+    11000: "disabled",
+    11001: "enabled",
   },
 
   // subject
