@@ -113,83 +113,83 @@ export default {
   operation_action_type: {
     /* role */
     //role:  10XX
-    1000: "XXXXXXXX",
+    1000: "更新权限",
     /* user */
     // status
-    2000: "XXXXXXXX",
-    2001: "XXXXXXXX",
+    2000: "停用",
+    2001: "启用",
     /* bank */
     //status
-    3000: "XXXXXXXX",
-    3001: "XXXXXXXX",
+    3000: "停用",
+    3001: "启用",
     //transfer
-    3010: "XXXXXXXX",
-    3011: "XXXXXXXX",
+    3010: "停用",
+    3011: "启用",
     /* channel */
     //status
-    4000: "XXXXXXXX",
-    4001: "XXXXXXXX",
+    4000: "停用",
+    4001: "启用",
     /* holder */
     //status
-    5000: "XXXXXXXX",
-    5001: "XXXXXXXX",
+    5000: "停用",
+    5001: "启用",
     /* card */
     //status
-    6000: "XXXXXXXX",
-    6001: "XXXXXXXX",
+    6000: "停用",
+    6001: "启用",
     //online
-    6010: "XXXXXXXX",
-    6011: "XXXXXXXX",
+    6010: "卸载",
+    6011: "挂载",
     //plugin_mode
-    6021: "XXXXXXXX",
-    6022: "XXXXXXXX",
-    6023: "XXXXXXXX",
+    6021: "短信推送工具",
+    6022: "短信 2",
+    6023: "网银爬虫",
     /* sms */
     //stuats
-    6101: "XXXXXXXX",
-    6102: "XXXXXXXX",
+    6101: "启用",
+    6102: "停用",
     /* funds */
     //status
-    7000: "XXXXXXXX",
-    7001: "XXXXXXXX",
-    7002: "XXXXXXXX",
-    7003: "XXXXXXXX",
+    7000: "等待",
+    7001: "处理中",
+    7002: "支付",
+    7003: "拒绝",
     //operation_type
-    7010: "XXXXXXXX",
-    7011: "XXXXXXXX",
-    7012: "XXXXXXXX",
-    7013: "XXXXXXXX",
+    7010: "等待",
+    7011: "处理中",
+    7012: "支付",
+    7013: "拒绝",
     /* merchant_order */
     //order_status
-    8000: "XXXXXXXX",
-    8001: "XXXXXXXX",
-    8002: "XXXXXXXX",
-    8003: "XXXXXXXX",
-    8004: "XXXXXXXX",
-    8005: "XXXXXXXX",
+    8000: "未支付",
+    8001: "成功",
+    8002: "成功未通知",
+    8003: "逾时",
+    8004: "额度不符",
+    8005: "订单错误",
     //audit_type審核狀態 1-paid 2-unpaid 3-reject
-    8011: "XXXXXXXX",
-    8012: "XXXXXXXX",
-    8013: "XXXXXXXX",
+    8011: "支付",
+    8012: "未支付",
+    8013: "拒绝",
     //post_status
-    8021: "XXXXXXXX",
-    8022: "XXXXXXXX",
-    8023: "XXXXXXXX",
+    8021: "未推送",
+    8022: "推送成功",
+    8023: "停止推送",
     /* deposit_order */
-    9000: "XXXXXXXX",
-    9001: "XXXXXXXX",
+    9000: "停用",
+    9001: "启用",
     /* merchant */
     //status
-    10000: "XXXXXXXX",
-    10001: "XXXXXXXX",
+    10000: "停用",
+    10001: "启用",
     //type
-    10011: "XXXXXXXX",
-    10012: "XXXXXXXX",
-    10013: "XXXXXXXX",
+    10011: "商户",
+    10012: "代理",
+    10013: "系统",
     /*merchant_channel*/
     //status
-    11000: "XXXXXXXX",
-    11001: "XXXXXXXX",
+    11000: "停用",
+    11001: "启用",
   },
 
   // subject
@@ -567,7 +567,7 @@ export default {
 
       // General
       9101: "没有资料",
-      9102: "无法处理的物件",
+      9102: "输入内容验证失败",
       9103: "你的登入ip不允许",
 
       //Pay Order
