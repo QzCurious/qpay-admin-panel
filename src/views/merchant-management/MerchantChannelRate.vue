@@ -32,7 +32,7 @@
     <Column field="channel_name" :header="$t('channel')" />
     <Column :header="$t('deposit_fee_rate')" bodyClass="p-text-right">
       <template #body="{ data }">{{
-        numeral(data.deposit_fee_rate || 0).format("0.00%")
+        numeral(data.deposit_fee_rate || 0).format("0[.][0000]%")
       }}</template>
     </Column>
     <Column
@@ -55,7 +55,9 @@
     </Column>
     <Column :header="$t('withdraw_fee_rate')" bodyClass="p-text-right">
       <template #body="{ data }">
-        {{ numeral(data.withdraw_fee_rate || 0).format("0.00%") }}</template
+        {{
+          numeral(data.withdraw_fee_rate || 0).format("0[.][0000]%")
+        }}</template
       >
     </Column>
     <Column
