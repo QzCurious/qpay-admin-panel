@@ -461,6 +461,7 @@ export default {
   enter_2fa_to_permit_action: "請輸入 2fa 以授權操作",
 
   form: {
+    confirm: "確認",
     create: "新增",
     edit: "編輯",
     delete: "刪除",

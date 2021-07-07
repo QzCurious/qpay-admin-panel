@@ -468,6 +468,7 @@ export default {
     "End time should not be older then start time",
 
   form: {
+    confirm: "Confirm",
     create: "Create",
     edit: "Edit",
     delete: "Delete",

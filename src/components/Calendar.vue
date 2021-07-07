@@ -18,7 +18,18 @@
         v-bind="forward"
         :modelValue="modelValue"
         @update:modelValue="(value) => $emit('update:modelValue', value)"
-      />
+        ref="calendar"
+      >
+        <template #footer>
+          <div class="p-d-flex">
+            <Button
+              class="p-ml-auto"
+              :label="$t('form.confirm')"
+              @click="$refs.calendar.overlayVisible = false"
+            />
+          </div>
+        </template>
+      </Calendar>
       <template v-if="float">
         <label :for="name" :class="{ 'p-error': errors.length }">{{
           label

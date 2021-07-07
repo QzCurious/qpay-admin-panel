@@ -463,6 +463,7 @@ export default {
   enter_2fa_to_permit_action: "请输入谷歌二次验证码",
 
   form: {
+    confirm: "确认",
     create: "新增",
     edit: "编辑",
     delete: "删除",
