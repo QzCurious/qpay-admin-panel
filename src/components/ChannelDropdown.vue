@@ -19,6 +19,7 @@ export default {
   props: {
     modelValue: Number,
     label: { type: String },
+    filter: { type: Function, default: () => true },
   },
   emits: ["update:modelValue"],
   computed: {
@@ -26,7 +27,7 @@ export default {
       return this.label ?? this.$i18n.t("channel")
     },
     options() {
-      return store.state.api.channel_list
+      return store.state.api.channel_list.filter(this.filter)
     },
   },
   async mounted() {

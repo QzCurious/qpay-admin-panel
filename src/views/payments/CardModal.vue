@@ -3,16 +3,19 @@
     <ChannelDropdown
       float
       v-model="channel_id"
+      :filter="(item) => item.status !== 0"
       :errors="v$.channel_id.$errors.map((e) => e.$message)"
     />
     <HolderDropdown
       float
       v-model="card_holder_id"
+      :filter="(item) => item.status !== 0"
       :errors="v$.card_holder_id.$errors.map((e) => e.$message)"
     />
     <BankDropdown
       float
       v-model="bank_id"
+      :filter="(item) => item.status !== 0"
       :errors="v$.bank_id.$errors.map((e) => e.$message)"
     />
     <InputText
