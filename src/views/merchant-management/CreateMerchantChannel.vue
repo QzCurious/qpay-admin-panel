@@ -3,11 +3,13 @@
     <ChannelDropdown
       float
       v-model="channel_id"
+      :filter="(item) => item.status !== 0"
       :errors="v$.channel_id.$errors.map((e) => e.$message)"
     />
     <MerchantDropdown
       float
       v-model="merchant_id"
+      :filter="(item) => item.status !== 0"
       :errors="v$.merchant_id.$errors.map((e) => e.$message)"
     />
     <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
