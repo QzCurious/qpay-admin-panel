@@ -196,7 +196,7 @@ export default {
       limit: 10,
       filters: {
         id: null,
-        deposit_transation_id: null,
+        deposit_transaction_id: null,
         order_number: null,
         order_amount: null,
         order_over: null,
