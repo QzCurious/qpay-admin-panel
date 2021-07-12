@@ -3,13 +3,15 @@
     <InputText
       float
       autofocus
-      class="p-mb-3"
       v-model="channel"
       :label="$t('channel')"
       name="channel"
       :errors="v$.channel.$errors.map((e) => e.$message)"
     />
-    <InputSwitch v-model="status" />
+    <div class="p-d-flex p-ai-center p-mt-3">
+      <InputSwitch v-model="status" />
+      <span class="p-ml-2">{{ $t("status") }}</span>
+    </div>
 
     <Button class="p-mt-3" :label="$t('form.submit')" type="submit" />
   </form>
@@ -24,6 +26,7 @@ import InputText from "../../components/InputText"
 import ToastService from "../../service/ToastService"
 
 export default {
+  emits: ["success"],
   components: { InputText },
   props: {
     mode: {
@@ -45,7 +48,7 @@ export default {
   data() {
     return {
       channel: this.data?.name,
-      status: this.data?.status ?? true,
+      status: Boolean(this.data?.status ?? true),
     }
   },
   methods: {
