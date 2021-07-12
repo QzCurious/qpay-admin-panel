@@ -10,4 +10,5 @@ module.exports = {
       fullInstall: true,
     },
   },
+  transpileDependencies: ["vue-currency-input"],
 }

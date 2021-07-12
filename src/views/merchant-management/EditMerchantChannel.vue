@@ -4,7 +4,7 @@
     <InputText float v-model="channel_name" :label="$t('channel')" readonly />
     <RateNumber
       float
-      v-model="deposit_fee_rate"
+      v-model="deposit_fee_rate_percent"
       :label="$t('deposit_fee_rate')"
       name="deposit_fee_rate"
       :errors="v$.deposit_fee_rate.$errors.map((e) => e.$message)"
@@ -25,7 +25,7 @@
     />
     <RateNumber
       float
-      v-model="withdraw_fee_rate"
+      v-model="withdraw_fee_rate_percent"
       :label="$t('withdraw_fee_rate')"
       name="withdraw_fee_rate"
       :errors="v$.withdraw_fee_rate.$errors.map((e) => e.$message)"
@@ -58,6 +58,7 @@ import RateNumber from "../../components/RateNumber"
 import ToastService from "../../service/ToastService"
 import { minValue, maxValue, numeric } from "@vuelidate/validators"
 import { empty_to_null, falsy_to_0 } from "../../helper/transform"
+import numeral from "numeral"
 
 export default {
   components: {
@@ -104,6 +105,38 @@ export default {
       withdraw_fee: this.data?.withdraw_fee,
       withdraw_limit_daily: this.data?.withdraw_limit_daily,
     }
+  },
+  computed: {
+    deposit_fee_rate_percent: {
+      get() {
+        return (
+          this.deposit_fee_rate &&
+          numeral(this.deposit_fee_rate)
+            .multiply(100)
+            .value()
+        )
+      },
+      set(value) {
+        this.deposit_fee_rate = numeral(value)
+          .divide(100)
+          .value()
+      },
+    },
+    withdraw_fee_rate_percent: {
+      get() {
+        return (
+          this.withdraw_fee_rate &&
+          numeral(this.withdraw_fee_rate)
+            .multiply(100)
+            .value()
+        )
+      },
+      set(value) {
+        this.withdraw_fee_rate = numeral(value)
+          .divide(100)
+          .value()
+      },
+    },
   },
   methods: {
     async handle_submit() {
