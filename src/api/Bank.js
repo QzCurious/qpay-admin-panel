@@ -15,8 +15,8 @@ class Bank {
           maxAge: CACHE_MAX_AGE,
           exclude: {
             query: false,
-            filter: () => clear_all,
           },
+          ignoreCache: clear_all,
         },
       }
     )
