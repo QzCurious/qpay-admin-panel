@@ -5,6 +5,8 @@ export const DEPOSIT_TRANSACTION_STATUS_VALUES = {
   AUTO_DEPOSIT: 1,
   MANUAL_DEPOSIT: 2,
   WAITING_DEPOSIT: 3,
+  FAIL_ORDER: 4,
+  PAID_ORDER: 5,
 }
 
 class DepositTransaction {
