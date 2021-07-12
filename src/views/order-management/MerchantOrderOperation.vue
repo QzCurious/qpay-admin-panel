@@ -338,6 +338,7 @@ export default {
       })
 
       this.modal.visible = false
+      this.fetch()
     },
     clear() {
       Object.keys(this.filters).forEach((x) => {

@@ -73,6 +73,8 @@ export default {
     MANUAL_DEPOSIT: "人工处理",
     UNKNOWN_DEPOSIT: "未知存款",
     WAITING_DEPOSIT: "等待存款",
+    FAIL_ORDER: "XXXXXXXX",
+    PAID_ORDER: "XXXXXXXX",
   },
   transaction_record_type_values: {
     ORDER_DEPOSIT: "代收订单",
