@@ -32,6 +32,7 @@ import InputText from "../../components/InputText"
 import ToastService from "../../service/ToastService"
 
 export default {
+  emits: ["success"],
   components: { InputText },
   props: {
     mode: {
@@ -55,7 +56,7 @@ export default {
     return {
       name: this.data?.name,
       phone: this.data?.phone,
-      status: this.data?.status ?? true,
+      status: Boolean(this.data?.status ?? true),
     }
   },
   methods: {
