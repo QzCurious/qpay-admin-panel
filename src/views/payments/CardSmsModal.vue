@@ -65,7 +65,7 @@ export default {
       bank_card_id: this.data.bank_card_id,
       send_phone: this.data.send_phone,
       content: this.data.content,
-      status: this.data.status ?? true,
+      status: Boolean(this.data.status ?? true),
     }
   },
   methods: {

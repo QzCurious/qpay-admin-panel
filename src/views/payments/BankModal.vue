@@ -70,8 +70,8 @@ export default {
       name: this.data?.name,
       country: this.data?.country,
       code: this.data?.code,
-      status: this.data?.status ?? true,
-      transfer: this.data?.transfer ?? true,
+      status: Boolean(this.data?.status ?? true),
+      transfer: Boolean(this.data?.transfer ?? true),
     }
   },
   methods: {
