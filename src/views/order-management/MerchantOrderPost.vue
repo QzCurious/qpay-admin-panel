@@ -27,7 +27,7 @@
         <InputText
           :label="$t('transaction_number')"
           name="transaction_number"
-          v-model="filters.deposit_id"
+          v-model="filters.deposit_transaction_id"
         />
         <Dropdown
           :label="$t('order_status')"
@@ -159,7 +159,7 @@ export default {
       page: 1,
       limit: 10,
       filters: {
-        deposit_id: null,
+        deposit_transaction_id: null,
         merchant_order_id: null,
         order_status: null,
         push_status: null,

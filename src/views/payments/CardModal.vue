@@ -55,6 +55,7 @@
     />
     <Dropdown
       float
+      :reset_value="0"
       :label="$t('plugin_mode')"
       v-model="plugin_mode"
       optionLabel="name"
