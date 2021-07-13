@@ -9,7 +9,7 @@
         >
       </template>
       <Dropdown
-        showClear
+        :showClear="showClear"
         :name="name"
         :style="inputStyle"
         :class="{ ...computedInputClass, 'p-invalid': errors.length }"
@@ -69,6 +69,23 @@ export default {
     },
     inputClass: [Object, Array, String],
     inputStyle: [Object, Array, String],
+    reset_value: {
+      default: null,
+    },
+  },
+  data() {
+    return {
+      showClear: true,
+    }
+  },
+  watch: {
+    // 修改 x 按鈕重設值。如: reset_value = 0, 按 x 後 modelValue 設為 0 而非 null
+    modelValue(value) {
+      this.showClear = value !== this.reset_value
+      if (value === null && this.reset_value !== null) {
+        this.$emit("update:modelValue", this.reset_value)
+      }
+    },
   },
   computed: {
     forward() {

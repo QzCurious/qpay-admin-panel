@@ -120,7 +120,6 @@ export default {
       }
 
       const data = {
-        merchant_channel_id: this.data.merchant_channel_id,
         amount: Number(this.amount),
         bank_id: this.bank_id,
         branch: this.branch,
