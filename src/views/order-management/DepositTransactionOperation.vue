@@ -320,7 +320,7 @@ export default {
         }),
         DepositTransaction.count(this.filters),
       ])
-      console.log(records.data.data)
+      // console.log(records.data.data)
       this.records = records.data.data
       this.totalRecords = count.data.count
       window.scrollTo(0, 0)
@@ -336,14 +336,14 @@ export default {
       this.modal.data.id = data.id
       this.modal.data.remark = ""
       this.modal.visible = true
-      console.log(this.modal)
+      // console.log(this.modal)
     },
     async handle_modal(data) {
-      console.log(data)
-      let resp = await DepositTransaction.update(this.modal.data.id, {
-        real_amount: this.modal.data.amount,
-        code: this.modal.data.code,
-        remark: this.modal.data.remark,
+      // console.log(data)
+      let resp = await DepositTransaction.update(data.id, {
+        real_amount: data.amount,
+        code: data.code,
+        remark: data.remark,
       })
 
       if (resp.data.message === "success") {
