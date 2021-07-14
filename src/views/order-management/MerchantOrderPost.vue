@@ -22,7 +22,7 @@
         <InputText
           name="order_number"
           :label="$t('order_number')"
-          v-model="filters.merchant_order_id"
+          v-model="filters.id"
         />
         <InputText
           :label="$t('transaction_number')"
@@ -160,7 +160,7 @@ export default {
       limit: 10,
       filters: {
         deposit_transaction_id: null,
-        merchant_order_id: null,
+        id: null,
         order_status: null,
         push_status: null,
         merchant_id: null,
