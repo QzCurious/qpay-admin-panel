@@ -348,6 +348,7 @@ export default {
 
       if (resp.data.message === "success") {
         this.modal.visible = false
+        this.fetch()
       }
     },
     shortenAccount(account) {
