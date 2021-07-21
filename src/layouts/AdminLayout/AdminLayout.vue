@@ -21,6 +21,15 @@
 
     <div class="layout-main">
       <router-view />
+      <div :style="{ position: 'absolute', right: 0, bottom: 0 }">
+        <Message
+          style="width: min(100%, 18rem);"
+          :closable="false"
+          severity="warn"
+        >
+          僅供前端畫面測試使用
+        </Message>
+      </div>
     </div>
 
     <!-- <Config

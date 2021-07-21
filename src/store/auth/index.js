@@ -22,7 +22,7 @@ export const store = {
       return jwt.signin_id
     },
     merchant_type(state, getters) {
-      return getters["jwt"].merchant_type
+      return getters["jwt"]?.merchant_type
     },
     MERCHANT_TYPE() {
       return {

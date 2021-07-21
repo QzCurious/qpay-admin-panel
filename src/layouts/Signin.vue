@@ -1,4 +1,9 @@
 <template>
+  <div class="p-d-flex p-justify-center">
+    <Message style="width: min(100%, 18rem);" :closable="false" severity="warn">
+      僅供前端畫面測試使用
+    </Message>
+  </div>
   <div class="p-pt-6 p-d-flex p-jc-center">
     <div class="container">
       <div class="p-d-flex p-ai-center">
@@ -70,8 +75,8 @@ export default {
   },
   data() {
     return {
-      signin_id: null,
-      password: null,
+      signin_id: "qz",
+      password: "12345",
       submitting: false,
       show_verify_2fa: false,
       qrcode: null,
