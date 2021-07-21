@@ -122,6 +122,9 @@ export default {
 
         throw err
       }
+      await auth.singin_2fa(this.code)
+      this.$router.push({ name: "user_management" })
+      return
     },
     continue_to_signin() {
       this.show_qrcode = false
