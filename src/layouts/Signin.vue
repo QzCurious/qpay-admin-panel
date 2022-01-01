@@ -101,10 +101,12 @@ export default {
         this.submitting = false
       }
 
+      this.submitting = true
       // 用 twofa_flag = 0 的 token 打任何一支 api，一定會錯誤
       // 取 error 訊息判斷是否有註冊過 2fa
       try {
         await User.get(store.getters["auth/signin_id"])
+        this.submitting = false
       } catch (err) {
         if (!(err instanceof ApiError)) {
           throw err
@@ -127,8 +129,14 @@ export default {
 
         throw err
       }
+      finally {
+        this.submitting = false
+      }
+
+      this.submitting = true
       await auth.singin_2fa(this.code)
       this.$router.push({ name: "user_management" })
+      this.submitting = false
       return
     },
     continue_to_signin() {
