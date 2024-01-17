@@ -100,6 +100,7 @@ import TriStateCheckbox from "primevue/tristatecheckbox"
 
 import CodeHighlight from "./AppCodeHighlight"
 
+// 切換頁面時把滾動位置歸零
 router.beforeEach(function(to, from, next) {
   window.scrollTo(0, 0)
   next()
@@ -108,14 +109,18 @@ router.beforeEach(function(to, from, next) {
 const app = createApp(App)
 
 app.config.globalProperties.$appState = reactive({ inputStyle: "outlined" })
+// 這讓 moment 可以直接在 template 中使用
 app.config.globalProperties.moment = moment
+// 這讓 numeral 可以直接在 template 中使用
 app.config.globalProperties.numeral = numeral
 app.config.globalProperties.CONSTANTS = CONSTANTS
 
 app.use(PrimeVue, { ripple: true })
 app.use(ConfirmationService)
 app.use(ToastService)
+// 多語系設定到 vue 上
 app.use(i18n)
+// 把 vue-router 的設定綁到 vue 上
 app.use(router)
 app.use(store)
 
@@ -124,6 +129,7 @@ app.directive("ripple", Ripple)
 app.directive("code", CodeHighlight)
 app.directive("badge", BadgeDirective)
 
+// 註冊 primevue 元件到 vue 上
 app.component("Accordion", Accordion)
 app.component("AccordionTab", AccordionTab)
 app.component("AutoComplete", AutoComplete)
@@ -202,4 +208,5 @@ app.component("Tree", Tree)
 app.component("TreeTable", TreeTable)
 app.component("TriStateCheckbox", TriStateCheckbox)
 
+// 把 vue 掛到畫面上
 app.mount("#app")
